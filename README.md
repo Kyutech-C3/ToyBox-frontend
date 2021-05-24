@@ -1,5 +1,8 @@
 # c3-toybox
 
+## 開発
+`Nuxt.js` + `TypeScript` + `nuxt-property-decorator` + `storybook`
+
 ## Build Setup
 
 ```bash
@@ -17,4 +20,12 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+storybookの使い方
+起動コマンド
+$ `yarn nuxt storybook`
+
+storybookの起動に時間がかかるのでせっかちにならないように
+
+storybookについての参考サイト
+https://storybook.nuxtjs.org/setup
+https://tech-broccoli.life/articles/engineer/add-storybook-for-nuxt/

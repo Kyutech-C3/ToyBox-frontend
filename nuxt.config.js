@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'c3-toybox',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ja'
     },
     meta: [
       { charset: 'utf-8' },
@@ -43,5 +43,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  storybook: {
+    // Run Storybook on localhost:4000
+    port: 4000
   }
 }
