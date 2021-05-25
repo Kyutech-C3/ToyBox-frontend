@@ -47,6 +47,10 @@ export default {
 
   storybook: {
     // Run Storybook on localhost:4000
-    port: 4000
+    port: 4000,
+    addons: [
+      '@storybook/addon-actions/register',
+      '@storybook/addon-viewport/register'
+    ]
   }
 }
