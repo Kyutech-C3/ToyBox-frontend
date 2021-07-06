@@ -46,6 +46,7 @@ export default {
   },
 
   storybook: {
+    stories: ['~/storybooks/*.stories.ts'],
     // Run Storybook on localhost:4000
     port: 4000,
     addons: [
