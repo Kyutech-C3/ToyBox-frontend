@@ -52,6 +52,10 @@ export default class Auth extends VuexModule {
     public_flags: 0
   }
 
+  public get getUser () {
+    return this.user
+  }
+
   private get authURL () {
     return oauthDiscord.generateAuthUrl({
       scope: ['identify']
@@ -70,15 +74,23 @@ export default class Auth extends VuexModule {
 
   @Action({ rawError: true })
   public async fetchUser (authData: AuthData) {
-    let accessToken :string
+    let accessToken
     if (authData.authorization) {
       accessToken = await this.RequestAccessTokenByAuthorizationCode(authData.token)
     } else {
       accessToken = await this.RequestAccessTokenByRefleshToken(authData.token)
     }
+
+    if (typeof (accessToken) !== 'string') {
+      alert('認証に失敗しました')
+      localStorage.removeItem('refresh_token')
+      return false
+    }
+
     this.getUserByAccessToken(accessToken)
       .then((user) => {
         this.setUser(user)
+        return true
       })
     // const credentials = Buffer.from(
     //   `${process.env.CLIENT_ID}:${process.env.CLIENT_SEACRET}`
@@ -99,6 +111,7 @@ export default class Auth extends VuexModule {
           resolve(result.access_token)
         })
         .catch((error) => {
+          localStorage.removeItem('refresh_token')
           reject(error)
         })
     })
@@ -118,6 +131,7 @@ export default class Auth extends VuexModule {
           resolve(result.access_token)
         })
         .catch((error) => {
+          localStorage.removeItem('refresh_token')
           reject(error)
         })
     })
