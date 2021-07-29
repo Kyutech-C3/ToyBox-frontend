@@ -24,6 +24,11 @@ export interface User {
   public_flags?: number;
 }
 
+export interface AuthData {
+  token: string,
+  authorization: boolean
+}
+
 @Module({
   name: 'auth',
   stateFactory: true,
@@ -47,8 +52,6 @@ export default class Auth extends VuexModule {
     public_flags: 0
   }
 
-  private accessToken: string = ''
-
   public get getTodos () {
     return this.user
   }
@@ -63,10 +66,6 @@ export default class Auth extends VuexModule {
     this.user = user
   }
 
-  @Mutation setAccessToken (token: string) {
-    this.accessToken = token
-  }
-
   @Action({ rawError: true })
   public toAuthDiscordPage () {
     // ここでDiscordログイン実装
@@ -74,44 +73,54 @@ export default class Auth extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public fetchUser (token: string, authorization: boolean) {
-    if (authorization) {
-      this.RequestAccessTokenByAuthorizationCode(token)
+  public async fetchUser (authData: AuthData) {
+    let accessToken :string
+    if (authData.authorization) {
+      accessToken = await this.RequestAccessTokenByAuthorizationCode(authData.token)
     } else {
-      this.RequestAccessTokenByRefleshToken(token)
+      accessToken = await this.RequestAccessTokenByRefleshToken(authData.token)
     }
+    console.log(accessToken)
     // const credentials = Buffer.from(
     //   `${process.env.CLIENT_ID}:${process.env.CLIENT_SEACRET}`
     // ).toString('base64')
   }
 
   @Action({ rawError: true })
-  private RequestAccessTokenByAuthorizationCode (authorizationCode: string) {
-    oauthDiscord
-      .tokenRequest({
-        code: authorizationCode,
-        grantType: 'authorization_code',
-        scope: ['identify']
-      })
-      .then((result) => {
-        this.setAccessToken(result.access_token)
-        localStorage.setItem('refresh_token', result.refresh_token)
-        console.log(result)
-      })
+  private RequestAccessTokenByAuthorizationCode (authorizationCode: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      oauthDiscord
+        .tokenRequest({
+          code: authorizationCode,
+          grantType: 'authorization_code',
+          scope: ['identify']
+        })
+        .then((result) => {
+          localStorage.setItem('refresh_token', result.refresh_token)
+          resolve(result.access_token)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
   }
 
   @Action({ rawError: true })
-  private RequestAccessTokenByRefleshToken (refreshtoken: string) {
-    oauthDiscord
-      .tokenRequest({
-        refreshToken: refreshtoken,
-        grantType: 'refresh_token',
-        scope: ['identify']
-      })
-      .then((result) => {
-        this.setAccessToken(result.access_token)
-        localStorage.setItem('refresh_token', result.refresh_token)
-        console.log(result)
-      })
+  private RequestAccessTokenByRefleshToken (refreshtoken: string) :Promise<string> {
+    return new Promise((resolve, reject) => {
+      oauthDiscord
+        .tokenRequest({
+          refreshToken: refreshtoken,
+          grantType: 'refresh_token',
+          scope: ['identify']
+        })
+        .then((result) => {
+          localStorage.setItem('refresh_token', result.refresh_token)
+          resolve(result.access_token)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
   }
 }
