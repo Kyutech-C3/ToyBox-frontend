@@ -52,17 +52,13 @@ export default class Auth extends VuexModule {
     public_flags: 0
   }
 
-  public get getTodos () {
-    return this.user
-  }
-
   private get authURL () {
     return oauthDiscord.generateAuthUrl({
       scope: ['identify']
     })
   }
 
-  @Mutation set (user: User) {
+  @Mutation setUser (user: User) {
     this.user = user
   }
 
@@ -80,7 +76,10 @@ export default class Auth extends VuexModule {
     } else {
       accessToken = await this.RequestAccessTokenByRefleshToken(authData.token)
     }
-    console.log(accessToken)
+    this.getUserByAccessToken(accessToken)
+      .then((user) => {
+        this.setUser(user)
+      })
     // const credentials = Buffer.from(
     //   `${process.env.CLIENT_ID}:${process.env.CLIENT_SEACRET}`
     // ).toString('base64')
@@ -117,6 +116,19 @@ export default class Auth extends VuexModule {
         .then((result) => {
           localStorage.setItem('refresh_token', result.refresh_token)
           resolve(result.access_token)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  }
+
+  @Action({ rawError: true })
+  private getUserByAccessToken (accessToken: string) :Promise<User> {
+    return new Promise((resolve, reject) => {
+      oauthDiscord.getUser(accessToken)
+        .then((result) => {
+          resolve(result)
         })
         .catch((error) => {
           reject(error)
