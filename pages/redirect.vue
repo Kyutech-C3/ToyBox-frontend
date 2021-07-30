@@ -17,9 +17,11 @@ export default class Redirect extends Vue {
       authorization: true
     } as AuthData
 
-    if (authData.token !== null) {
-      AuthStore.fetchUser(authData)
+    if (!this.$route.query.code) {
+      this.$router.push('/login')
+      return
     }
+    AuthStore.fetchUser(authData)
     this.$router.push('/')
   }
 }
