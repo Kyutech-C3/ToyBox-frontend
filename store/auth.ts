@@ -102,7 +102,7 @@ export default class Auth extends VuexModule {
     if (authData.authorization) {
       accessToken = await this.RequestAccessTokenByAuthorizationCode(authData.token)
     } else {
-      accessToken = await this.RequestAccessTokenByRefleshToken(authData.token)
+      accessToken = await this.RequestAccessTokenByRefreshToken(authData.token)
     }
 
     if (typeof (accessToken) !== 'string') {
@@ -128,7 +128,7 @@ export default class Auth extends VuexModule {
         .tokenRequest({
           code: authorizationCode,
           grantType: 'authorization_code',
-          scope: ['identify']
+          scope: ['identify', 'guilds']
         })
         .then((result) => {
           localStorage.setItem('refresh_token', result.refresh_token)
@@ -142,13 +142,13 @@ export default class Auth extends VuexModule {
   }
 
   @Action({ rawError: true })
-  private RequestAccessTokenByRefleshToken (refreshtoken: string) :Promise<string> {
+  private RequestAccessTokenByRefreshToken (refreshtoken: string) :Promise<string> {
     return new Promise((resolve, reject) => {
       oauthDiscord
         .tokenRequest({
           refreshToken: refreshtoken,
           grantType: 'refresh_token',
-          scope: ['identify']
+          scope: ['identify', 'guilds']
         })
         .then((result) => {
           localStorage.setItem('refresh_token', result.refresh_token)
@@ -177,7 +177,7 @@ export default class Auth extends VuexModule {
   @Action({ rawError: true })
   private getUserGuilds (): Promise<PartialGuild[]> {
     return new Promise((resolve, reject) => {
-      this.RequestAccessTokenByRefleshToken(String(localStorage.getItem('refresh_token')))
+      this.RequestAccessTokenByRefreshToken(String(localStorage.getItem('refresh_token')))
         .then((result) => {
           oauthDiscord.getUserGuilds(result)
             .then((result) => {
