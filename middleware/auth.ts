@@ -4,7 +4,7 @@ import { AuthData } from '@/store/auth.ts'
 
 const auth: Middleware = () => {
   const refleshToken = localStorage.getItem('refresh_token')
-  if (refleshToken === null) {
+  if (refleshToken === null || AuthStore.getUser.id !== '') {
     return
   }
 
