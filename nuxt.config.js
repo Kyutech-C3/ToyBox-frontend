@@ -62,5 +62,9 @@ export default {
     C3_GUILD_ID: process.env.C3_GUILD_ID
   },
 
-  ssr: false
+  ssr: false,
+
+  router: {
+    middleware: 'auth'
+  }
 }
