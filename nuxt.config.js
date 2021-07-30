@@ -58,6 +58,7 @@ export default {
   env: {
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SEACRET: process.env.CLIENT_SEACRET,
-    REDIRECT_URL: process.env.REDIRECT_URL
+    REDIRECT_URL: process.env.REDIRECT_URL,
+    C3_GUILD_ID: process.env.C3_GUILD_ID
   }
 }
