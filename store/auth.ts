@@ -24,6 +24,17 @@ export interface User {
   public_flags?: number;
 }
 
+export interface PartialGuild {
+  id: string;
+  name: string;
+  icon: string | null | undefined;
+  owner?: boolean;
+  permissions?: number;
+  features: string[];
+  // eslint-disable-next-line camelcase
+  permissions_new?: string;
+}
+
 export interface AuthData {
   token: string,
   authorization: boolean
@@ -52,18 +63,31 @@ export default class Auth extends VuexModule {
     public_flags: 0
   }
 
+  private guilds: PartialGuild[] = []
+
   public get getUser () {
     return this.user
   }
 
+  public get isC3Menber () {
+    const isC3Menber = this.guilds.some((guild) => {
+      return (guild.id === process.env.C3_GUILD_ID)
+    })
+    return isC3Menber
+  }
+
   private get authURL () {
     return oauthDiscord.generateAuthUrl({
-      scope: ['identify']
+      scope: ['identify', 'guilds']
     })
   }
 
   @Mutation setUser (user: User) {
     this.user = user
+  }
+
+  @Mutation setGuilds (guilds: PartialGuild[]) {
+    this.guilds = guilds
   }
 
   @Action({ rawError: true })
@@ -90,11 +114,11 @@ export default class Auth extends VuexModule {
     this.getUserByAccessToken(accessToken)
       .then((user) => {
         this.setUser(user)
+        this.getUserGuilds().then((guilds) => {
+          this.setGuilds(guilds)
+        })
         return true
       })
-    // const credentials = Buffer.from(
-    //   `${process.env.CLIENT_ID}:${process.env.CLIENT_SEACRET}`
-    // ).toString('base64')
   }
 
   @Action({ rawError: true })
@@ -143,6 +167,25 @@ export default class Auth extends VuexModule {
       oauthDiscord.getUser(accessToken)
         .then((result) => {
           resolve(result)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  }
+
+  @Action({ rawError: true })
+  private getUserGuilds (): Promise<PartialGuild[]> {
+    return new Promise((resolve, reject) => {
+      this.RequestAccessTokenByRefleshToken(String(localStorage.getItem('refresh_token')))
+        .then((result) => {
+          oauthDiscord.getUserGuilds(result)
+            .then((result) => {
+              resolve(result)
+            })
+            .catch((error) => {
+              reject(error)
+            })
         })
         .catch((error) => {
           reject(error)
