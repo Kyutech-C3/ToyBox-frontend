@@ -11,17 +11,17 @@ import { AuthData } from '~/store/auth.ts'
 
 @Component
 export default class Redirect extends Vue {
-  created () {
+  async created () {
     const authData = {
       token: String(this.$route.query.code),
       isNewLogin: true
     } as AuthData
 
-    if (!this.$route.query.code) {
+    if (!this.$route.query.code ||
+        !(await AuthStore.fetchUser(authData))) {
       this.$router.push('/login')
       return
     }
-    AuthStore.fetchUser(authData)
     this.$router.push('/')
   }
 }

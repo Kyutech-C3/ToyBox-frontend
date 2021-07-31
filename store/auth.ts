@@ -57,11 +57,11 @@ export default class Auth extends VuexModule {
     locale: undefined,
     verified: false,
     email: null,
-    flags: 0,
+    flags: undefined,
     // eslint-disable-next-line camelcase
-    premium_type: 0,
+    premium_type: undefined,
     // eslint-disable-next-line camelcase
-    public_flags: 0
+    public_flags: undefined
   }
 
   private guilds: PartialGuild[] = []
@@ -99,7 +99,7 @@ export default class Auth extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public async fetchUser (authData: AuthData) {
+  public async fetchUser (authData: AuthData) :Promise<Boolean> {
     const accessToken = await this.requestAccessToken(authData)
 
     if (typeof (accessToken) !== 'string') {
@@ -108,14 +108,14 @@ export default class Auth extends VuexModule {
       return false
     }
 
-    this.getUserByAccessToken(accessToken)
+    await this.getUserByAccessToken(accessToken)
       .then((user) => {
         this.setUser(user)
         this.getUserGuilds().then((guilds) => {
           this.setGuilds(guilds)
         })
-        return true
       })
+    return true
   }
 
   @Action({ rawError: true })

@@ -2,9 +2,11 @@ import { Middleware } from '@nuxt/types'
 import { AuthStore } from '@/store'
 import { AuthData } from '@/store/auth.ts'
 
-const auth: Middleware = () => {
+const auth: Middleware = async ({ route }) => {
   const refleshToken = localStorage.getItem('refresh_token')
-  if (refleshToken === null || AuthStore.getUser.id !== '') {
+  if (refleshToken === null ||
+      AuthStore.getUser.id !== '' ||
+      route.name === 'redirect') {
     return
   }
 
@@ -12,7 +14,7 @@ const auth: Middleware = () => {
     token: refleshToken,
     isNewLogin: false
   } as AuthData
-  AuthStore.fetchUser(authData)
+  await AuthStore.fetchUser(authData)
 }
 
 export default auth
