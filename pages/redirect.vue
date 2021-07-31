@@ -14,7 +14,7 @@ export default class Redirect extends Vue {
   created () {
     const authData = {
       token: String(this.$route.query.code),
-      authorization: true
+      isNewLogin: true
     } as AuthData
 
     if (!this.$route.query.code) {

@@ -10,7 +10,7 @@ const auth: Middleware = () => {
 
   const authData = {
     token: refleshToken,
-    authorization: false
+    isNewLogin: false
   } as AuthData
   AuthStore.fetchUser(authData)
 }

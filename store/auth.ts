@@ -37,7 +37,7 @@ export interface PartialGuild {
 
 export interface AuthData {
   token: string,
-  authorization: boolean
+  isNewLogin: boolean
 }
 
 @Module({
@@ -45,6 +45,7 @@ export interface AuthData {
   stateFactory: true,
   namespaced: true
 })
+
 export default class Auth extends VuexModule {
   private user: User = {
     id: '',
@@ -65,11 +66,11 @@ export default class Auth extends VuexModule {
 
   private guilds: PartialGuild[] = []
 
-  public get getUser () {
+  public get getUser () :User {
     return this.user
   }
 
-  public get isC3Menber () {
+  public get isC3Menber () :Boolean {
     const isC3Menber = this.guilds.some((guild) => {
       return (guild.id === process.env.C3_GUILD_ID)
     })
@@ -82,28 +83,24 @@ export default class Auth extends VuexModule {
     })
   }
 
-  @Mutation setUser (user: User) {
+  @Mutation
+  private setUser (user: User) {
     this.user = user
   }
 
-  @Mutation setGuilds (guilds: PartialGuild[]) {
+  @Mutation
+  private setGuilds (guilds: PartialGuild[]) {
     this.guilds = guilds
   }
 
   @Action({ rawError: true })
   public toAuthDiscordPage () {
-    // ここでDiscordログイン実装
     window.location.href = this.authURL
   }
 
   @Action({ rawError: true })
   public async fetchUser (authData: AuthData) {
-    let accessToken
-    if (authData.authorization) {
-      accessToken = await this.RequestAccessTokenByAuthorizationCode(authData.token)
-    } else {
-      accessToken = await this.RequestAccessTokenByRefreshToken(authData.token)
-    }
+    const accessToken = await this.requestAccessToken(authData)
 
     if (typeof (accessToken) !== 'string') {
       alert('認証に失敗しました')
@@ -122,32 +119,13 @@ export default class Auth extends VuexModule {
   }
 
   @Action({ rawError: true })
-  private RequestAccessTokenByAuthorizationCode (authorizationCode: string): Promise<string> {
+  private requestAccessToken (authData: AuthData): Promise<string> {
     return new Promise((resolve, reject) => {
       oauthDiscord
         .tokenRequest({
-          code: authorizationCode,
-          grantType: 'authorization_code',
-          scope: ['identify', 'guilds']
-        })
-        .then((result) => {
-          localStorage.setItem('refresh_token', result.refresh_token)
-          resolve(result.access_token)
-        })
-        .catch((error) => {
-          localStorage.removeItem('refresh_token')
-          reject(error)
-        })
-    })
-  }
-
-  @Action({ rawError: true })
-  private RequestAccessTokenByRefreshToken (refreshtoken: string) :Promise<string> {
-    return new Promise((resolve, reject) => {
-      oauthDiscord
-        .tokenRequest({
-          refreshToken: refreshtoken,
-          grantType: 'refresh_token',
+          code: (authData.isNewLogin ? authData.token : ''),
+          refreshToken: (!authData.isNewLogin ? authData.token : ''),
+          grantType: (authData.isNewLogin ? 'authorization_code' : 'refresh_token'),
           scope: ['identify', 'guilds']
         })
         .then((result) => {
@@ -177,7 +155,11 @@ export default class Auth extends VuexModule {
   @Action({ rawError: true })
   private getUserGuilds (): Promise<PartialGuild[]> {
     return new Promise((resolve, reject) => {
-      this.RequestAccessTokenByRefreshToken(String(localStorage.getItem('refresh_token')))
+      const authData = {
+        token: String(localStorage.getItem('refresh_token')),
+        isNewLogin: false
+      } as AuthData
+      this.requestAccessToken(authData)
         .then((result) => {
           oauthDiscord.getUserGuilds(result)
             .then((result) => {
