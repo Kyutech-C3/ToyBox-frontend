@@ -77,7 +77,7 @@ export default class Auth extends VuexModule {
     return isC3Menber
   }
 
-  private get authURL () {
+  private get authURL () :string {
     return oauthDiscord.generateAuthUrl({
       scope: ['identify', 'guilds']
     })
@@ -124,7 +124,7 @@ export default class Auth extends VuexModule {
       oauthDiscord
         .tokenRequest({
           code: (authData.isNewLogin ? authData.token : ''),
-          refreshToken: (!authData.isNewLogin ? authData.token : ''),
+          refreshToken: (authData.isNewLogin ? '' : authData.token),
           grantType: (authData.isNewLogin ? 'authorization_code' : 'refresh_token'),
           scope: ['identify', 'guilds']
         })
