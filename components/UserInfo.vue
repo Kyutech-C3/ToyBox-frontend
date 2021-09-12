@@ -16,7 +16,7 @@ export default class UserInfo extends Vue {
   }
 
   get getIconURL () {
-    return `https://cdn.discordapp.com/avatars/${this.UserInfo.id}/${this.UserInfo.avatar_url}`
+    return `https://cdn.discordapp.com/avatars/${this.UserInfo.discord_user_id}/${this.UserInfo.avatar_url}`
   }
 }
 </script>
