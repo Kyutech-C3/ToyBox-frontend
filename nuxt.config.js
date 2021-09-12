@@ -53,5 +53,9 @@ export default {
       '@storybook/addon-actions/register',
       '@storybook/addon-viewport/register'
     ]
+  },
+  env: {
+    AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
+    SERVER_URL: process.env.SERVER_URL
   }
 }
