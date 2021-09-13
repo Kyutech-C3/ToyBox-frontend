@@ -47,7 +47,7 @@ export default class Auth extends VuexModule {
     updated_at: ''
   }
 
-  public get getUser () {
+  public get getUser (): User {
     return this.user
   }
 
@@ -70,6 +70,25 @@ export default class Auth extends VuexModule {
     }).then((result: any) => {
       this.setUser(result.data)
       console.log(result)
+    })
+  }
+
+  @Action({ rawError: true })
+  public getAccessTokenByRefreshToken (refreshToken: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      axios.post(`${process.env.SERVER_URL}auth/token`, {
+        refresh_token: refreshToken
+      })
+        .then((result) => {
+          console.log(result)
+          localStorage.setItem('refresh_token', result.data.refresh_token)
+          resolve(result.data.access_token)
+        })
+        .catch((error) => {
+          console.error(error)
+          localStorage.removeItem('refresh_token')
+          reject(error)
+        })
     })
   }
 }

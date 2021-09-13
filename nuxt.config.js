@@ -58,5 +58,9 @@ export default {
     AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
     SERVER_URL: process.env.SERVER_URL
   },
-  ssr: false
+  ssr: false,
+
+  router: {
+    middleware: 'auth'
+  }
 }
