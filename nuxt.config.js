@@ -57,5 +57,6 @@ export default {
   env: {
     AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
     SERVER_URL: process.env.SERVER_URL
-  }
+  },
+  ssr: false
 }
