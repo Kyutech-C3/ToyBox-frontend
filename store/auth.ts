@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import axios from 'axios'
 
-export interface User {
+type User = {
   id: string,
   name: string,
   email: string,
@@ -19,15 +19,6 @@ export interface User {
   created_at: string,
   // eslint-disable-next-line camelcase
   updated_at: string
-}
-
-export interface Authentication {
-  // eslint-disable-next-line camelcase
-  expired_at: string,
-  // eslint-disable-next-line camelcase
-  access_token: string,
-  // eslint-disable-next-line camelcase
-  refresh_token: string
 }
 
 @Module({
@@ -90,18 +81,12 @@ export default class Auth extends VuexModule {
       })
         .then((result) => {
           console.log(result)
-          const C3Authentication = {
-            expired_at: String(result.data.expired_at),
-            access_token: String(result.data.access_token),
-            refresh_token: String(result.data.refresh_token)
-          } as Authentication
-
-          localStorage.setItem('C3Authentication', JSON.stringify(C3Authentication))
+          localStorage.setItem('refresh_token', result.data.refresh_token)
           resolve(result.data.access_token)
         })
         .catch((error) => {
           console.error(error)
-          localStorage.removeItem('C3Authentication')
+          localStorage.removeItem('refresh_token')
           reject(error)
         })
     })

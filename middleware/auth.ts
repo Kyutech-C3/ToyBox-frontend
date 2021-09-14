@@ -1,13 +1,14 @@
 import { Middleware } from '@nuxt/types'
 import { AuthStore } from '~/store'
 
-const auth: Middleware = () => {
-  const C3Authentication = JSON.parse(String(localStorage.getItem('C3Authentication')))
-  if (AuthStore.getUser.id !== '') {
+const auth: Middleware = ({ route }) => {
+  const refreshToken = String(localStorage.getItem('refresh_token'))
+  if (refreshToken === null ||
+    AuthStore.getUser.id !== '' ||
+    route.query.access_token !== '') {
     return
   }
-  console.log(C3Authentication)
-  AuthStore.getAccessTokenByRefreshToken(C3Authentication.refresh_token)
+  AuthStore.getAccessTokenByRefreshToken(refreshToken)
     .then((accessToken) => {
       AuthStore.fetchUserByAccessToken(accessToken)
     })
