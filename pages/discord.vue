@@ -21,7 +21,8 @@ export default class Discord extends Vue {
   created (): void {
     if (!this.$route.query.access_token) { return }
 
-    AuthStore.fetchUserByAccessToken(String(this.$route.query.access_token))
+    AuthStore.newLoginSetAccessToken(String(this.$route.query.access_token))
+    AuthStore.fetchUser(String(this.$route.query.access_token))
     localStorage.setItem('refresh_token', String(this.$route.query.refresh_token))
   }
 }

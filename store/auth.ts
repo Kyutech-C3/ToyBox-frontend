@@ -47,12 +47,19 @@ export default class Auth extends VuexModule {
     updated_at: ''
   }
 
+  // eslint-disable-next-line camelcase
+  private access_token: string = ''
+
   public get getUser (): User {
     return this.user
   }
 
   @Mutation setUser (user: User) {
     this.user = user
+  }
+
+  @Mutation setAccessToken (accessToken: string) {
+    this.access_token = accessToken
   }
 
   @Action({ rawError: true })
@@ -62,30 +69,52 @@ export default class Auth extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public fetchUserByAccessToken (accessToken: string) {
-    axios.get(`${process.env.SERVER_URL}users/@me`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    }).then((result: any) => {
-      this.setUser(result.data)
-      console.log(result)
+  public newLoginSetAccessToken (accessToken: string) {
+    this.setAccessToken(accessToken)
+  }
+
+  @Action({ rawError: true })
+  public async authAgain () {
+    const refreshToken = String(localStorage.getItem('refresh_token'))
+    if (!refreshToken) { return }
+
+    await this.getAccessTokenByRefreshToken(refreshToken)
+    await this.fetchUser()
+  }
+
+  @Action({ rawError: true })
+  public fetchUser (accessToken?:string): Promise<void> {
+    const token = accessToken || this.access_token
+    return new Promise((resolve, reject) => {
+      axios.get(`${process.env.SERVER_URL}users/@me`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then((result: any) => {
+        this.setUser(result.data)
+        resolve()
+        console.log(result)
+      }).catch((error) => {
+        reject(error)
+      })
     })
   }
 
   @Action({ rawError: true })
-  public getAccessTokenByRefreshToken (refreshToken: string): Promise<string> {
+  private getAccessTokenByRefreshToken (refreshToken: string): Promise<void> {
     return new Promise((resolve, reject) => {
       axios.post(`${process.env.SERVER_URL}auth/token`, {
         refresh_token: refreshToken
       })
         .then((result) => {
           console.log(result)
+          this.setAccessToken(result.data.access_token)
           localStorage.setItem('refresh_token', result.data.refresh_token)
-          resolve(result.data.access_token)
+          resolve()
         })
         .catch((error) => {
           console.error(error)
+          alert('ログイン認証に失敗しました。もう一度ログインしてください。')
           localStorage.removeItem('refresh_token')
           reject(error)
         })
