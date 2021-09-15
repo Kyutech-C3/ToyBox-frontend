@@ -54,6 +54,10 @@ export default class Auth extends VuexModule {
     return this.user
   }
 
+  public get nowLogin (): Boolean {
+    return this.user.id !== ''
+  }
+
   @Mutation setUser (user: User) {
     this.user = user
   }
@@ -75,10 +79,7 @@ export default class Auth extends VuexModule {
 
   @Action({ rawError: true })
   public async authAgain () {
-    const refreshToken = String(localStorage.getItem('refresh_token'))
-    if (!refreshToken) { return }
-
-    await this.getAccessTokenByRefreshToken(refreshToken)
+    await this.getAccessTokenByRefreshToken()
     await this.fetchUser()
   }
 
@@ -94,17 +95,27 @@ export default class Auth extends VuexModule {
         this.setUser(result.data)
         resolve()
         console.log(result)
-      }).catch((error) => {
-        reject(error)
+      }).catch(() => {
+        // access_tokenが失効してしまった場合
+        this.getAccessTokenByRefreshToken()
+          .then(() => {
+            this.fetchUser()
+            resolve()
+          })
+          .catch((error) => {
+            console.log(error)
+            reject(error)
+          })
       })
     })
   }
 
   @Action({ rawError: true })
-  private getAccessTokenByRefreshToken (refreshToken: string): Promise<void> {
+  private getAccessTokenByRefreshToken (refreshToken?: string): Promise<void> {
+    const token = refreshToken || String(localStorage.getItem('refresh_token'))
     return new Promise((resolve, reject) => {
       axios.post(`${process.env.SERVER_URL}auth/token`, {
-        refresh_token: refreshToken
+        refresh_token: token
       })
         .then((result) => {
           console.log(result)
