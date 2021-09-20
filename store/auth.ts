@@ -1,5 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import axios from 'axios'
+axios.defaults.baseURL = process.env.SERVER_URL
 
 type User = {
   id: string,
@@ -87,7 +88,7 @@ export default class Auth extends VuexModule {
   public fetchUser (accessToken?:string): Promise<void> {
     const token = accessToken || this.access_token
     return new Promise((resolve, reject) => {
-      axios.get(`${process.env.SERVER_URL}users/@me`, {
+      axios.get('/users/@me', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -114,7 +115,7 @@ export default class Auth extends VuexModule {
   private getAccessTokenByRefreshToken (refreshToken?: string): Promise<void> {
     const token = refreshToken || String(localStorage.getItem('refresh_token'))
     return new Promise((resolve, reject) => {
-      axios.post(`${process.env.SERVER_URL}auth/token`, {
+      axios.post('/auth/token', {
         refresh_token: token
       })
         .then((result) => {
