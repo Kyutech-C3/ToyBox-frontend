@@ -1,7 +1,7 @@
 <template>
-  <div v-if="UserInfo.id !== ''">
+  <div v-if="getUser.id !== ''">
     <img :src="getIconURL">
-    <p>{{ UserInfo.display_name }}</p>
+    <p>{{ getUser.display_name }}</p>
   </div>
 </template>
 
@@ -11,12 +11,12 @@ import { AuthStore } from '~/store'
 
 @Component
 export default class UserInfo extends Vue {
-  get UserInfo () {
+  get getUser () {
     return AuthStore.getUser
   }
 
   get getIconURL () {
-    return `https://cdn.discordapp.com/avatars/${this.UserInfo.discord_user_id}/${this.UserInfo.avatar_url}`
+    return `https://cdn.discordapp.com/avatars/${this.getUser.discord_user_id}/${this.getUser.avatar_url}`
   }
 }
 </script>
