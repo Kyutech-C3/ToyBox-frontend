@@ -1,7 +1,7 @@
 <template>
   <div v-if="getUser.id !== ''">
     <img :src="getIconURL">
-    <p>{{ getUser.display_name }}</p>
+    <p>{{ getUser.displayName }}</p>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default class UserInfo extends Vue {
   }
 
   get getIconURL () {
-    return `https://cdn.discordapp.com/avatars/${this.getUser.discord_user_id}/${this.getUser.avatar_url}`
+    return `https://cdn.discordapp.com/avatars/${this.getUser.discordUserId}/${this.getUser.avatarUrl}`
   }
 }
 </script>

@@ -6,20 +6,11 @@ type User = {
   id: string,
   name: string,
   email: string,
-  // eslint-disable-next-line camelcase
-  display_name: string,
-  // eslint-disable-next-line camelcase
-  discord_token: string,
-  // eslint-disable-next-line camelcase
-  discord_refresh_token: string,
-  // eslint-disable-next-line camelcase
-  discord_user_id: string,
-  // eslint-disable-next-line camelcase
-  avatar_url: string,
-  // eslint-disable-next-line camelcase
-  created_at: string,
-  // eslint-disable-next-line camelcase
-  updated_at: string
+  displayName: string,
+  discordToken: string,
+  discordRefreshToken: string,
+  discordUserId: string,
+  avatarUrl: string,
 }
 
 @Module({
@@ -32,24 +23,14 @@ export default class Auth extends VuexModule {
     id: '',
     name: '',
     email: '',
-    // eslint-disable-next-line camelcase
-    display_name: '',
-    // eslint-disable-next-line camelcase
-    discord_token: '',
-    // eslint-disable-next-line camelcase
-    discord_refresh_token: '',
-    // eslint-disable-next-line camelcase
-    discord_user_id: '',
-    // eslint-disable-next-line camelcase
-    avatar_url: '',
-    // eslint-disable-next-line camelcase
-    created_at: '',
-    // eslint-disable-next-line camelcase
-    updated_at: ''
+    displayName: '',
+    discordToken: '',
+    discordRefreshToken: '',
+    discordUserId: '',
+    avatarUrl: ''
   }
 
-  // eslint-disable-next-line camelcase
-  private access_token: string = ''
+  private accessToken: string = ''
 
   public get getUser (): User {
     return this.user
@@ -59,12 +40,19 @@ export default class Auth extends VuexModule {
     return this.user.id !== ''
   }
 
-  @Mutation setUser (user: User) {
-    this.user = user
+  @Mutation setUser (user: any) {
+    this.user.id = user.id
+    this.user.name = user.name
+    this.user.email = user.email
+    this.user.displayName = user.display_name
+    this.user.discordToken = user.discord_token
+    this.user.discordRefreshToken = user.discord_refresh_token
+    this.user.discordUserId = user.discord_user_id
+    this.user.avatarUrl = user.avatar_url
   }
 
   @Mutation setAccessToken (accessToken: string) {
-    this.access_token = accessToken
+    this.accessToken = accessToken
   }
 
   @Action({ rawError: true })
@@ -86,7 +74,7 @@ export default class Auth extends VuexModule {
 
   @Action({ rawError: true })
   public fetchUser (accessToken?:string): Promise<void> {
-    const token = accessToken || this.access_token
+    const token = accessToken || this.accessToken
     return new Promise((resolve, reject) => {
       axios.get('/users/@me', {
         headers: {
