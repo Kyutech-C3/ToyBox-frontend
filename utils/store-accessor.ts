@@ -4,8 +4,8 @@ import Auth from '~/store/auth'
 
 // eslint-disable-next-line import/no-mutable-exports
 let AuthStore: Auth
-function initialiseStores (store: Store<any>): void {
+function initializeStores (store: Store<any>): void {
   AuthStore = getModule(Auth, store)
 }
 
-export { initialiseStores, AuthStore }
+export { initializeStores, AuthStore }
