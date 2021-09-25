@@ -53,18 +53,5 @@ export default {
       '@storybook/addon-actions/register',
       '@storybook/addon-viewport/register'
     ]
-  },
-
-  env: {
-    CLIENT_ID: process.env.CLIENT_ID,
-    CLIENT_SEACRET: process.env.CLIENT_SEACRET,
-    REDIRECT_URL: process.env.REDIRECT_URL,
-    C3_GUILD_ID: process.env.C3_GUILD_ID
-  },
-
-  ssr: false,
-
-  router: {
-    middleware: 'auth'
   }
 }
