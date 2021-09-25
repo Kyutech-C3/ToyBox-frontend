@@ -15,7 +15,6 @@
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
-    "discord-oauth2": "^2.7.0",
     "nuxt": "^2.14.12",
     "nuxt-property-decorator": "^2.9.1"
   },
@@ -39,7 +38,6 @@
     "postcss": "^8.3.0",
     "storybook-addon-vue-info": "^1.4.2",
     "ts-jest": "^26.4.4",
-    "vue-jest": "^3.0.4",
-    "vuex-module-decorators": "^1.0.1"
+    "vue-jest": "^3.0.4"
   }
 }
