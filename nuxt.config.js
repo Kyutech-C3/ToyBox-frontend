@@ -17,6 +17,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/tailwind.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -30,7 +31,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+     '@nuxtjs/tailwindcss'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -58,5 +60,14 @@ export default {
       '@storybook/addon-actions/register',
       '@storybook/addon-viewport/register'
     ]
+  },
+  env: {
+    AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
+    SERVER_URL: process.env.SERVER_URL
+  },
+  ssr: false,
+
+  router: {
+    middleware: 'auth'
   }
 }
