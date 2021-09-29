@@ -1,10 +1,10 @@
 <template>
-  <form class="flex flex-col items-center" @submit.prevent>
-    <form-thumbnail v-model="workData.thumbnailImg" />
-    <form-title v-model="workData.title" />
-    <form-description v-model="workData.description" />
-    <form-community v-model="workData.communityId" />
-    <toybox-button title="送信" type="submit" @click="clickSubmit" />
+  <form class="flex flex-col items-center m-auto w-3/4 max-w-xl" autocomplete="off" @submit.prevent>
+    <form-thumbnail v-model="workData.thumbnailImg" class="mb-5" />
+    <form-title v-model="workData.title" class="mb-5" />
+    <form-description v-model="workData.description" class="mb-5" />
+    <form-community v-model="workData.communityId" class="mb-5" />
+    <toybox-button title="送信" type="submit" class="mb-5" @click="clickSubmit" />
   </form>
 </template>
 

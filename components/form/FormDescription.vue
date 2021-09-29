@@ -1,5 +1,10 @@
 <template>
-  <textarea v-model="description" name="description" placeholder="description" />
+  <textarea
+    v-model="description"
+    name="description"
+    placeholder="description"
+    class="w-full p-3 resize-y ring-1 placeholder-gray-400 focus:outline-none focus:ring-blue-600"
+  />
 </template>
 
 <script lang="ts">

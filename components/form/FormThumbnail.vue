@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="file" accept="image/*" required @change="onFilePicked($event)">
+    <input v-if="thumbnailImg === ''" type="file" accept="image/*" required @change="onFilePicked($event)">
     <img v-if="thumbnailImg !== ''" :src="thumbnailImg">
   </div>
 </template>

@@ -1,6 +1,8 @@
 <template>
-  <select v-model="communityId" name="pets" required>
-    <option value="" hidden>コミュニティーを選択してください</option>
+  <select v-model="communityId" name="pets" required class="w-full p-3 ring-1 focus:outline-none focus:ring-blue-600">
+    <option value="" hidden disabled selected>
+      community
+    </option>
     <template v-for="community in communityList">
       <option :key="community.id" :value="community.id">
         {{ community.name }}
@@ -37,3 +39,10 @@ export default class FormCommunity extends Vue {
   }
 }
 </script>
+
+<style scoped>
+select:invalid {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+</style>
