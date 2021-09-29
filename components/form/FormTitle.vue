@@ -1,5 +1,12 @@
 <template>
-  <input v-model="title" type="text" name="text/title" placeholder="title" required>
+  <input
+    v-model="title"
+    type="text"
+    name="text/title"
+    placeholder="title"
+    required
+    class="w-full p-3 ring-1 placeholder-gray-400 focus:outline-none focus:ring-blue-600"
+  >
 </template>
 
 <script lang="ts">
