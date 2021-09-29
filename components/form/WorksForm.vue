@@ -1,0 +1,52 @@
+<template>
+  <form class="flex flex-col items-center" @submit.prevent>
+    <form-thumbnail v-model="workData.thumbnailImg" />
+    <form-title v-model="workData.title" />
+    <form-description v-model="workData.description" />
+    <form-community v-model="workData.communityId" />
+    <toybox-button title="送信" type="submit" @click="clickSubmit" />
+  </form>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import FormThumbnail from '~/components/form/FormThumbnail.vue'
+import FormTitle from '~/components/form/FormTitle.vue'
+import FormDescription from '~/components/form/FormDescription.vue'
+import FormCommunity from '~/components/form/FormCommunity.vue'
+import ToyboxButton from '~/components/ToyboxButton.vue'
+
+@Component({
+  components: {
+    FormThumbnail,
+    FormTitle,
+    FormDescription,
+    FormCommunity,
+    ToyboxButton
+  }
+})
+export default class WorksForm extends Vue {
+  @Prop({ type: Boolean, required: false, default: false })
+  isNew!: boolean
+
+  workData = {
+    title: '',
+    description: '',
+    communityId: '',
+    thumbnailImg: ''
+  }
+
+  created () {
+    if (this.isNew) {
+      return
+    }
+    // ここでaxiosでworksの内容からデータ取得
+  }
+
+  clickSubmit () {
+    // バリデーションをクリアしたときのみ実行される
+    // バックエンドにPOSTを記述
+    console.log(this.workData)
+  }
+}
+</script>
