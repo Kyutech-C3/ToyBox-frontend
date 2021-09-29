@@ -30,7 +30,9 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build', '@nuxtjs/tailwindcss'
+    '@nuxt/typescript-build',
+    '@nuxtjs/style-resources',
+     '@nuxtjs/tailwindcss'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -44,6 +46,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  styleResources: {
+    scss: './assets/stylesheets/*.scss'
   },
 
   storybook: {

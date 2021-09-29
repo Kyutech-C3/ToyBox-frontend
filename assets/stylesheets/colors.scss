@@ -1,0 +1,15 @@
+
+// Colors
+$accent-color: #ff8000;
+$accent-color-lighten-1: lighten($accent-color, 10%);
+$accent-color-lighten-2: lighten($accent-color, 20%);
+$accent-color-lighten-3: lighten($accent-color, 30%);
+$accent-color-darken-1: darken($accent-color, 10%);
+$accent-color-darken-2: darken($accent-color, 20%);
+$accent-color-darken-3: darken($accent-color, 30%);
+
+$text-color-base: #111111;
+$base-shadow-color: rgba(0, 0, 0, 0.26);
+
+$white: #ffffff;
+$black: #000000;
