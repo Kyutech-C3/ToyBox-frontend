@@ -26,7 +26,7 @@ import ToyboxButton from '~/components/ToyboxButton.vue'
   }
 })
 export default class WorksForm extends Vue {
-  @Prop({ type: Boolean, required: false, default: false })
+  @Prop({ type: Boolean, required: false, default: true })
   isNew!: boolean
 
   workData = {
