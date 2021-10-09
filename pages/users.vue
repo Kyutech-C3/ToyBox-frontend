@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col content-center justify-center align-middle items-center">
+  <div class="min-h-screen flex flex-col content-center justify-center items-center">
     <div class="m-5">
       <img class="w-64 border-2 border-black rounded-full" :src="userImage" alt="User image">
     </div>
@@ -8,6 +8,27 @@
     </div>
     <div class="text-2xl m-5">
       {{ userDescription }}
+    </div>
+    <div class="m-5">
+      <button
+        class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
+        @click="showEditProfile = true"
+      >
+        プロフィール編集
+      </button>
+      <div
+        v-show="showEditProfile"
+        class="bg-gray-300 fixed h-screen inset-0 bg-opacity-50 flex justify-center items-center"
+      >
+        <div class="bg-white w-2/3 h-2/3 rounded-md">
+          <button
+            class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
+            @click="showEditProfile = false"
+          >
+            とじる
+          </button>
+        </div>
+      </div>
     </div>
     <div class="m-10">
       <div class="text-3xl text-center p-10 border-b-2">
@@ -32,5 +53,6 @@ export default class Users extends Vue {
   userDescription: string = 'はむたろなのだ'
   userWorksCount: number = 6
   userWorks: Array<string> = Array(this.userWorksCount)
+  showEditProfile: boolean = false
 }
 </script>
