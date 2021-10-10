@@ -16,6 +16,7 @@ export default class FormMarkdown extends Vue {
     },
     placeholder: 'マークダウンでの記入が可能です',
     spellChecker: false,
+    status: false,
     initialValue: '',
     toolbar: [
       'preview',
