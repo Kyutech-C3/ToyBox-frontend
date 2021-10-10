@@ -1,0 +1,39 @@
+.markdown ol {
+  @apply list-decimal;
+  @apply  pl-10;
+}
+
+.markdown ul {
+  @apply list-disc;
+  @apply pl-10;
+}
+
+.markdown h1 {
+  @apply text-4xl;
+  @apply font-semibold;
+}
+
+.markdown h2 {
+  @apply text-3xl;
+  @apply font-semibold;
+}
+
+.markdown h3 {
+  @apply text-2xl;
+  @apply font-semibold;
+}
+
+.markdown h4 {
+  @apply text-xl;
+  @apply font-semibold;
+}
+
+.markdown h5 {
+  @apply text-lg;
+  @apply font-semibold;
+}
+
+.markdown h6 {
+  @apply text-base;
+  @apply font-semibold;
+}
