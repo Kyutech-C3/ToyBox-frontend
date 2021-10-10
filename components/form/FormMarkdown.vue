@@ -1,5 +1,5 @@
 <template>
-  <vue-simplemde v-model="description" class="markdown min-h-300 w-full" :configs="configs" />
+  <vue-simplemde v-model="description" class="markdown-body min-h-300 w-full" :configs="configs" />
 </template>
 
 <script lang="ts">
