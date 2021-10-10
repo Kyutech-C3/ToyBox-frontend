@@ -1,39 +1,47 @@
-.markdown ol {
+.markdown-body ol {
   @apply list-decimal;
   @apply  pl-10;
 }
 
-.markdown ul {
+.markdown-body ul {
   @apply list-disc;
   @apply pl-10;
 }
 
-.markdown h1 {
+.markdown-body h1 {
   @apply text-4xl;
   @apply font-semibold;
 }
 
-.markdown h2 {
+.markdown-body h2 {
   @apply text-3xl;
   @apply font-semibold;
 }
 
-.markdown h3 {
+.markdown-body h3 {
   @apply text-2xl;
   @apply font-semibold;
 }
 
-.markdown h4 {
+.markdown-body h4 {
   @apply text-xl;
   @apply font-semibold;
 }
 
-.markdown h5 {
+.markdown-body h5 {
   @apply text-lg;
   @apply font-semibold;
 }
 
-.markdown h6 {
+.markdown-body h6 {
   @apply text-base;
   @apply font-semibold;
+}
+
+.markdown-body code {
+  @apply bg-gray-200;
+}
+
+.markdown-body pre>code {
+  @apply bg-transparent;
 }
