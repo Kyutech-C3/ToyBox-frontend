@@ -1,6 +1,6 @@
 <template>
   <form class="flex flex-col items-center m-auto w-3/4 max-w-7xl" autocomplete="off" @submit.prevent>
-    <form-thumbnail v-model="workData.thumbnailImg" class="mb-5" />
+    <form-assets v-model="workData.thumbnailImg" class="mb-5" />
     <form-title v-model="workData.title" class="mb-5" />
     <form-markdown v-model="workData.description" class="mb-5" />
     <form-community v-model="workData.communityId" class="mb-5" />
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import FormThumbnail from '~/components/form/FormThumbnail.vue'
+import FormAssets from '~/components/form/FormAssets.vue'
 import FormTitle from '~/components/form/FormTitle.vue'
 import FormMarkdown from '~/components/form/FormMarkdown.vue'
 import FormCommunity from '~/components/form/FormCommunity.vue'
@@ -18,7 +18,7 @@ import ToyboxButton from '~/components/ToyboxButton.vue'
 
 @Component({
   components: {
-    FormThumbnail,
+    FormAssets,
     FormTitle,
     FormMarkdown,
     FormCommunity,
