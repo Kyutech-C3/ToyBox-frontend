@@ -8,8 +8,8 @@
     <option value="" hidden disabled selected>
       community
     </option>
-    <template v-for="community in communityList">
-      <option :key="community.id" :value="community.id">
+    <template v-for="(community, i) in communityList">
+      <option :key="i" :value="community.id">
         {{ community.name }}
       </option>
     </template>
