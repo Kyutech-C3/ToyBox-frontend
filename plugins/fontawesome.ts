@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // 1. 利用したいアイコンを以下にてimportする
 import {
-  faHeart as faSolidHeart
+  faHeart as faSolidHeart,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -23,7 +24,8 @@ library.add(
   faYoutube,
   faHeart,
   faSolidHeart,
-  faTwitter
+  faTwitter,
+  faPlus
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
