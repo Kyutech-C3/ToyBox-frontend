@@ -1,7 +1,7 @@
 <template>
   <label
     for="pickimg"
-    class="mt-5 p-3 ring-1 rounded-full focus:outline-none focus:ring-blue-600 flex items-center"
+    class="mt-5 p-3 w-20 h-20 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 flex justify-center items-center"
   >
     <input
       id="pickimg"
@@ -12,7 +12,7 @@
       :multiple="false"
       @change="onFilePicked($event)"
     >
-    <div class="text-7xl text-justify p-0">+</div>
+    <font-awesome-icon class="w-10" :icon="['fas', 'plus']" />
   </label>
 </template>
 
