@@ -1,19 +1,22 @@
 <template>
-  <select
-    v-if="communityList.length > 0"
-    v-model="communityId"
-    required
-    class="w-full p-3 ring-1 focus:outline-none focus:ring-blue-600"
-  >
-    <option value="" hidden disabled selected>
-      community
-    </option>
-    <template v-for="(community, i) in communityList">
-      <option :key="i" :value="community.id">
-        {{ community.name }}
+  <div class="flex items-center">
+    <form-label name="コミュニティー" />
+    <select
+      v-if="communityList.length > 0"
+      v-model="communityId"
+      required
+      class="w-48 p-3 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 text-center text-xl"
+    >
+      <option value="" hidden disabled selected>
+        community
       </option>
-    </template>
-  </select>
+      <template v-for="(community, i) in communityList">
+        <option :key="i" :value="community.id">
+          {{ community.name }}
+        </option>
+      </template>
+    </select>
+  </div>
 </template>
 
 <script lang="ts">

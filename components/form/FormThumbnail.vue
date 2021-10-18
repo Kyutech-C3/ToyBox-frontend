@@ -1,7 +1,7 @@
 <template>
   <label
     for="pickimg"
-    class="mt-5 p-3 w-20 h-20 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 flex justify-center items-center"
+    class="p-3 w-20 h-20 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 flex justify-center items-center"
   >
     <input
       id="pickimg"
