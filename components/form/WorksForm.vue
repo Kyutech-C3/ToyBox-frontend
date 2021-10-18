@@ -1,6 +1,7 @@
 <template>
   <form class="flex flex-col items-left m-auto w-3/4 max-w-7xl" autocomplete="off" @submit.prevent>
     <form-community v-model="workData.communityId" class="my-5" />
+    <form-tag class="my-5" />
     <form-title v-model="workData.title" class="my-5" />
     <form-assets v-model="workData.thumbnailImg" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
