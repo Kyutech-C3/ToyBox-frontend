@@ -1,11 +1,13 @@
 <template>
   <div class="flex">
-    <form-label name="アセット" />
-    <div v-for="(imageURL, i) in assetImage" :key="i" class="relative mr-5">
-      <font-awesome-icon class="w-4 absolute top-1 right-2 opacity-60 cursor-pointer" :icon="['fas', 'times']" @click="deleteAsset(i)" />
-      <form-image-preview :image-u-r-l="imageURL" />
+    <form-label class="flex-shrink-0" name="アセット" />
+    <div class="flex flex-wrap">
+      <div v-for="(imageURL, i) in assetImage" :key="i" class="relative  mr-5 flex-shrink-0 mb-5">
+        <font-awesome-icon class="w-4 absolute top-1 right-2 opacity-60 cursor-pointer" :icon="['fas', 'times']" @click="deleteAsset(imageURL)" />
+        <form-image-preview :image-u-r-l="imageURL" />
+      </div>
+      <form-thumbnail v-model="assetImage" class="flex-shrink-0" />
     </div>
-    <form-thumbnail v-model="assetImage" />
   </div>
 </template>
 
@@ -28,8 +30,8 @@ export default class FormAssets extends Vue {
 
   assetImage = [] as string[]
 
-  deleteAsset (number: number) {
-    this.assetImage = this.assetImage.splice(0, number)
+  deleteAsset (url: string) {
+    this.assetImage = this.assetImage.filter(n => n !== url)
   }
 }
 </script>
