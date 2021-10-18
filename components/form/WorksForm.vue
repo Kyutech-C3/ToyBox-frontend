@@ -4,6 +4,7 @@
     <form-tag class="my-5" />
     <form-title v-model="workData.title" class="my-5" />
     <form-assets v-model="workData.thumbnailImg" class="my-5" />
+    <form-u-r-l v-model="workData.url" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
     <toybox-button title="送信" type="submit" class="my-5" @click="clickSubmit" />
   </form>
@@ -15,6 +16,7 @@ import FormAssets from '~/components/form/FormAssets.vue'
 import FormTitle from '~/components/form/FormTitle.vue'
 import FormMarkdown from '~/components/form/FormMarkdown.vue'
 import FormCommunity from '~/components/form/FormCommunity.vue'
+import FormURL from '~/components/form/FormURL.vue'
 import ToyboxButton from '~/components/ToyboxButton.vue'
 
 @Component({
@@ -23,6 +25,7 @@ import ToyboxButton from '~/components/ToyboxButton.vue'
     FormTitle,
     FormMarkdown,
     FormCommunity,
+    FormURL,
     ToyboxButton
   }
 })
@@ -34,7 +37,8 @@ export default class WorksForm extends Vue {
     title: '',
     description: '',
     communityId: '',
-    thumbnailImg: ''
+    thumbnailImg: '',
+    url: []
   }
 
   created () {
