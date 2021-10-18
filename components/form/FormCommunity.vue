@@ -19,9 +19,15 @@
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
+import FormLabel from '~/components/form/FormLabel.vue'
+
 axios.defaults.baseURL = process.env.SERVER_URL
 
-@Component
+@Component({
+  components: {
+    FormLabel
+  }
+})
 export default class FormCommunity extends Vue {
   @VModel({ type: String })
   communityId!: string
