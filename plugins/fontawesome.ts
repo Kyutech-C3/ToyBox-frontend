@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faHeart as faSolidHeart,
   faPlus,
-  faTimes
+  faTimes,
+  faCaretUp,
+  faLock,
+  faUpload,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -15,7 +19,8 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 
 import {
-  faHeart
+  faHeart,
+  faSave
 } from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
@@ -27,7 +32,12 @@ library.add(
   faSolidHeart,
   faTwitter,
   faPlus,
-  faTimes
+  faTimes,
+  faCaretUp,
+  faLock,
+  faUpload,
+  faSave,
+  faCheck
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

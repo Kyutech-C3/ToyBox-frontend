@@ -6,7 +6,7 @@
     <form-assets v-model="workData.thumbnailImg" class="my-5" />
     <form-u-r-l v-model="workData.url" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
-    <toybox-button title="送信" type="submit" class="my-5" @click="clickSubmit" />
+    <form-submit-button class="z-10" />
   </form>
 </template>
 
