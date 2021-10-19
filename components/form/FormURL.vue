@@ -17,7 +17,7 @@
           pattern="https://.*"
           class="w-72 text-xl border-b-2 placeholder-gray-400 focus:outline-none focus:border-black"
         >
-        <font-awesome-icon class="w-5 mx-3" :icon="['fas', 'times']" @click="deleteURL(urls[i])" />
+        <font-awesome-icon class="w-5 mx-3" :icon="['fas', 'times']" @click="deleteURL(i)" />
       </div>
     </div>
     <font-awesome-icon
@@ -51,8 +51,10 @@ export default class FormURL extends Vue {
     this.urls.push('')
   }
 
-  deleteURL (url: string) {
-    this.urls = this.urls.filter(n => n !== url)
+  deleteURL (number: number) {
+    this.urls = this.urls.filter((value, index) => {
+      return number !== index
+    })
   }
 }
 </script>

@@ -7,7 +7,7 @@
       name="text/title"
       placeholder="title"
       required
-      class="w-72 text-xl p-3 border-b-2 placeholder-gray-400 focus:outline-none"
+      class="w-72 text-xl p-3 border-b-2 placeholder-gray-400 focus:outline-none focus:border-black"
     >
   </div>
 </template>
