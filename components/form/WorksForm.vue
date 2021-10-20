@@ -6,7 +6,7 @@
     <form-assets v-model="workData.thumbnailImg" class="my-5" />
     <form-u-r-l v-model="workData.url" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
-    <form-submit-button class="z-10" @submit="clickSubmit($event)" />
+    <form-submit-button class="my-5 z-10" @submit="clickSubmit($event)" />
   </form>
 </template>
 

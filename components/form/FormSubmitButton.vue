@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex justify-end">
     <button
-      class="rounded-tl-lg rounded-bl-lg border-2 border-yellow-500 text-yellow-500 transition-colors px-4 py-2.5 my-5 flex items-center"
+      class="rounded-tl-lg rounded-bl-lg border-2 border-yellow-500 text-yellow-500 transition-colors px-4 py-2.5 flex items-center"
       type="submit"
       @click="$emit('submit', option)"
     >
@@ -10,7 +10,7 @@
     </button>
 
     <div
-      class="rounded-tr-lg rounded-br-lg border-2 border-yellow-500 bg-yellow-500 text-gray-100 transition-colors px-2 pt-3 pb-2 my-5"
+      class="rounded-tr-lg rounded-br-lg border-2 border-yellow-500 bg-yellow-500 text-gray-100 transition-colors px-2 pt-3 pb-2"
       @click="openList = !openList"
     >
       <font-awesome-icon :icon="['fas', 'caret-up']" class="w-3" />
@@ -21,48 +21,22 @@
         v-if="openList"
         class="balloon absolute bottom-full rounded-lg bg-white px-5 py-2 border-2 border-yellow-500"
       >
-        <div class="z-10 relative flex flex-col">
-          <label for="release" class="flex items-center py-2">
-            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != 0}" />
-            <font-awesome-icon :icon="submitList[0].icon" class="w-4 mr-3" />
-            公開
-          </label>
-          <label for="exclusive" class="flex items-center py-2">
-            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != 1}" />
-            <font-awesome-icon :icon="submitList[1].icon" class="w-4 mr-3" />
-            限定公開
-          </label>
-          <label for="save" class="flex items-center py-2">
-            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != 2}" />
-            <font-awesome-icon :icon="submitList[2].icon" class="w-4 mr-3" />
-            下書き保存
-          </label>
-
-          <input
-            id="release"
-            v-model="option"
-            :value="0"
-            type="radio"
-            name="公開"
-            class="hidden"
-          >
-          <input
-            id="exclusive"
-            v-model="option"
-            :value="1"
-            type="radio"
-            name="限定公開"
-            class="hidden"
-          >
-          <input
-            id="save"
-            v-model="option"
-            :value="2"
-            type="radio"
-            name="限定公開"
-            class="hidden"
-          >
-        </div>
+        <ul class="z-10 relative">
+          <li v-for="(range, i) in submitList" :key="i">
+            <label :for="range.id" class="flex items-center py-2">
+              <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != range.value}" />
+              <font-awesome-icon :icon="range.icon" class="w-4 mr-3" />
+              {{ range.name }}
+              <input
+                :id="range.id"
+                v-model="option"
+                :value="range.value"
+                type="radio"
+                class="hidden"
+              >
+            </label>
+          </li>
+        </ul>
         <!-- 以下、別部分をクリックした時にfalseにするdiv -->
         <div class="fixed w-full h-full top-0 left-0 z-0" @click="openList = !openList" />
       </div>
@@ -81,17 +55,20 @@ export default class FormSubmitButton extends Vue {
     {
       icon: ['fas', 'upload'],
       name: '公開',
-      value: 0
+      value: 0,
+      id: 'release'
     },
     {
       icon: ['fas', 'lock'],
       name: '限定公開',
-      value: 1
+      value: 1,
+      id: 'exclusive'
     },
     {
       icon: ['far', 'save'],
       name: '下書き保存',
-      value: 2
+      value: 2,
+      id: 'save'
     }
   ]
 
