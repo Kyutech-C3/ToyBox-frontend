@@ -10,12 +10,14 @@ import {
   faCaretUp,
   faLock,
   faUpload,
-  faCheck
+  faCheck,
+  faLink
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
   faYoutube,
-  faTwitter
+  faTwitter,
+  faGithub
 } from '@fortawesome/free-brands-svg-icons'
 
 import {
@@ -37,7 +39,9 @@ library.add(
   faLock,
   faUpload,
   faSave,
-  faCheck
+  faCheck,
+  faLink,
+  faGithub
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

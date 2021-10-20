@@ -8,6 +8,7 @@
         class="flex items-center cursor-pointer"
         :class="{'mb-10': urls.length > 1}"
       >
+        <font-awesome-icon class="w-6 mr-3" :icon="whichIcon(i)" />
         <input
           v-model="urls[i]"
           type="url"
@@ -17,7 +18,7 @@
           pattern="https://.*"
           class="w-72 text-xl border-b-2 placeholder-gray-400 focus:outline-none focus:border-black"
         >
-        <font-awesome-icon class="w-5 mx-3" :icon="['fas', 'times']" @click="deleteURL(i)" />
+        <font-awesome-icon class="w-5 mx-5" :icon="['fas', 'times']" @click="deleteURL(i)" />
       </div>
     </div>
     <font-awesome-icon
@@ -55,6 +56,20 @@ export default class FormURL extends Vue {
     this.urls = this.urls.filter((value, index) => {
       return number !== index
     })
+  }
+
+  whichIcon (index: number) {
+    const url = this.urls[index].match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)
+    const domain = (url !== undefined && url !== null) ? url[1] : false
+    if (!domain) { return ['fas', 'link'] }
+
+    switch (domain) {
+      case 'github.com': return ['fab', 'github']
+      case 'www.youtube.com': return ['fab', 'youtube']
+      case 'youtu.be': return ['fab', 'youtube']
+      case 'twitter.com': return ['fab', 'twitter']
+      default: return ['fas', 'link']
+    }
   }
 }
 </script>
