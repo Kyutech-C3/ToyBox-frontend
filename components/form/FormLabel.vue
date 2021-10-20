@@ -1,5 +1,5 @@
 <template>
-  <div class="w-56 text-xl">
+  <div class="w-56 text-xl flex-shrink-0">
     {{ name }}
   </div>
 </template>

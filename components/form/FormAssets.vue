@@ -1,12 +1,12 @@
 <template>
   <div class="flex">
-    <form-label class="flex-shrink-0" name="アセット" />
-    <div class="flex flex-wrap mb-5">
-      <div v-for="(imageURL, i) in assetImage" :key="i" class="relative  mr-5 flex-shrink-0">
+    <form-label name="アセット" />
+    <div class="flex flex-wrap">
+      <div v-for="(imageURL, i) in assetImage" :key="i" class="relative mb-5 mr-5 ">
         <font-awesome-icon class="w-4 absolute top-1 right-2 opacity-60 cursor-pointer" :icon="['fas', 'times']" @click="deleteAsset(i)" />
         <form-image-preview :image-u-r-l="imageURL" />
       </div>
-      <form-thumbnail v-model="assetImage" class="flex-shrink-0" />
+      <form-thumbnail v-model="assetImage" />
     </div>
   </div>
 </template>
