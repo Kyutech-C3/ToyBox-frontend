@@ -92,11 +92,11 @@ export default class FormSubmitButton extends Vue {
   position: absolute;
   right: 10px;
   width: 20px;
-  height: 22px;
+  height: 20px;
 }
 .balloon:before{
-  bottom: -20.5px;
-  border-top:11px solid #ffffff;
+  bottom: -18px;
+  border-top:10px solid #ffffff;
   border-right:10px solid transparent;
   border-left:10px solid transparent;
   border-bottom: 10px solid transparent;
@@ -104,8 +104,8 @@ export default class FormSubmitButton extends Vue {
   z-index: 10;
 }
 .balloon:after{
-  bottom: -22.5px;
-  border-top:11px solid #f59e0b;
+  bottom: -20px;
+  border-top:10px solid #f59e0b;
   border-right:10px solid transparent;
   border-left:10px solid transparent;
   border-bottom: 10px solid transparent;
