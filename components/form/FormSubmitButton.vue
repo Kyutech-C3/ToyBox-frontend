@@ -70,14 +70,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Watch } from 'nuxt-property-decorator'
 
 @Component
 export default class FormSubmitButton extends Vue {
   openList = false
-
   option = 0
-
   submitList = [
     {
       icon: ['fas', 'upload'],
@@ -95,13 +93,21 @@ export default class FormSubmitButton extends Vue {
       value: 2
     }
   ]
+
+  @Watch('option')
+  onOptionChanged () {
+    this.openList = !this.openList
+  }
 }
 </script>
 
 <style scoped>
 /* 以下、吹き出しのアニメーション */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active {
   transition: opacity .2s;
+}
+.fade-leave-active {
+  transition: opacity .1s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
 {
