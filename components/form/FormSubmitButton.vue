@@ -38,7 +38,7 @@
           </li>
         </ul>
         <!-- 以下、別部分をクリックした時にfalseにするdiv -->
-        <div class="fixed w-full h-full top-0 left-0 z-0" @click="openList = !openList" />
+        <span class="fixed w-full h-full top-0 left-0 z-0" @click="openList = !openList" />
       </div>
     </transition>
   </div>
