@@ -5,7 +5,7 @@
       v-if="communityList.length > 0"
       v-model="communityId"
       required
-      class="w-48 p-3 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 text-center text-xl"
+      class="w-48 p-3 border-2 border-gray-400 rounded-xl focus:outline-none text-center text-xl cursor-pointer"
     >
       <option value="" hidden disabled selected>
         community

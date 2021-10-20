@@ -40,3 +40,15 @@ export default class FormMarkdown extends Vue {
   }
 }
 </script>
+
+<style>
+.editor-toolbar {
+  border-top: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+  border-left: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+  border-right: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+}
+.CodeMirror {
+  border: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+  opacity: 0.8;
+}
+</style>

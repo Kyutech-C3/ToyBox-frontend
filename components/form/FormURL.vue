@@ -5,7 +5,7 @@
       <div
         v-for="(url, i) in urls"
         :key="i"
-        class="flex items-center"
+        class="flex items-center cursor-pointer"
         :class="{'mb-10': urls.length > 1}"
       >
         <input
@@ -22,7 +22,7 @@
     </div>
     <font-awesome-icon
       v-if="urls.length !== 5"
-      class="w-7"
+      class="w-7 cursor-pointer"
       :icon="['fas', 'plus']"
       :class="{ 'ml-20': urls.length > 0 }"
       @click="addURL()"

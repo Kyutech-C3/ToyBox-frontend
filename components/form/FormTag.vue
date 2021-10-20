@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center">
     <form-label name="タグ" />
-    <div class="w-48 p-2 ring-1 rounded-xl focus:outline-none focus:ring-blue-600 text-center text-xl">
+    <div class="w-48 p-2 border-2 rounded-xl border-gray-400 text-center text-xl cursor-pointer">
       <font-awesome-icon class="w-7 m-auto" :icon="['fas', 'plus']" />
     </div>
   </div>

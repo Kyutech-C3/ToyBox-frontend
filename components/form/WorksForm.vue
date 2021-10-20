@@ -1,5 +1,5 @@
 <template>
-  <form class="flex flex-col items-left m-auto w-3/4 max-w-7xl" autocomplete="off" @submit.prevent>
+  <form class="flex flex-col items-left m-auto w-3/4 max-w-7xl border-2 rounded-3xl border-gray-400 px-16" autocomplete="off" @submit.prevent>
     <form-community v-model="workData.communityId" class="my-5" />
     <form-tag class="my-5" />
     <form-title v-model="workData.title" class="my-5" />
