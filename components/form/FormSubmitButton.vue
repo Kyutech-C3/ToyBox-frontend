@@ -3,6 +3,7 @@
     <button
       class="rounded-tl-lg rounded-bl-lg border-2 border-yellow-500 text-yellow-500 transition-colors px-4 py-2.5 my-5 flex items-center"
       type="submit"
+      @click="$emit('submit', option)"
     >
       <font-awesome-icon :icon="submitList[option].icon" class="w-4 mr-3" />
       {{ submitList[option].name }}
@@ -40,7 +41,7 @@
           <input
             id="release"
             v-model="option"
-            value="0"
+            :value="0"
             type="radio"
             name="公開"
             class="hidden"
@@ -48,7 +49,7 @@
           <input
             id="exclusive"
             v-model="option"
-            value="1"
+            :value="1"
             type="radio"
             name="限定公開"
             class="hidden"
@@ -56,7 +57,7 @@
           <input
             id="save"
             v-model="option"
-            value="2"
+            :value="2"
             type="radio"
             name="限定公開"
             class="hidden"

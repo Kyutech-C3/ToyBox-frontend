@@ -6,7 +6,7 @@
     <form-assets v-model="workData.thumbnailImg" class="my-5" />
     <form-u-r-l v-model="workData.url" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
-    <form-submit-button class="z-10" />
+    <form-submit-button class="z-10" @submit="clickSubmit($event)" />
   </form>
 </template>
 
@@ -48,10 +48,10 @@ export default class WorksForm extends Vue {
     // ここでaxiosでworksの内容からデータ取得
   }
 
-  clickSubmit () {
+  clickSubmit (option: number) {
     // バリデーションをクリアしたときのみ実行される
     // バックエンドにPOSTを記述
-    console.log(this.workData)
+    console.log(this.workData, option)
   }
 }
 </script>
