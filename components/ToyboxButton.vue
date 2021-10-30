@@ -16,7 +16,7 @@ export default class ToyboxButton extends Vue {
   @Prop({ type: String, required: true, default: 'Button' })
   title!: string
 
-  @Prop({ type: String, required: false, default: false })
+  @Prop({ type: Boolean, required: false, default: false })
   isShadow!: boolean
 }
 </script>
