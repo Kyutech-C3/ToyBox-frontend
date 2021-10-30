@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col content-center justify-center items-center">
+  <div class="flex flex-col content-center justify-center items-center border-2 border-gray-400 rounded-3xl px-60">
     <div class="m-5">
-      <img class="w-64 border-2 border-black rounded-full" :src="userImage" alt="User image">
+      <img class="w-64 border-2 border-gray-400 rounded-full" :src="userImage" alt="User image">
     </div>
     <div class="text-4xl m-5">
       {{ userName }}
@@ -10,23 +10,21 @@
       {{ userDescription }}
     </div>
     <div class="m-5">
-      <button
+      <custom-button
         class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
+        title="プロフィール編集"
         @click="showEditProfile = true"
-      >
-        プロフィール編集
-      </button>
+      />
       <div
         v-show="showEditProfile"
         class="bg-gray-300 fixed h-screen inset-0 bg-opacity-50 flex justify-center items-center"
       >
         <div class="bg-white w-2/3 h-2/3 rounded-md">
-          <button
+          <custom-button
             class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
+            title="とじる"
             @click="showEditProfile = false"
-          >
-            とじる
-          </button>
+          />
         </div>
       </div>
     </div>
@@ -35,8 +33,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import CustomButton from '@/components/ToyboxButton.vue'
 
-@Component
+@Component({
+  components: {
+    CustomButton
+  }
+})
 export default class Profile extends Vue {
   @Prop({ type: String, required: true })
   userImage!: string
