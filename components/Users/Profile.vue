@@ -11,7 +11,6 @@
     </div>
     <div class="m-5">
       <custom-button
-        class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
         title="プロフィール編集"
         @click="showEditProfile = true"
       />
@@ -21,12 +20,19 @@
       >
         <div class="bg-white w-2/3 h-2/3 rounded-md">
           <custom-button
-            class="bg-green-400 hover:bg-green-500 px-5 py-3 rounded-full shadow-md"
             title="とじる"
             @click="showEditProfile = false"
           />
         </div>
       </div>
+    </div>
+    <div class="flex justify-around w-full my-5">
+      <a :href="githubLink" target="_blank" title="GitHub">
+        <font-awesome-icon class="w-10 text-gray-500" :icon="['fab', 'github']" />
+      </a>
+      <a :href="twitterLink" target="_blank" title="Twitter">
+        <font-awesome-icon class="w-10 text-gray-500" :icon="['fab', 'twitter']" />
+      </a>
     </div>
   </div>
 </template>
@@ -49,6 +55,12 @@ export default class Profile extends Vue {
 
   @Prop({ type: String, required: true })
   userDescription!: string
+
+  @Prop({ type: String, required: true })
+  githubLink!: string
+
+  @Prop({ type: String, required: true })
+  twitterLink!: string
 
   showEditProfile: boolean = false
 }

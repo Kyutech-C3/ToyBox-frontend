@@ -9,7 +9,8 @@ import {
 
 import {
   faYoutube,
-  faTwitter
+  faTwitter,
+  faGithub
 } from '@fortawesome/free-brands-svg-icons'
 
 import {
@@ -23,10 +24,11 @@ library.add(
   faYoutube,
   faHeart,
   faSolidHeart,
-  faTwitter
+  faTwitter,
+  faGithub
 )
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 
 /**
  * <!-- 利用 -->

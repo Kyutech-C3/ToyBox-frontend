@@ -1,6 +1,12 @@
 <template>
   <div class="min-h-screen flex flex-col content-center justify-center items-center">
-    <profile :user-image="userImage" :user-name="userName" :user-description="userDescription" />
+    <profile
+      :user-image="userImage"
+      :user-name="userName"
+      :user-description="userDescription"
+      :github-link="githubLink"
+      :twitter-link="twitterLink"
+    />
     <works-filter />
     <works :user-works="userWorks" />
   </div>
@@ -23,6 +29,8 @@ export default class Users extends Vue {
   userImage: string = 'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png'
   userName: string = 'ハムタロサァン'
   userDescription: string = 'はむたろなのだ'
+  githubLink: string = 'https://github.com/'
+  twitterLink: string = 'https://twitter.com/'
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
   showEditProfile: boolean = false
