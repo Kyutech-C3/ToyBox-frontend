@@ -6,6 +6,7 @@
       :user-description="userDescription"
       :github-link="githubLink"
       :twitter-link="twitterLink"
+      :is-disable-edit="true"
     />
     <works-filter />
     <works :user-works="userWorks" />

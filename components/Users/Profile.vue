@@ -9,7 +9,7 @@
     <div class="text-2xl m-5">
       {{ userDescription }}
     </div>
-    <div class="m-5">
+    <div v-show="!isDisableEdit" class="m-5">
       <custom-button
         title="プロフィール編集"
         @click="showEditProfile = true"
@@ -61,6 +61,9 @@ export default class Profile extends Vue {
 
   @Prop({ type: String, required: true })
   twitterLink!: string
+
+  @Prop({ type: Boolean, required: false, default: false })
+  isDisableEdit!: boolean
 
   showEditProfile: boolean = false
 }
