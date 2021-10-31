@@ -14,13 +14,8 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import FormLabel from '~/components/form/FormLabel.vue'
 
-@Component({
-  components: {
-    FormLabel
-  }
-})
+@Component
 export default class FormTitle extends Vue {
   @VModel({ type: String })
   title!: string

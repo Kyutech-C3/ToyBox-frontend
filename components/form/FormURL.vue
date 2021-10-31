@@ -33,13 +33,8 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import FormLabel from '~/components/form/FormLabel.vue'
 
-@Component({
-  components: {
-    FormLabel
-  }
-})
+@Component
 export default class FormURL extends Vue {
   @VModel({ type: Array })
   urls!: string[]

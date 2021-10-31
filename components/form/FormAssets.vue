@@ -13,17 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import FormThumbnail from '~/components/form/FormThumbnail.vue'
-import FormImagePreview from '~/components/form/FormImagePreview.vue'
-import FormLabel from '~/components/form/FormLabel.vue'
-@Component({
-  components: {
-    FormThumbnail,
-    FormImagePreview,
-    FormLabel
-  }
-})
-
+@Component
 export default class FormAssets extends Vue {
   @VModel({ type: String })
   thumbnailImg!: string

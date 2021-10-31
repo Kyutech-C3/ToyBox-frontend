@@ -12,23 +12,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import FormAssets from '~/components/form/FormAssets.vue'
-import FormTitle from '~/components/form/FormTitle.vue'
-import FormMarkdown from '~/components/form/FormMarkdown.vue'
-import FormCommunity from '~/components/form/FormCommunity.vue'
-import FormURL from '~/components/form/FormURL.vue'
-import ToyboxButton from '~/components/ToyboxButton.vue'
-
-@Component({
-  components: {
-    FormAssets,
-    FormTitle,
-    FormMarkdown,
-    FormCommunity,
-    FormURL,
-    ToyboxButton
-  }
-})
+@Component
 export default class WorksForm extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
   isNew!: boolean
