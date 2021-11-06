@@ -10,7 +10,8 @@
     "storybook": "nuxt-ts storybook",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "yarn lint:js",
-    "test": "jest"
+    "test": "jest",
+    "aspida": "npx openapi2aspida -i https://kodomobeya.compositecomputer.club/openapi.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
