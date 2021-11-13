@@ -17,9 +17,9 @@ export default class Tag extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #tag {
   border: 1px solid;
-  border-color: #000000;
+  border-color: $black;
 }
 </style>
