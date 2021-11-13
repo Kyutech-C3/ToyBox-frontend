@@ -1,13 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col content-center justify-center items-center">
-    <profile
-      :user-image="userImage"
-      :user-name="userName"
-      :user-description="userDescription"
-      :github-link="githubLink"
-      :twitter-link="twitterLink"
-      :is-disable-edit="true"
-    />
+    <profile :users="users" />
     <works-filter />
     <works :user-works="userWorks" />
   </div>
@@ -19,6 +12,14 @@ import Profile from '@/components/Users/Profile.vue'
 import WorksFilter from '~/components/Users/WorksFilter.vue'
 import Works from '~/components/Users/Works.vue'
 
+interface User {
+  image: string
+  name: string
+  description: string
+  github: string
+  twitter: string
+}
+
 @Component({
   components: {
     Profile,
@@ -27,13 +28,15 @@ import Works from '~/components/Users/Works.vue'
   }
 })
 export default class Users extends Vue {
-  userImage: string = 'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png'
-  userName: string = 'ハムタロサァン'
-  userDescription: string = 'はむたろなのだ'
-  githubLink: string = 'https://github.com/'
-  twitterLink: string = 'https://twitter.com/'
+  users: User = {
+    image: 'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
+    name: 'ハムタロサァン',
+    description: 'はむたろなのだ',
+    github: 'Kyutech-C3',
+    twitter: 'c3_kyutech'
+  }
+
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
-  showEditProfile: boolean = false
 }
 </script>
