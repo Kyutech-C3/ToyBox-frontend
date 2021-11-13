@@ -1,5 +1,5 @@
 <template>
-  <dev class="bg-white border-black border-solid border-2 text-black px-4 rounded-full" :class="[[fontSize=='xs' || fontSize=='sm' ? 'py-0.5' : 'py-1'], {'text-xs': fontSize=='xs', 'text-sm': fontSize=='sm', 'text-base': fontSize=='base', 'text-lg': fontSize=='lg', 'text-xl': fontSize=='xl'}]">
+  <dev id="tag" class="bg-white text-black px-4 rounded-full" :class="[[fontSize=='xs' || fontSize=='sm' ? 'py-0.5' : 'py-1'], {'text-xs': fontSize=='xs', 'text-sm': fontSize=='sm', 'text-base': fontSize=='base', 'text-lg': fontSize=='lg', 'text-xl': fontSize=='xl'}]">
     {{ tagText }}
   </dev>
 </template>
@@ -16,3 +16,10 @@ export default class Tag extends Vue {
   fontSize!: string
 }
 </script>
+
+<style scoped>
+#tag {
+  border: 1px solid;
+  border-color: #000000;
+}
+</style>
