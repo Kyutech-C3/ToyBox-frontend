@@ -1,33 +1,31 @@
 <template>
-  <select
-    v-if="communityList.length > 0"
-    v-model="communityId"
-    required
-    class="w-full p-3 ring-1 focus:outline-none focus:ring-blue-600"
-  >
-    <option value="" hidden disabled selected>
-      community
-    </option>
-    <template v-for="(community, i) in communityList">
-      <option :key="i" :value="community.id">
-        {{ community.name }}
+  <div class="flex items-center">
+    <form-label name="コミュニティー" />
+    <select
+      v-if="communityList.length > 0"
+      v-model="communityId"
+      required
+      class="w-48 p-3 border-2 border-gray-400 rounded-xl focus:outline-none text-center text-xl cursor-pointer"
+    >
+      <option value="" hidden disabled selected>
+        community
       </option>
-    </template>
-  </select>
+      <template v-for="(community, i) in communityList">
+        <option :key="i" :value="community.id">
+          {{ community.name }}
+        </option>
+      </template>
+    </select>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
-import FormLabel from '~/components/form/FormLabel.vue'
 
 axios.defaults.baseURL = process.env.SERVER_URL
 
-@Component({
-  components: {
-    FormLabel
-  }
-})
+@Component
 export default class FormCommunity extends Vue {
   @VModel({ type: String })
   communityId!: string

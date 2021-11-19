@@ -1,27 +1,29 @@
 <template>
-  <div>
-    <form-thumbnail v-model="assetImage" />
-    <template v-for="imageURL in assetImage">
-      <form-image-preview :key="imageURL.id" :image-u-r-l="imageURL" />
-    </template>
+  <div class="flex">
+    <form-label name="アセット" />
+    <div class="flex flex-wrap">
+      <div v-for="(imageURL, i) in assetImage" :key="i" class="relative mb-5 mr-5 ">
+        <font-awesome-icon class="w-4 absolute top-1 right-2 opacity-60 cursor-pointer" :icon="['fas', 'times']" @click="deleteAsset(i)" />
+        <form-image-preview :image-u-r-l="imageURL" />
+      </div>
+      <form-thumbnail v-model="assetImage" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import FormThumbnail from '~/components/form/FormThumbnail.vue'
-import FormImagePreview from '~/components/form/FormImagePreview.vue'
-@Component({
-  components: {
-    FormThumbnail,
-    FormImagePreview
-  }
-})
-
+@Component
 export default class FormAssets extends Vue {
   @VModel({ type: String })
   thumbnailImg!: string
 
   assetImage = [] as string[]
+
+  deleteAsset (number: number) {
+    this.assetImage = this.assetImage.filter((value, index) => {
+      return number !== index
+    })
+  }
 }
 </script>

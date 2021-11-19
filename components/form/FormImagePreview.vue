@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <img :src="imageURL">
+  <div class="w-32 h-32 rounded-xl">
+    <img class="w-full h-full object-cover rounded-xl" :src="imageURL">
   </div>
 </template>
 
