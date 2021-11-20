@@ -18,6 +18,8 @@
 
 <script lang="ts">
 import { Component, VModel, Vue } from 'nuxt-property-decorator'
+import axios from 'axios'
+import { AuthStore } from '~/store'
 
 @Component
 export default class FromThumbnail extends Vue {
@@ -28,9 +30,22 @@ export default class FromThumbnail extends Vue {
     const file = (e.target.files || e.dataTransfer.files)
     if (file.length !== 0) {
       // 本番環境では何らかのサービスに画像を保存する
-      this.assetImage.push(URL.createObjectURL(file[0]))
+      const params = new FormData()
+      params.append('file', file[0])
+      params.append('asset_type', 'image')
+      try {
+        axios.post('/assets', params, {
+          headers: {
+            'content-type': 'multipart/form-data',
+            Authorization: `Bearer ${AuthStore.getAccessToken}`
+          }
+        }).then((result) => {
+          this.assetImage.push(result.data.id)
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
-
     const refs = this.$refs.pickimg as any
     refs.value = ''
   }

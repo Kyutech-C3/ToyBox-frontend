@@ -15,10 +15,8 @@
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
 @Component
 export default class FormAssets extends Vue {
-  @VModel({ type: String })
-  thumbnailImg!: string
-
-  assetImage = [] as string[]
+  @VModel({ type: Array })
+  assetImage!: string[]
 
   deleteAsset (number: number) {
     this.assetImage = this.assetImage.filter((value, index) => {
