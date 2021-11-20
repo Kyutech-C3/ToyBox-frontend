@@ -3,7 +3,7 @@
     v-model="description"
     :toolbars="toolbarsOption"
     language="ja"
-    xss-options="{}"
+    :xss-options="{}"
     default-open="edit"
     class="
     markdown-body
@@ -42,3 +42,9 @@ export default class FormMarkdown extends Vue {
   }
 }
 </script>
+
+<style>
+.v-note-wrapper {
+  z-index: 1 !important
+}
+</style>
