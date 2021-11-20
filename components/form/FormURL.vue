@@ -10,7 +10,7 @@
       >
         <font-awesome-icon class="w-6 mr-3" :icon="whichIcon(i)" />
         <input
-          v-model="urls[i]"
+          v-model="urls[i].url"
           type="url"
           name="url"
           required
@@ -22,7 +22,7 @@
       </div>
     </div>
     <font-awesome-icon
-      v-if="urls.length !== 5"
+      v-if="urls.length < 5"
       class="w-7 cursor-pointer"
       :icon="['fas', 'plus']"
       :class="{ 'ml-20': urls.length > 0 }"
@@ -33,18 +33,19 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { BaseURL } from '~/types'
 
 @Component
 export default class FormURL extends Vue {
   @VModel({ type: Array })
-  urls!: string[]
+  urls!: BaseURL[]
 
   get count () {
     return `URL ${this.urls.length}/5`
   }
 
   addURL () {
-    this.urls.push('')
+    this.urls.push({ url: '', url_type: 'other' })
   }
 
   deleteURL (number: number) {
@@ -54,7 +55,7 @@ export default class FormURL extends Vue {
   }
 
   whichIcon (index: number) {
-    const url = this.urls[index].match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)
+    const url = this.urls[index].url.match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)
     const domain = (url !== undefined && url !== null) ? url[1] : false
     if (!domain) { return ['fas', 'link'] }
 

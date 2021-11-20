@@ -1,10 +1,10 @@
 <template>
   <form class="flex flex-col items-left m-auto w-3/4 max-w-7xl border-2 rounded-3xl border-gray-400 px-16" autocomplete="off" @submit.prevent>
-    <form-community v-model="workData.communityId" class="my-5" />
+    <form-community v-model="workData.community_id" class="my-5" />
     <form-tag class="my-5" />
     <form-title v-model="workData.title" class="my-5" />
-    <form-assets v-model="workData.thumbnailImg" class="my-5" />
-    <form-u-r-l v-model="workData.url" class="my-5" />
+    <form-assets v-model="workData.assets_id" class="my-5" />
+    <form-u-r-l v-model="workData.urls" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
     <form-submit-button class="my-5 z-10" @submit="clickSubmit($event)" />
   </form>
@@ -12,6 +12,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import axios from 'axios'
+import { AuthStore } from '~/store'
+import { PostWork } from '~/types'
+
 @Component
 export default class WorksForm extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
@@ -20,10 +24,13 @@ export default class WorksForm extends Vue {
   workData = {
     title: '',
     description: '',
-    communityId: '',
-    thumbnailImg: '',
-    url: []
-  }
+    community_id: '',
+    visibility: '',
+    thumbnail_asset_id: '',
+    assets_id: [],
+    urls: [],
+    tags_id: ['6337f6d5-500a-446d-a3ab-dcf438a00f9f'] // 仮置き
+  } as PostWork
 
   created () {
     if (this.isNew) {
@@ -32,10 +39,22 @@ export default class WorksForm extends Vue {
     // ここでaxiosでworksの内容からデータ取得
   }
 
-  clickSubmit (option: number) {
+  clickSubmit (visibility: string) {
     // バリデーションをクリアしたときのみ実行される
     // バックエンドにPOSTを記述
-    console.log(this.workData, option)
+    this.workData.thumbnail_asset_id = this.workData.assets_id[0]
+    this.workData.visibility = visibility
+    try {
+      axios.post('/works', this.workData, {
+        headers: {
+          Authorization: `Bearer ${AuthStore.getAccessToken}`
+        }
+      }).then((result) => {
+        console.log(result)
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 </script>

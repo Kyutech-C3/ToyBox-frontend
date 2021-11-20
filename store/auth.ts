@@ -40,6 +40,10 @@ export default class Auth extends VuexModule {
     return this.user.id !== ''
   }
 
+  public get getAccessToken (): String {
+    return this.accessToken
+  }
+
   @Mutation setUser (user: any) {
     this.user.id = user.id
     this.user.name = user.name

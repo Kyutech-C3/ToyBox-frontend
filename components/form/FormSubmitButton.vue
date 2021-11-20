@@ -3,7 +3,7 @@
     <button
       class="rounded-tl-lg rounded-bl-lg border-2 border-yellow-500 text-yellow-500 transition-colors px-4 py-2.5 flex items-center"
       type="submit"
-      @click="$emit('submit', option)"
+      @click="$emit('submit', submitList[option].value)"
     >
       <font-awesome-icon :icon="submitList[option].icon" class="w-4 mr-3" />
       {{ submitList[option].name }}
@@ -51,23 +51,23 @@ export default class FormSubmitButton extends Vue {
     {
       icon: ['fas', 'upload'],
       name: '公開',
-      value: 0
+      value: 'public'
     },
     {
       icon: ['fas', 'lock'],
       name: '限定公開',
-      value: 1
+      value: 'private'
     },
     {
       icon: ['far', 'save'],
       name: '下書き保存',
-      value: 2
+      value: 'draft'
     }
   ]
 
-  clickOption (number: number) {
+  clickOption (index: number) {
     this.openList = !this.openList
-    this.option = number
+    this.option = index
   }
 }
 </script>
