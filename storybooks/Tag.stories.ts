@@ -5,20 +5,11 @@ export default {
 }
 
 export const tag1 = () => ({
-  template: '<tag :tag-text="text" :font-size="size" :tagId="id" :linkDisabledFlag="disable"/>',
+  template: '<tag :tag-text="text"/>',
   components: { Tag },
   props: {
     text: {
       default: 'hogehoge'
-    },
-    id: {
-      default: '12314'
-    },
-    disable: {
-      default: false
-    },
-    size: {
-      default: 'xs'
     }
   }
 })
