@@ -28,7 +28,7 @@
             class="cursor-pointer flex items-center py-2"
             @click="clickOption(i)"
           >
-            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != range.value}" />
+            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != i}" />
             <font-awesome-icon :icon="range.icon" class="w-4 mr-3" />
             {{ range.name }}
           </li>
