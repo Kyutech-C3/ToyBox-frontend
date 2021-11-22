@@ -1,12 +1,13 @@
 <template>
   <div>
-    <works-form />
+    <works-form v-model="workData" :is-new="true" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import WorksForm from '~/components/form/WorksForm.vue'
+import { PostWork } from '~/types'
 
 @Component({
   components: {
@@ -14,5 +15,15 @@ import WorksForm from '~/components/form/WorksForm.vue'
   }
 })
 export default class Create extends Vue {
+  workData = {
+    title: '',
+    description: '',
+    community_id: '',
+    visibility: '',
+    thumbnail_asset_id: '',
+    assets_id: [],
+    urls: [],
+    tags_id: ['6337f6d5-500a-446d-a3ab-dcf438a00f9f'] // 仮置き
+  } as PostWork
 }
 </script>

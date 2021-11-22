@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { AuthStore } from '~/store'
 import { PostWork } from '~/types'
@@ -21,23 +21,8 @@ export default class WorksForm extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
   isNew!: boolean
 
-  workData = {
-    title: '',
-    description: '',
-    community_id: '',
-    visibility: '',
-    thumbnail_asset_id: '',
-    assets_id: [],
-    urls: [],
-    tags_id: ['6337f6d5-500a-446d-a3ab-dcf438a00f9f'] // 仮置き
-  } as PostWork
-
-  created () {
-    if (this.isNew) {
-      return
-    }
-    // ここでaxiosでworksの内容からデータ取得
-  }
+  @VModel({ type: Object, required: true })
+  workData!: PostWork
 
   clickSubmit (visibility: string) {
     // バリデーションをクリアしたときのみ実行される
