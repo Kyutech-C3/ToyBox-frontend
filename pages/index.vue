@@ -2,17 +2,22 @@
   <div class="container">
     <div>
       <sample :sample="prop" />
+      <comment-list></comment-list>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import CommentItem from '~/components/CommentItem.vue'
+import CommentList from '~/components/CommentList.vue'
 import Sample from '~/components/Sample.vue'
 
 @Component({
   components: {
-    Sample
+    Sample,
+    CommentList,
+    CommentItem
   }
 })
 

@@ -11,11 +11,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import UserInfo from '@/components/UserInfo.vue'
+// import UserInfo from '@/components/UserInfo.vue'
 
 @Component({
   components: {
-    UserInfo
+    // UserInfo
   }
 })
 export default class Sample extends Vue {

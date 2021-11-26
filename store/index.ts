@@ -6,32 +6,32 @@ export * from '~/utils/store-accessor'
 
 
 export default () => (new Store<{
-  todos: string[]
+  comments: string[]
 }>({
   state: {
-    todos: []
+    comments: []
   },
   getters: {
-    getTodos (state) {
-      return state.todos
+    getComments (state) {
+      return state.comments
     }
   },
   mutations: {
-    ADD_TODO(state, newTodo: string) {
-      state.todos.push(newTodo)
+    ADD_COMMENTS(state, newComment: string) {
+      state.comments.push(newComment)
     },
-    DELETE_TODO(state, index: number) {
-      state.todos = state.todos.filter(function (_, i) {
+    DELETE_COMMENTS(state, index: number) {
+      state.comments = state.comments.filter(function (_, i) {
         return i !== index
       })
     }
   },
   actions: {
-    addTodo(context, t) {
-      context.commit('ADD_TODO', t)
+    addComment(context, t) {
+      context.commit('ADD_COMMENT', t)
     },
     deleteTodo(context, i) {
-      context.commit('DELETE_TODO', i)
+      context.commit('DELETE_COMMENT', i)
     }
   }
 }))
