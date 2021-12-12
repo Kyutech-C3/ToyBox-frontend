@@ -20,32 +20,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import axios from 'axios'
-
-axios.defaults.baseURL = process.env.SERVER_URL
+import { Component, Vue, VModel, Inject } from 'nuxt-property-decorator'
+import { Community } from '~/types'
 
 @Component
 export default class FormCommunity extends Vue {
   @VModel({ type: String })
   communityId!: string
 
-  communityList = []
-
-  created () {
-    axios.get('/communities')
-      .then((result) => {
-        if (result.data.length !== 0) {
-          this.communityList = result.data
-          console.log(this.communityList)
-        } else {
-          alert('コミュニティーが登録されていません。')
-        }
-      })
-      .catch((error) => {
-        alert(error)
-      })
-  }
+  @Inject() communityList!: Array<Community>
 }
 </script>
 

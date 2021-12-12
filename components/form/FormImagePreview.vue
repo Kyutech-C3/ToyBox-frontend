@@ -9,6 +9,7 @@ import { Vue, Prop, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class FormImagePreview extends Vue {
-  @Prop({ type: String, required: true }) imageURL!: string
+  @Prop({ type: String, required: true })
+  imageURL!: string
 }
 </script>

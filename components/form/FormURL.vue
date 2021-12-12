@@ -60,11 +60,15 @@ export default class FormURL extends Vue {
     if (!domain) { return ['fas', 'link'] }
 
     switch (domain) {
-      case 'github.com': return ['fab', 'github']
-      case 'www.youtube.com': return ['fab', 'youtube']
-      case 'youtu.be': return ['fab', 'youtube']
-      case 'twitter.com': return ['fab', 'twitter']
-      default: return ['fas', 'link']
+      case 'github.com':
+        return ['fab', 'github']
+      case 'www.youtube.com':
+      case 'youtu.be':
+        return ['fab', 'youtube']
+      case 'twitter.com':
+        return ['fab', 'twitter']
+      default:
+        return ['fas', 'link']
     }
   }
 }

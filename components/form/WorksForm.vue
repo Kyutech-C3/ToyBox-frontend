@@ -19,7 +19,7 @@ import { PostWork } from '~/types'
 @Component
 export default class WorksForm extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
-  isNew!: boolean
+  isNewWorks!: boolean
 
   @VModel({ type: Object, required: true })
   workData!: PostWork

@@ -1,6 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import axios from 'axios'
-axios.defaults.baseURL = process.env.SERVER_URL
 
 type User = {
   id: string,
