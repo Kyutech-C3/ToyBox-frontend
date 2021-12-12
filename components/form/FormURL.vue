@@ -49,7 +49,7 @@ export default class FormURL extends Vue {
   }
 
   deleteURL (number: number) {
-    this.urls = this.urls.filter((value, index) => {
+    this.urls = this.urls.filter((_, index) => {
       return number !== index
     })
   }

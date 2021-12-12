@@ -19,7 +19,7 @@ export default class FormAssets extends Vue {
   assetImage!: string[]
 
   deleteAsset (number: number) {
-    this.assetImage = this.assetImage.filter((value, index) => {
+    this.assetImage = this.assetImage.filter((_, index) => {
       return number !== index
     })
   }
