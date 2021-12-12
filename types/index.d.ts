@@ -34,9 +34,11 @@ export type PostWork = {
   title: string
   description: string
   community_id: string
-  github_url?: string
-  work_url?: string
-  private: boolean
+  visibility: string
+  thumbnail_asset_id: string
+  assets_id: string[]
+  urls: BaseURL[],
+  tags_id: string[]
 }
 
 export type PutTag = {
@@ -102,4 +104,9 @@ export type Work = {
   private: boolean
   created_at: string
   updated_at: string
+}
+
+export type BaseURL = {
+  url: string
+  url_type: string
 }
