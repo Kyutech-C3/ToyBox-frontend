@@ -28,10 +28,10 @@ export default () => (new Store<{
   },
   actions: {
     addComment(context, t) {
-      context.commit('ADD_COMMENT', t)
+      context.commit('ADD_COMMENTS', t)
     },
-    deleteTodo(context, i) {
-      context.commit('DELETE_COMMENT', i)
+    deleteComment(context, i) {
+      context.commit('DELETE_COMMENTS', i)
     }
   }
 }))

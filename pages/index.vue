@@ -2,7 +2,6 @@
   <div class="container">
     <div>
       <sample :sample="prop" />
-      <comment-list></comment-list>
     </div>
   </div>
 </template>

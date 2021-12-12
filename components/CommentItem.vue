@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div class="font-light rounded-full px-2 shadow-xl font-normal border-white border-2">{{name}}</div>
-    <button class="border-white border-2 rounded-full px-2 shadow-xl ml-12 "  @click="commentDelete">
-      削除
-    </button>
+    <div class="pl-3 pb-1 border-b-2 border-dotted">
+      <div class="inline-block">
+        {{name}}
+      </div>
+      <button class="ml-6"  @click="commentDelete">
+        <img  src="../assets/img/commentDelete.png">
+      </button>
+    </div>
   </div>
 </template>
 
