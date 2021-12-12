@@ -21,13 +21,17 @@ import { Component, VModel, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { AuthStore } from '~/store'
 
+interface Event<T = EventTarget> {
+  target: T;
+}
+
 @Component
 export default class FromThumbnail extends Vue {
   @VModel({ type: Array })
   assetImage!: string[]
 
-  onFilePicked (e:any) {
-    const file = (e.target.files || e.dataTransfer.files)
+  onFilePicked (event: Event<HTMLInputElement>) {
+    const file = event.target.files as FileList
     if (file.length !== 0) {
       // 本番環境では何らかのサービスに画像を保存する
       const params = new FormData()
