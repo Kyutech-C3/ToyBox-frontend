@@ -1,42 +1,37 @@
 <template>
-  <footer 
-    class="
-      py-20
-      text-center
-      justify-around
-      border-solid border-2 border-gray-200
-      flex
-      w-full
-    "
-  >
-    <div 
-      class="
-        grid
-        justify-start
-        absolute
-        left-10
-      "
-    >
-      <nuxt-link 
-        to="/"
-        class="
-          hover:opacity-50
-          transition
-        "
-      >
-        <div
+  <footer class="
+    py-8
+    text-center
+    border-solid border-2 border-gray-200
+    w-full
+    justify-center
+  ">
+    <div class="
+      grid
+      text-left
+      px-5
+      relative
+      top-4
+      w-96
+      h-4
+    ">
+      <nuxt-link class="inline-flex" to="/">
+        <img 
+          src="../assets/image/ToyBoxlogo.png"
           class="
-            text-5xl
-            text-gray-600
+            hover:opacity-50
+            transition
+            inline
           "
         >
-          ToyBoxLogo
-        </div>
       </nuxt-link>
-      <small class="m-2">
+      <div class="
+        inline-flex
+      ">
         © C3 2021 - {{ date }}
-      </small>
+      </div>
     </div>
+    <div class="justify-center">
     <ul 
       class="
         justify-center
@@ -52,6 +47,8 @@
               transition
               w-12
               h-12
+              my-5
+              align-bottom
             "
           >
         </a>
@@ -66,6 +63,7 @@
               text-3xl
               w-10
               h-10
+              my-5
             "
           /> 
         </a>
@@ -80,11 +78,13 @@
               text-3xl
               w-10
               h-10
+              my-5
             "
           />
         </a>
       </li>
     </ul>
+    </div>
   </footer>
 </template>
 
