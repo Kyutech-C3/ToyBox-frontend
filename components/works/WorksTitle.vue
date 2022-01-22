@@ -1,25 +1,37 @@
 <template>
   <div>
     <p class="font-light text-gray-400">
-      2021/12/24 12:00
+      {{ date.replace("T", " ").split(".")[0] }}
     </p>
     <p class="text-3xl">
-      ToyBox Frontend
+      {{ title }}
     </p>
     <div class="inline-flex items-center mt-5">
-      <img class="border rounded-full w-10 h-10 border-gray-400" src="http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png" alt="">
+      <img
+        class="border rounded-full w-10 h-10 border-gray-400"
+        :src="user.avatar_url"
+        alt="userImage"
+      >
       <p class="ml-3">
-        ハムタロサァン
+        {{ user.display_name }}
       </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { User } from '~/types'
 
 @Component
 export default class WorksTitle extends Vue {
+  @Prop({ type: String, required: false, default: '' })
+  date!: string;
 
+  @Prop({ type: String, required: false, default: '' })
+  title!: string;
+
+  @Prop({ type: Object, required: false, default: '' })
+  user!: User;
 }
 </script>

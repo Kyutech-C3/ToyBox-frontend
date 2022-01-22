@@ -33,7 +33,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     '@nuxtjs/style-resources',
-     '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -43,7 +43,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseUrl: process.env.API_URL
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -64,7 +66,7 @@ export default {
   },
   env: {
     AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
-    SERVER_URL: process.env.SERVER_URL
+    API_URL: process.env.API_URL
   },
   ssr: false,
 

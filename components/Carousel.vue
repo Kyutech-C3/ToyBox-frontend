@@ -1,22 +1,29 @@
 <template>
-  <hooper :settings="hooperSettings">
-    <slide>
-      <div class="bg-red-500 h-full" />
-    </slide>
-    <slide>
-      <div class="bg-yellow-300 h-full" />
-    </slide>
-    <slide>
-      <div class="bg-green-400 h-full" />
-    </slide>
-    <slide>
-      <div class="bg-blue-500 h-full" />
-    </slide>
-    <slide>
-      <div class="bg-indigo-300 h-full" />
-    </slide>
-    <slide>
-      <div class="bg-pink-200 h-full" />
+  <hooper :settings="hooperSettings" class="bg-blue-200">
+    <slide v-for="asset in assets" :key="asset.id" class="flex justify-center items-center">
+      <img
+        v-if="asset.asset_type === 'image'"
+        class="m-auto h-full"
+        :src="`https://kodomobeya.compositecomputer.club/static/image/${asset.id}/origin.png`"
+        alt="asset image"
+      >
+      <video v-else-if="asset.asset_type === 'video'" controls>
+        <source
+          :src="`https://kodomobeya.compositecomputer.club/static/video/${asset.id}/origin.mp4`"
+          type="video/mp4"
+        >
+        Sorry, your browser doesn't support embedded videos.
+      </video>
+      <audio
+        v-else-if="asset.asset_type === 'music'"
+        controls
+        :src="`https://kodomobeya.compositecomputer.club/static/music/${asset.id}/origin.mp3`"
+      >
+        Your browser does not support the <code>audio</code> element.
+      </audio>
+      <div v-else>
+        {{ asset.asset_type }} file is not supported.
+      </div>
     </slide>
     <hooper-pagination slot="hooper-addons" />
     <hooper-navigation slot="hooper-addons" />
@@ -24,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import {
   Hooper,
   Slide,
@@ -42,6 +49,9 @@ import 'hooper/dist/hooper.css'
   }
 })
 export default class Carousel extends Vue {
+  @Prop({ type: Array, required: true })
+  assets!: Object
+
   hooperSettings: any = {
     infiniteScroll: true,
     centerMode: true,

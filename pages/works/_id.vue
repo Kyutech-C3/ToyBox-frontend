@@ -1,46 +1,52 @@
 <template>
   <div class="w-8/12 m-auto">
-    <carousel class="border border-gray-700" />
+    <carousel class="border border-gray-700" :assets="work.assets" />
     <div class="flex justify-between mt-5">
-      <works-title />
+      <works-title :date="work.updated_at" :title="work.title" :user="work.user" />
       <works-view-info />
     </div>
     <!-- コミュニティー -->
     <works-content class="mt-8" icon="users">
       <p class="border border-gray-500 rounded-lg text-center px-6 mx-3">
-        Hack
+        {{ work.community.name }}
       </p>
     </works-content>
     <!-- タグ -->
     <works-content class="mt-5" icon="tags">
-      <p class="border border-gray-500 rounded-lg text-center px-6 mx-3">
-        Nuxt.js
-      </p>
-      <p class="border border-gray-500 rounded-lg text-center px-6 mx-3">
-        TypeScript
+      <p
+        v-for="tag in work.tags"
+        :key="tag.id"
+        class="border border-gray-500 rounded-lg text-center px-6 mx-3"
+      >
+        {{ tag.name }}
       </p>
     </works-content>
     <!-- URL -->
     <works-content class="mt-8" icon="link">
-      <a class="mx-3 hover:text-blue-600 hover:underline" href="https://google.com" target="_blank">
-        google.com
+      <a
+        v-for="url in work.urls"
+        :key="url.id"
+        class="mx-3 hover:text-blue-600 hover:underline"
+        :href="url.url"
+        target="_blank"
+      >
+        {{ url.url.split('/')[2] }}
       </a>
     </works-content>
     <!-- ダウンロード -->
     <works-content class="mt-5" icon="download">
-      <custom-button class="mx-3" title="hogefuga.zip" />
-      <custom-button class="mx-3" title="foobar.mp3" />
+      <div v-for="asset in work.assets" :key="asset.id">
+        <custom-button
+          v-if="asset.asset_type === ('zip' || 'model')"
+          class="mx-3"
+          :title="asset.asset_type"
+          @click="download(asset.asset_type, asset.id)"
+        />
+      </div>
     </works-content>
     <!-- 説明 -->
-    <div class="mt-10">
-      Toyboxは、組込みシステム向けのいくつかのUNIXのコマンドラインユーティリティの代替として設計されたフリーでオープンソースのソフトウェアある。<br>
-      Toyboxにはls、cp、mvなど約150のコマンドを含んでいる。<br>
-      プロジェクトは2006年に始められ、BSDライセンスで提供されるBusyBoxの代替物となっている。<br>
-      Android 6.0とそれ以降の全てのAndroidのバージョンに含まれ、他のOSへのインストールもサポートされている。<br><br>
-      Toyboxは、GNU GPLライセンスで提供されるBusyBoxをBSDライセンスで置き換える事を目的としている。<br>
-      その技術的なデザインのゴールは、単純で小型、高速、そして標準への準拠である。<br>
-      仕様はPOSIX-2008とLSB 4.1に適合しているが、GNUのコンポーネントにある全てのオプションを提供することには注力していない。
-    </div>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div class="mt-10" v-html="work.description_html" />
     <!-- コメント部分のコンポーネントをここに入れる -->
   </div>
 </template>
@@ -51,6 +57,9 @@ import Carousel from '@/components/Carousel.vue'
 import WorksTitle from '@/components/works/WorksTitle.vue'
 import WorksViewInfo from '@/components/works/WorksViewInfo.vue'
 import CustomButton from '@/components/ToyboxButton.vue'
+import axios from 'axios'
+import { Work } from '@/types'
+import { saveAs } from 'file-saver'
 
 @Component({
   components: {
@@ -58,9 +67,24 @@ import CustomButton from '@/components/ToyboxButton.vue'
     WorksTitle,
     WorksViewInfo,
     CustomButton
+  },
+  async asyncData ({ route }) {
+    const response = await axios.get(`https://kodomobeya.compositecomputer.club/api/v1/works/${route.params.id}`)
+    return { work: response.data }
   }
 })
 export default class Works extends Vue {
+  work!: Work
 
+  mounted () {
+    console.log(JSON.stringify(this.work, null, 2))
+  }
+
+  async download (type: string, id: string) {
+    const url = `https://kodomobeya.compositecomputer.club/${type}/${id}/origin.zip`
+    const data = await fetch(url)
+    const blob = await data.blob()
+    saveAs(blob, 'origin.zip')
+  }
 }
 </script>

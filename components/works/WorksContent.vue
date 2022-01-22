@@ -5,12 +5,12 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class WorksContent extends Vue {
   @Prop({ type: String, required: true })
-  icon!: string
+  icon!: string;
 }
 </script>
