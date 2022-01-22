@@ -1,7 +1,7 @@
 <template>
   <header 
     class="
-      py-5
+      py-3
       text-center
       justify-around
       border-solid border-2 border-gray-200
@@ -28,7 +28,7 @@
             text-gray-600
           "
         >
-          ToyBoxLogo
+          <img src="../assets/image/ToyBoxlogo.png">
         </div>
       </nuxt-link>
       <div 
@@ -37,11 +37,18 @@
           justify-start
           absolute
           right-10
+          h-auto
         "
       >
         <button
           class="
+            py-2
+            px-5
+            my-3
+            rounded-xl
             hover:opacity-50
+            transition
+            border-solid border-2 border-gray-200
           "
           @click="clickLogin"
           v-if="!nowLogin"
@@ -56,6 +63,8 @@
             rounded-full
             w-12
             h-12
+            my-3
+            cursor-pointer
           "
         >
       </div>
