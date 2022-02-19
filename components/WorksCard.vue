@@ -1,5 +1,5 @@
 <template>
-  <div class="h-80 border border-gray-300 rounded-3xl shadow-md">
+  <div class="h-80 border border-gray-300 rounded-3xl shadow-md cursor-pointer">
     <div class="h-1/2 border-b">
       <img class="h-full m-auto" :src="image" />
     </div>
@@ -25,7 +25,7 @@
         <div
           v-for="(user, index) in users"
           :key="index"
-          class="flex items-center mx-1"
+          class="flex items-center mx-1 cursor-pointer"
         >
           <img
             class="w-8 border border-gray-500 rounded-full"
