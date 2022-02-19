@@ -1,5 +1,5 @@
 <template>
-  <div class="h-80 border-2 border-gray-400 rounded-3xl">
+  <div class="h-80 border border-gray-300 rounded-3xl shadow-md">
     <div class="h-1/2 border-b">
       <img class="h-full m-auto" :src="image" />
     </div>

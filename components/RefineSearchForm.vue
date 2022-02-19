@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-gray-400 rounded-3xl px-10 py-5">
+  <div class="border border-gray-300 rounded-3xl px-10 py-5">
     <div>絞り込み</div>
     <div class="flex items-center my-3">
       <font-awesome-icon class="w-7" :icon="['fas', 'users']" />
