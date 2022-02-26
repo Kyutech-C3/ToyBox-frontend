@@ -6,12 +6,12 @@
       <span class="mx-3">コミュニティ</span>
       <div class="w-0.5 h-7 mx-7 border border-gray-500" />
       <tag
-        v-for="(community, index) in communities"
+        v-for="(community, index) in communityList"
         :key="index"
-        :tagText="community"
-        class="mx-1.5 px-5 py-0.5 cursor-pointer"
-        :class="{ 'bg-gray-400': select === index }"
-        @click="selecting(community)"
+        :tag-text="community.name"
+        class="mx-1.5 px-5 py-0.5 cursor-pointer bg-white transform transition-colors border-gray-400 hover:border-gray-600 select-none"
+        :class="{'bg-blue-100': Object.values($route.query).includes(community.name)}"
+        @click.native="selectingCommunities(community.name)"
       />
     </div>
     <div class="flex items-center my-3">
@@ -21,8 +21,8 @@
       <tag
         v-for="(tag, index) in tags"
         :key="index"
-        :tagText="tag"
-        class="mx-1.5 px-5 py-0.5 cursor-pointer"
+        :tag-text="tag"
+        class="mx-1.5 px-5 py-0.5 cursor-pointer border-gray-400 hover:border-gray-600 select-none"
       />
       <font-awesome-icon
         class="w-7 cursor-pointer mx-2"
@@ -33,22 +33,45 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
-import Tag from "@/components/Tag.vue";
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Community } from '@/types'
+import Tag from '@/components/Tag.vue'
 
 @Component({
   components: {
-    Tag,
-  },
+    Tag
+  }
 })
 export default class RefineSearchForm extends Vue {
-  communities = ["Hack", "CG", "Game", "Media_art"] as Array<string>;
-  tags = ["tag1", "tag2", "tag3", "tag4", "tag5"] as Array<string>;
-  selects = [] as Array<number>;
+  @Prop({ type: Array, required: true })
+  communityList!: Array<Community>
+
+  communities = ['Hack', 'CG', 'Game', 'Media_art'] as Array<string>;
+  tags = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'] as Array<string>;
+  selectCommunityNum = 0 as number;
   select = -1 as number;
 
-  selecting(index: number) {
-    this.select = index;
+  selectingCommunities (index: string) {
+    if (Object.keys(this.$route.query).length === 0) {
+      this.selectCommunityNum = 1
+      this.$router.push(`${this.$route.fullPath}?c1=${index}`)
+    } else if (Object.values(this.$route.query).includes(index)) {
+      const newQuery = Object.values(this.$route.query).filter(item => (String(item).match(index)) === null)
+      let url = '/works?'
+      let queryNum = 1
+      newQuery.forEach((i) => {
+        if (queryNum >= 2) {
+          url += '&'
+        }
+        url += `c${queryNum}=${i}`
+        queryNum++
+        this.selectCommunityNum = queryNum - 1
+      })
+      this.$router.push(url)
+    } else {
+      this.selectCommunityNum += 1
+      this.$router.push(`${this.$route.fullPath}&c${this.selectCommunityNum}=${index}`)
+    }
   }
 }
 </script>

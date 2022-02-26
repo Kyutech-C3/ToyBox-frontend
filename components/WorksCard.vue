@@ -1,28 +1,46 @@
 <template>
-  <div class="h-80 border border-gray-300 rounded-3xl shadow-md cursor-pointer">
+  <nuxt-link :to="'works/' + WorkData.id" class="h-80 border border-gray-300 rounded-3xl shadow-md cursor-pointer hover:scale-105 hover:shadow-lg transform transition">
     <div class="h-1/2 border-b">
-      <img class="h-full m-auto" :src="image" />
+      <img class="h-full m-auto" :src="WorkData.thumbnail.length === 1 ? 'https://kodomobeya.compositecomputer.club/static/image/' + WorkData.thumbnail[0].id + '/origin.jpg' : 'https://avatars.githubusercontent.com/u/61457046'">
     </div>
-    <div class="h-1/2 p-3">
+    <div class="h-1/2 py-3 px-2.5">
       <div class="mx-auto w-min">
         <div class="text-center text-xl w-max">
-          {{ name }}
+          {{ WorkData.title }}
         </div>
         <div class="w-11/12 mx-auto my-0.5 border border-blue-500" />
       </div>
-      <div class="flex justify-center my-2">
+      <div class="flex justify-center mt-2">
         <tag
-          v-for="(tag, index) in tags"
-          :tagText="tag"
+          v-for="(tag, index) in WorkData.tags"
           :key="index"
-          class="px-3 py-0.5 mx-1"
+          :tag-text="tag.name"
+          class="px-2.5 py-0 mx-1 border-gray-300 text-gray-500"
         />
+        <div v-if="WorkData.tags.length === 0" class="h-6 py-0.5" />
       </div>
-      <div class="text-right mt-2">
-        {{ date }}
+      <div class="text-right mt-2 mr-2 text-sm">
+        {{ dateFormatter(WorkData.updated_at) }}
       </div>
       <div class="my-0 flex">
-        <div
+        <nuxt-link
+          :to="'user/' + WorkData.user.id"
+          class="flex items-center mx-1 cursor-pointer group hover:bg-gray-100 rounded-full p-1"
+        >
+          <img
+            class="w-8 border border-gray-400 group-hover:border-blue-500 rounded-full"
+            :src="WorkData.user.avatar_url"
+            alt=""
+            onerror="this.src='/alt.svg'; this.removeAttribute('onerror'); this.removeAttribute('onload');"
+            onload="this.removeAttribute('onerror'); this.removeAttribute('onload');"
+          >
+          <div class="ml-1.5 mr-2">
+            {{ WorkData.user.name }}
+          </div>
+        </nuxt-link>
+      </div>
+      <!-- バックエンドが複数ユーザーに対応するまでコメントアウト -->
+      <!-- <div
           v-for="(user, index) in users"
           :key="index"
           class="flex items-center mx-1 cursor-pointer"
@@ -31,61 +49,46 @@
             class="w-8 border border-gray-500 rounded-full"
             :src="user.image"
             alt=""
-          />
+          >
           <div v-if="users.length === 1" class="ml-1.5">
             {{ user.name }}
           </div>
-        </div>
-      </div>
+        </div> -->
     </div>
-  </div>
+  </nuxt-link>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "nuxt-property-decorator";
-import Tag from "@/components/Tag.vue";
-
-interface Users {
-  image: string;
-  name: string;
-}
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Tag from '@/components/Tag.vue'
+import { Work } from '~/types'
 
 @Component({
   components: {
-    Tag,
-  },
+    Tag
+  }
 })
 export default class WorksCard extends Vue {
-  @Prop({ type: String, required: true })
-  image: string =
-    "https://1.bp.blogspot.com/-OnSHKvYNcv4/XSGF5lk32TI/AAAAAAABTk4/acb-SM9CPBkQahuhNItcpNA2dsnhH0AiwCLcBGAs/s400/vr_game_mother_boy.png";
+  @Prop({ type: Object, required: true })
+  WorkData!: Work
 
-  @Prop({ type: String, required: true })
-  name: string = "作品名";
-
-  @Prop({ type: String, required: true })
-  tags: Array<string> = ["tag1", "tag2"];
-
-  @Prop({ type: String, required: true })
-  date: string = "2021/10/31";
-
-  @Prop({ type: Array, required: true })
-  users: Users[] = [
-    {
-      image:
-        "https://3.bp.blogspot.com/-2VIWJTc7MBs/VCIiteBs3wI/AAAAAAAAmec/BkjJno4Qh5U/s170/animal_buta.png",
-      name: "ぶたさん",
-    },
-    {
-      image:
-        "https://3.bp.blogspot.com/-2VIWJTc7MBs/VCIiteBs3wI/AAAAAAAAmec/BkjJno4Qh5U/s170/animal_buta.png",
-      name: "ぶたさん",
-    },
-    {
-      image:
-        "https://3.bp.blogspot.com/-2VIWJTc7MBs/VCIiteBs3wI/AAAAAAAAmec/BkjJno4Qh5U/s170/animal_buta.png",
-      name: "ぶたさん",
-    },
-  ];
+  dateFormatter (date: string) {
+    const nowDate: Date = new Date()
+    const dateDate: Date = new Date(date)
+    const diffTime: Number = (Number(nowDate) - Number(dateDate)) / 1000
+    if (Number(diffTime) < 60) {
+      return `${Math.trunc(Number(diffTime))}秒前`
+    } else if (Number(diffTime) < 3600) {
+      return `${Math.trunc(Number(diffTime) / 60)}分前`
+    } else if (Number(diffTime) < 86400) {
+      return `${Math.trunc(Number(diffTime) / 60 / 60)}時間前`
+    } else if (Number(diffTime) < 604800) {
+      return `${Math.trunc(Number(diffTime) / 60 / 60 / 24)}日前`
+    } else if (Number(diffTime) < 31536000) {
+      return `${dateDate.getMonth() + 1}月${dateDate.getDate()}日`
+    } else {
+      return `${dateDate.getFullYear()}年${dateDate.getMonth() + 1}月${dateDate.getDate()}日`
+    }
+  }
 }
 </script>
