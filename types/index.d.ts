@@ -140,7 +140,7 @@ export type Work = {
   urls: UrlInfo[]
   visibility: string
   tags: GetTag[]
-  thumbnail?: Asset
+  thumbnail?: Asset[]
   created_at: string
   updated_at: string
 }
