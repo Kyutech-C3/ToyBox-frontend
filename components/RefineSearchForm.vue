@@ -46,10 +46,8 @@ export default class RefineSearchForm extends Vue {
   @Prop({ type: Array, required: true })
   communityList!: Array<Community>
 
-  communities = ['Hack', 'CG', 'Game', 'Media_art'] as Array<string>;
-  tags = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'] as Array<string>;
-  selectCommunityNum = 0 as number;
-  select = -1 as number;
+  tags: Array<string> = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
+  selectCommunityNum: number = 0;
 
   selectingCommunities (index: string) {
     if (Object.keys(this.$route.query).length === 0) {
