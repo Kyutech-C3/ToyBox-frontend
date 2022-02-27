@@ -12,12 +12,13 @@
     <div class="justify-center flex">
       <nuxt-link to="/" class="hover:opacity-50 transition">
         <div class="text-4xl text-gray-600">
-          <img src="../assets/image/ToyBoxlogo.png" />
+          <img src="../assets/image/ToyBoxlogo.png">
         </div>
       </nuxt-link>
       <div class="grid justify-start absolute right-10 h-auto">
         <!-- not logged in  -->
         <button
+          v-if="!nowLogin"
           class="
             py-2
             px-5
@@ -28,15 +29,14 @@
             border-solid border-2 border-gray-200
           "
           @click="clickLogin"
-          v-if="!nowLogin"
         >
           sign in
         </button>
         <!-- logged in -->
         <button class="hover:opacity-60 transition" @click="activeNav = true">
           <img
-            :src="getIcon"
             v-if="nowLogin"
+            :src="getIcon"
             class="
               rounded-full
               w-12
@@ -45,11 +45,12 @@
               cursor-pointer
               pointer-events-none
             "
-          />
+          >
         </button>
       </div>
       <!-- navigation -->
       <div
+        v-if="activeNav"
         class="
           shadow-2xl
           rounded
@@ -62,13 +63,12 @@
           opacity-90
           z-50
         "
-        v-if="activeNav"
       >
         <!-- icon -->
         <img
           :src="getIcon"
           class="rounded-full w-16 h-16 mx-auto my-1 pointer-events-none"
-        />
+        >
         <!-- name -->
         <div class="text-gray-200">
           {{ getName }}
@@ -117,48 +117,48 @@
       </div>
     </div>
     <div
-      class="fixed w-full h-full z-40"
       v-if="activeNav"
+      class="fixed w-full h-full z-40"
       @click="activeNav = !activeNav"
-    ></div>
+    />
   </header>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { AuthStore } from "~/store";
+import Vue from 'vue'
+import { AuthStore } from '~/store'
 
 export default Vue.extend({
   components: {},
-  data(): {
+  data (): {
     activeNav: Boolean;
-  } {
+    } {
     return {
-      activeNav: false,
-    };
+      activeNav: false
+    }
   },
   computed: {
-    nowLogin() {
-      return AuthStore.nowLogin;
+    nowLogin () {
+      return AuthStore.nowLogin
     },
-    getIcon() {
-      return AuthStore.getUser.avatarUrl;
+    getIcon () {
+      return AuthStore.getUser.avatarUrl
     },
-    getName() {
-      return AuthStore.getUser.name;
+    getName () {
+      return AuthStore.getUser.name
     },
-    getEmail() {
-      return AuthStore.getUser.email;
-    },
+    getEmail () {
+      return AuthStore.getUser.email
+    }
   },
   methods: {
-    clickLogin() {
-      AuthStore.authDiscord();
+    clickLogin () {
+      AuthStore.authDiscord()
     },
-    clickLogout() {
-      localStorage.removeItem("refresh_token");
-      location.reload();
-    },
-  },
-});
+    clickLogout () {
+      localStorage.removeItem('refresh_token')
+      location.reload()
+    }
+  }
+})
 </script>
