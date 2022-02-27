@@ -1,12 +1,6 @@
 <template>
   <footer
-    class="
-      py-8
-      text-center
-      border-solid border-2 border-gray-200
-      w-full
-      justify-center
-    "
+    class="py-8 text-center border-solid border-2 border-gray-200 w-full justify-center"
   >
     <div class="grid text-left px-5 w-96 h-4">
       <nuxt-link to="/">
@@ -52,16 +46,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default Vue.extend({
-  components: {},
-  data(): {
-    date: string;
-  } {
-    return {
-      date: "2022",
-    };
-  },
-});
+@Component
+export default class WorksCard extends Vue {
+  date: number = new Date().getFullYear()
+}
 </script>

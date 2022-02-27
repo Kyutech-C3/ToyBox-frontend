@@ -1,6 +1,9 @@
 <template>
   <div class="w-192 mx-auto">
-    <refine-search-form :community-list="communityList" class="w-11/12 mx-auto my-16" />
+    <refine-search-form
+      :community-list="communityList"
+      class="w-11/12 mx-auto mb-16"
+    />
     <work-list :work-list="workList" />
   </div>
 </template>
@@ -17,7 +20,7 @@ import { Work } from '~/types'
     RefineSearchForm,
     WorkList
   },
-  async asyncData () {
+  async asyncData() {
     const resWorks = await axios.get('/works')
     if (resWorks.data.length === 0) {
       alert('作品がありません')
@@ -36,6 +39,6 @@ import { Work } from '~/types'
   }
 })
 export default class WorkIndex extends Vue {
-  workList!: Array<Work>;
+  workList!: Array<Work>
 }
 </script>
