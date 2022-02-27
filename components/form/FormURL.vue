@@ -33,19 +33,19 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import { BaseURL } from '~/types'
+import { UrlInfo } from '~/types'
 
 @Component
 export default class FormURL extends Vue {
   @VModel({ type: Array })
-  urls!: BaseURL[]
+  urls!: UrlInfo[]
 
   get count () {
     return `URL ${this.urls.length}/5`
   }
 
   addURL () {
-    this.urls.push({ url: '', url_type: 'other' })
+    this.urls.push({ url: '', url_type: 'other', id: '', user: { id: '', name: '', email: '', display_name: '', created_at: '', updated_at: '' }, created_at: '', updated_at: '' })
   }
 
   deleteURL (number: number) {

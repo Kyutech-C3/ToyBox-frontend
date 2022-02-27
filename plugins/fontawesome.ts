@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import { library, config } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Vue from "vue";
+import { library, config } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // 1. 利用したいアイコンを以下にてimportする
 import {
@@ -11,21 +11,21 @@ import {
   faLock,
   faUpload,
   faCheck,
-  faLink
-} from '@fortawesome/free-solid-svg-icons'
+  faLink,
+  faUsers,
+  faTags,
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   faYoutube,
   faTwitter,
-  faGithub
-} from '@fortawesome/free-brands-svg-icons'
+  faGithub,
+} from "@fortawesome/free-brands-svg-icons";
 
-import {
-  faHeart,
-  faSave
-} from '@fortawesome/free-regular-svg-icons'
+import { faHeart, faSave } from "@fortawesome/free-regular-svg-icons";
 
-config.autoAddCss = false
+config.autoAddCss = false;
 
 // 2. 利用したいアイコンを以下にてlibrary.addする
 library.add(
@@ -41,10 +41,13 @@ library.add(
   faSave,
   faCheck,
   faLink,
-  faGithub
-)
+  faGithub,
+  faUsers,
+  faTags,
+  faPlusCircle
+);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 /**
  * <!-- 利用 -->
