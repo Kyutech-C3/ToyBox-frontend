@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // 1. 利用したいアイコンを以下にてimportする
 import {
+  faDownload,
   faHeart as faSolidHeart,
   faPlus,
   faTimes,
@@ -33,6 +34,7 @@ library.add(
   faHeart,
   faSolidHeart,
   faTwitter,
+  faDownload,
   faPlus,
   faTimes,
   faCaretUp,
