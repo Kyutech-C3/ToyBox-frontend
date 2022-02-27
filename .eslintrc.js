@@ -16,6 +16,16 @@ module.exports = {
         after: true
       }
     ],
+    indent: [
+      'error',
+      2,
+      {
+        ignoredNodes: [
+          'ClassBody.body > PropertyDefinition[decorators.length > 0] > .key'
+        ],
+        SwitchCase: 1
+      }
+    ],
     'comma-dangle': ['error', 'never'],
     semi: ['error', 'never'],
     quotes: [2, 'single'],
