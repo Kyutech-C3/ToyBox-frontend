@@ -17,12 +17,15 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/css/tailwind.css'
+    '~/assets/css/tailwind.css',
+    'github-markdown-css',
+    '~/assets/css/markdown.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/fontawesome.ts'
+    '~/plugins/fontawesome.ts',
+    { src: '~plugins/mavonEditor.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,7 +47,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.API_URL
+    baseURL: process.env.API_URL
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

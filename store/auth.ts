@@ -1,6 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import axios from 'axios'
-axios.defaults.baseURL = process.env.SERVER_URL
+
+axios.defaults.baseURL = process.env.API_URL
 
 type User = {
   id: string,
@@ -38,6 +39,10 @@ export default class Auth extends VuexModule {
 
   public get nowLogin (): Boolean {
     return this.user.id !== ''
+  }
+
+  public get getAccessToken (): String {
+    return this.accessToken
   }
 
   @Mutation setUser (user: any) {
