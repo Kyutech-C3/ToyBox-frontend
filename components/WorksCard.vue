@@ -74,20 +74,20 @@ export default class WorksCard extends Vue {
 
   dateFormatter (date: string) {
     const nowDate: Date = new Date()
-    const dateDate: Date = new Date(date)
-    const diffTime: Number = (Number(nowDate) - Number(dateDate)) / 1000
-    if (Number(diffTime) < 60) {
-      return `${Math.trunc(Number(diffTime))}秒前`
-    } else if (Number(diffTime) < 3600) {
-      return `${Math.trunc(Number(diffTime) / 60)}分前`
-    } else if (Number(diffTime) < 86400) {
-      return `${Math.trunc(Number(diffTime) / 60 / 60)}時間前`
-    } else if (Number(diffTime) < 604800) {
-      return `${Math.trunc(Number(diffTime) / 60 / 60 / 24)}日前`
-    } else if (Number(diffTime) < 31536000) {
-      return `${dateDate.getMonth() + 1}月${dateDate.getDate()}日`
+    const postDate: Date = new Date(date)
+    const diffTime: number = (Number(nowDate) - Number(postDate)) / 1000
+    if (diffTime < 60) {
+      return `${Math.trunc(diffTime)}秒前`
+    } else if (diffTime < 3600) {
+      return `${Math.trunc(diffTime / 60)}分前`
+    } else if (diffTime < 86400) {
+      return `${Math.trunc(diffTime / 60 / 60)}時間前`
+    } else if (diffTime < 604800) {
+      return `${Math.trunc(diffTime / 60 / 60 / 24)}日前`
+    } else if (diffTime < 31536000) {
+      return `${postDate.getMonth() + 1}月${postDate.getDate()}日`
     } else {
-      return `${dateDate.getFullYear()}年${dateDate.getMonth() + 1}月${dateDate.getDate()}日`
+      return `${postDate.getFullYear()}年${postDate.getMonth() + 1}月${postDate.getDate()}日`
     }
   }
 }
