@@ -73,5 +73,11 @@ export default {
 
   router: {
     middleware: 'auth'
+  },
+
+  watchers: {
+    webpack: {
+      ignored: /.git/
+    }
   }
 }
