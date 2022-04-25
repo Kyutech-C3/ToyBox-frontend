@@ -59,9 +59,9 @@
         <!-- my profile link -->
         <nuxt-link
           class="grid py-1 px-2 my-3 mx-auto rounded hover:text-white hover:underline text-gray-200"
-          :to="menuItem.to"
+          :to="`users/${getUserId}${index === 0 ? '/draft' : ''}`"
         >
-          {{ menuItem.title }}
+          {{ menuItem }}
         </nuxt-link>
       </div>
       <div class="border-solid border-b border-gray-200 w-10/12 my-1 mx-auto" />
@@ -83,34 +83,39 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { AuthStore } from '~/store'
+import { authStore } from '@/store'
 
 @Component
 export default class Header extends Vue {
   activeNav: Boolean = false
-  menuItems: Array<Object> = [
-    { title: '下書き', to: `users/${AuthStore.getUser.id}/draft` },
-    { title: 'マイページ', to: `users/${AuthStore.getUser.id}` }
-  ]
+  menuItems: string[] = ['下書き', 'マイページ']
 
   get nowLogin() {
-    return AuthStore.nowLogin
+    return false
   }
 
   get getIcon() {
-    return AuthStore.getUser.avatarUrl
+    return authStore.getUser.avatarUrl
   }
 
   get getName() {
-    return AuthStore.getUser.name
+    return authStore.getUser.name
   }
 
   get getEmail() {
-    return AuthStore.getUser.email
+    return authStore.getUser.email
+  }
+
+  get getUserId() {
+    return authStore.getUser.id
+  }
+
+  mounted() {
+    console.log(authStore)
   }
 
   clickLogin() {
-    AuthStore.authDiscord()
+    authStore.authDiscord()
   }
 
   clickLogout() {

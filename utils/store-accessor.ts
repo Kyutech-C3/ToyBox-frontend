@@ -1,11 +1,14 @@
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import Auth from '~/store/auth'
+import Auth from '@/store/auth'
+import Comment from '@/store/comment'
 
-// eslint-disable-next-line import/no-mutable-exports
-let AuthStore: Auth
+let authStore: Auth
+let commentStore: Comment
+
 function initializeStores(store: Store<any>): void {
-  AuthStore = getModule(Auth, store)
+  authStore = getModule(Auth, store)
+  commentStore = getModule(Comment, store)
 }
 
-export { initializeStores, AuthStore }
+export { initializeStores, authStore, commentStore }

@@ -22,35 +22,30 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'nuxt-property-decorator'
 import CommentItem from '@/components/CommentItem.vue'
+import { commentStore } from '@/store'
 
-export default Vue.extend({
-  data(): {
-    comment: string
-  } {
-    return {
-      comment: ''
-    }
-  },
+@Component({
   components: {
     CommentItem
-  },
-  computed: {
-    getterComments() {
-      var getcomment = this.$store.getters.getComments
-      console.log(getcomment)
-      return getcomment
-    }
-  },
-  methods: {
-    add() {
-      if (this.comment === '') return
-      //this.todos.push(this.todo);
-      this.$store.dispatch('addComment', this.comment)
-      console.log(this.comment)
-      this.comment = ''
-    }
   }
 })
+export default class CommentList extends Vue {
+  comment: string = ''
+
+  get getterComments() {
+    var getcomment = commentStore.getComments
+    console.log(getcomment)
+    return getcomment
+  }
+
+  add() {
+    if (this.comment === '') return
+    // this.todos.push(this.todo);
+    commentStore.addComment(this.comment)
+    console.log(this.comment)
+    this.comment = ''
+  }
+}
 </script>

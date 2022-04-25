@@ -6,14 +6,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { AuthStore } from '~/store'
+import { authStore } from '~/store'
 
 @Component
 export default class Login extends Vue {
   text: string = 'Discordでログイン'
 
   clickLogin() {
-    AuthStore.authDiscord()
+    authStore.authDiscord()
   }
 }
 </script>

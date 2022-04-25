@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
-import { AuthStore } from '~/store'
+import { authStore } from '~/store'
 import { PostWork } from '~/types'
 
 @Component
@@ -37,7 +37,7 @@ export default class WorksForm extends Vue {
       axios
         .post('/works', this.workData, {
           headers: {
-            Authorization: `Bearer ${AuthStore.getAccessToken}`
+            Authorization: `Bearer ${authStore.getAccessToken}`
           }
         })
         .then((result) => {

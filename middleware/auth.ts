@@ -1,12 +1,12 @@
 import { Middleware } from '@nuxt/types'
-import { AuthStore } from '~/store'
+import { authStore } from '~/store'
 
 const auth: Middleware = ({ route }) => {
   const refreshToken = localStorage.getItem('refresh_token')
-  if (!refreshToken || AuthStore.nowLogin || route.query.access_token) {
+  if (!refreshToken || authStore.nowLogin || route.query.access_token) {
     return
   }
-  AuthStore.authAgain()
+  authStore.authAgain()
 }
 
 export default auth

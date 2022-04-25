@@ -12,23 +12,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
-  props: {
-    name: {
-      type: String,
-      required: true,
-      default: 'error'
-    },
-    index: {
-      type: Number,
-      required: true
-    }
-  },
-  methods: {
-    commentDelete() {
-      this.$store.dispatch('deleteComment', this.index)
-    }
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { commentStore } from '@/store'
+
+@Component
+export default class CommentItem extends Vue {
+  @Prop({ type: String, required: true, default: 'error' })
+  name!: string
+  @Prop({ type: Number, required: true })
+  index!: number
+
+  commentDelete() {
+    commentStore.deleteComment(this.index)
   }
-})
+}
 </script>

@@ -8,12 +8,12 @@
 
 <script lang="ts">
 // import { Component, Vue } from 'nuxt-property-decorator'
-// import { AuthStore } from '~/store'
+// import { authStore } from '~/store'
 
 // @Component
 // export default class UserInfo extends Vue {
 //   get getUser () {
-//     return AuthStore.getUser
+//     return authStore.getUser
 //   }
 
 //   get getIconURL () {

@@ -1,6 +1,13 @@
-import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import {
+  Module,
+  VuexModule,
+  Mutation,
+  Action,
+  config
+} from 'vuex-module-decorators'
 import axios from 'axios'
 
+config.rawError = true
 axios.defaults.baseURL = process.env.API_URL
 
 type User = {
@@ -45,7 +52,8 @@ export default class Auth extends VuexModule {
     return this.accessToken
   }
 
-  @Mutation setUser(user: any) {
+  @Mutation
+  setUser(user: any) {
     this.user.id = user.id
     this.user.name = user.name
     this.user.email = user.email
@@ -56,28 +64,29 @@ export default class Auth extends VuexModule {
     this.user.avatarUrl = user.avatar_url
   }
 
-  @Mutation setAccessToken(accessToken: string) {
+  @Mutation
+  setAccessToken(accessToken: string) {
     this.accessToken = accessToken
   }
 
-  @Action({ rawError: true })
+  @Action
   public authDiscord() {
     // ここでDiscordログイン実装
     window.location.href = String(process.env.AUTHENTICATION_URL)
   }
 
-  @Action({ rawError: true })
+  @Action
   public newLoginSetAccessToken(accessToken: string) {
     this.setAccessToken(accessToken)
   }
 
-  @Action({ rawError: true })
+  @Action
   public async authAgain() {
     await this.getAccessTokenByRefreshToken()
     await this.fetchUser()
   }
 
-  @Action({ rawError: true })
+  @Action
   public fetchUser(accessToken?: string): Promise<void> {
     const token = accessToken || this.accessToken
     return new Promise((resolve, reject) => {
@@ -107,7 +116,7 @@ export default class Auth extends VuexModule {
     })
   }
 
-  @Action({ rawError: true })
+  @Action
   private getAccessTokenByRefreshToken(refreshToken?: string): Promise<void> {
     const token = refreshToken || String(localStorage.getItem('refresh_token'))
     return new Promise((resolve, reject) => {

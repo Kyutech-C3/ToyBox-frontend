@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, VModel, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
-import { AuthStore } from '~/store'
+import { authStore } from '~/store'
 
 interface Event<T = EventTarget> {
   target: T
@@ -56,7 +56,7 @@ export default class FromThumbnail extends Vue {
             .post('/assets', params, {
               headers: {
                 'content-type': 'multipart/form-data',
-                Authorization: `Bearer ${AuthStore.getAccessToken}`
+                Authorization: `Bearer ${authStore.getAccessToken}`
               }
             })
             .then((result) => {
