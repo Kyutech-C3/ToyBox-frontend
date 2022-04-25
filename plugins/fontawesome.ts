@@ -4,7 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // 1. 利用したいアイコンを以下にてimportする
 import {
-  faHeart as faSolidHeart
+  faDownload,
+  faHeart as faSolidHeart,
+  faPlus,
+  faTimes,
+  faCaretUp,
+  faLock,
+  faUpload,
+  faCheck,
+  faLink,
+  faUsers,
+  faTags,
+  faPlusCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -13,9 +24,7 @@ import {
   faGithub
 } from '@fortawesome/free-brands-svg-icons'
 
-import {
-  faHeart
-} from '@fortawesome/free-regular-svg-icons'
+import { faHeart, faSave } from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
 
@@ -25,7 +34,19 @@ library.add(
   faHeart,
   faSolidHeart,
   faTwitter,
-  faGithub
+  faDownload,
+  faPlus,
+  faTimes,
+  faCaretUp,
+  faLock,
+  faUpload,
+  faSave,
+  faCheck,
+  faLink,
+  faGithub,
+  faUsers,
+  faTags,
+  faPlusCircle
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
