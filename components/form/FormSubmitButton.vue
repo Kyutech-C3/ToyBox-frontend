@@ -28,13 +28,20 @@
             class="cursor-pointer flex items-center py-2"
             @click="clickOption(i)"
           >
-            <font-awesome-icon :icon="['fas', 'check']" class="w-4 mr-3" :class="{'text-transparent': option != i}" />
+            <font-awesome-icon
+              :icon="['fas', 'check']"
+              class="w-4 mr-3"
+              :class="{ 'text-transparent': option != i }"
+            />
             <font-awesome-icon :icon="range.icon" class="w-4 mr-3" />
             {{ range.name }}
           </li>
         </ul>
         <!-- 以下、別部分をクリックした時にfalseにするdiv -->
-        <div class="fixed w-full h-full top-0 left-0 z-0" @click="openList = !openList" />
+        <div
+          class="fixed w-full h-full top-0 left-0 z-0"
+          @click="openList = !openList"
+        />
       </div>
     </transition>
   </div>
@@ -65,7 +72,7 @@ export default class FormSubmitButton extends Vue {
     }
   ]
 
-  clickOption (index: number) {
+  clickOption(index: number) {
     this.openList = !this.openList
     this.option = index
   }
@@ -75,40 +82,39 @@ export default class FormSubmitButton extends Vue {
 <style scoped>
 /* 以下、吹き出しのアニメーション */
 .fade-enter-active {
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
 .fade-leave-active {
-  transition: opacity .0s;
+  transition: opacity 0s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
-{
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 
 /* 以下、吹き出しに見えるようにするための三角形のCSS */
 .balloon:before,
-.balloon:after{
-  content: "";
+.balloon:after {
+  content: '';
   position: absolute;
   right: 10px;
   width: 20px;
   height: 20px;
 }
-.balloon:before{
+.balloon:before {
   bottom: -18px;
   border-top: 10px solid #ffffff;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  display:inline-block;
+  display: inline-block;
   z-index: 10;
 }
-.balloon:after{
+.balloon:after {
   bottom: -20px;
   border-top: 10px solid #f59e0b;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  display:inline-block
+  display: inline-block;
 }
 </style>

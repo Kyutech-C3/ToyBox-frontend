@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen flex flex-col content-center justify-center items-center">
+  <div
+    class="min-h-screen flex flex-col content-center justify-center items-center"
+  >
     <profile :users="users" />
     <works-filter />
     <works :user-works="userWorks" />
@@ -29,7 +31,8 @@ interface User {
 })
 export default class Users extends Vue {
   users: User = {
-    image: 'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
+    image:
+      'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
     name: 'ハムタロサァン',
     description: 'はむたろなのだ',
     github: 'Kyutech-C3',

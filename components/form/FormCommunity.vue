@@ -7,9 +7,7 @@
       required
       class="w-48 p-3 border-2 border-gray-400 rounded-xl focus:outline-none text-center text-xl cursor-pointer"
     >
-      <option value="" hidden disabled selected>
-        community
-      </option>
+      <option value="" hidden disabled selected>community</option>
       <template v-for="(community, i) in communityList">
         <option :key="i" :value="community.id">
           {{ community.name }}

@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
@@ -23,12 +23,12 @@ export default class WorksViewInfo extends Vue {
   likes: number = 10
   isLiked: boolean = false
 
-  liked () {
+  liked() {
     this.likes++
     this.isLiked = true
   }
 
-  unliked () {
+  unliked() {
     this.likes--
     this.isLiked = false
   }

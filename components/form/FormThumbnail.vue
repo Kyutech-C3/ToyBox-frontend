@@ -12,7 +12,7 @@
       required
       :multiple="true"
       @change="onFilePicked($event)"
-    >
+    />
     <font-awesome-icon class="w-10" :icon="['fas', 'plus']" />
   </label>
 </template>
@@ -23,7 +23,7 @@ import axios from 'axios'
 import { AuthStore } from '~/store'
 
 interface Event<T = EventTarget> {
-  target: T;
+  target: T
 }
 
 const baseAssetType: Object = {
@@ -39,7 +39,7 @@ export default class FromThumbnail extends Vue {
   @VModel({ type: Array })
   assetImage!: string[]
 
-  onFilePicked (event: Event<HTMLInputElement>) {
+  onFilePicked(event: Event<HTMLInputElement>) {
     const file = event.target.files as FileList
     // eslint-disable-next-line no-console
     console.log(file.length)
@@ -52,14 +52,16 @@ export default class FromThumbnail extends Vue {
         params.append('file', file[i])
         params.append('asset_type', this.getAssetType(file[i].name as string))
         try {
-          axios.post('/assets', params, {
-            headers: {
-              'content-type': 'multipart/form-data',
-              Authorization: `Bearer ${AuthStore.getAccessToken}`
-            }
-          }).then((result) => {
-            this.assetImage.push(result.data.id)
-          })
+          axios
+            .post('/assets', params, {
+              headers: {
+                'content-type': 'multipart/form-data',
+                Authorization: `Bearer ${AuthStore.getAccessToken}`
+              }
+            })
+            .then((result) => {
+              this.assetImage.push(result.data.id)
+            })
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)
@@ -70,7 +72,7 @@ export default class FromThumbnail extends Vue {
     refs.value = ''
   }
 
-  getAssetType (assetName: string) {
+  getAssetType(assetName: string) {
     let index: number = 0
     let response: string = ''
     const assetTypeList: string[][] = Object.values(baseAssetType)

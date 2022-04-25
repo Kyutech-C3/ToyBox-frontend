@@ -7,7 +7,7 @@ export default {
 export const markdown1 = () => ({
   template: '<form-markdown v-model="description" />',
   components: { FormMarkdown },
-  data () {
+  data() {
     return {
       description: '# sample text'
     }

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button @click="clickLogin">
-      Discordでログイン
-    </button>
+    <button @click="clickLogin">{{ text }}</button>
   </div>
 </template>
 
@@ -12,7 +10,9 @@ import { AuthStore } from '~/store'
 
 @Component
 export default class Login extends Vue {
-  clickLogin () {
+  text: string = 'Discordでログイン'
+
+  clickLogin() {
     AuthStore.authDiscord()
   }
 }

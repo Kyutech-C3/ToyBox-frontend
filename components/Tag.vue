@@ -7,12 +7,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "nuxt-property-decorator";
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Tag extends Vue {
-  @Prop({ type: String, required: true, default: "" })
-  tagText!: string;
+  @Prop({ type: String, required: true, default: '' })
+  tagText!: string
 }
 </script>
 

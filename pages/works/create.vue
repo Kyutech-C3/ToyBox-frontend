@@ -12,7 +12,7 @@ import { PostWork, Community } from '~/types'
   components: {
     WorksForm
   },
-  async asyncData () {
+  async asyncData() {
     const response = await axios.get('/communities')
     if (response.data.length === 0) {
       alert('コミュニティーが登録されていません')

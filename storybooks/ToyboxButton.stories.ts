@@ -22,7 +22,7 @@ export const PrimaryToyboxButton: Story = (arg, { argTypes }) => ({
   components: { ToyboxButton },
   props: Object.keys(argTypes),
   methods: {
-    handleClick (e) {
+    handleClick(e) {
       clickHandler(e)
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <!-- <div v-if="getUser.id !== ''"> -->
+    <!-- <div v-if="getUser.id !== ''"> -->
     <!-- <img :src="getIconURL">
     <p>{{ getUser.displayName }}</p> -->
   </div>

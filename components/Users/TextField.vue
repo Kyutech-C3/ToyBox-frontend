@@ -14,9 +14,8 @@
         class="w-full border rounded border-gray-500 p-2"
         type="text"
         :placeholder="placeholder"
-      >
+      />
     </div>
-
   </label>
 </template>
 

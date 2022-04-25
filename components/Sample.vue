@@ -20,9 +20,8 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 })
 export default class Sample extends Vue {
   @Prop({ type: String, required: true, default: 'not found' })
-  sample: string|undefined
+  sample: string | undefined
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

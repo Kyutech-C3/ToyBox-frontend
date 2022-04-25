@@ -2,7 +2,11 @@
   <div class="w-8/12 m-auto">
     <carousel class="border border-gray-700" :assets="work.assets" />
     <div class="flex justify-between mt-5">
-      <works-title :date="work.updated_at" :title="work.title" :user="work.user" />
+      <works-title
+        :date="work.updated_at"
+        :title="work.title"
+        :user="work.user"
+      />
       <works-view-info />
     </div>
     <!-- コミュニティー -->
@@ -68,19 +72,21 @@ import { saveAs } from 'file-saver'
     WorksViewInfo,
     CustomButton
   },
-  async asyncData ({ route }) {
-    const response = await axios.get(`https://kodomobeya.compositecomputer.club/api/v1/works/${route.params.id}`)
+  async asyncData({ route }) {
+    const response = await axios.get(
+      `https://kodomobeya.compositecomputer.club/api/v1/works/${route.params.id}`
+    )
     return { work: response.data }
   }
 })
 export default class Works extends Vue {
   work!: Work
 
-  mounted () {
+  mounted() {
     console.log(JSON.stringify(this.work, null, 2))
   }
 
-  async download (type: string, id: string) {
+  async download(type: string, id: string) {
     const url = `https://kodomobeya.compositecomputer.club/${type}/${id}/origin.zip`
     const data = await fetch(url)
     const blob = await data.blob()

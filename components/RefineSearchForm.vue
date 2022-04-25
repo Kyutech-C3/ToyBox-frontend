@@ -10,7 +10,9 @@
         :key="index"
         :tag-text="community.name"
         class="mx-1.5 px-5 py-0.5 cursor-pointer bg-white transform transition-colors border-gray-400 hover:border-gray-600 select-none"
-        :class="{'bg-blue-100': Object.values($route.query).includes(community.name)}"
+        :class="{
+          'bg-blue-100': Object.values($route.query).includes(community.name)
+        }"
         @click.native="selectingCommunities(community.name)"
       />
     </div>
@@ -46,15 +48,17 @@ export default class RefineSearchForm extends Vue {
   @Prop({ type: Array, required: true })
   communityList!: Array<Community>
 
-  tags: Array<string> = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
-  selectCommunityNum: number = 0;
+  tags: Array<string> = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5']
+  selectCommunityNum: number = 0
 
-  selectingCommunities (index: string) {
+  selectingCommunities(index: string) {
     if (Object.keys(this.$route.query).length === 0) {
       this.selectCommunityNum = 1
       this.$router.push(`${this.$route.fullPath}?c1=${index}`)
     } else if (Object.values(this.$route.query).includes(index)) {
-      const newQuery = Object.values(this.$route.query).filter(item => (String(item).match(index)) === null)
+      const newQuery = Object.values(this.$route.query).filter(
+        (item) => String(item).match(index) === null
+      )
       let url = '/works?'
       let queryNum = 1
       newQuery.forEach((i) => {
@@ -68,7 +72,9 @@ export default class RefineSearchForm extends Vue {
       this.$router.push(url)
     } else {
       this.selectCommunityNum += 1
-      this.$router.push(`${this.$route.fullPath}&c${this.selectCommunityNum}=${index}`)
+      this.$router.push(
+        `${this.$route.fullPath}&c${this.selectCommunityNum}=${index}`
+      )
     }
   }
 }

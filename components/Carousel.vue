@@ -1,17 +1,21 @@
 <template>
   <hooper :settings="hooperSettings" class="bg-blue-200">
-    <slide v-for="asset in assets" :key="asset.id" class="flex justify-center items-center">
+    <slide
+      v-for="asset in assets"
+      :key="asset.id"
+      class="flex justify-center items-center"
+    >
       <img
         v-if="asset.asset_type === 'image'"
         class="m-auto h-full"
         :src="`https://kodomobeya.compositecomputer.club/static/image/${asset.id}/origin.png`"
         alt="asset image"
-      >
+      />
       <video v-else-if="asset.asset_type === 'video'" controls>
         <source
           :src="`https://kodomobeya.compositecomputer.club/static/video/${asset.id}/origin.mp4`"
           type="video/mp4"
-        >
+        />
         Sorry, your browser doesn't support embedded videos.
       </video>
       <audio
@@ -21,9 +25,7 @@
       >
         Your browser does not support the <code>audio</code> element.
       </audio>
-      <div v-else>
-        {{ asset.asset_type }} file is not supported.
-      </div>
+      <div v-else>{{ asset.asset_type }} file is not supported.</div>
     </slide>
     <hooper-pagination slot="hooper-addons" />
     <hooper-navigation slot="hooper-addons" />

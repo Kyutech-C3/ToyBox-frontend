@@ -1,7 +1,5 @@
 <template>
-  <div>
-    リダイレクトページ
-  </div>
+  <div>リダイレクトページ</div>
 </template>
 
 <script lang="ts">
@@ -10,7 +8,7 @@ import { AuthStore } from '~/store'
 
 @Component({
   components: {},
-  asyncData ({ query }) {
+  asyncData({ query }) {
     if (query.access_token && query.refresh_token) {
       AuthStore.newLoginSetAccessToken(String(query.access_token))
       AuthStore.fetchUser(String(query.access_token))
@@ -19,7 +17,7 @@ import { AuthStore } from '~/store'
   }
 })
 export default class Discord extends Vue {
-  mounted (): void {
+  mounted(): void {
     this.$router.push('/')
   }
 }
