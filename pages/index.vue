@@ -11,6 +11,8 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
+import CommentItem from '~/components/CommentItem.vue'
+import CommentList from '~/components/CommentList.vue'
 import RefineSearchForm from '~/components/RefineSearchForm.vue'
 import WorkList from '~/components/WorkList.vue'
 import { Work } from '~/types'
@@ -18,7 +20,9 @@ import { Work } from '~/types'
 @Component({
   components: {
     RefineSearchForm,
-    WorkList
+    WorkList,
+    CommentList,
+    CommentItem
   },
   async asyncData() {
     const resWorks = await axios.get('/works')
