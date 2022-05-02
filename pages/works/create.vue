@@ -5,8 +5,8 @@
 <script lang="ts">
 import { Component, Vue, Provide } from 'nuxt-property-decorator'
 import axios from 'axios'
-import WorksForm from '~/components/form/WorksForm.vue'
-import { PostWork, Community } from '~/types'
+import WorksForm from '@/components/works/WorksForm.vue'
+import { PostWork, Community } from '@/types'
 
 @Component({
   components: {
@@ -19,12 +19,11 @@ import { PostWork, Community } from '~/types'
     } else if (!response.data) {
       alert('コミュニティーのデータ取得に失敗しました')
     }
-
     return { communityList: response.data }
   }
 })
 export default class Create extends Vue {
-  workData = {
+  workData: PostWork = {
     title: '',
     description: '',
     community_id: '',
@@ -33,7 +32,7 @@ export default class Create extends Vue {
     assets_id: [],
     urls: [],
     tags_id: ['6337f6d5-500a-446d-a3ab-dcf438a00f9f'] // 仮置き
-  } as PostWork
+  }
 
   @Provide() communityList: Array<Community> = []
 }

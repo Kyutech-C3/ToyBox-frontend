@@ -1,6 +1,6 @@
 <template>
-  <div class="w-8/12 m-auto">
-    <carousel class="border border-gray-700" :assets="work.assets" />
+  <div class="w-3/4">
+    <works-carousel class="border border-gray-700" :assets="work.assets" />
     <div class="flex justify-between mt-5">
       <works-title
         :date="work.updated_at"
@@ -11,19 +11,11 @@
     </div>
     <!-- コミュニティー -->
     <works-content class="mt-8" icon="users">
-      <p class="border border-gray-500 rounded-lg text-center px-6 mx-3">
-        {{ work.community.name }}
-      </p>
+      <base-tag :text="work.community.name" />
     </works-content>
     <!-- タグ -->
     <works-content class="mt-5" icon="tags">
-      <p
-        v-for="tag in work.tags"
-        :key="tag.id"
-        class="border border-gray-500 rounded-lg text-center px-6 mx-3"
-      >
-        {{ tag.name }}
-      </p>
+      <base-tag v-for="tag in work.tags" :key="tag.id" :text="tag.name" />
     </works-content>
     <!-- URL -->
     <works-content class="mt-8" icon="link">
@@ -40,7 +32,7 @@
     <!-- ダウンロード -->
     <works-content class="mt-5" icon="download">
       <div v-for="asset in work.assets" :key="asset.id">
-        <custom-button
+        <base-button
           v-if="asset.asset_type === ('zip' || 'model')"
           class="mx-3"
           :title="asset.asset_type"
@@ -51,26 +43,31 @@
     <!-- 説明 -->
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="mt-10" v-html="work.description_html" />
-    <!-- コメント部分のコンポーネントをここに入れる -->
+    <!-- コメント -->
+    <comment-list class="mt-10" />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import Carousel from '@/components/Carousel.vue'
+import WorksCarousel from '@/components/works/WorksCarousel.vue'
 import WorksTitle from '@/components/works/WorksTitle.vue'
 import WorksViewInfo from '@/components/works/WorksViewInfo.vue'
-import CustomButton from '@/components/ToyboxButton.vue'
+import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTag from '@/components/commons/BaseTag.vue'
+import CommentList from '@/components/comments/CommentsList.vue'
 import axios from 'axios'
 import { Work } from '@/types'
 import { saveAs } from 'file-saver'
 
 @Component({
   components: {
-    Carousel,
+    WorksCarousel,
     WorksTitle,
     WorksViewInfo,
-    CustomButton
+    BaseButton,
+    BaseTag,
+    CommentList
   },
   async asyncData({ route }) {
     const response = await axios.get(

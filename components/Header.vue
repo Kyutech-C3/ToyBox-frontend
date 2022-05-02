@@ -1,6 +1,14 @@
 <template>
   <header
-    class="py-3 text-center justify-around border-solid border-2 border-gray-200 flex w-full relative"
+    class="
+      py-3
+      text-center
+      justify-around
+      border-solid border-2 border-gray-200
+      flex
+      w-full
+      relative
+    "
   >
     <div class="justify-center flex">
       <nuxt-link to="/" class="hover:opacity-50 transition">
@@ -13,33 +21,46 @@
       class="flex justify-start items-center absolute right-10 top-0 bottom-0"
     >
       <!-- not logged in  -->
-      <nuxt-link
+      <base-button
         v-if="nowLogin && $route.path !== '/works/create'"
-        class="py-2 px-8 mx-7 rounded-xl hover:bg-blue-300 transition border-solid border-2 border-gray-400 bg-blue-100"
-        to="/works/create"
-      >
-        投稿
-      </nuxt-link>
-      <button
-        v-if="!nowLogin"
-        class="py-2 px-5 rounded-xl hover:opacity-50 transition border-solid border-2 border-gray-400"
-        @click="clickLogin"
-      >
-        sign in
-      </button>
+        class="mx-5"
+        title="投稿"
+        @click="$router.push('/works/create')"
+      />
+      <base-button class="mx-5" title="ログイン" @click="clickLogin" />
       <!-- logged in -->
       <button class="hover:opacity-60 transition" @click="activeNav = true">
         <img
           v-if="nowLogin"
           :src="getIcon"
-          class="rounded-full w-12 h-12 cursor-pointer pointer-events-none border-solid border-2 border-gray-400"
+          class="
+            rounded-full
+            w-12
+            h-12
+            cursor-pointer
+            pointer-events-none
+            border-solid border-2 border-gray-400
+          "
         />
       </button>
     </div>
     <!-- navigation -->
     <div
       v-if="activeNav"
-      class="shadow-2xl rounded-xl absolute top-24 right-6 w-60 py-5 px-8 bg-gray-700 opacity-90 z-50 menu"
+      class="
+        shadow-2xl
+        rounded-xl
+        absolute
+        top-24
+        right-6
+        w-60
+        py-5
+        px-8
+        bg-gray-700
+        opacity-90
+        z-50
+        menu
+      "
     >
       <!-- icon -->
       <img
@@ -58,7 +79,17 @@
       >
         <!-- my profile link -->
         <nuxt-link
-          class="grid py-1 px-2 my-3 mx-auto rounded hover:text-white hover:underline text-gray-200"
+          class="
+            grid
+            py-1
+            px-2
+            my-3
+            mx-auto
+            rounded
+            hover:text-white
+            hover:underline
+            text-gray-200
+          "
           :to="`users/${getUserId}${index === 0 ? '/draft' : ''}`"
         >
           {{ menuItem }}
@@ -67,7 +98,19 @@
       <div class="border-solid border-b border-gray-200 w-10/12 my-1 mx-auto" />
       <!-- logout button -->
       <button
-        class="py-1 px-5 mt-5 mb-2 rounded bg-transparent hover:text-white hover:border-2 transition border-solid border border-gray-200 text-gray-200"
+        class="
+          py-1
+          px-5
+          mt-5
+          mb-2
+          rounded
+          bg-transparent
+          hover:text-white
+          hover:border-2
+          transition
+          border-solid border border-gray-200
+          text-gray-200
+        "
         @click="clickLogout"
       >
         ログアウト
@@ -83,9 +126,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import BaseButton from '@/components/commons/BaseButton.vue'
 import { authStore } from '@/store'
 
-@Component
+@Component({
+  components: {
+    BaseButton
+  }
+})
 export default class Header extends Vue {
   activeNav: Boolean = false
   menuItems: string[] = ['下書き', 'マイページ']

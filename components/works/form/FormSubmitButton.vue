@@ -1,7 +1,16 @@
 <template>
   <div class="relative flex justify-end">
     <button
-      class="rounded-tl-lg rounded-bl-lg border-2 border-yellow-500 text-yellow-500 transition-colors px-4 py-2.5 flex items-center"
+      class="
+        rounded-tl-lg rounded-bl-lg
+        border-2 border-yellow-500
+        text-yellow-500
+        transition-colors
+        px-4
+        py-2.5
+        flex
+        items-center
+      "
       type="submit"
       @click="$emit('submit', submitList[option].value)"
     >
@@ -10,7 +19,16 @@
     </button>
 
     <div
-      class="rounded-tr-lg rounded-br-lg border-2 border-yellow-500 bg-yellow-500 text-gray-100 transition-colors px-2 pt-3 pb-2"
+      class="
+        rounded-tr-lg rounded-br-lg
+        border-2 border-yellow-500
+        bg-yellow-500
+        text-gray-100
+        transition-colors
+        px-2
+        pt-3
+        pb-2
+      "
       @click="openList = !openList"
     >
       <font-awesome-icon :icon="['fas', 'caret-up']" class="w-3" />
@@ -19,7 +37,16 @@
     <transition name="fade">
       <div
         v-if="openList"
-        class="balloon absolute bottom-16 rounded-lg bg-white px-5 py-2 border-2 border-yellow-500"
+        class="
+          balloon
+          absolute
+          bottom-16
+          rounded-lg
+          bg-white
+          px-5
+          py-2
+          border-2 border-yellow-500
+        "
       >
         <ul class="z-10 relative">
           <li

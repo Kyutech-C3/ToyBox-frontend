@@ -1,6 +1,17 @@
 <template>
   <div
-    class="flex flex-col content-center justify-center items-center border-2 border-gray-400 rounded-3xl px-60"
+    class="
+      w-3/4
+      flex flex-col
+      content-center
+      justify-center
+      items-center
+      border-2 border-gray-400
+      rounded-3xl
+      mx-auto
+      px-60
+      mb-12
+    "
   >
     <div class="m-5">
       <img
@@ -16,19 +27,19 @@
       {{ users.description }}
     </div>
     <div v-show="!disabledEditButton" class="m-5">
-      <custom-button title="プロフィール編集" @click="showEditProfile = true" />
-      <profile-form v-show="showEditProfile" :users="users">
-        <custom-button
+      <base-button title="プロフィール編集" @click="showEditProfile = true" />
+      <users-profile-form v-show="showEditProfile" :users="users">
+        <base-button
           class="px-7"
           title="変更"
           @click="showEditProfile = false"
         />
-        <custom-button
+        <base-button
           class="px-7"
           title="やめる"
           @click="showEditProfile = false"
         />
-      </profile-form>
+      </users-profile-form>
     </div>
     <div class="flex justify-around w-full my-5">
       <a
@@ -57,8 +68,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import CustomButton from '@/components/ToyboxButton.vue'
-import ProfileForm from '@/components/Users/ProfileForm.vue'
+import BaseButton from '@/components/commons/BaseButton.vue'
+import UsersProfileForm from '@/components/users/UsersProfileForm.vue'
 
 interface User {
   image: string
@@ -70,11 +81,11 @@ interface User {
 
 @Component({
   components: {
-    CustomButton,
-    ProfileForm
+    BaseButton,
+    UsersProfileForm
   }
 })
-export default class Profile extends Vue {
+export default class UsersProfile extends Vue {
   @Prop({ type: Object, required: true })
   users!: User
 

@@ -12,7 +12,7 @@
           :icon="['fas', 'times']"
           @click="deleteAsset(i)"
         />
-        <form-image-preview :image-u-r-l="imageURL" />
+        <form-image-preview :image-url="imageURL" />
       </div>
       <form-thumbnail v-model="assetImage" />
     </div>
@@ -21,7 +21,17 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-@Component
+import FormLabel from '@/components/works/form/FormLabel.vue'
+import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
+import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
+
+@Component({
+  components: {
+    FormLabel,
+    FormImagePreview,
+    FormThumbnail
+  }
+})
 export default class FormAssets extends Vue {
   @VModel({ type: Array })
   assetImage!: string[]

@@ -50,7 +50,7 @@ import 'hooper/dist/hooper.css'
     HooperNavigation
   }
 })
-export default class Carousel extends Vue {
+export default class WorksCarousel extends Vue {
   @Prop({ type: Array, required: true })
   assets!: Object
 

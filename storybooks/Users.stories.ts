@@ -1,8 +1,6 @@
 import { Story, Meta } from '@storybook/vue'
 import Profile from '@/components/Users/Profile.vue'
 import ProfileForm from '@/components/Users/ProfileForm.vue'
-import WorksFilter from '@/components/Users/WorksFilter.vue'
-import Works from '@/components/Users/Works.vue'
 
 export default {
   title: 'Users'
@@ -43,22 +41,3 @@ export const profileForm = () => ({
   template: '<profile-form />',
   components: { ProfileForm }
 })
-
-export const filter = () => ({
-  template: '<works-filter />',
-  components: { WorksFilter }
-})
-
-export const works: Story = (_, { argTypes }) => ({
-  template: '<works :user-works="userWorks"/>',
-  components: { Works },
-  props: Object.keys(argTypes)
-})
-
-works.argTypes = {
-  userWorks: {
-    name: 'カードの数',
-    control: { type: 'object' },
-    defaultValue: Array(6)
-  }
-}

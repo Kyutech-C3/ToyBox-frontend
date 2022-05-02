@@ -11,13 +11,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-// import UserInfo from '@/components/UserInfo.vue'
 
-@Component({
-  components: {
-    // UserInfo
-  }
-})
+@Component
 export default class Sample extends Vue {
   @Prop({ type: String, required: true, default: 'not found' })
   sample: string | undefined

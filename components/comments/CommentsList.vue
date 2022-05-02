@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute">
+  <div>
     <div class="ml-4">
       <input
         class="rounded-full shadow-l border-2 border-gray-500 p-2"
@@ -8,11 +8,11 @@
         v-model="comment"
       />
       <button class="rounded-full pl-5" @click="add">
-        <img src="../assets/img/commentAdd.png" />
+        <img src="@/assets/img/commentAdd.png" />
       </button>
     </div>
     <comment-item
-      class="relative ml-6 mt-6"
+      class="ml-6 mt-6"
       v-for="(item, i) in getterComments"
       :key="i"
       :name="item"
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import CommentItem from '@/components/CommentItem.vue'
+import CommentItem from '~/components/comments/CommentsItem.vue'
 import { commentStore } from '@/store'
 
 @Component({
@@ -31,7 +31,7 @@ import { commentStore } from '@/store'
     CommentItem
   }
 })
-export default class CommentList extends Vue {
+export default class CommentsList extends Vue {
   comment: string = ''
 
   get getterComments() {

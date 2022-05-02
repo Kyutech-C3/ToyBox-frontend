@@ -1,7 +1,19 @@
 <template>
   <nuxt-link
     :to="'works/' + WorkData.id"
-    class="h-80 border border-gray-300 rounded-3xl shadow-md cursor-pointer hover:scale-105 hover:shadow-lg transform transition"
+    class="
+      w-80
+      h-80
+      m-2
+      border border-gray-300
+      rounded-3xl
+      shadow-md
+      cursor-pointer
+      hover:scale-105
+      hover:shadow-lg
+      transform
+      transition
+    "
   >
     <div class="h-1/2 border-b">
       <img
@@ -13,6 +25,7 @@
               '/origin.jpg'
             : 'https://avatars.githubusercontent.com/u/61457046'
         "
+        alt="Thumbnail is not found"
       />
     </div>
     <div class="h-1/2 py-3 px-2.5">
@@ -33,11 +46,10 @@
         />
       </div>
       <div class="flex justify-center mt-2">
-        <tag
+        <base-tag
           v-for="(tag, index) in WorkData.tags"
           :key="index"
-          :tag-text="tag.name"
-          class="px-2.5 py-0 mx-1 border-gray-300 text-gray-500"
+          :text="tag.name"
         />
         <div v-if="WorkData.tags.length === 0" class="h-6 py-0.5" />
       </div>
@@ -47,10 +59,24 @@
       <div class="my-0 flex">
         <nuxt-link
           :to="'user/' + WorkData.user.id"
-          class="flex items-center mx-1 cursor-pointer group hover:bg-gray-100 rounded-full p-1"
+          class="
+            flex
+            items-center
+            mx-1
+            cursor-pointer
+            group
+            hover:bg-gray-100
+            rounded-full
+            p-1
+          "
         >
           <img
-            class="w-8 border border-gray-400 group-hover:border-blue-500 rounded-full"
+            class="
+              w-8
+              border border-gray-400
+              group-hover:border-blue-500
+              rounded-full
+            "
             :src="WorkData.user.avatar_url"
             alt=""
             onerror="this.src='/alt.svg'; this.removeAttribute('onerror'); this.removeAttribute('onload');"
@@ -82,19 +108,19 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import Tag from '@/components/Tag.vue'
-import { Work } from '~/types'
+import BaseTag from '@/components/commons/BaseTag.vue'
+import { Work } from '@/types'
 
 @Component({
   components: {
-    Tag
+    BaseTag
   }
 })
 export default class WorksCard extends Vue {
   @Prop({ type: Object, required: true })
   WorkData!: Work
 
-  dateFormatter(date: string) {
+  dateFormatter(date: string): string {
     const nowDate: Date = new Date()
     const postDate: Date = new Date(date)
     const diffTime: number = (Number(nowDate) - Number(postDate)) / 1000

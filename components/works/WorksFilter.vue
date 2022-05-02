@@ -1,15 +1,26 @@
 <template>
-  <div class="border border-gray-300 rounded-3xl px-10 py-5">
-    <div>絞り込み</div>
+  <div class="border border-gray-300 rounded-3xl px-10 py-5 w-[45rem] mx-auto">
+    <p>絞り込み</p>
     <div class="flex items-center my-3">
       <font-awesome-icon class="w-7" :icon="['fas', 'users']" />
       <span class="mx-3">コミュニティ</span>
       <div class="w-0.5 h-7 mx-7 border border-gray-500" />
-      <tag
-        v-for="(community, index) in communityList"
+      <base-tag
+        v-for="(community, index) in communities"
         :key="index"
-        :tag-text="community.name"
-        class="mx-1.5 px-5 py-0.5 cursor-pointer bg-white transform transition-colors border-gray-400 hover:border-gray-600 select-none"
+        :text="community.name"
+        class="
+          mx-1.5
+          px-5
+          py-0.5
+          cursor-pointer
+          bg-white
+          transform
+          transition-colors
+          border-gray-400
+          hover:border-gray-600
+          select-none
+        "
         :class="{
           'bg-blue-100': Object.values($route.query).includes(community.name)
         }"
@@ -20,11 +31,19 @@
       <font-awesome-icon class="w-7" :icon="['fas', 'tags']" />
       <span class="mx-3">タグ</span>
       <div class="w-0.5 h-7 mx-7 border border-gray-500" />
-      <tag
+      <base-tag
         v-for="(tag, index) in tags"
         :key="index"
-        :tag-text="tag"
-        class="mx-1.5 px-5 py-0.5 cursor-pointer border-gray-400 hover:border-gray-600 select-none"
+        :text="tag"
+        class="
+          mx-1.5
+          px-5
+          py-0.5
+          cursor-pointer
+          border-gray-400
+          hover:border-gray-600
+          select-none
+        "
       />
       <font-awesome-icon
         class="w-7 cursor-pointer mx-2"
@@ -36,17 +55,17 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import BaseTag from '@/components/commons/BaseTag.vue'
 import { Community } from '@/types'
-import Tag from '@/components/Tag.vue'
 
 @Component({
   components: {
-    Tag
+    BaseTag
   }
 })
-export default class RefineSearchForm extends Vue {
+export default class WorksFilter extends Vue {
   @Prop({ type: Array, required: true })
-  communityList!: Array<Community>
+  communities!: Array<Community>
 
   tags: Array<string> = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5']
   selectCommunityNum: number = 0

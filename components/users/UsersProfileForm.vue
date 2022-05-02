@@ -1,33 +1,42 @@
 <template>
   <div
-    class="bg-gray-300 fixed h-screen inset-0 bg-opacity-50 flex justify-center items-center"
+    class="
+      bg-gray-300
+      fixed
+      h-screen
+      inset-0
+      bg-opacity-50
+      flex
+      justify-center
+      items-center
+    "
   >
     <div class="w-1/2 flex flex-col bg-white rounded-md p-10">
-      <text-field
+      <users-text-field
         v-model="users.name"
         label="名前"
         placeholder="名前を入力してください"
       />
-      <text-field
+      <users-text-field
         v-model="users.description"
         label="自己紹介"
         placeholder="自己紹介をしましょう"
         :textarea="true"
       />
-      <text-field
+      <users-text-field
         v-model="users.github"
         label="GitHub"
         placeholder="GitHub の ID"
       >
         <div class="mr-1 text-gray-500">https://github.com/</div>
-      </text-field>
-      <text-field
+      </users-text-field>
+      <users-text-field
         v-model="users.twitter"
         label="Twitter"
         placeholder="Twitter の ID"
       >
         <div class="mr-1 text-gray-500">https://twitter.com/</div>
-      </text-field>
+      </users-text-field>
       <div class="mt-5 flex justify-around">
         <slot />
       </div>
@@ -37,7 +46,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import TextField from '@/components/Users/TextField.vue'
+import UsersTextField from '@/components/users/UsersTextField.vue'
 
 interface User {
   image: string
@@ -49,10 +58,10 @@ interface User {
 
 @Component({
   components: {
-    TextField
+    UsersTextField
   }
 })
-export default class Profile extends Vue {
+export default class UsersProfileForm extends Vue {
   @Prop({ type: Object, required: false, default: [] })
   users!: User
 }

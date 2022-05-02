@@ -23,7 +23,7 @@
 import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 
 @Component
-export default class TextField extends Vue {
+export default class UsersTextField extends Vue {
   @Prop({ type: String, required: false, default: '' })
   label!: string
 

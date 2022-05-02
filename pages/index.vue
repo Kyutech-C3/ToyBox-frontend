@@ -1,28 +1,21 @@
 <template>
-  <div class="w-192 mx-auto">
-    <refine-search-form
-      :community-list="communityList"
-      class="w-11/12 mx-auto mb-16"
-    />
-    <work-list :work-list="workList" />
+  <div>
+    <works-filter :communities="communities" />
+    <works-list :works="works" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
-import CommentItem from '~/components/CommentItem.vue'
-import CommentList from '~/components/CommentList.vue'
-import RefineSearchForm from '~/components/RefineSearchForm.vue'
-import WorkList from '~/components/WorkList.vue'
-import { Work } from '~/types'
+import WorksFilter from '@/components/works/WorksFilter.vue'
+import WorksList from '@/components/works/WorksList.vue'
+import { Work } from '@/types'
 
 @Component({
   components: {
-    RefineSearchForm,
-    WorkList,
-    CommentList,
-    CommentItem
+    WorksFilter,
+    WorksList
   },
   async asyncData() {
     const resWorks = await axios.get('/works')
@@ -33,16 +26,14 @@ import { Work } from '~/types'
     }
     const resCommunities = await axios.get('/communities')
     if (resCommunities.data.length === 0) {
-      // eslint-disable-next-line no-console
-      console.log('コミュニティがありません')
+      console.error('コミュニティがありません')
     } else if (!resCommunities.data) {
-      // eslint-disable-next-line no-console
-      console.log('コミュニティ一覧の取得に失敗しました')
+      console.error('コミュニティ一覧の取得に失敗しました')
     }
-    return { workList: resWorks.data, communityList: resCommunities.data }
+    return { works: resWorks.data, communities: resCommunities.data }
   }
 })
-export default class WorkIndex extends Vue {
-  workList!: Array<Work>
+export default class Index extends Vue {
+  works!: Array<Work>
 }
 </script>

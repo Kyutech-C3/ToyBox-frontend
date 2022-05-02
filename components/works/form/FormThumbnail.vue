@@ -1,7 +1,19 @@
 <template>
   <label
     for="pickimg"
-    class="mr-10 p-3 w-32 h-32 border-2 rounded-xl border-gray-400 flex justify-center items-center cursor-pointer"
+    class="
+      mr-10
+      p-3
+      w-32
+      h-32
+      border-2
+      rounded-xl
+      border-gray-400
+      flex
+      justify-center
+      items-center
+      cursor-pointer
+    "
   >
     <input
       id="pickimg"
@@ -20,7 +32,7 @@
 <script lang="ts">
 import { Component, VModel, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
-import { authStore } from '~/store'
+import { authStore } from '@/store'
 
 interface Event<T = EventTarget> {
   target: T

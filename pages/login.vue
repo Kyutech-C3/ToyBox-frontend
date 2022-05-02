@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <button @click="clickLogin">{{ text }}</button>
-  </div>
+  <base-button title="Discordでログイン" @click="authDiscord" />
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { authStore } from '~/store'
+import BaseButton from '@/components/commons/BaseButton.vue'
+import { authStore } from '@/store'
 
-@Component
+@Component({
+  components: {
+    BaseButton
+  }
+})
 export default class Login extends Vue {
-  text: string = 'Discordでログイン'
-
-  clickLogin() {
+  authDiscord() {
     authStore.authDiscord()
   }
 }

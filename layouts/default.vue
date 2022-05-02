@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <Nuxt class="my-28" />
+    <Nuxt class="mx-auto my-12 max-w-[90rem]" />
     <Footer />
   </div>
 </template>

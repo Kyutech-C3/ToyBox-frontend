@@ -1,13 +1,12 @@
 <template>
-  <div>リダイレクトページ</div>
+  <div>Redirect Page</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { authStore } from '~/store'
+import { authStore } from '@/store'
 
 @Component({
-  components: {},
   asyncData({ query }) {
     if (query.access_token && query.refresh_token) {
       authStore.newLoginSetAccessToken(String(query.access_token))
@@ -17,7 +16,7 @@ import { authStore } from '~/store'
   }
 })
 export default class Discord extends Vue {
-  mounted(): void {
+  mounted() {
     this.$router.push('/')
   }
 }

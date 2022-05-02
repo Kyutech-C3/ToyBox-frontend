@@ -16,7 +16,14 @@
           required
           placeholder="https://example.com"
           pattern="https://.*"
-          class="w-72 text-xl border-b-2 placeholder-gray-400 focus:outline-none focus:border-black"
+          class="
+            w-72
+            text-xl
+            border-b-2
+            placeholder-gray-400
+            focus:outline-none
+            focus:border-black
+          "
         />
         <font-awesome-icon
           class="w-5 mx-5"
@@ -37,10 +44,15 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import { UrlInfo } from '~/types'
+import FormLabel from '@/components/works/form/FormLabel.vue'
+import { UrlInfo } from '@/types'
 
-@Component
-export default class FormURL extends Vue {
+@Component({
+  components: {
+    FormLabel
+  }
+})
+export default class FormUrl extends Vue {
   @VModel({ type: Array })
   urls!: UrlInfo[]
 
