@@ -48,7 +48,7 @@
       <div class="flex justify-center mt-2 h-8">
         <base-tag v-for="tag in workData.tags" :key="tag.id" :text="tag.name" />
       </div>
-      <div class="flex items-center">
+      <div class="flex items-center absolute bottom-2">
         <user-rounded-icon :imageSrc="workData.user.avatar_url" />
         <div class="ml-3">
           {{ workData.user.name }}
@@ -69,9 +69,6 @@
             {{ user.name }}
           </div>
         </div> -->
-      <div class="text-right mt-2 mr-2 text-sm">
-        {{ dateFormatter(workData.updated_at) }}
-      </div>
     </div>
   </nuxt-link>
 </template>
