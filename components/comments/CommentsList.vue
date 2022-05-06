@@ -1,51 +1,69 @@
 <template>
   <div>
-    <div class="ml-4">
-      <input
-        class="rounded-full shadow-l border-2 border-gray-500 p-2"
-        type="text"
-        name="comment"
-        v-model="comment"
-      />
-      <button class="rounded-full pl-5" @click="add">
-        <img src="@/assets/img/commentAdd.png" />
-      </button>
+    <div
+      class="border-b-2 border-dotted my-4"
+      v-for="comment in comments"
+      :key="comment.id"
+    >
+      <div class="flex items-center">
+        <user-rounded-icon :imageSrc="comment.userIconUrl" />
+        <div class="ml-3">
+          {{ comment.userName }}
+        </div>
+      </div>
+      <div class="my-2">
+        <p>{{ comment.text }}</p>
+        <p class="text-right text-gray-400">
+          {{ dateFormatter(comment.created_at) }}
+        </p>
+      </div>
     </div>
-    <comment-item
-      class="ml-6 mt-6"
-      v-for="(item, i) in getterComments"
-      :key="i"
-      :name="item"
-      :index="i"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import CommentItem from '~/components/comments/CommentsItem.vue'
-import { commentStore } from '@/store'
+import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+
+interface Comment {
+  id: string
+  userIconUrl: string
+  userName: string
+  text: string
+  created_at: string
+}
 
 @Component({
   components: {
-    CommentItem
+    UserRoundedIcon
   }
 })
 export default class CommentsList extends Vue {
-  comment: string = ''
+  comments: Comment[] = [
+    {
+      id: 'abcd1234',
+      userIconUrl:
+        'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
+      userName: 'ハムタロサァン',
+      text: 'くしくし',
+      created_at: '2021-11-20T15:52:47.590564'
+    },
+    {
+      id: 'abcd1234',
+      userIconUrl:
+        'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
+      userName: 'ハムタロサァン',
+      text: 'くしくし',
+      created_at: '2021-11-20T15:52:47.590564'
+    }
+  ]
 
-  get getterComments() {
-    var getcomment = commentStore.getComments
-    console.log(getcomment)
-    return getcomment
-  }
-
-  add() {
-    if (this.comment === '') return
-    // this.todos.push(this.todo);
-    commentStore.addComment(this.comment)
-    console.log(this.comment)
-    this.comment = ''
+  dateFormatter(date: string): string {
+    console.log(date)
+    const splitFullDate = date.split('T')
+    const splitDate = splitFullDate[0].split('-')
+    const splitTime = splitFullDate[1].split('.')
+    return `${splitDate[0]}年${splitDate[1]}月${splitDate[2]}日 ${splitTime[0]}`
   }
 }
 </script>

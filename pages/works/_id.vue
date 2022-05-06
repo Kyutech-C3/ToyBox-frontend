@@ -44,7 +44,8 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="mt-10" v-html="work.description_html" />
     <!-- コメント -->
-    <comment-list class="mt-10" />
+    <comments-field class="mt-10 mx-auto w-3/4" />
+    <comments-list class="mt-10 mx-auto w-3/4" />
   </div>
 </template>
 
@@ -55,7 +56,8 @@ import WorksTitle from '@/components/works/WorksTitle.vue'
 import WorksViewInfo from '@/components/works/WorksViewInfo.vue'
 import BaseButton from '@/components/commons/BaseButton.vue'
 import BaseTag from '@/components/commons/BaseTag.vue'
-import CommentList from '@/components/comments/CommentsList.vue'
+import CommentsField from '@/components/comments/CommentsField.vue'
+import CommentsList from '@/components/comments/CommentsList.vue'
 import axios from 'axios'
 import { Work } from '@/types'
 import { saveAs } from 'file-saver'
@@ -67,7 +69,8 @@ import { saveAs } from 'file-saver'
     WorksViewInfo,
     BaseButton,
     BaseTag,
-    CommentList
+    CommentsField,
+    CommentsList
   },
   async asyncData({ route }) {
     const response = await axios.get(
