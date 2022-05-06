@@ -4,7 +4,7 @@
       py-3
       text-center
       justify-around
-      border-solid border-2 border-gray-200
+      border-solid border-b-2 border-gray-200
       flex
       w-full
       relative

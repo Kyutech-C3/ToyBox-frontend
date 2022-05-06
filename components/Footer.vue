@@ -1,5 +1,5 @@
 <template>
-  <footer class="py-8 border-solid border-2 border-gray-200 w-full">
+  <footer class="py-8 border-solid border-t-2 border-gray-200 w-full">
     <div class="flex justify-center">
       <a class="mx-8" href="https://compositecomputer.club" target="_blank">
         <img
