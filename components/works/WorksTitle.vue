@@ -7,11 +7,7 @@
       {{ title }}
     </p>
     <div class="inline-flex items-center mt-5">
-      <img
-        class="border rounded-full w-10 h-10 border-gray-400"
-        :src="user.avatar_url"
-        alt="userImage"
-      />
+      <user-rounded-icon :imageSrc="user.avatar_url" />
       <p class="ml-3">
         {{ user.display_name }}
       </p>
@@ -21,9 +17,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { User } from '~/types'
+import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+import { User } from '@/types'
 
-@Component
+@Component({
+  components: {
+    UserRoundedIcon
+  }
+})
 export default class WorksTitle extends Vue {
   @Prop({ type: String, required: false, default: '' })
   date!: string

@@ -13,13 +13,7 @@
       mb-12
     "
   >
-    <div class="m-5">
-      <img
-        class="w-64 border-2 border-gray-400 rounded-full"
-        :src="users.image"
-        alt="User image"
-      />
-    </div>
+    <user-rounded-icon :imageSrc="users.image" isLarge class="m-5" />
     <div class="text-4xl m-5">
       {{ users.name }}
     </div>
@@ -70,6 +64,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import BaseButton from '@/components/commons/BaseButton.vue'
 import UsersProfileForm from '@/components/users/UsersProfileForm.vue'
+import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
 
 interface User {
   image: string
@@ -82,7 +77,8 @@ interface User {
 @Component({
   components: {
     BaseButton,
-    UsersProfileForm
+    UsersProfileForm,
+    UserRoundedIcon
   }
 })
 export default class UsersProfile extends Vue {
