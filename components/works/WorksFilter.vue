@@ -48,6 +48,7 @@
       <font-awesome-icon
         class="w-7 cursor-pointer mx-2"
         :icon="['fas', 'plus-circle']"
+        @click="openTagSelector"
       />
     </div>
   </div>
@@ -57,6 +58,8 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
 import { Community } from '@/types'
+import { modalStore } from '~/store'
+import TagSelector from './TagSelector.vue'
 
 @Component({
   components: {
@@ -95,6 +98,10 @@ export default class WorksFilter extends Vue {
         `${this.$route.fullPath}&c${this.selectCommunityNum}=${index}`
       )
     }
+  }
+
+  openTagSelector() {
+    modalStore.setModalComponent(TagSelector)
   }
 }
 </script>
