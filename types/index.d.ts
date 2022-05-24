@@ -37,12 +37,14 @@ export type DeleteStatus = {
   status: string
 }
 
-export type GetTag = {
+export type Tag = {
   name: string
   color: string
   id: string
   community: Community
 }
+
+export type GetTag = Tag
 
 export type HTTPValidationError = {
   detail: ValidationError[]
