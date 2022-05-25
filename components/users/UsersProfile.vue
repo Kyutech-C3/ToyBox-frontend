@@ -38,6 +38,7 @@
     </div>
     <div class="flex justify-around w-full my-5">
       <a
+        v-if="user.github_id !== null"
         :href="'https://github.com/' + user.github_id"
         target="_blank"
         title="GitHub"
@@ -48,6 +49,7 @@
         />
       </a>
       <a
+        v-if="user.twitter_id !== null"
         :href="'https://twitter.com/' + user.twitter_id"
         target="_blank"
         title="Twitter"
