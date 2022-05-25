@@ -22,23 +22,19 @@
       {{ user.profile }}
     </div>
     <div v-show="!disabledEditButton" class="m-5">
-      <base-button title="プロフィール編集" @click="showEditProfile = true" />
-      <users-profile-form v-show="showEditProfile" :user="user">
-        <base-button
-          class="px-7"
-          title="変更"
-          @click="showEditProfile = false"
-        />
-        <base-button
-          class="px-7"
-          title="やめる"
-          @click="showEditProfile = false"
-        />
-      </users-profile-form>
+      <base-button
+        title="プロフィール編集"
+        @click="showEditProfileModal = true"
+      />
+      <users-profile-form
+        v-show="showEditProfileModal"
+        :user="user"
+        @close-edit-profile-modal="showEditProfileModal = false"
+      />
     </div>
     <div class="flex justify-around w-full my-5">
       <a
-        v-if="user.github_id !== null"
+        v-if="user.github_id !== ''"
         :href="'https://github.com/' + user.github_id"
         target="_blank"
         title="GitHub"
@@ -49,7 +45,7 @@
         />
       </a>
       <a
-        v-if="user.twitter_id !== null"
+        v-if="user.twitter_id !== ''"
         :href="'https://twitter.com/' + user.twitter_id"
         target="_blank"
         title="Twitter"
@@ -84,6 +80,6 @@ export default class UsersProfile extends Vue {
   @Prop({ type: Boolean, required: false, default: false })
   disabledEditButton!: boolean
 
-  showEditProfile: boolean = false
+  showEditProfileModal: boolean = false
 }
 </script>
