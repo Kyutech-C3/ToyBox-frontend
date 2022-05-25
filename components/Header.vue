@@ -21,13 +21,15 @@
       class="flex justify-start items-center absolute right-10 top-0 bottom-0"
     >
       <!-- not logged in  -->
-      <base-button
-        v-if="nowLogin && $route.path !== '/works/create'"
-        class="mx-5"
-        title="投稿"
-        @click="$router.push('/works/create')"
-      />
-      <base-button class="mx-5" title="ログイン" @click="clickLogin" />
+      <div v-if="$route.path !== '/works/create'">
+        <base-button
+          v-if="nowLogin"
+          class="mx-5"
+          title="投稿"
+          @click="$router.push('/works/create')"
+        />
+        <base-button v-else class="mx-5" title="ログイン" @click="clickLogin" />
+      </div>
       <!-- logged in -->
       <button class="hover:opacity-60 transition" @click="activeNav = true">
         <img
@@ -139,11 +141,11 @@ export default class Header extends Vue {
   menuItems: string[] = ['下書き', 'マイページ']
 
   get nowLogin() {
-    return false
+    return authStore.nowLogin
   }
 
   get getIcon() {
-    return authStore.getUser.avatarUrl
+    return authStore.getUser.avatar_url
   }
 
   get getName() {
