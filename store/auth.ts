@@ -6,20 +6,10 @@ import {
   config
 } from 'vuex-module-decorators'
 import axios from 'axios'
+import { User } from '~/types'
 
 config.rawError = true
 axios.defaults.baseURL = process.env.API_URL
-
-type User = {
-  id: string
-  name: string
-  email: string
-  displayName: string
-  discordToken: string
-  discordRefreshToken: string
-  discordUserId: string
-  avatarUrl: string
-}
 
 @Module({
   name: 'auth',
@@ -31,11 +21,9 @@ export default class Auth extends VuexModule {
     id: '',
     name: '',
     email: '',
-    displayName: '',
-    discordToken: '',
-    discordRefreshToken: '',
-    discordUserId: '',
-    avatarUrl: ''
+    display_name: '',
+    created_at: '',
+    updated_at: ''
   }
 
   private accessToken: string = ''
@@ -53,15 +41,8 @@ export default class Auth extends VuexModule {
   }
 
   @Mutation
-  setUser(user: any) {
-    this.user.id = user.id
-    this.user.name = user.name
-    this.user.email = user.email
-    this.user.displayName = user.display_name
-    this.user.discordToken = user.discord_token
-    this.user.discordRefreshToken = user.discord_refresh_token
-    this.user.discordUserId = user.discord_user_id
-    this.user.avatarUrl = user.avatar_url
+  setUser(user: User) {
+    this.user = user
   }
 
   @Mutation

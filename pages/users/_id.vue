@@ -1,6 +1,6 @@
 <template>
   <div>
-    <users-profile :users="users" />
+    <users-profile :user="fetchUser" />
     <works-filter :communities="communities" />
     <works-list :works="works" />
   </div>
@@ -13,14 +13,7 @@ import UsersProfile from '@/components/users/UsersProfile.vue'
 import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import { Work } from '@/types'
-
-interface User {
-  image: string
-  name: string
-  description: string
-  github: string
-  twitter: string
-}
+import { authStore } from '~/store'
 
 @Component({
   components: {
@@ -48,13 +41,9 @@ export default class Users extends Vue {
   works!: Work[]
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
-  users: User = {
-    image:
-      'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
-    name: 'ハムタロサァン',
-    description: 'はむたろなのだ',
-    github: 'Kyutech-C3',
-    twitter: 'c3_kyutech'
+
+  get fetchUser() {
+    return authStore.getUser
   }
 }
 </script>
