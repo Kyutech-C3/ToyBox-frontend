@@ -12,45 +12,6 @@
           <div class="flex-shrink-0 w-24" />
             <div class="flex justify-center flex-wrap gap-3">
               <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="tariban"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="tekata"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="hugahugamaru"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="hogehogemaru"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="tariban"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="tekata"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="hugahugamaru"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="hogehogemaru"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
-              <tag tagText="text"/>
             </div>    
           <div class="flex-shrink-0 w-24" />
         </div>
@@ -58,8 +19,7 @@
       <div class="row-span-1">
         <div class="flex items-center flex-row-reverse h-24">
           <custom-button class="px-7 m-6" title="完了" @click="showEditProfile = false" />
-          <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
-          <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">1</div>
+          <div class="text-gray-700 text-center  px-4 py-2 m-2">{{deNumerator}} / {{Numerator}}</div>
         </div>
       </div>
   </div>
@@ -80,5 +40,7 @@ import FormTagWindowCloseButton from '@/components/form/FormTagWindowCloseButton
   }
 })
 export default class FormTagWindow extends Vue {
+  Numerator = 1
+  deNumerator = 10
 }
 </script>
