@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
-import ToyboxButton from '~/components/ToyboxButton.vue'
+import ToyboxButton from '~/components/commons/BaseButton.vue'
 
 export default {
   title: 'ToyboxButton',

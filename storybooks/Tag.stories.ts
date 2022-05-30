@@ -1,12 +1,12 @@
-import Tag from '~/components/commons/Tag.vue'
+import BaseTag from '~/components/commons/BaseTag.vue'
 
 export default {
   title: 'Tag'
 }
 
 export const tag1 = () => ({
-  template: '<tag :tag-text="text"/>',
-  components: { Tag },
+  template: '<base-tag :tag-text="text"/>',
+  components: { BaseTag },
   props: {
     text: {
       default: 'hogehoge'

@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/vue'
-import Profile from '@/components/Users/Profile.vue'
-import ProfileForm from '@/components/Users/ProfileForm.vue'
+import Profile from '@/components/users/UsersProfile.vue'
+import ProfileForm from '@/components/users/UsersProfileForm.vue'
 
 export default {
   title: 'Users'

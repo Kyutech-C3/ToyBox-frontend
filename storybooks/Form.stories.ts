@@ -1,4 +1,4 @@
-import WorksForm from '~/components/form/WorksForm.vue'
+import WorksForm from '~/components/works/WorksForm.vue'
 
 export default {
   title: 'Form'

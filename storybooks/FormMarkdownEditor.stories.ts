@@ -1,4 +1,4 @@
-import FormMarkdown from '~/components/form/FormMarkdown.vue'
+import FormMarkdown from '~/components/works/form/FormMarkdown.vue'
 
 export default {
   title: 'Form'
