@@ -1,7 +1,7 @@
 # M1 Macの場合
-FROM arm64v8/node:16-alpine
+# FROM arm64v8/node:16-alpine
 # Intel CPUの場合
-# FROM node:16-alpine
+FROM node:16-alpine
 
 ARG WORKDIR
 
