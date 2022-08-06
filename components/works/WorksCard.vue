@@ -20,9 +20,7 @@
         class="h-full m-auto"
         :src="
           workData.thumbnail.length === 1
-            ? 'https://kodomobeya.compositecomputer.club/static/image/' +
-              workData.thumbnail[0].id +
-              '/origin.jpg'
+            ? `${assetBaseURL}/image/${workData.thumbnail[0].id}/origin.${workData.thumbnail[0].extention}`
             : 'https://avatars.githubusercontent.com/u/61457046'
         "
         alt="Thumbnail is not found"
@@ -86,6 +84,8 @@ import { Work } from '@/types'
   }
 })
 export default class WorksCard extends Vue {
+  assetBaseURL?: string = process.env.ASSET_BASE_URL
+
   @Prop({ type: Object, required: true })
   workData!: Work
 
