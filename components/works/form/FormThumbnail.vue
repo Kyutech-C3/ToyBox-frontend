@@ -2,7 +2,8 @@
   <label
     for="pickimg"
     class="
-      mr-10
+      mr-5
+      mb-5
       p-3
       w-32
       h-32
@@ -13,6 +14,7 @@
       justify-center
       items-center
       cursor-pointer
+      relative
     "
   >
     <input
@@ -20,7 +22,14 @@
       ref="pickimg"
       type="file"
       accept="image/png, image/jpeg, image/gif, image/bmp, video/mp4, audio/mp4, audio/wav, audio/mpeg, application/zip, .gltf, .fbx"
-      style="display: none"
+      style="opacity: 0"
+      class="
+        absolute
+        opacity-0
+        top-1/2
+        left-1/2
+        translate-x-1/2 translate-y-1/2
+      "
       required
       :multiple="true"
       @change="onFilePicked($event)"
@@ -30,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component, VModel, Vue } from 'nuxt-property-decorator'
+import { Component, VModel, Vue, Model, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { authStore } from '@/store'
 
@@ -48,6 +57,8 @@ const baseAssetType: Object = {
 
 @Component
 export default class FromThumbnail extends Vue {
+  assets: { url: string; asset_type: string }[] = []
+
   @VModel({ type: Array })
   assetImage!: string[]
 
@@ -73,6 +84,10 @@ export default class FromThumbnail extends Vue {
             })
             .then((result) => {
               this.assetImage.push(result.data.id)
+              this.assets.push({
+                url: `${process.env.ASSET_BASE_URL}/${result.data.asset_type}/${result.data.id}/origin.${result.data.extention}`,
+                asset_type: result.data.asset_type
+              })
             })
         } catch (error) {
           // eslint-disable-next-line no-console
@@ -99,6 +114,12 @@ export default class FromThumbnail extends Vue {
       index++
     })
     return response
+  }
+
+  deleteAsset(number: number) {
+    this.assets = this.assets.filter((_, index) => {
+      return number !== index
+    })
   }
 }
 </script>

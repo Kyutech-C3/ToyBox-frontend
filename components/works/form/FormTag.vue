@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <form-label name="タグ" />
+    <form-label name="タグ" :required="true" />
     <div
       class="
         w-48

@@ -1,45 +1,78 @@
 <template>
   <div class="flex">
-    <form-label name="アセット" />
+    <form-label name="アセット" :required="true" :info="info" />
     <div class="flex flex-wrap">
-      <div
-        v-for="(imageURL, i) in assetImage"
-        :key="i"
-        class="relative mb-5 mr-5"
-      >
+      <div v-for="(imageURL, i) in assets" :key="i" class="relative mb-5 mr-5">
         <font-awesome-icon
-          class="w-4 absolute top-1 right-2 opacity-60 cursor-pointer"
+          class="
+            w-6
+            h-6
+            rounded-full
+            absolute
+            top-1.5
+            right-1.5
+            opacity-60
+            cursor-pointer
+            bg-white
+          "
           :icon="['fas', 'times']"
           @click="deleteAsset(i)"
         />
-        <form-image-preview :image-url="imageURL" />
+        <form-image-preview
+          v-if="imageURL.asset_type === 'image'"
+          :image-url="imageURL.url"
+        />
+        <form-video-preview
+          v-if="imageURL.asset_type === 'video'"
+          :image-url="imageURL.url"
+        />
       </div>
-      <form-thumbnail v-model="assetImage" />
+      <form-thumbnail v-model="assetImage" ref="formThumbnail" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Ref } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
+import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
 import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
 
 @Component({
   components: {
     FormLabel,
     FormImagePreview,
-    FormThumbnail
+    FormThumbnail,
+    FormVideoPreview
   }
 })
 export default class FormAssets extends Vue {
+  info: string = `
+対応形式：
+  画像 [ .png, .jpg, .jpeg, .bmp ]
+  動画 [ .mp4 ]
+  音源 [ .mp3, .wav, .m4a ]
+  モデル [ .gltf, .fbx ]
+  zip [.zip ]
+`
+  assets: { url: string; asset_type: string }[] = []
+
+  @Ref() formThumbnail!: FormThumbnail
+
   @VModel({ type: Array })
   assetImage!: string[]
+
+  mounted() {
+    this.assets = this.formThumbnail.assets
+  }
 
   deleteAsset(number: number) {
     this.assetImage = this.assetImage.filter((_, index) => {
       return number !== index
     })
+    this.formThumbnail.deleteAsset(number)
+    this.assets = this.formThumbnail.assets
   }
 }
 </script>

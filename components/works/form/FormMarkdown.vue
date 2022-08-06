@@ -1,18 +1,26 @@
 <template>
-  <mavon-editor
-    v-model="description"
-    :toolbars="toolbarsOption"
-    language="ja"
-    :xss-options="{}"
-    default-open="edit"
-    class="markdown-body min-h-300 w-full bg-white"
-  />
+  <div>
+    <form-label name="本文" :required="true" />
+    <mavon-editor
+      v-model="description"
+      :toolbars="toolbarsOption"
+      language="ja"
+      :xss-options="{}"
+      default-open="edit"
+      class="markdown-body min-h-300 w-full bg-white"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import FormLabel from '@/components/works/form/FormLabel.vue'
 
-@Component
+@Component({
+  components: {
+    FormLabel
+  }
+})
 export default class FormMarkdown extends Vue {
   @VModel({ type: String })
   description!: string

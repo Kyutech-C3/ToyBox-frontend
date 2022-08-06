@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <form-label name="タイトル" />
+    <form-label name="タイトル" :required="true" />
     <input
       v-model="title"
       type="text"
