@@ -92,7 +92,7 @@
             hover:underline
             text-gray-200
           "
-          :to="`users/${getUserId}${index === 0 ? '/draft' : ''}`"
+          :to="`/users/${getUserId}${index === 0 ? '/draft' : ''}`"
         >
           {{ menuItem }}
         </nuxt-link>
