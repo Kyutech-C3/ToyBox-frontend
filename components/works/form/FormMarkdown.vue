@@ -5,7 +5,7 @@
     language="ja"
     :xss-options="{}"
     default-open="edit"
-    class="markdown-body min-h-300 w-full"
+    class="markdown-body min-h-300 w-full bg-white"
   />
 </template>
 
@@ -42,5 +42,8 @@ export default class FormMarkdown extends Vue {
 <style>
 .v-note-wrapper {
   z-index: 1 !important;
+}
+textarea {
+  background-color: white;
 }
 </style>

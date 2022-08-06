@@ -10,17 +10,18 @@
       rounded-3xl
       border-gray-400
       px-16
+      py-7
     "
     autocomplete="off"
     @submit.prevent
   >
-    <form-community v-model="workData.community_id" class="my-5" />
-    <form-tag class="my-5" />
-    <form-title v-model="workData.title" class="my-5" />
-    <form-assets v-model="workData.assets_id" class="my-5" />
+    <!-- <form-community v-model="workData.community_id" class="mb-3" /> -->
+    <form-tag class="my-3" />
+    <form-title v-model="workData.title" class="my-3" />
+    <form-assets v-model="workData.assets_id" class="my-3" />
     <form-url v-model="workData.urls" class="my-5" />
     <form-markdown v-model="workData.description" class="my-5" />
-    <form-submit-button class="my-5 z-10" @submit="clickSubmit($event)" />
+    <form-submit-button class="mt-5 z-10" @submit="clickSubmit($event)" />
   </form>
 </template>
 
@@ -69,6 +70,7 @@ export default class WorksForm extends Vue {
         })
         .then((result) => {
           console.log(result)
+          // this.$router.push(`/works/${result.}`)
         })
     } catch (error) {
       console.log(error)

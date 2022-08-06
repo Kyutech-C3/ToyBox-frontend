@@ -1,6 +1,6 @@
 <template>
   <div>
-    <works-filter :communities="communities" />
+    <works-filter />
     <works-list :works="works" />
   </div>
 </template>
@@ -24,13 +24,7 @@ import { Work } from '@/types'
     } else if (!resWorks.data) {
       alert('作品一覧の取得に失敗しました')
     }
-    const resCommunities = await axios.get('/communities')
-    if (resCommunities.data.length === 0) {
-      console.error('コミュニティがありません')
-    } else if (!resCommunities.data) {
-      console.error('コミュニティ一覧の取得に失敗しました')
-    }
-    return { works: resWorks.data, communities: resCommunities.data }
+    return { works: resWorks.data }
   }
 })
 export default class Index extends Vue {
