@@ -15,11 +15,10 @@
     autocomplete="off"
     @submit.prevent
   >
-    <!-- <form-community v-model="workData.community_id" class="mb-3" /> -->
     <form-tag class="my-3" />
     <form-title v-model="workData.title" class="my-3" />
-    <form-assets v-model="workData.assets_id" class="my-3" />
-    <form-url v-model="workData.urls" class="my-5" />
+    <form-assets v-model="workData.assets_id" class="mt-3" />
+    <form-url v-model="workData.urls" class="mb-5" />
     <form-markdown v-model="workData.description" class="my-5" />
     <form-submit-button class="mt-5 z-10" @submit="clickSubmit($event)" />
   </form>
@@ -28,7 +27,6 @@
 <script lang="ts">
 import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
-import FormCommunity from '@/components/works/form/FormCommunity.vue'
 import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
 import FormAssets from '@/components/works/form/FormAssets.vue'
@@ -40,7 +38,6 @@ import { PostWork } from '@/types'
 
 @Component({
   components: {
-    FormCommunity,
     FormTag,
     FormTitle,
     FormAssets,
@@ -70,7 +67,7 @@ export default class WorksForm extends Vue {
         })
         .then((result) => {
           console.log(result)
-          // this.$router.push(`/works/${result.}`)
+          this.$router.push('/')
         })
     } catch (error) {
       console.log(error)

@@ -24,15 +24,6 @@ export type Body_post_asset_api_v1_assets_post = {
   asset_type: string
 }
 
-export type Community = {
-  name: string
-  description: string
-  id: string
-  description_html: string
-  created_at: string
-  updated_at: string
-}
-
 export type DeleteStatus = {
   status: string
 }
@@ -41,7 +32,6 @@ export type Tag = {
   name: string
   color: string
   id: string
-  community: Community
 }
 
 export type GetTag = Tag
@@ -53,13 +43,11 @@ export type HTTPValidationError = {
 export type PostTag = {
   name: string
   color: string
-  community_id: string
 }
 
 export type PostWork = {
   title: string
   description: string
-  community_id: string
   visibility: string
   thumbnail_asset_id?: string
   assets_id: string[]
@@ -70,7 +58,6 @@ export type PostWork = {
 export type PutTag = {
   name: string
   color: string
-  community_id: string
 }
 
 export type RefreshTokenExchangeRequest = {
@@ -137,7 +124,6 @@ export type Work = {
   description: string
   description_html: string
   user: User
-  community: Community
   assets: Asset[]
   urls: UrlInfo[]
   visibility: string

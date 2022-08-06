@@ -16,12 +16,11 @@ export default class Create extends Vue {
   workData: PostWork = {
     title: '',
     description: '',
-    community_id: '',
     visibility: '',
     thumbnail_asset_id: '',
     assets_id: [],
     urls: [],
-    tags_id: ['6337f6d5-500a-446d-a3ab-dcf438a00f9f'] // 仮置き
+    tags_id: ['tag-12345'] // 仮置き
   }
 }
 </script>

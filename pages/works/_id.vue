@@ -9,10 +9,6 @@
       />
       <works-view-info />
     </div>
-    <!-- コミュニティー -->
-    <works-content class="mt-8" icon="users">
-      <base-tag :text="work.community.name" />
-    </works-content>
     <!-- タグ -->
     <works-content class="mt-5" icon="tags">
       <base-tag v-for="tag in work.tags" :key="tag.id" :text="tag.name" />
@@ -74,7 +70,7 @@ import { saveAs } from 'file-saver'
   },
   async asyncData({ route }) {
     const response = await axios.get(
-      `https://kodomobeya.compositecomputer.club/api/v1/works/${route.params.id}`
+      `${process.env.API_URL}/works/${route.params.id}`
     )
     return { work: response.data }
   }
@@ -87,7 +83,7 @@ export default class Works extends Vue {
   }
 
   async download(type: string, id: string) {
-    const url = `https://kodomobeya.compositecomputer.club/${type}/${id}/origin.zip`
+    const url = `${process.env.ASSET_BASE_URL}/${type}/${id}/origin.zip`
     const data = await fetch(url)
     const blob = await data.blob()
     saveAs(blob, 'origin.zip')
