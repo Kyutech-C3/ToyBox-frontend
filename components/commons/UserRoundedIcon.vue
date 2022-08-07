@@ -2,7 +2,7 @@
   <div>
     <img
       class="border-gray-400 rounded-full"
-      :class="isLarge ? 'w-64 h-64 border-2' : 'w-10 h-10 border'"
+      :class="isLarge ? 'w-64 h-64 border-2' : 'w-8 h-8 border'"
       :src="imageSrc"
       alt="icon"
     />

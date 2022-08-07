@@ -46,12 +46,7 @@
       <div class="flex justify-center mt-2 h-8">
         <base-tag v-for="tag in workData.tags" :key="tag.id" :text="tag.name" />
       </div>
-      <div class="flex items-center absolute bottom-2">
-        <user-rounded-icon :imageSrc="workData.user.avatar_url" />
-        <div class="ml-3">
-          {{ workData.user.name }}
-        </div>
-      </div>
+      <user-tag :user="workData.user" class="absolute bottom-2" />
       <!-- バックエンドが複数ユーザーに対応するまでコメントアウト -->
       <!-- <div
           v-for="(user, index) in users"
@@ -74,13 +69,13 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
-import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+import UserTag from '@/components/commons/UserTag.vue'
 import { Work } from '@/types'
 
 @Component({
   components: {
     BaseTag,
-    UserRoundedIcon
+    UserTag
   }
 })
 export default class WorksCard extends Vue {

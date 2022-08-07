@@ -6,23 +6,20 @@
     <p class="text-3xl">
       {{ title }}
     </p>
-    <div class="inline-flex items-center mt-5">
-      <user-rounded-icon :imageSrc="user.avatar_url" />
-      <p class="ml-3">
-        {{ user.display_name }}
-      </p>
-    </div>
+    <user-tag :user="user" class="mt-5" />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+import UserTag from '@/components/commons/UserTag.vue'
 import { User } from '@/types'
 
 @Component({
   components: {
-    UserRoundedIcon
+    UserRoundedIcon,
+    UserTag
   }
 })
 export default class WorksTitle extends Vue {
