@@ -29,9 +29,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
-import { Community } from '@/types'
 import { modalStore } from '~/store'
 import TagSelector from './TagSelector.vue'
 
