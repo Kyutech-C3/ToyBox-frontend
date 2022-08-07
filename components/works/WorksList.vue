@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap justify-center px-10 py-5">
+  <div class="flex flex-wrap px-10 py-5">
     <works-card v-for="(work, index) in works" :key="index" :work-data="work" />
   </div>
 </template>
