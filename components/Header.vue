@@ -179,7 +179,8 @@ export default class Header extends Vue {
     })
     authStore.setAccessToken('')
     localStorage.removeItem('refresh_token')
-    location.reload()
+    this.activeNav = !this.activeNav
+    this.$router.push('/')
   }
 }
 </script>
