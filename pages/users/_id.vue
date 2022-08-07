@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <users-profile :user="fetchUser" />
-    <works-filter :communities="communities" />
+  <div class="w-4/5">
+    <users-profile :user="user" />
+    <works-filter />
     <works-list :works="works" />
   </div>
 </template>
@@ -21,23 +21,46 @@ import { authStore } from '~/store'
     WorksFilter,
     WorksList
   },
-  async asyncData() {
-    const resWorks = await axios.get('/works')
+  async asyncData({ store, route }) {
+    let resUser
+    console.log(authStore.getAccessToken)
+    console.log(authStore.getUser.id)
+    if (authStore.getUser.id === route.params.id) {
+      resUser = await axios.get('/users/@me', {
+        headers: {
+          Authorization: `Bearer ${authStore.getAccessToken}`
+        }
+      })
+      if (!resUser.data) {
+        alert('ユーザー情報の取得に失敗しました')
+      }
+    } else {
+      resUser = await axios.get(`/users/${route.params.id}`)
+      if (!resUser.data) {
+        alert('ユーザー情報の取得に失敗しました')
+      }
+    }
+    const resWorks = await axios.get('/works', {
+      headers: {
+        Authorization: `Bearer ${authStore.getAccessToken}`
+      }
+    })
     if (resWorks.data.length === 0) {
       alert('作品がありません')
     } else if (!resWorks.data) {
       alert('作品一覧の取得に失敗しました')
     }
-    return { works: resWorks.data }
+    return { works: resWorks.data, user: resUser.data }
+  },
+  methods: {
+    fetchUser() {
+      return authStore.getUser
+    }
   }
 })
 export default class Users extends Vue {
   works!: Work[]
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
-
-  get fetchUser() {
-    return authStore.getUser
-  }
 }
 </script>

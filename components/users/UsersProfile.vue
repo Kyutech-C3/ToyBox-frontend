@@ -10,11 +10,10 @@
       border-2 border-gray-400
       rounded-3xl
       mx-auto
-      px-60
       mb-12
     "
   >
-    <user-rounded-icon :imageSrc="user.avatar_url" isLarge class="m-5" />
+    <user-rounded-icon :imageSrc="user.avatar_url" isLarge class="my-5" />
     <div class="text-4xl m-5">
       {{ user.display_name }}
     </div>
@@ -32,15 +31,16 @@
         @close-edit-profile-modal="showEditProfileModal = false"
       />
     </div>
-    <div class="flex justify-around w-full my-5">
+    <div class="flex justify-center w-full my-5">
       <a
         v-if="user.github_id !== ''"
         :href="'https://github.com/' + user.github_id"
         target="_blank"
         title="GitHub"
+        class="mx-5"
       >
         <font-awesome-icon
-          class="w-10 text-gray-500"
+          class="w-10 text-gray-500 hover:text-gray-700"
           :icon="['fab', 'github']"
         />
       </a>
@@ -49,9 +49,10 @@
         :href="'https://twitter.com/' + user.twitter_id"
         target="_blank"
         title="Twitter"
+        class="mx-5"
       >
         <font-awesome-icon
-          class="w-10 text-gray-500"
+          class="w-10 text-gray-500 hover:text-gray-700"
           :icon="['fab', 'twitter']"
         />
       </a>
