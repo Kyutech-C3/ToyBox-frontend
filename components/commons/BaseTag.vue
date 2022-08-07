@@ -3,7 +3,7 @@
     class="
       px-4
       py-0.5
-      mx-3
+      mx-1
       bg-white
       rounded-lg
       border border-gray-500
