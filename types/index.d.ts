@@ -5,6 +5,7 @@ export type Asset = {
   asset_type: string
   id: string
   user: User
+  extention: string
   created_at: string
   updated_at: string
 }

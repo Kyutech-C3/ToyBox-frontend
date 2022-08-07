@@ -8,20 +8,17 @@
       <img
         v-if="asset.asset_type === 'image'"
         class="m-auto h-full"
-        :src="`https://kodomobeya.compositecomputer.club/static/image/${asset.id}/origin.png`"
+        :src="getURL(asset)"
         alt="asset image"
       />
       <video v-else-if="asset.asset_type === 'video'" controls>
-        <source
-          :src="`https://kodomobeya.compositecomputer.club/static/video/${asset.id}/origin.mp4`"
-          type="video/mp4"
-        />
+        <source :src="getURL(asset)" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
       </video>
       <audio
         v-else-if="asset.asset_type === 'music'"
         controls
-        :src="`https://kodomobeya.compositecomputer.club/static/music/${asset.id}/origin.mp3`"
+        :src="getURL(asset)"
       >
         Your browser does not support the <code>audio</code> element.
       </audio>
@@ -41,6 +38,7 @@ import {
   Navigation as HooperNavigation
 } from 'hooper'
 import 'hooper/dist/hooper.css'
+import { Asset } from '@/types'
 
 @Component({
   components: {
@@ -52,12 +50,16 @@ import 'hooper/dist/hooper.css'
 })
 export default class WorksCarousel extends Vue {
   @Prop({ type: Array, required: true })
-  assets!: Object
+  assets!: Asset
 
   hooperSettings: any = {
     infiniteScroll: true,
     centerMode: true,
     keysControl: false
+  }
+
+  getURL(asset: Asset): string {
+    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
   }
 }
 </script>
