@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-4/5">
     <works-filter />
     <works-list :works="works" />
   </div>

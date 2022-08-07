@@ -2,8 +2,8 @@
   <nuxt-link
     :to="'works/' + workData.id"
     class="
-      w-80
-      h-80
+      w-[var(--card-w)]
+      h-96
       m-2
       border border-gray-300
       rounded-3xl
