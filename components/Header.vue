@@ -169,6 +169,15 @@ export default class Header extends Vue {
   }
 
   clickLogout() {
+    authStore.setUser({
+      id: '',
+      name: '',
+      email: '',
+      display_name: '',
+      created_at: '',
+      updated_at: ''
+    })
+    authStore.setAccessToken('')
     localStorage.removeItem('refresh_token')
     location.reload()
   }

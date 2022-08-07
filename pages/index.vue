@@ -11,6 +11,7 @@ import axios from 'axios'
 import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import { Work } from '@/types'
+import { authStore } from '@/store'
 
 @Component({
   components: {
@@ -18,12 +19,17 @@ import { Work } from '@/types'
     WorksList
   },
   async asyncData() {
-    const resWorks = await axios.get('/works')
+    const resWorks = await axios.get('/works', {
+      headers: {
+        Authorization: `Bearer ${authStore.getAccessToken}`
+      }
+    })
     if (resWorks.data.length === 0) {
       alert('作品がありません')
     } else if (!resWorks.data) {
       alert('作品一覧の取得に失敗しました')
     }
+    console.log(resWorks.data)
     return { works: resWorks.data }
   }
 })
