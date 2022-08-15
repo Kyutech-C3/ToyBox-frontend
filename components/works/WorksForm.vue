@@ -33,7 +33,7 @@ import FormAssets from '@/components/works/form/FormAssets.vue'
 import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
-import { authStore } from '@/store'
+import { authStore, workPostStore } from '@/store'
 import { PostWork } from '@/types'
 
 @Component({
@@ -53,22 +53,41 @@ export default class WorksForm extends Vue {
   @VModel({ type: Object, required: true })
   workData!: PostWork
 
+  // @Emit()
+  // change() {
+  //   return true
+  // }
+
   clickSubmit(visibility: string) {
+    workPostStore.initAssetsViewInfo()
     // バリデーションをクリアしたときのみ実行される
     // バックエンドにPOSTを記述
     this.workData.thumbnail_asset_id = this.workData.assets_id[0]
     this.workData.visibility = visibility
     try {
-      axios
-        .post('/works', this.workData, {
-          headers: {
-            Authorization: `Bearer ${authStore.getAccessToken}`
-          }
-        })
-        .then((result) => {
-          console.log(result)
-          this.$router.push('/')
-        })
+      if (this.isNewWorks) {
+        axios
+          .post('/works', this.workData, {
+            headers: {
+              Authorization: `Bearer ${authStore.getAccessToken}`
+            }
+          })
+          .then((result) => {
+            console.log(result)
+            this.$router.push('/')
+          })
+      } else {
+        axios
+          .put(`/works/${this.$route.params.id}`, this.workData, {
+            headers: {
+              Authorization: `Bearer ${authStore.getAccessToken}`
+            }
+          })
+          .then((result) => {
+            console.log(result)
+            this.$router.push('/')
+          })
+      }
     } catch (error) {
       console.log(error)
     }

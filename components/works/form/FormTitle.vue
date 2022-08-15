@@ -16,6 +16,8 @@
         focus:outline-none
         focus:border-black
       "
+      @change="change"
+      @keyup="change"
     />
   </div>
 </template>
@@ -23,6 +25,7 @@
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
+import { workPostStore } from '@/store'
 
 @Component({
   components: {
@@ -32,5 +35,9 @@ import FormLabel from '@/components/works/form/FormLabel.vue'
 export default class FormTitle extends Vue {
   @VModel({ type: String })
   title!: string
+
+  change() {
+    workPostStore.changeIsBlockUnload()
+  }
 }
 </script>

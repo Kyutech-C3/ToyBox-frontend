@@ -24,11 +24,16 @@
             focus:outline-none
             focus:border-black
           "
+          @change="change"
+          @keyup="change"
         />
         <font-awesome-icon
           class="w-5 mx-5"
           :icon="['fas', 'times']"
-          @click="deleteURL(i)"
+          @click="
+            deleteURL(i)
+            change
+          "
         />
       </div>
     </div>
@@ -43,9 +48,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Emit } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import { UrlInfo } from '@/types'
+import { workPostStore } from '@/store'
 
 @Component({
   components: {
@@ -55,6 +61,10 @@ import { UrlInfo } from '@/types'
 export default class FormUrl extends Vue {
   @VModel({ type: Array })
   urls!: UrlInfo[]
+
+  change() {
+    workPostStore.changeIsBlockUnload()
+  }
 
   get count() {
     return `URL ${this.urls.length}/5`

@@ -26,22 +26,28 @@
       class="
         absolute
         opacity-0
+        w-full
+        h-full
         top-1/2
         left-1/2
-        translate-x-1/2 translate-y-1/2
+        -translate-x-1/2 -translate-y-1/2
       "
       required
       :multiple="true"
-      @change="onFilePicked($event)"
+      @change="
+        onFilePicked($event)
+        change
+      "
+      @click="change"
     />
     <font-awesome-icon class="w-10" :icon="['fas', 'plus']" />
   </label>
 </template>
 
 <script lang="ts">
-import { Component, VModel, Vue, Model, Prop } from 'nuxt-property-decorator'
+import { Component, VModel, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
-import { authStore } from '@/store'
+import { authStore, workPostStore } from '@/store'
 
 interface Event<T = EventTarget> {
   target: T
@@ -57,10 +63,12 @@ const baseAssetType: Object = {
 
 @Component
 export default class FromThumbnail extends Vue {
-  assets: { url: string; asset_type: string }[] = []
-
   @VModel({ type: Array })
   assetImage!: string[]
+
+  change() {
+    workPostStore.changeIsBlockUnload()
+  }
 
   onFilePicked(event: Event<HTMLInputElement>) {
     const file = event.target.files as FileList
@@ -84,10 +92,7 @@ export default class FromThumbnail extends Vue {
             })
             .then((result) => {
               this.assetImage.push(result.data.id)
-              this.assets.push({
-                url: `${process.env.ASSET_BASE_URL}/${result.data.asset_type}/${result.data.id}/origin.${result.data.extention}`,
-                asset_type: result.data.asset_type
-              })
+              workPostStore.addAssetsViewInfo(result.data)
             })
         } catch (error) {
           // eslint-disable-next-line no-console
@@ -114,12 +119,6 @@ export default class FromThumbnail extends Vue {
       index++
     })
     return response
-  }
-
-  deleteAsset(number: number) {
-    this.assets = this.assets.filter((_, index) => {
-      return number !== index
-    })
   }
 }
 </script>
