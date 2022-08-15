@@ -1,5 +1,15 @@
 <template>
-  <div class="w-3/4">
+  <div class="w-3/4 relative">
+    <div class="z-50 absolute -right-20 top-0">
+      <base-icon-button
+        v-if="getUser().id === work.user.id"
+        :to="`/works/${work.id}/edit`"
+        :size="'base'"
+        :is-background="true"
+        :is-shadow="true"
+        class="p-4"
+      />
+    </div>
     <works-carousel class="border border-gray-700" :assets="work.assets" />
     <div class="flex justify-between mt-5">
       <works-title
@@ -47,26 +57,31 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+
 import WorksCarousel from '@/components/works/WorksCarousel.vue'
 import WorksTitle from '@/components/works/WorksTitle.vue'
 import WorksViewInfo from '@/components/works/WorksViewInfo.vue'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import BaseTag from '@/components/commons/BaseTag.vue'
 import CommentsField from '@/components/comments/CommentsField.vue'
 import CommentsList from '@/components/comments/CommentsList.vue'
+import BaseIconButton from '@/components/commons/BaseIconButton.vue'
+
 import axios from 'axios'
 import { Work } from '@/types'
 import { saveAs } from 'file-saver'
+import { authStore } from '~/store'
 
 @Component({
   components: {
     WorksCarousel,
     WorksTitle,
     WorksViewInfo,
-    BaseButton,
+    BaseTextButton,
     BaseTag,
     CommentsField,
-    CommentsList
+    CommentsList,
+    BaseIconButton
   },
   async asyncData({ route }) {
     const response = await axios.get(
@@ -77,6 +92,10 @@ import { saveAs } from 'file-saver'
 })
 export default class Works extends Vue {
   work!: Work
+
+  getUser() {
+    return authStore.getUser
+  }
 
   mounted() {
     console.log(JSON.stringify(this.work, null, 2))

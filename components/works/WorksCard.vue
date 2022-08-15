@@ -13,8 +13,16 @@
       hover:shadow-lg
       transform
       transition
+      relative
     "
   >
+    <div class="z-50 absolute right-3 top-3">
+      <base-icon-button
+        v-if="getUser().id === workData.user.id"
+        :to="`/works/${workData.id}/edit`"
+        :size="'small'"
+      />
+    </div>
     <div class="h-1/2 border-b">
       <img
         class="h-full m-auto"
@@ -70,12 +78,15 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
+import BaseIconButton from '@/components/commons/BaseIconButton.vue'
 import { Work } from '@/types'
+import { authStore } from '~/store'
 
 @Component({
   components: {
     BaseTag,
-    UserTag
+    UserTag,
+    BaseIconButton
   }
 })
 export default class WorksCard extends Vue {
@@ -83,6 +94,10 @@ export default class WorksCard extends Vue {
 
   @Prop({ type: Object, required: true })
   workData!: Work
+
+  getUser() {
+    return authStore.getUser
+  }
 
   dateFormatter(date: string): string {
     // const nowDate: Date = new Date()
