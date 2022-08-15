@@ -4,12 +4,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import { authStore } from '@/store'
 
 @Component({
   components: {
-    BaseButton
+    BaseTextButton
   }
 })
 export default class Login extends Vue {

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="w-full flex flex-row justify-end">
-      <BaseButton title="完了" @click="close"></BaseButton>
+      <BaseTextButton title="完了" @click="close"></BaseTextButton>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import BaseTag from '../commons/BaseTag.vue'
-import BaseButton from '../commons/BaseButton.vue'
+import BaseTextButton from '../commons/BaseTextButton.vue'
 import { modalStore, tagStore, workFilterStore } from '~/store'
 import { Tag } from '~/types'
 
@@ -43,7 +43,7 @@ import { Tag } from '~/types'
 @Component({
   components: {
     BaseTag,
-    BaseButton
+    BaseTextButton
   }
 })
 export default class WorkFilter extends Vue {

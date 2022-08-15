@@ -52,14 +52,14 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersTextField from '@/components/users/UsersTextField.vue'
 import { User } from '~/types'
 import { authStore } from '~/store'
 
 @Component({
   components: {
-    BaseButton,
+    BaseTextButton,
     UsersTextField
   }
 })

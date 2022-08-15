@@ -24,11 +24,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 
 @Component({
   components: {
-    BaseButton
+    BaseTextButton
   }
 })
 export default class CommentsField extends Vue {
