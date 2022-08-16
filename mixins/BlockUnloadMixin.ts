@@ -8,9 +8,6 @@ export default class BlockUnloadMixin extends Vue {
   // 表示するメッセージ
   protected blockUnloadMessage = '編集した内容が消えちゃうけど、移動する？'
 
-  change() {
-    workPostStore.changeIsBlockUnload()
-  }
   // ****************************
   // * ページを閉じるときの処理: beforeunloadイベント
   // ****************************

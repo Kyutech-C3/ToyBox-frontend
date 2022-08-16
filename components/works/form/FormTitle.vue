@@ -16,8 +16,8 @@
         focus:outline-none
         focus:border-black
       "
-      @change="change"
-      @keyup="change"
+      @change="changeBlockUnloadState"
+      @keyup="changeBlockUnloadState"
     />
   </div>
 </template>
@@ -36,7 +36,7 @@ export default class FormTitle extends Vue {
   @VModel({ type: String })
   title!: string
 
-  change() {
+  changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
   }
 }

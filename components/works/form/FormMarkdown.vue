@@ -1,5 +1,5 @@
 <template>
-  <div @keyup="change">
+  <div @keyup="changeBlockUnloadState">
     <form-label name="本文" :required="true" />
     <mavon-editor
       v-model="description"
@@ -27,7 +27,7 @@ export default class FormMarkdown extends Vue {
   @VModel({ type: String })
   description!: string
 
-  change() {
+  changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
   }
 

@@ -53,11 +53,6 @@ export default class WorksForm extends Vue {
   @VModel({ type: Object, required: true })
   workData!: PostWork
 
-  // @Emit()
-  // change() {
-  //   return true
-  // }
-
   clickSubmit(visibility: string) {
     workPostStore.initAssetsViewInfo()
     // バリデーションをクリアしたときのみ実行される

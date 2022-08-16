@@ -24,7 +24,7 @@
             focus:outline-none
             focus:border-black
           "
-          @keyup="change"
+          @keyup="changeBlockUnloadState"
         />
         <font-awesome-icon
           class="w-5 mx-5"
@@ -58,7 +58,7 @@ export default class FormUrl extends Vue {
   @VModel({ type: Array })
   urls!: UrlInfo[]
 
-  change() {
+  changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
   }
 
