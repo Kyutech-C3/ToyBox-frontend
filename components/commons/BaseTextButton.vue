@@ -8,7 +8,7 @@
       hover:text-gray-100
       transition-colors
       px-4
-      py-2.5
+      py-1
     "
     :class="{ shadow: isShadow }"
     @click="(event) => $emit('click', event)"
@@ -21,7 +21,7 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
-export default class BaseButton extends Vue {
+export default class BaseTextButton extends Vue {
   @Prop({ type: String, required: true, default: 'Button' })
   title!: string
 

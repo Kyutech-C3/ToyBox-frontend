@@ -14,6 +14,7 @@
             opacity-60
             cursor-pointer
             bg-white
+            z-50
           "
           :icon="['fas', 'times']"
           @click="deleteAsset(i)"
@@ -27,17 +28,18 @@
           :image-url="imageURL.url"
         />
       </div>
-      <form-thumbnail v-model="assetImage" ref="formThumbnail" />
+      <form-thumbnail v-model="assetImage" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Ref } from 'nuxt-property-decorator'
+import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
 import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
+import { workPostStore } from '@/store'
 
 @Component({
   components: {
@@ -56,23 +58,23 @@ export default class FormAssets extends Vue {
   モデル [ .gltf, .fbx ]
   zip [.zip ]
 `
-  assets: { url: string; asset_type: string }[] = []
-
-  @Ref() formThumbnail!: FormThumbnail
+  assets: { url: string; asset_type: string }[] =
+    workPostStore.getAssetsViewInfo
 
   @VModel({ type: Array })
   assetImage!: string[]
 
   mounted() {
-    this.assets = this.formThumbnail.assets
+    this.assets = workPostStore.getAssetsViewInfo
   }
 
   deleteAsset(number: number) {
     this.assetImage = this.assetImage.filter((_, index) => {
       return number !== index
     })
-    this.formThumbnail.deleteAsset(number)
-    this.assets = this.formThumbnail.assets
+    workPostStore.deleteAssetsViewInfo(number)
+    this.assets = workPostStore.getAssetsViewInfo
+    workPostStore.changeIsBlockUnload()
   }
 }
 </script>

@@ -38,8 +38,8 @@
         <div class="mr-1 text-gray-500">https://twitter.com/</div>
       </users-text-field>
       <div class="mt-5 flex justify-around">
-        <base-button class="px-7" title="変更" @click="putUserInfo" />
-        <base-button
+        <base-text-button class="px-7" title="変更" @click="putUserInfo" />
+        <base-text-button
           class="px-7"
           title="やめる"
           @click="closeEditProfileModal"
@@ -52,14 +52,14 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersTextField from '@/components/users/UsersTextField.vue'
 import { User } from '~/types'
 import { authStore } from '~/store'
 
 @Component({
   components: {
-    BaseButton,
+    BaseTextButton,
     UsersTextField
   }
 })

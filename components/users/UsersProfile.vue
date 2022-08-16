@@ -21,7 +21,7 @@
       {{ user.profile }}
     </div>
     <div v-show="!disabledEditButton" class="m-5">
-      <base-button
+      <base-text-button
         title="プロフィール編集"
         @click="showEditProfileModal = true"
       />
@@ -62,14 +62,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import BaseButton from '@/components/commons/BaseButton.vue'
+import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersProfileForm from '@/components/users/UsersProfileForm.vue'
 import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
 import { User } from '~/types'
 
 @Component({
   components: {
-    BaseButton,
+    BaseTextButton,
     UsersProfileForm,
     UserRoundedIcon
   }

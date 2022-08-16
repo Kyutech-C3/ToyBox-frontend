@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keyup="changeBlockUnloadState">
     <form-label name="本文" :required="true" />
     <mavon-editor
       v-model="description"
@@ -7,6 +7,7 @@
       language="ja"
       :xss-options="{}"
       default-open="edit"
+      :autofocus="false"
       class="markdown-body min-h-300 w-full bg-white"
     />
   </div>
@@ -15,6 +16,7 @@
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
+import { workPostStore } from '@/store'
 
 @Component({
   components: {
@@ -24,6 +26,10 @@ import FormLabel from '@/components/works/form/FormLabel.vue'
 export default class FormMarkdown extends Vue {
   @VModel({ type: String })
   description!: string
+
+  changeBlockUnloadState() {
+    workPostStore.changeIsBlockUnload()
+  }
 
   toolbarsOption = {
     bold: true, // 粗体

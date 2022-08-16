@@ -16,7 +16,8 @@ import {
   faUsers,
   faTags,
   faPlusCircle,
-  faInfoCircle
+  faInfoCircle,
+  faPen
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -48,7 +49,8 @@ library.add(
   faUsers,
   faTags,
   faPlusCircle,
-  faInfoCircle
+  faInfoCircle,
+  faPen
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

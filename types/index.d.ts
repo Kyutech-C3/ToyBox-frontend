@@ -50,7 +50,7 @@ export type PostWork = {
   title: string
   description: string
   visibility: string
-  thumbnail_asset_id?: string
+  thumbnail_asset_id: string
   assets_id: string[]
   urls: BaseUrlInfo[]
   tags_id: string[]
@@ -129,7 +129,7 @@ export type Work = {
   urls: UrlInfo[]
   visibility: string
   tags: GetTag[]
-  thumbnail?: Asset[]
+  thumbnail: Asset[]
   created_at: string
   updated_at: string
 }
