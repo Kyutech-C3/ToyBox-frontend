@@ -38,8 +38,8 @@
         <div class="mr-1 text-gray-500">https://twitter.com/</div>
       </users-text-field>
       <div class="mt-5 flex justify-around">
-        <base-button class="px-7" title="変更" @click="putUserInfo" />
-        <base-button
+        <base-text-button class="px-7" title="変更" @click="putUserInfo" />
+        <base-text-button
           class="px-7"
           title="やめる"
           @click="closeEditProfileModal"

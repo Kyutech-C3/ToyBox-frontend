@@ -8,7 +8,7 @@
       hover:text-gray-100
       transition-colors
       px-4
-      py-2.5
+      py-1
     "
     :class="{ shadow: isShadow }"
     @click="(event) => $emit('click', event)"

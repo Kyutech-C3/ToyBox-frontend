@@ -17,10 +17,7 @@
             z-50
           "
           :icon="['fas', 'times']"
-          @click="
-            deleteAsset(i)
-            change
-          "
+          @click="deleteAsset(i)"
         />
         <form-image-preview
           v-if="imageURL.asset_type === 'image'"
@@ -67,10 +64,6 @@ export default class FormAssets extends Vue {
   @VModel({ type: Array })
   assetImage!: string[]
 
-  change() {
-    workPostStore.changeIsBlockUnload()
-  }
-
   mounted() {
     this.assets = workPostStore.getAssetsViewInfo
   }
@@ -81,6 +74,7 @@ export default class FormAssets extends Vue {
     })
     workPostStore.deleteAssetsViewInfo(number)
     this.assets = workPostStore.getAssetsViewInfo
+    workPostStore.changeIsBlockUnload()
   }
 }
 </script>

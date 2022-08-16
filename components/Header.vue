@@ -22,13 +22,18 @@
     >
       <!-- not logged in  -->
       <div v-if="$route.path !== '/works/create'">
-        <base-button
+        <base-text-button
           v-if="nowLogin"
           class="mx-5"
           title="投稿"
           @click="$router.push('/works/create')"
         />
-        <base-button v-else class="mx-5" title="ログイン" @click="clickLogin" />
+        <base-text-button
+          v-else
+          class="mx-5"
+          title="ログイン"
+          @click="clickLogin"
+        />
       </div>
       <!-- logged in -->
       <button class="hover:opacity-60 transition" @click="activeNav = true">

@@ -34,11 +34,7 @@
       "
       required
       :multiple="true"
-      @change="
-        onFilePicked($event)
-        change
-      "
-      @click="change"
+      @change="onFilePicked($event)"
     />
     <font-awesome-icon class="w-10" :icon="['fas', 'plus']" />
   </label>
@@ -65,10 +61,6 @@ const baseAssetType: Object = {
 export default class FromThumbnail extends Vue {
   @VModel({ type: Array })
   assetImage!: string[]
-
-  change() {
-    workPostStore.changeIsBlockUnload()
-  }
 
   onFilePicked(event: Event<HTMLInputElement>) {
     const file = event.target.files as FileList
@@ -102,6 +94,7 @@ export default class FromThumbnail extends Vue {
     }
     const refs = this.$refs.pickimg as any
     refs.value = ''
+    workPostStore.changeIsBlockUnload()
   }
 
   getAssetType(assetName: string) {

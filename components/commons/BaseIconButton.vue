@@ -20,7 +20,7 @@
       :class="[
         { 'w-4': size === 'small' },
         { 'w-7': size === 'base' },
-        { 'w-10': size === 'learge' }
+        { 'w-10': size === 'large' }
       ]"
       :icon="['fas', 'pen']"
     />
@@ -31,12 +31,12 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
-export default class BaseTextButton extends Vue {
+export default class BaseIconButton extends Vue {
   @Prop({ type: String, required: true, default: '' })
   to!: string
 
-  @Prop({ type: String, required: true, default: 'base' })
-  size!: 'small' | 'base' | 'learge'
+  @Prop({ type: String, required: false, default: 'base' })
+  size!: 'small' | 'base' | 'large'
 
   @Prop({ type: Boolean, required: false, default: false })
   isShadow!: boolean

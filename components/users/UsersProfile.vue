@@ -21,7 +21,7 @@
       {{ user.profile }}
     </div>
     <div v-show="!disabledEditButton" class="m-5">
-      <base-button
+      <base-text-button
         title="プロフィール編集"
         @click="showEditProfileModal = true"
       />

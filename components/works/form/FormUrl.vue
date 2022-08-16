@@ -24,16 +24,12 @@
             focus:outline-none
             focus:border-black
           "
-          @change="change"
           @keyup="change"
         />
         <font-awesome-icon
           class="w-5 mx-5"
           :icon="['fas', 'times']"
-          @click="
-            deleteURL(i)
-            change
-          "
+          @click="deleteURL(i)"
         />
       </div>
     </div>
@@ -92,6 +88,7 @@ export default class FormUrl extends Vue {
     this.urls = this.urls.filter((_, index) => {
       return number !== index
     })
+    workPostStore.changeIsBlockUnload()
   }
 
   whichIcon(index: number) {

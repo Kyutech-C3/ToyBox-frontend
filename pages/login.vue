@@ -1,5 +1,5 @@
 <template>
-  <base-button title="Discordでログイン" @click="authDiscord" />
+  <base-text-button title="Discordでログイン" @click="authDiscord" />
 </template>
 
 <script lang="ts">

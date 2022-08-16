@@ -18,7 +18,7 @@
   >
     <div class="z-50 absolute right-3 top-3">
       <base-icon-button
-        v-if="getUser().id === workData.user.id"
+        v-if="getUser.id === workData.user.id"
         :to="`/works/${workData.id}/edit`"
         :size="'small'"
       />
@@ -95,7 +95,7 @@ export default class WorksCard extends Vue {
   @Prop({ type: Object, required: true })
   workData!: Work
 
-  getUser() {
+  get getUser() {
     return authStore.getUser
   }
 

@@ -2,9 +2,8 @@
   <div class="w-3/4 relative">
     <div class="z-50 absolute -right-20 top-0">
       <base-icon-button
-        v-if="getUser().id === work.user.id"
+        v-if="getUser.id === work.user.id"
         :to="`/works/${work.id}/edit`"
-        :size="'base'"
         :is-background="true"
         :is-shadow="true"
         class="p-4"
@@ -93,7 +92,7 @@ import { authStore } from '~/store'
 export default class Works extends Vue {
   work!: Work
 
-  getUser() {
+  get getUser() {
     return authStore.getUser
   }
 
