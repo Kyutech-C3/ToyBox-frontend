@@ -1,16 +1,31 @@
 <template>
-  <hooper :settings="hooperSettings" class="bg-blue-200">
+  <hooper
+    :settings="hooperSettings"
+    class="bg-gray-100 rounded-t-2xl overflow-hidden"
+  >
     <slide
       v-for="asset in assets"
       :key="asset.id"
-      class="flex justify-center items-center"
+      class="flex justify-center items-center h-96"
     >
-      <img
+      <div
         v-if="asset.asset_type === 'image'"
-        class="m-auto h-full"
-        :src="getURL(asset)"
-        alt="asset image"
-      />
+        class="m-0 relative h-full w-full overflow-hidden"
+      >
+        <img
+          class="
+            w-full
+            h-full
+            absolute
+            top-1/2
+            left-1/2
+            -translate-x-1/2 -translate-y-1/2
+            object-contain
+          "
+          :src="getURL(asset)"
+          alt="asset image"
+        />
+      </div>
       <video v-else-if="asset.asset_type === 'video'" controls>
         <source :src="getURL(asset)" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
@@ -55,7 +70,10 @@ export default class WorksCarousel extends Vue {
   hooperSettings: any = {
     infiniteScroll: true,
     centerMode: true,
-    keysControl: false
+    keysControl: false,
+    itemsToShow: 1,
+    mouseDrag: false,
+    transition: 1000
   }
 
   getURL(asset: Asset): string {
@@ -66,6 +84,6 @@ export default class WorksCarousel extends Vue {
 
 <style scoped>
 .hooper {
-  height: 500px;
+  height: 45vw;
 }
 </style>

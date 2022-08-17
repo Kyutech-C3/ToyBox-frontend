@@ -1,39 +1,85 @@
 <template>
-  <div
-    class="
-      flex flex-col
-      items-center
-      border border-gray-400
-      rounded-2xl
-      px-10
-      py-4
-    "
-  >
-    <textarea
-      v-model="inputText"
-      class="w-full h-20 mb-1 border-b focus:outline-0 resize-none"
-      placeholder="コメント"
-      maxlength="100"
+  <div class="flex flex-col">
+    <user-tag
+      :user="getUser"
+      :no-link="true"
+      class="p-0 w-max text-gray-600 mt-4 mb-2"
     />
-    <p class="w-full mb-3 text-right text-gray-500">
-      {{ inputText.length }} / 100
-    </p>
-    <base-button title="送信" class="px-10 self-end" />
+    <textarea
+      v-model="postCommentData.content"
+      class="
+        h-20
+        mb-1
+        border-b border-gray-400
+        focus:outline-0
+        resize-none
+        ml-10
+        text-black
+      "
+      placeholder="コメント"
+      maxlength="500"
+      @focus="focusCommentForm = true"
+    />
+    <div
+      v-if="focusCommentForm"
+      class="flex items-center justify-end w-full mt-1"
+    >
+      <span v-if="postErrorFlag" class="w-full pl-10 text-red-600">
+        エラーが発生し、投稿できませんでした。<br />詳細はコンソールログを確認してください。
+      </span>
+      <span class="text-gray-400 text-sm mr-3 w-20 text-right">
+        {{ postCommentData.content.length }} / 500
+      </span>
+      <span class="text-ms text-gray-500 cursor-pointer mr-3" @click="unfocus">
+        キャンセル
+      </span>
+      <base-text-button
+        title="送信"
+        class="w-20"
+        :class="{
+          'pointer-events-none': postCommentData.content.length === 0
+        }"
+        :color="postCommentData.content.length === 0 ? 'gray' : 'yellow'"
+        @click="click"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, VModel, Prop, Emit } from 'nuxt-property-decorator'
+
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
+import UserTag from '@/components/commons/UserTag.vue'
+
+import { User, PostComment } from '@/types'
+import { authStore } from '~/store'
 
 @Component({
   components: {
-    BaseTextButton
+    BaseTextButton,
+    UserTag
   }
 })
 export default class CommentsField extends Vue {
-  inputText: string = ''
+  focusCommentForm: boolean = false
+
+  @Prop({ type: Boolean, required: true })
+  postErrorFlag!: boolean
+
+  @VModel({ type: Object, required: true })
+  postCommentData!: PostComment
+
+  get getUser(): User {
+    return authStore.getUser
+  }
+
+  @Emit()
+  click() {}
+
+  unfocus() {
+    this.focusCommentForm = false
+    this.postCommentData = { content: '' }
+  }
 }
 </script>
-
-<style scoped></style>
