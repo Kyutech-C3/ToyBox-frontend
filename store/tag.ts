@@ -6,7 +6,7 @@ import {
   config
 } from 'vuex-module-decorators'
 import axios from 'axios'
-import { GetTag, Tag } from '~/types'
+import { GetTag } from '~/types'
 
 config.rawError = true
 axios.defaults.baseURL = process.env.API_URL
@@ -20,19 +20,19 @@ axios.defaults.baseURL = process.env.API_URL
   namespaced: true
 })
 export default class TagStore extends VuexModule {
-  private tags: Tag[] = []
+  private tags: GetTag[] = []
 
   public get getTags() {
     return this.tags
   }
 
   @Mutation
-  SET_TAGS(tags: Tag[]) {
+  SET_TAGS(tags: GetTag[]) {
     this.tags = tags
   }
 
   @Mutation
-  ADD_TAGS(tags: Tag[]) {
+  ADD_TAGS(tags: GetTag[]) {
     this.tags.push(...tags)
   }
 

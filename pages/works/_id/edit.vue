@@ -46,11 +46,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
       title: this.putWorkData.title,
       description: this.putWorkData.description,
       visibility: this.putWorkData.visibility,
-      thumbnail_asset_id: this.putWorkData
-        ? this.putWorkData.thumbnail
-          ? this.putWorkData.thumbnail[0].id
-          : ''
-        : '',
+      thumbnail_asset_id: this.putWorkData.thumbnail.id,
       assets_id: this.putWorkData.assets.map((i) => i.id),
       urls: [],
       tags_id: this.putWorkData.tags.map((i) => i.id)
