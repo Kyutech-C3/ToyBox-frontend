@@ -42,7 +42,8 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/style-resources',
     '@nuxtjs/tailwindcss',
-    '@nuxt/postcss8'
+    '@nuxt/postcss8',
+    '@nuxtjs/markdownit'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -54,6 +55,15 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: process.env.API_URL
+  },
+
+  markdownit: {
+    preset: 'default',
+    html: true,
+    breaks: true,
+    linkify: false,
+    runtime: true,
+    use: []
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
