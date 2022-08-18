@@ -6,6 +6,8 @@ import Modal from '@/store/modal'
 import Tag from '@/store/tag'
 import WorkFilter from '~/store/work_filter'
 import WorkPost from '@/store/work_post'
+import Confirmation from '@/store/confirmation'
+import DownloadAsset from '@/store/download_asset'
 
 let authStore: Auth
 let commentStore: Comment
@@ -13,6 +15,8 @@ let modalStore: Modal
 let tagStore: Tag
 let workFilterStore: WorkFilter
 let workPostStore: WorkPost
+let confirmationStore: Confirmation
+let downloadAssetStore: DownloadAsset
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -21,6 +25,8 @@ function initializeStores(store: Store<any>): void {
   tagStore = getModule(Tag, store)
   workFilterStore = getModule(WorkFilter, store)
   workPostStore = getModule(WorkPost, store)
+  confirmationStore = getModule(Confirmation, store)
+  downloadAssetStore = getModule(DownloadAsset, store)
 }
 
 export {
@@ -30,5 +36,7 @@ export {
   modalStore,
   tagStore,
   workFilterStore,
-  workPostStore
+  workPostStore,
+  confirmationStore,
+  downloadAssetStore
 }

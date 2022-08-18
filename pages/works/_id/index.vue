@@ -19,10 +19,26 @@
       "
     >
       <works-carousel :assets="work.assets" />
+      <div class="flex items-center w-full px-5 py-3">
+        <font-awesome-icon
+          class="w-6 text-gray-500 mr-5"
+          :icon="['fas', 'link']"
+        />
+        <a
+          v-for="url in work.urls"
+          :key="url.id"
+          class="mx-3 hover:text-blue-600 hover:underline"
+          :href="url.url"
+          target="_blank"
+        >
+          {{ url.url.split('/')[2] }}
+        </a>
+      </div>
       <div
         class="
           flex
           items-center
+          justify-between
           w-full
           px-5
           py-4
@@ -30,18 +46,44 @@
           border-t border-gray-200
         "
       >
-        <div class="inline-flex mr-5">
-          <p class="text-xl mr-2">
-            {{ likes }}
-          </p>
-          <button v-if="!isLiked" @click="liked">
-            <font-awesome-icon class="w-7" :icon="['far', 'heart']" />
-          </button>
-          <button v-else @click="unliked">
-            <font-awesome-icon class="w-7" :icon="['fas', 'heart']" />
-          </button>
+        <div class="flex items-center">
+          <div class="inline-flex mr-3 items-center">
+            <p class="text-xl mr-1.5 w-5">
+              {{ likes }}
+            </p>
+            <span
+              class="
+                material-symbols-outlined
+                cursor-pointer
+                transition-all
+                text-3xl
+                select-none
+              "
+              @click="clickFavorite"
+              :class="[
+                {
+                  'material-symbols-liked text-red-500': isLiked
+                },
+                {
+                  'material-symbols-unliked': !isLiked
+                }
+              ]"
+            >
+              favorite
+            </span>
+          </div>
+          <div>1000 view</div>
         </div>
-        <div>1000 view</div>
+        <div class="flex items-center">
+          <div v-for="asset in work.assets" :key="asset.id">
+            <base-text-button
+              v-if="asset.asset_type === ('zip' || 'model')"
+              class="mx-3"
+              :title="`${asset.asset_type} download`"
+              @click="openConfirmation(asset)"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -83,29 +125,6 @@
           :text="tag.name"
           class="mr-4 text-gray-600"
         />
-      </works-content>
-      <!-- URL -->
-      <works-content icon="link">
-        <a
-          v-for="url in work.urls"
-          :key="url.id"
-          class="mx-3 hover:text-blue-600 hover:underline"
-          :href="url.url"
-          target="_blank"
-        >
-          {{ url.url.split('/')[2] }}
-        </a>
-      </works-content>
-      <!-- ダウンロード -->
-      <works-content icon="download">
-        <div v-for="asset in work.assets" :key="asset.id">
-          <base-text-button
-            v-if="asset.asset_type === ('zip' || 'model')"
-            class="mx-3"
-            :title="asset.asset_type"
-            @click="download(asset.asset_type, asset.id)"
-          />
-        </div>
       </works-content>
       <!-- 説明 -->
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -155,11 +174,18 @@ import CommentsList from '@/components/comments/CommentsList.vue'
 import BaseIconButton from '@/components/commons/BaseIconButton.vue'
 import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
+import Confirmation from '@/components/commons/Confirmation.vue'
 
 import axios from 'axios'
-import { Work, ResponseComment, PostComment } from '@/types'
+import { Work, PostComment, Asset } from '@/types'
 import { saveAs } from 'file-saver'
-import { authStore, commentStore } from '~/store'
+import {
+  authStore,
+  commentStore,
+  confirmationStore,
+  modalStore,
+  downloadAssetStore
+} from '~/store'
 
 type replyCommentType = {
   comment_id: string
@@ -222,6 +248,14 @@ export default class Works extends Vue {
     console.log(JSON.stringify(this.work, null, 2))
   }
 
+  clickFavorite() {
+    if (!this.isLiked) {
+      this.liked()
+    } else {
+      this.unliked()
+    }
+  }
+
   liked() {
     this.likes++
     this.isLiked = true
@@ -232,6 +266,17 @@ export default class Works extends Vue {
     this.isLiked = false
   }
 
+  async openConfirmation(asset: Asset) {
+    downloadAssetStore.setAsset(asset)
+    confirmationStore.init()
+    confirmationStore.setApproveTitle('ダウンロード')
+    confirmationStore.setRejectTitle('キャンセル')
+    confirmationStore.setInformation(
+      `${asset.asset_type} のダウンロードが行われます。ダウンロードしますか？`
+    )
+    confirmationStore.setType('download')
+    modalStore.open(Confirmation)
+  }
   postComment() {
     try {
       if (this.nowLogin) {
@@ -318,11 +363,21 @@ export default class Works extends Vue {
     }
   }
 
-  async download(type: string, id: string) {
-    const url = `${process.env.ASSET_BASE_URL}/${type}/${id}/origin.zip`
-    const data = await fetch(url)
-    const blob = await data.blob()
-    saveAs(blob, 'origin.zip')
-  }
+  // async download(type: string, id: string) {
+  //   const url = `${process.env.ASSET_BASE_URL}/${type}/${id}/origin.zip`
+  //   const data = await fetch(url)
+  //   const blob = await data.blob()
+  //   saveAs(blob, 'origin.zip')
+  // }
 }
 </script>
+
+<style scoped>
+.material-symbols-liked {
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+}
+
+.material-symbols-unliked {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+</style>

@@ -1,5 +1,6 @@
 <template>
   <button
+    type="button"
     class="rounded-lg border-2 transition-colors px-4 py-1"
     :class="[
       { shadow: isShadow },
