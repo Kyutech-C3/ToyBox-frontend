@@ -1,6 +1,6 @@
 <template>
   <div class="w-4/6 relative text-gray-400">
-    <div class="z-50 absolute -right-20 top-0">
+    <div class="z-30 absolute -right-20 top-0">
       <base-icon-button
         v-if="getUser.id === work.user.id"
         :to="`/works/${work.id}/edit`"
@@ -127,11 +127,7 @@
         />
       </works-content>
       <!-- 説明 -->
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div
-        class="w-full mt-10 py-5 px-7 bg-gray-200 rounded-xl text-black"
-        v-html="work.description_html"
-      />
+      <markdown-view :markdown-text="work.description" />
     </div>
     <!-- コメント -->
     <div
@@ -175,10 +171,10 @@ import BaseIconButton from '@/components/commons/BaseIconButton.vue'
 import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
 import Confirmation from '@/components/commons/Confirmation.vue'
+import MarkdownView from '@/components/commons/MarkdownView.vue'
 
 import axios from 'axios'
 import { Work, PostComment, Asset } from '@/types'
-import { saveAs } from 'file-saver'
 import {
   authStore,
   commentStore,
@@ -203,7 +199,8 @@ type replyCommentType = {
     CommentsList,
     BaseIconButton,
     VisibilityStateTag,
-    UserTag
+    UserTag,
+    MarkdownView
   },
   async asyncData({ route }) {
     const resWork = await axios.get(
@@ -277,6 +274,7 @@ export default class Works extends Vue {
     confirmationStore.setType('download')
     modalStore.open(Confirmation)
   }
+
   postComment() {
     try {
       if (this.nowLogin) {
@@ -362,13 +360,6 @@ export default class Works extends Vue {
       }, 5000)
     }
   }
-
-  // async download(type: string, id: string) {
-  //   const url = `${process.env.ASSET_BASE_URL}/${type}/${id}/origin.zip`
-  //   const data = await fetch(url)
-  //   const blob = await data.blob()
-  //   saveAs(blob, 'origin.zip')
-  // }
 }
 </script>
 

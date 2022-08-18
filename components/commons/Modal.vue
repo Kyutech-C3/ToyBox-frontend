@@ -11,6 +11,7 @@
       justify-center
       items-center
       backdrop-blur-md
+      z-40
     "
     @click.self="close"
   >

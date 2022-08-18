@@ -1,31 +1,14 @@
 <template>
   <hooper
     :settings="hooperSettings"
-    class="bg-gray-100 rounded-t-2xl overflow-hidden"
+    class="bg-black rounded-t-2xl overflow-hidden pb-5 relative"
   >
     <slide
-      v-for="asset in assets"
+      v-for="asset in showAssets"
       :key="asset.id"
-      class="flex justify-center items-center h-96"
+      class="flex justify-center items-center h-96 relative"
     >
-      <div
-        v-if="asset.asset_type === 'image'"
-        class="m-0 relative h-full w-full overflow-hidden"
-      >
-        <img
-          class="
-            w-full
-            h-full
-            absolute
-            top-1/2
-            left-1/2
-            -translate-x-1/2 -translate-y-1/2
-            object-contain
-          "
-          :src="getURL(asset)"
-          alt="asset image"
-        />
-      </div>
+      <item-image v-if="asset.asset_type === 'image'" :image="asset" />
       <video v-else-if="asset.asset_type === 'video'" controls>
         <source :src="getURL(asset)" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
@@ -37,7 +20,7 @@
       >
         Your browser does not support the <code>audio</code> element.
       </audio>
-      <div v-else>{{ asset.asset_type }} file is not supported.</div>
+      <!-- <div v-else>{{ asset.asset_type }} file is not supported.</div> -->
     </slide>
     <hooper-pagination slot="hooper-addons" />
     <hooper-navigation slot="hooper-addons" />
@@ -53,6 +36,9 @@ import {
   Navigation as HooperNavigation
 } from 'hooper'
 import 'hooper/dist/hooper.css'
+
+import ItemImage from '@/components/works/carouselItem/Image.vue'
+
 import { Asset } from '@/types'
 
 @Component({
@@ -60,12 +46,16 @@ import { Asset } from '@/types'
     Hooper,
     Slide,
     HooperPagination,
-    HooperNavigation
+    HooperNavigation,
+    ItemImage
   }
 })
 export default class WorksCarousel extends Vue {
+  showAssets: Asset[] = []
+  showAssetsType: string[] = ['image', 'video', 'music', 'model']
+
   @Prop({ type: Array, required: true })
-  assets!: Asset
+  assets!: Asset[]
 
   hooperSettings: any = {
     infiniteScroll: true,
@@ -76,6 +66,14 @@ export default class WorksCarousel extends Vue {
     transition: 1000
   }
 
+  created() {
+    for (let i = 0; i < this.assets.length; i++) {
+      if (this.showAssetsType.includes(this.assets[i].asset_type)) {
+        this.showAssets.push(this.assets[i])
+      }
+    }
+  }
+
   getURL(asset: Asset): string {
     return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
   }
@@ -84,6 +82,6 @@ export default class WorksCarousel extends Vue {
 
 <style scoped>
 .hooper {
-  height: 45vw;
+  height: 39vw;
 }
 </style>

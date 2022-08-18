@@ -8,6 +8,7 @@ import WorkFilter from '~/store/work_filter'
 import WorkPost from '@/store/work_post'
 import Confirmation from '@/store/confirmation'
 import DownloadAsset from '@/store/download_asset'
+import Fullscrean from '@/store/fullscrean'
 
 let authStore: Auth
 let commentStore: Comment
@@ -17,6 +18,7 @@ let workFilterStore: WorkFilter
 let workPostStore: WorkPost
 let confirmationStore: Confirmation
 let downloadAssetStore: DownloadAsset
+let fullscreanStore: Fullscrean
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -27,6 +29,7 @@ function initializeStores(store: Store<any>): void {
   workPostStore = getModule(WorkPost, store)
   confirmationStore = getModule(Confirmation, store)
   downloadAssetStore = getModule(DownloadAsset, store)
+  fullscreanStore = getModule(Fullscrean, store)
 }
 
 export {
@@ -38,5 +41,6 @@ export {
   workFilterStore,
   workPostStore,
   confirmationStore,
-  downloadAssetStore
+  downloadAssetStore,
+  fullscreanStore
 }
