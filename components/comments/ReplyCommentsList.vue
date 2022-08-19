@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <comments-list-item
+      <reply-comments-list-item
         v-for="replyComment in replyComments"
         :key="replyComment.id"
         :reply-comment="replyComment"
