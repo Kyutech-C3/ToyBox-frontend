@@ -19,7 +19,10 @@
       "
     >
       <works-carousel :assets="work.assets" />
-      <div class="flex items-center w-full px-5 py-3">
+      <div
+        v-if="work.urls.length > 0"
+        class="flex items-center w-full px-5 py-3"
+      >
         <font-awesome-icon
           class="w-6 text-gray-500 mr-5"
           :icon="['fas', 'link']"
