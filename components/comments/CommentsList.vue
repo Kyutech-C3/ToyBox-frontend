@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="comments.length === 0">
-      コメントがまだありません>_&lt; 作品の感想などをコメントしてみてね！
+    <div v-if="comments.length === 0" class="ml-10">
+      コメントがまだありません>_&lt; &nbsp;作品の感想などをコメントしてみてね！
     </div>
     <comments-list-item
       v-for="comment in comments"
@@ -18,7 +18,6 @@ import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
 import CommentsListItem from '@/components/comments/CommentsListItem.vue'
 
 import { ResponseComment, PostComment } from '@/types'
-import { commentStore } from '@/store'
 
 type replyCommentType = {
   comment_id: string
