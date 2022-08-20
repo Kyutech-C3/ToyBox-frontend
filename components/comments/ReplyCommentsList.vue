@@ -7,12 +7,6 @@
         :reply-comment="replyComment"
       />
     </div>
-    <span
-      class="text-gray-400 text-xs cursor-pointer"
-      @click="closeReplyCommentList"
-    >
-      less
-    </span>
   </div>
 </template>
 
@@ -31,8 +25,5 @@ import { ResponseReplyComment } from '@/types'
 export default class ReplyCommentsList extends Vue {
   @Prop({ type: Array, required: true })
   replyComments!: ResponseReplyComment[]
-
-  @Emit()
-  closeReplyCommentList() {}
 }
 </script>

@@ -26,13 +26,6 @@
         <span class="text-xs ml-1">返信</span>
       </div>
     </div>
-    <span
-      v-if="comment.number_of_reply > 0"
-      class="w-fit text-xs text-blue-600 cursor-pointer mr-3 pl-11"
-      @click="getReplyComments()"
-    >
-      {{ comment.number_of_reply }} 件の返信
-    </span>
     <div v-if="showReplyTextarea" class="pl-10 w-full mt-3">
       <div class="flex items-start">
         <user-tag
@@ -73,11 +66,32 @@
         />
       </div>
     </div>
+    <div
+      v-if="comment.number_of_reply > 0"
+      class="
+        text-blue-600
+        mr-3
+        ml-10
+        select-none
+        cursor-pointer
+        w-fit
+        flex
+        items-center
+      "
+      @click="getReplyComments()"
+    >
+      <span v-if="!showReplyList" class="material-symbols-outlined text-lg">
+        arrow_drop_down
+      </span>
+      <span v-if="showReplyList" class="material-symbols-outlined text-lg">
+        arrow_drop_up
+      </span>
+      <span class="text-xs"> {{ comment.number_of_reply }} 件の返信 </span>
+    </div>
     <reply-comments-list
       v-if="showReplyList"
       class="pl-12 w-full mt-3"
       :reply-comments="replyComments"
-      @close-reply-comment-list="showReplyList = false"
     />
   </div>
 </template>
@@ -167,27 +181,31 @@ export default class CommentsListItem extends Vue {
   }
 
   getReplyComments() {
-    try {
-      axios
-        .get(
-          `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${this.getAccessToken}`
+    if (!this.showReplyList) {
+      try {
+        axios
+          .get(
+            `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.getAccessToken}`
+              }
             }
-          }
-        )
-        .then((result) => {
-          console.log(result)
-          this.replyComments = result.data
-          console.log(this.replyComments)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      this.showReplyList = true
-    } catch (error) {
-      console.log(error)
+          )
+          .then((result) => {
+            console.log(result)
+            this.replyComments = result.data
+            console.log(this.replyComments)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        this.showReplyList = true
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      this.showReplyList = false
     }
   }
 }
