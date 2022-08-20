@@ -23,8 +23,10 @@
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/markdownit": "^2.0.0",
     "@types/file-saver": "^2.0.5",
+    "@types/three": "^0.143.1",
     "caniuse-lite": "^1.0.30001312",
     "core-js": "^3.21.1",
     "file-saver": "^2.0.5",
@@ -34,6 +36,7 @@
     "nuxt": "^2.15.8",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-property-decorator": "^2.9.1",
+    "three": "^0.143.0",
     "vuex-module-decorators": "^2.0.0",
     "vuex-persistedstate": "^4.1.0"
   },

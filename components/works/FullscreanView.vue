@@ -14,6 +14,7 @@
     "
   >
     <img
+      v-if="getAsset.asset_type === 'image'"
       class="
         w-full
         h-full
@@ -25,6 +26,11 @@
       "
       :src="getURL(getAsset)"
       alt="asset image"
+    />
+    <model-viewer
+      v-if="getAsset.asset_type === 'model'"
+      :model="getAsset"
+      :fullscrean="true"
     />
     <span
       class="
@@ -53,9 +59,10 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Asset } from '@/types'
 import { fullscreanStore } from '@/store'
+import ModelViewer from '@/components/works/ModelViewer.vue'
 
 @Component({
-  components: {}
+  components: { ModelViewer }
 })
 export default class WorksCarousel extends Vue {
   get getFullscrean() {

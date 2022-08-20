@@ -30,7 +30,8 @@ export default {
   plugins: [
     '~/plugins/fontawesome.ts',
     { src: '~plugins/mavonEditor.ts', mode: 'client' },
-    { src: '~/plugins/localStorage.ts', mode: 'client' }
+    { src: '~/plugins/localStorage.ts', mode: 'client' },
+    { src: '~plugins/three.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -43,7 +44,8 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/tailwindcss',
     '@nuxt/postcss8',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/composition-api/module'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -67,7 +69,13 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['three'],
+    babel: {
+      babelrc: false,
+      compact: false
+    }
+  },
 
   styleResources: {
     scss: './assets/stylesheets/*.scss'

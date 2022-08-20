@@ -2,11 +2,13 @@
   <hooper
     :settings="hooperSettings"
     class="bg-black rounded-t-2xl overflow-hidden pb-5 relative"
+    @beforeSlide="hoge = hoge * -1"
   >
     <slide
       v-for="asset in showAssets"
       :key="asset.id"
       class="flex justify-center items-center h-96 relative"
+      :class="{ 'bg-white': asset.asset_type === 'model' }"
     >
       <item-image v-if="asset.asset_type === 'image'" :image="asset" />
       <video v-else-if="asset.asset_type === 'video'" controls>
@@ -20,7 +22,12 @@
       >
         Your browser does not support the <code>audio</code> element.
       </audio>
-      <!-- <div v-else>{{ asset.asset_type }} file is not supported.</div> -->
+      <ModelViewer
+        v-else-if="asset.asset_type === 'model'"
+        :model="asset"
+        ref="modelViewer"
+      />
+      <div v-else>{{ asset.asset_type }} file is not supported.</div>
     </slide>
     <hooper-pagination slot="hooper-addons" />
     <hooper-navigation slot="hooper-addons" />
@@ -28,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Ref } from 'nuxt-property-decorator'
 import {
   Hooper,
   Slide,
@@ -40,6 +47,7 @@ import 'hooper/dist/hooper.css'
 import ItemImage from '@/components/works/carouselItem/Image.vue'
 
 import { Asset } from '@/types'
+import ModelViewer from '@/components/works/ModelViewer.vue'
 
 @Component({
   components: {
@@ -47,12 +55,15 @@ import { Asset } from '@/types'
     Slide,
     HooperPagination,
     HooperNavigation,
-    ItemImage
+    ItemImage,
+    ModelViewer
   }
 })
 export default class WorksCarousel extends Vue {
+  // @Ref() modelViewer: ModelViewer
   showAssets: Asset[] = []
   showAssetsType: string[] = ['image', 'video', 'music', 'model']
+  hoge: number = 1
 
   @Prop({ type: Array, required: true })
   assets!: Asset[]
@@ -63,7 +74,8 @@ export default class WorksCarousel extends Vue {
     keysControl: false,
     itemsToShow: 1,
     mouseDrag: false,
-    transition: 1000
+    transition: 1000,
+    wheelControl: false
   }
 
   created() {
