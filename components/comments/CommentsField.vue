@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <user-tag
-      :user="getUser"
+      :user="getNowLogin ? getUser : gestUser"
       :no-link="true"
       class="p-0 w-max text-gray-600 mt-4 mb-2"
     />
@@ -62,6 +62,16 @@ import { authStore } from '~/store'
   }
 })
 export default class CommentsField extends Vue {
+  gestUser: User = {
+    id: '0',
+    name: 'ゲスト',
+    email: '',
+    display_name: 'ゲスト',
+    avatar_url: require('@/assets/image/gest-user.svg'),
+    created_at: '',
+    updated_at: ''
+  }
+
   focusCommentForm: boolean = false
 
   @Prop({ type: Boolean, required: true })
@@ -72,6 +82,10 @@ export default class CommentsField extends Vue {
 
   get getUser(): User {
     return authStore.getUser
+  }
+
+  get getNowLogin(): Boolean {
+    return authStore.nowLogin
   }
 
   @Emit()
