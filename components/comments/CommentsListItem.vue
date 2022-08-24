@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3">
+  <div>
     <div class="flex items-start h-10 translate-y-5">
       <comment-user
         :user="comment.user ? comment.user : gestUser"
@@ -41,12 +41,7 @@
         />
       </div>
       <div class="flex justify-end pr-8 mt-1 items-center">
-        <!-- <font-awesome-icon
-            :icon="['fas', 'paper-plane']"
-            class="w-4 cursor-pointer hover:text-gray-600"
-            @click="replyComment(comment.id)"
-          /> -->
-        <span class="text-gray-300 text-xs mr-3 w-20 text-right">
+        <span class="text-gray-400 text-xs mr-3 w-20 text-right">
           {{ replyCommentData.content.length }} / 500
         </span>
         <span
@@ -90,7 +85,7 @@
     </div>
     <reply-comments-list
       v-if="showReplyList"
-      class="pl-12 w-full mt-3"
+      class="pl-12 w-full -translate-y-3"
       :reply-comments="replyComments"
     />
   </div>
@@ -173,7 +168,6 @@ export default class CommentsListItem extends Vue {
   }
 
   dateFormatter(date: string): string {
-    console.log(date)
     const splitFullDate = date.split('T')
     const splitDate = splitFullDate[0].split('-')
     const splitTime = splitFullDate[1].split('.')
@@ -193,7 +187,6 @@ export default class CommentsListItem extends Vue {
             }
           )
           .then((result) => {
-            console.log(result)
             this.replyComments = result.data
             console.log(this.replyComments)
           })
