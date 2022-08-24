@@ -44,7 +44,7 @@
         right-5
         z-50
         text-white
-        bg-gray-900 bg-opacity-50
+        bg-black bg-opacity-30
         rounded-full
         px-1
       "

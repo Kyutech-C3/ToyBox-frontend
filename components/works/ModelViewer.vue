@@ -14,8 +14,8 @@
         right-5
         rounded-full
         px-1
-        text-gray-400
-        bg-white bg-opacity-50
+        text-black
+        bg-white bg-opacity-30
         z-40
       "
       @click="showFullscrean()"
@@ -31,6 +31,7 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Ref } from '@nuxtjs/composition-api'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {
   Scene,
   PerspectiveCamera,
@@ -38,7 +39,9 @@ import {
   WebGLRenderer,
   Color,
   AmbientLight,
-  sRGBEncoding
+  sRGBEncoding,
+  AnimationMixer,
+  Clock
 } from 'three'
 import { fullscreanStore } from '@/store'
 import { Asset } from '@/types'
@@ -57,7 +60,7 @@ export default class ModelViewer extends Vue {
   rot!: number
   directionalLight!: DirectionalLight
   count: number = 1
-  created() {}
+  clock = new Clock()
   mounted() {
     this.init()
   }
@@ -85,7 +88,6 @@ export default class ModelViewer extends Vue {
   }
 
   init() {
-    console.log('simo')
     // set container
     this.container = this.$refs.sceneContainer
     // add camera
@@ -128,45 +130,96 @@ export default class ModelViewer extends Vue {
     this.camera.aspect = this.width / this.height
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(this.width, this.height)
-    const loader = new GLTFLoader()
-    console.log('++++')
-    loader.load(this.getURL(this.model), (data: any) => {
-      const gltf = data
-      const object = gltf.scene
-      object.scale.set(100.0, 100.0, 100.0)
-      object.position.set(0, 0, 0)
-      this.scene.add(object)
-    })
-    // 仕様変更で使用可能性あり、一旦コメントアウト
-    // const eventHandler = () => {
-    //   this.mouseX = event.pageX
-    // }
-    // // マウス座標はマウスが動いた時のみ取得できる
-    // document.addEventListener('mousemove', eventHandler)
-    const tick = () => {
-      this.renderer.render(this.scene, this.camera)
-      // this.targetRot = (this.mouseX / this.container.clientWidth) * 360
-      // this.rot += (this.targetRot - this.rot) * 0.02
-      // this.radian = (this.rot * Math.PI) / 180
-      // // 角度に応じてカメラの位置を設定
-      // this.camera.position.x = 0.1 + 0.05 * Math.sin(this.radian)
-      // this.camera.position.y = 0.0 + 0.05 * Math.sin(this.radian)
-      // this.camera.position.z = 0.3 + 0.001 * Math.cos(this.radian)
-      // this.scene.rotation.y += 0.005
-      // // camera.lookAt(new THREE.Vector3(0, 0, 0));
-      this.controls.update()
-      requestAnimationFrame(tick)
-    }
-    tick()
-    if (!this.fullscrean) {
-      setTimeout(() => {
-        if (this.count <= 1) {
-          this.count = this.count + 1
-          this.init()
+    if (this.model.extention === 'gltf') {
+      const loader = new GLTFLoader()
+      loader.load(this.getURL(this.model), (data: any) => {
+        const gltf = data
+        const object = gltf.scene
+        object.scale.set(100.0, 100.0, 100.0)
+        object.position.set(0, 0, 0)
+        this.scene.add(object)
+      })
 
-          console.log(this.count)
+      // 仕様変更で使用可能性あり、一旦コメントアウト
+      // const eventHandler = () => {
+      //   this.mouseX = event.pageX
+      // }
+      // // マウス座標はマウスが動いた時のみ取得できる
+      // document.addEventListener('mousemove', eventHandler)
+      const tick = () => {
+        this.renderer.render(this.scene, this.camera)
+        // this.targetRot = (this.mouseX / this.container.clientWidth) * 360
+        // this.rot += (this.targetRot - this.rot) * 0.02
+        // this.radian = (this.rot * Math.PI) / 180
+        // // 角度に応じてカメラの位置を設定
+        // this.camera.position.x = 0.1 + 0.05 * Math.sin(this.radian)
+        // this.camera.position.y = 0.0 + 0.05 * Math.sin(this.radian)
+        // this.camera.position.z = 0.3 + 0.001 * Math.cos(this.radian)
+        // this.scene.rotation.y += 0.005
+        // // camera.lookAt(new THREE.Vector3(0, 0, 0));
+        this.controls.update()
+        requestAnimationFrame(tick)
+      }
+      tick()
+      if (!this.fullscrean) {
+        setTimeout(() => {
+          if (this.count <= 1) {
+            this.count = this.count + 1
+            this.init()
+          }
+        }, 50)
+      }
+    } else if (this.model.extention === 'fbx') {
+      let mixer: AnimationMixer
+      const loader = new FBXLoader()
+      loader.load(this.getURL(this.model), (object: any) => {
+        if (object.animations.length > 0) {
+          //シーン内の特定のオブジェクトのアニメーション用のプレーヤー(アニメーションの調整)
+          mixer = new AnimationMixer(object)
+          //Animation Actionを生成
+          const action = mixer.clipAction(object.animations[0])
+          //ループ設定（1回のみ）
+          // action.setLoop(LoopOnce);
+          //アニメーションを再生する
+          action.play()
         }
-      }, 50)
+        //オブジェクトとすべての子孫に対してコールバックを実行
+        object.traverse((child: any) => {
+          //影を落とすメッシュに対して、Shadowプロパティーを有効
+          if (child.isMesh) {
+            child.castShadow = true
+            child.receiveShadow = true
+          }
+        })
+        object.position.set(0, 0, 0)
+        object.scale.set(1.0, 1.0, 1.0)
+        object.rotation.set(0, 0, 0)
+        this.scene.add(object)
+      })
+      const render = () => {
+        this.renderer.render(this.scene, this.camera)
+      }
+
+      //アニメーション処理
+      const animate = () => {
+        //グローバルミキサー時間を進め、アニメーションを更新
+        if (mixer) {
+          mixer.update(this.clock.getDelta())
+        }
+        render()
+        //次のレンダラーを呼び出す
+        requestAnimationFrame(animate)
+      }
+
+      animate()
+      if (!this.fullscrean) {
+        setTimeout(() => {
+          if (this.count <= 1) {
+            this.count = this.count + 1
+            this.init()
+          }
+        }, 50)
+      }
     }
   }
 }
