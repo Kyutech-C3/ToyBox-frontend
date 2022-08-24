@@ -25,8 +25,8 @@
         right-5
         rounded-full
         px-1
-        text-gray-400
-        bg-white bg-opacity-50
+        text-black
+        bg-white bg-opacity-30
       "
       @click="showFullscrean()"
     >

@@ -96,4 +96,23 @@ export default class WorksCarousel extends Vue {
 .hooper {
   height: 39vw;
 }
+::v-deep .hooper-next,
+::v-deep .hooper-prev {
+  background-color: white;
+  opacity: 0.3;
+  border-radius: 50px;
+  padding: 0;
+  margin: 1rem;
+  transition: transform 100ms;
+}
+::v-deep .hooper-next:hover,
+::v-deep .hooper-prev:hover {
+  color: black;
+}
+::v-deep .hooper-next:hover {
+  transform: translate(0.125rem, -50%);
+}
+::v-deep .hooper-prev:hover {
+  transform: translate(-0.125rem, -50%);
+}
 </style>
