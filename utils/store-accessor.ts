@@ -9,6 +9,7 @@ import WorkPost from '@/store/work_post'
 import Confirmation from '@/store/confirmation'
 import DownloadAsset from '@/store/download_asset'
 import Fullscrean from '@/store/fullscrean'
+import Share from '@/store/share'
 
 let authStore: Auth
 let commentStore: Comment
@@ -19,6 +20,7 @@ let workPostStore: WorkPost
 let confirmationStore: Confirmation
 let downloadAssetStore: DownloadAsset
 let fullscreanStore: Fullscrean
+let shareStore: Share
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -30,6 +32,7 @@ function initializeStores(store: Store<any>): void {
   confirmationStore = getModule(Confirmation, store)
   downloadAssetStore = getModule(DownloadAsset, store)
   fullscreanStore = getModule(Fullscrean, store)
+  shareStore = getModule(Share, store)
 }
 
 export {
@@ -42,5 +45,6 @@ export {
   workPostStore,
   confirmationStore,
   downloadAssetStore,
-  fullscreanStore
+  fullscreanStore,
+  shareStore
 }

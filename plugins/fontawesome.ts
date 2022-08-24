@@ -25,7 +25,8 @@ import {
 import {
   faYoutube,
   faTwitter,
-  faGithub
+  faGithub,
+  faMastodon
 } from '@fortawesome/free-brands-svg-icons'
 
 import { faHeart, faSave } from '@fortawesome/free-regular-svg-icons'
@@ -54,7 +55,8 @@ library.add(
   faInfoCircle,
   faPen,
   faReply,
-  faPaperPlane
+  faPaperPlane,
+  faMastodon
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

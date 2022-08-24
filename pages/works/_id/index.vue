@@ -75,7 +75,14 @@
               favorite
             </span>
           </div>
-          <div>1000 view</div>
+          <!-- バックの実装までコメ -->
+          <!-- <div class="mr-3">1000 view</div> -->
+          <span
+            class="material-symbols-outlined cursor-pointer text-xl select-none"
+            @click="openShareModal"
+          >
+            share
+          </span>
         </div>
         <div class="flex items-center">
           <div v-for="asset in work.assets" :key="asset.id">
@@ -175,6 +182,7 @@ import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
 import Confirmation from '@/components/commons/Confirmation.vue'
 import MarkdownView from '@/components/commons/MarkdownView.vue'
+import Share from '@/components/works/Share.vue'
 
 import axios from 'axios'
 import { Work, PostComment, Asset } from '@/types'
@@ -183,7 +191,8 @@ import {
   commentStore,
   confirmationStore,
   modalStore,
-  downloadAssetStore
+  downloadAssetStore,
+  shareStore
 } from '~/store'
 
 type replyCommentType = {
@@ -203,7 +212,8 @@ type replyCommentType = {
     BaseIconButton,
     VisibilityStateTag,
     UserTag,
-    MarkdownView
+    MarkdownView,
+    Share
   },
   async asyncData({ route }) {
     const resWork = await axios.get(
@@ -264,6 +274,11 @@ export default class Works extends Vue {
   unliked() {
     this.likes--
     this.isLiked = false
+  }
+
+  openShareModal() {
+    shareStore.setWork(this.work)
+    modalStore.open(Share)
   }
 
   async openConfirmation(asset: Asset) {

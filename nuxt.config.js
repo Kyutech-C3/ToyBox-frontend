@@ -93,7 +93,8 @@ export default {
   env: {
     AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
     API_URL: process.env.API_URL,
-    ASSET_BASE_URL: process.env.ASSET_BASE_URL
+    ASSET_BASE_URL: process.env.ASSET_BASE_URL,
+    BASE_URL: process.env.BASE_URL
   },
   ssr: false,
 
