@@ -1,14 +1,15 @@
 <template>
   <div>
-    <div class="flex items-center h-10">
-      <comment-user
-        :user="replyComment.user ? replyComment.user : gestUser"
-        class="p-0 w-max text-gray-600 mt-4 mb-2 -translate-y-1"
-      />
-
-      <p class="text-gray-400 mx-2 text-xs translate-y-0.5">
-        {{ dateFormatter(replyComment.created_at) }}
-      </p>
+    <div class="flex items-start h-10">
+      <div class="flex items-start h-10 translate-y-5">
+        <comment-user
+          :user="replyComment.user ? replyComment.user : gestUser"
+          class="p-0 w-max text-gray-600"
+        />
+        <p class="text-gray-400 mx-2 text-xs">
+          {{ dateFormatter(replyComment.created_at) }}
+        </p>
+      </div>
       <visibility-state-tag
         v-if="replyComment.visibility !== 'public'"
         :visibility="replyComment.visibility"
@@ -16,7 +17,7 @@
         class="text-black"
       />
     </div>
-    <p class="pl-12 -translate-y-2">{{ replyComment.content }}</p>
+    <p class="pl-12 text-sm text-black">{{ replyComment.content }}</p>
   </div>
 </template>
 
