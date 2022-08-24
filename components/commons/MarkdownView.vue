@@ -7,19 +7,24 @@
         w-full
         mt-5
         pt-5
-        pb-14
-        px-7
+        pb-10
+        px-4
         bg-gray-50
         rounded-xl
         text-gray-600
       "
       :class="[
-        { 'hidden-blur overflow-hidden max-h-96': !showAll },
+        {
+          'hidden-blur overflow-hidden max-h-96':
+            !showAll && markdownViewHeiht >= 384
+        },
         { '': showAll }
       ]"
+      ref="markdownView"
       v-html="$md.render(markdownText)"
-    ></div>
+    />
     <span
+      v-if="markdownViewHeiht >= 384"
       class="
         material-symbols-outlined
         cursor-pointer
@@ -42,14 +47,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Ref } from 'nuxt-property-decorator'
 
 @Component
 export default class MarkdownView extends Vue {
   showAll: boolean = false
+  markdownViewHeiht: number = 500
+
+  @Ref() markdownView!: HTMLElement
 
   @Prop({ type: String, required: true })
   markdownText!: string
+
+  mounted() {
+    this.markdownViewHeiht = this.markdownView.getBoundingClientRect().height
+  }
 }
 </script>
 
