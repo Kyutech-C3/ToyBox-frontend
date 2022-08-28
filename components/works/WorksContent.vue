@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <font-awesome-icon class="w-6 text-gray-500" :icon="['fas', icon]" />
+  <div class="flex h-10 items-center mt-3">
+    <font-awesome-icon class="w-6 text-gray-500 mr-5" :icon="['fas', icon]" />
     <slot />
   </div>
 </template>

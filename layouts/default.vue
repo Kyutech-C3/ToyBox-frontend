@@ -1,20 +1,27 @@
 <template>
-  <div>
+  <div :class="{ 'overflow-hidden h-screen': getFullscreen }">
     <Header />
     <Nuxt class="mx-auto my-12 max-w-[90rem]" />
     <Footer />
     <modal />
+    <fullscreen-view v-if="getFullscreen" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import Modal from '@/components/commons/Modal.vue'
-export default Vue.extend({
-  components: {
-    Modal
-  }
+import FullscreenView from '@/components/works/FullscreenView.vue'
+import { Vue, Component } from 'nuxt-property-decorator'
+
+import { fullscreenStore } from '@/store'
+@Component({
+  components: { Modal, FullscreenView }
 })
+export default class Default extends Vue {
+  get getFullscreen() {
+    return fullscreenStore.getFullscreen
+  }
+}
 </script>
 
 <style>

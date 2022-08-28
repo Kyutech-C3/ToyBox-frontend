@@ -6,6 +6,10 @@ import Modal from '@/store/modal'
 import Tag from '@/store/tag'
 import WorkFilter from '~/store/work_filter'
 import WorkPost from '@/store/work_post'
+import ConfirmModal from '@/store/confirm_modal'
+import DownloadAsset from '@/store/download_asset'
+import Fullscreen from '@/store/fullscreen'
+import WorkShare from '~/store/work_share'
 
 let authStore: Auth
 let commentStore: Comment
@@ -13,6 +17,10 @@ let modalStore: Modal
 let tagStore: Tag
 let workFilterStore: WorkFilter
 let workPostStore: WorkPost
+let confirmModalStore: ConfirmModal
+let downloadAssetStore: DownloadAsset
+let fullscreenStore: Fullscreen
+let workShareStore: WorkShare
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -21,6 +29,10 @@ function initializeStores(store: Store<any>): void {
   tagStore = getModule(Tag, store)
   workFilterStore = getModule(WorkFilter, store)
   workPostStore = getModule(WorkPost, store)
+  confirmModalStore = getModule(ConfirmModal, store)
+  downloadAssetStore = getModule(DownloadAsset, store)
+  fullscreenStore = getModule(Fullscreen, store)
+  workShareStore = getModule(WorkShare, store)
 }
 
 export {
@@ -30,5 +42,9 @@ export {
   modalStore,
   tagStore,
   workFilterStore,
-  workPostStore
+  workPostStore,
+  confirmModalStore,
+  downloadAssetStore,
+  fullscreenStore,
+  workShareStore
 }

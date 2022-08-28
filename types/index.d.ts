@@ -10,11 +10,6 @@ export type Asset = {
   updated_at: string
 }
 
-export type BaseCommunity = {
-  name: string
-  description: string
-}
-
 export type BaseUrlInfo = {
   url: string
   url_type: string
@@ -29,16 +24,18 @@ export type DeleteStatus = {
   status: string
 }
 
-export type Tag = {
+export type GetTag = {
   name: string
   color: string
   id: string
 }
 
-export type GetTag = Tag
-
 export type HTTPValidationError = {
-  detail: ValidationError[]
+  detail?: ValidationError[] | undefined
+}
+
+export type PostComment = {
+  content: string
 }
 
 export type PostTag = {
@@ -57,12 +54,35 @@ export type PostWork = {
 }
 
 export type PutTag = {
-  name: string
-  color: string
+  name?: string | undefined
+  color?: string | undefined
 }
 
 export type RefreshTokenExchangeRequest = {
   refresh_token: string
+}
+
+export type ResponseComment = {
+  content: string
+  id: string
+  user?: User | undefined
+  work_id: string
+  visibility?: string | undefined
+  reply_at?: string | undefined
+  created_at: string
+  updated_at: string
+  number_of_reply: number
+}
+
+export type ResponseReplyComment = {
+  content: string
+  id: string
+  user?: User | undefined
+  work_id: string
+  visibility?: string | undefined
+  reply_at?: string | undefined
+  created_at: string
+  updated_at: string
 }
 
 export type TagResponsStatus = {
@@ -89,10 +109,10 @@ export type User = {
   name: string
   email: string
   display_name: string
-  avatar_url?: string
-  profile?: string
-  twitter_id?: string
-  github_id?: string
+  avatar_url?: string | undefined
+  profile?: string | undefined
+  twitter_id?: string | undefined
+  github_id?: string | undefined
   created_at: string
   updated_at: string
 }
@@ -102,22 +122,25 @@ export type UserCreateRequest = {
   email: string
   password: string
   display_name: string
-  avatar_url?: string
+  avatar_url?: string | undefined
 }
 
 export type UserInfoChangeRequest = {
-  display_name: string
-  avatar_url: string
-  profile: string
-  twitter_id: string
-  github_id: string
+  display_name?: string | undefined
+  avatar_url?: string | undefined
+  profile?: string | undefined
+  twitter_id?: string | undefined
+  github_id?: string | undefined
 }
 
 export type ValidationError = {
-  loc: string[]
+  loc: Partial<string & number>[]
   msg: string
   type: string
 }
+
+/** An enumeration. */
+export type Visibility = 'public' | 'private' | 'draft'
 
 export type Work = {
   id: string
@@ -129,7 +152,7 @@ export type Work = {
   urls: UrlInfo[]
   visibility: string
   tags: GetTag[]
-  thumbnail: Asset[]
+  thumbnail: Asset
   created_at: string
   updated_at: string
 }

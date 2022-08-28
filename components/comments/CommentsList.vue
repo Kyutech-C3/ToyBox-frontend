@@ -1,69 +1,41 @@
 <template>
   <div>
-    <div
-      class="border-b-2 border-dotted my-4"
+    <div v-if="comments.length === 0" class="ml-10">
+      コメントがまだありません>_&lt; &nbsp;作品の感想などをコメントしてみてね！
+    </div>
+    <comments-list-item
       v-for="comment in comments"
       :key="comment.id"
-    >
-      <div class="flex items-center">
-        <user-rounded-icon :imageSrc="comment.userIconUrl" />
-        <div class="ml-3">
-          {{ comment.userName }}
-        </div>
-      </div>
-      <div class="my-2">
-        <p>{{ comment.text }}</p>
-        <p class="text-right text-gray-400">
-          {{ dateFormatter(comment.created_at) }}
-        </p>
-      </div>
-    </div>
+      :comment="comment"
+      @replyComment="replyComment($event)"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
 
-interface Comment {
-  id: string
-  userIconUrl: string
-  userName: string
-  text: string
-  created_at: string
+import CommentsListItem from '@/components/comments/CommentsListItem.vue'
+
+import { ResponseComment, PostComment } from '@/types'
+
+type replyCommentType = {
+  comment_id: string
+  reply_comment_data: PostComment
 }
 
 @Component({
   components: {
-    UserRoundedIcon
+    CommentsListItem
   }
 })
 export default class CommentsList extends Vue {
-  comments: Comment[] = [
-    {
-      id: 'abcd1234',
-      userIconUrl:
-        'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
-      userName: 'ハムタロサァン',
-      text: 'くしくし',
-      created_at: '2021-11-20T15:52:47.590564'
-    },
-    {
-      id: 'abcd1234',
-      userIconUrl:
-        'http://3.bp.blogspot.com/-n0PpkJL1BxE/VCIitXhWwpI/AAAAAAAAmfE/xLraJLXXrgk/s800/animal_hamster.png',
-      userName: 'ハムタロサァン',
-      text: 'くしくし',
-      created_at: '2021-11-20T15:52:47.590564'
-    }
-  ]
+  @Prop({ type: Array, required: true })
+  comments!: ResponseComment[]
 
-  dateFormatter(date: string): string {
-    console.log(date)
-    const splitFullDate = date.split('T')
-    const splitDate = splitFullDate[0].split('-')
-    const splitTime = splitFullDate[1].split('.')
-    return `${splitDate[0]}年${splitDate[1]}月${splitDate[2]}日 ${splitTime[0]}`
+  @Emit('replyComment')
+  replyComment(replyCommentData: replyCommentType): replyCommentType {
+    return replyCommentData
   }
 }
 </script>

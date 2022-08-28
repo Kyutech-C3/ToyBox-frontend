@@ -1,6 +1,6 @@
 .markdown-body ol {
   @apply list-decimal;
-  @apply  pl-10;
+  @apply pl-10;
 }
 
 .markdown-body ul {
@@ -42,6 +42,6 @@
   @apply bg-gray-200;
 }
 
-.markdown-body pre>code {
+.markdown-body pre > code {
   @apply bg-transparent;
 }

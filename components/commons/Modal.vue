@@ -11,6 +11,7 @@
       justify-center
       items-center
       backdrop-blur-md
+      z-40
     "
     @click.self="close"
   >
@@ -21,9 +22,10 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { modalStore } from '~/store'
 import TagSelector from '@/components/works/TagSelector.vue'
+import ConfirmModal from '@/components/commons/ConfirmModal.vue'
 
 @Component({
-  components: { TagSelector }
+  components: { TagSelector, ConfirmModal }
 })
 export default class Modal extends Vue {
   get modalInner() {
