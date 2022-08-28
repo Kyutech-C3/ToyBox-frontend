@@ -21,7 +21,11 @@
     >
       <form-tag v-model="workData.tags_id" class="my-3" />
       <form-title v-model="workData.title" class="my-3" />
-      <form-assets v-model="workData.assets_id" class="mt-3" />
+      <form-thumbnail-preview
+        v-model="workData.thumbnail_asset_id"
+        class="mt-3"
+      />
+      <form-assets-preview v-model="workData.assets_id" class="mt-3" />
       <form-url v-model="workData.urls" />
     </div>
     <div
@@ -49,7 +53,8 @@ import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
 import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
-import FormAssets from '@/components/works/form/FormAssets.vue'
+import FormAssetsPreview from '@/components/works/form/FormAssetsPreview.vue'
+import FormThumbnailPreview from '@/components/works/form/FormThumbnailPreview.vue'
 import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
@@ -61,7 +66,8 @@ import { PostWork, Tag } from '@/types'
   components: {
     FormTag,
     FormTitle,
-    FormAssets,
+    FormAssetsPreview,
+    FormThumbnailPreview,
     FormUrl,
     FormMarkdown,
     FormSubmitButton
@@ -79,7 +85,6 @@ export default class WorksForm extends Vue {
     workPostStore.initIsBlockUnload()
     // バリデーションをクリアしたときのみ実行される
     // バックエンドにPOSTを記述
-    this.workData.thumbnail_asset_id = this.workData.assets_id[0]
     this.workData.visibility = visibility
     try {
       if (this.isNewWorks) {

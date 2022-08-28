@@ -16,11 +16,15 @@ config.rawError = true
 })
 export default class WorkPost extends VuexModule {
   private assetsViewInfo: { url: string; asset_type: string }[] = []
+  private thumbnailViewInfo: string = ''
   private isBlockUnload: boolean = false
   private selectedTags: Tag[] = []
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
+  }
+  get getThumbnailViewInfo() {
+    return this.thumbnailViewInfo
   }
   get getIsBlockUnload() {
     return this.isBlockUnload
@@ -54,6 +58,14 @@ export default class WorkPost extends VuexModule {
     this.assetsViewInfo = this.assetsViewInfo.filter((_, index) => {
       return number !== index
     })
+  }
+  @Mutation
+  INIT_THUMBNAILVIEWINFO() {
+    this.thumbnailViewInfo = ''
+  }
+  @Mutation
+  SET_THUMBNAILVIEWINFO(thumbnail: Asset) {
+    this.thumbnailViewInfo = `${process.env.ASSET_BASE_URL}/${thumbnail.asset_type}/${thumbnail.id}/origin.${thumbnail.extention}`
   }
   @Mutation
   CHANGE_ISBLOCKUNLOAD() {
@@ -95,6 +107,14 @@ export default class WorkPost extends VuexModule {
   @Action
   deleteAssetsViewInfo(number: number) {
     this.DELETE_ASSETSVIEWINFO(number)
+  }
+  @Action
+  initThumbnailViewInfo() {
+    this.INIT_THUMBNAILVIEWINFO()
+  }
+  @Action
+  setThumbnailViewInfo(thumbnail: Asset) {
+    this.SET_THUMBNAILVIEWINFO(thumbnail)
   }
   @Action
   changeIsBlockUnload() {

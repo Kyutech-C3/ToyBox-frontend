@@ -28,7 +28,7 @@
           :image-url="imageURL.url"
         />
       </div>
-      <form-thumbnail v-model="assetImage" />
+      <form-input-assets v-model="assetImage" />
     </div>
   </div>
 </template>
@@ -38,18 +38,18 @@ import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
-import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
+import FormInputAssets from '@/components/works/form/FormInputAssets.vue'
 import { workPostStore } from '@/store'
 
 @Component({
   components: {
     FormLabel,
     FormImagePreview,
-    FormThumbnail,
+    FormInputAssets,
     FormVideoPreview
   }
 })
-export default class FormAssets extends Vue {
+export default class FormAssetsPreview extends Vue {
   info: string = `
 対応形式：
   画像 [ .png, .jpg, .jpeg, .bmp ]

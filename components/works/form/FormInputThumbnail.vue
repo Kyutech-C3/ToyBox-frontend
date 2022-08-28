@@ -1,5 +1,6 @@
 <template>
   <label
+    v-if="!getThumbnailViewInfo"
     for="pickimg"
     class="
       mr-5
@@ -21,7 +22,7 @@
       id="pickimg"
       ref="pickimg"
       type="file"
-      accept="image/png, image/jpeg, image/gif, image/bmp, video/mp4, audio/mp4, audio/wav, audio/mpeg, application/zip, .gltf, .fbx"
+      accept="image/png, image/jpeg, image/gif, image/bmp"
       style="opacity: 0"
       class="
         absolute
@@ -57,9 +58,13 @@ const baseAssetType: Object = {
 }
 
 @Component
-export default class FromThumbnail extends Vue {
-  @VModel({ type: Array })
-  assetImage!: string[]
+export default class FormInputThumbnail extends Vue {
+  @VModel({ type: String })
+  thumbnail!: string
+
+  get getThumbnailViewInfo() {
+    return workPostStore.getThumbnailViewInfo
+  }
 
   onFilePicked(event: Event<HTMLInputElement>) {
     const file = event.target.files as FileList
@@ -82,8 +87,8 @@ export default class FromThumbnail extends Vue {
               }
             })
             .then((result) => {
-              this.assetImage.push(result.data.id)
-              workPostStore.addAssetsViewInfo(result.data)
+              this.thumbnail = result.data.id
+              workPostStore.setThumbnailViewInfo(result.data)
             })
         } catch (error) {
           // eslint-disable-next-line no-console

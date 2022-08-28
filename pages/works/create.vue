@@ -27,6 +27,8 @@ export default class Create extends mixins(BlockUnloadMixin) {
 
   destroyed() {
     workPostStore.initAssetsViewInfo()
+    workPostStore.initSelectedTags()
+    workPostStore.initThumbnailViewInfo()
   }
 }
 </script>
