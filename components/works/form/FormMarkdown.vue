@@ -1,6 +1,11 @@
 <template>
   <div @keyup="changeBlockUnloadState">
-    <form-label name="本文" :required="true" class="mb-3" />
+    <form-label
+      name="本文"
+      :required="true"
+      :show-warning="showWarning"
+      class="mb-3"
+    />
     <mavon-editor
       v-model="description"
       :toolbars="toolbarsOption"
@@ -14,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import { workPostStore } from '@/store'
 
@@ -26,6 +31,9 @@ import { workPostStore } from '@/store'
 export default class FormMarkdown extends Vue {
   @VModel({ type: String })
   description!: string
+
+  @Prop({ type: Boolean, required: true })
+  showWarning!: boolean
 
   changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()

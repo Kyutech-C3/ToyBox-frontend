@@ -1,6 +1,11 @@
 <template>
   <div class="flex">
-    <form-label name="サムネイル" :required="true" :info="info" />
+    <form-label
+      name="サムネイル"
+      :required="true"
+      :info="info"
+      :show-warning="showWarning"
+    />
 
     <div v-if="getThumbnailViewInfo" class="relative mb-5 mr-5">
       <font-awesome-icon
@@ -26,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
@@ -52,6 +57,9 @@ export default class FormThumbnailPreview extends Vue {
 
   @VModel({ type: String })
   thumbnail!: string
+
+  @Prop({ type: Boolean, required: true })
+  showWarning!: boolean
 
   deleteAsset() {
     this.thumbnail = ''

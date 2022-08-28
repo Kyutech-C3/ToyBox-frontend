@@ -1,6 +1,11 @@
 <template>
   <div class="flex">
-    <form-label name="アセット" :required="true" :info="info" />
+    <form-label
+      name="アセット"
+      :required="true"
+      :info="info"
+      :show-warning="showWarning"
+    />
     <div class="flex flex-wrap">
       <div v-for="(imageURL, i) in assets" :key="i" class="relative mb-5 mr-5">
         <font-awesome-icon
@@ -34,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
@@ -63,6 +68,9 @@ export default class FormAssetsPreview extends Vue {
 
   @VModel({ type: Array })
   assetImage!: string[]
+
+  @Prop({ type: Boolean, required: true })
+  showWarning!: boolean
 
   mounted() {
     this.assets = workPostStore.getAssetsViewInfo
