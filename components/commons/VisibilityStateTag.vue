@@ -18,9 +18,9 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
-export default class WorksCarousel extends Vue {
+export default class VisibilityStateTag extends Vue {
   @Prop({ type: String, required: true })
-  visibility!: 'public' | 'praivate' | 'draft'
+  visibility!: 'public' | 'private' | 'draft'
   @Prop({ type: String, required: false, default: 'base' })
   size!: 'small' | 'base' | 'large'
 }

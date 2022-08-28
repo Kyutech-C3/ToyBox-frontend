@@ -124,22 +124,22 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { shareStore, modalStore, authStore } from '@/store'
+import { workShareStore, modalStore, authStore } from '@/store'
 
 @Component({
   components: {}
 })
-export default class Share extends Vue {
+export default class WorkShare extends Vue {
   copySuccess: boolean = false
   shareText: string = ''
   hashTags: string = '#ToyBox #C3 #CompositeComputerClub\n'
 
   get getURL() {
-    return shareStore.getURL
+    return workShareStore.getURL
   }
 
   get getWork() {
-    return shareStore.getWork
+    return workShareStore.getWork
   }
 
   get getNowLogin() {

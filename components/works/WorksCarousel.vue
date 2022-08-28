@@ -2,7 +2,6 @@
   <hooper
     :settings="hooperSettings"
     class="bg-black rounded-t-2xl overflow-hidden pb-5 relative"
-    @beforeSlide="hoge = hoge * -1"
   >
     <slide
       v-for="asset in showAssets"
@@ -10,7 +9,7 @@
       class="flex justify-center items-center h-96 relative"
       :class="{ 'bg-white': asset.asset_type === 'model' }"
     >
-      <item-image v-if="asset.asset_type === 'image'" :image="asset" />
+      <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
       <video v-else-if="asset.asset_type === 'video'" controls>
         <source :src="getURL(asset)" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
@@ -44,7 +43,7 @@ import {
 } from 'hooper'
 import 'hooper/dist/hooper.css'
 
-import ItemImage from '@/components/works/carouselItem/Image.vue'
+import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
 
 import { Asset } from '@/types'
 import ModelViewer from '@/components/works/ModelViewer.vue'
@@ -55,7 +54,7 @@ import ModelViewer from '@/components/works/ModelViewer.vue'
     Slide,
     HooperPagination,
     HooperNavigation,
-    ItemImage,
+    ItemImageView,
     ModelViewer
   }
 })
@@ -63,7 +62,6 @@ export default class WorksCarousel extends Vue {
   // @Ref() modelViewer: ModelViewer
   showAssets: Asset[] = []
   showAssetsType: string[] = ['image', 'video', 'music', 'model']
-  hoge: number = 1
 
   @Prop({ type: Array, required: true })
   assets!: Asset[]

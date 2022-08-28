@@ -28,7 +28,7 @@
         text-black
         bg-white bg-opacity-30
       "
-      @click="showFullscrean()"
+      @click="showFullscreen()"
     >
       fullscreen
     </span>
@@ -38,23 +38,23 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Asset } from '@/types'
-import { fullscreanStore } from '@/store'
+import { fullscreenStore } from '@/store'
 
 @Component({
   components: {}
 })
-export default class WorksCarousel extends Vue {
-  setFullscrean(boolean: boolean) {
-    fullscreanStore.setFullscrean(boolean)
+export default class ImageView extends Vue {
+  setFullscreen(boolean: boolean) {
+    fullscreenStore.setFullscreen(boolean)
   }
 
   setAsset(asset: Asset) {
-    fullscreanStore.setAsset(asset)
+    fullscreenStore.setAsset(asset)
   }
 
-  showFullscrean() {
+  showFullscreen() {
     this.setAsset(this.image)
-    this.setFullscrean(true)
+    this.setFullscreen(true)
   }
 
   @Prop({ type: Object, required: true })

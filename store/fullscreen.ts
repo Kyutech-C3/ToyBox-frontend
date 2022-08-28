@@ -15,12 +15,12 @@ axios.defaults.baseURL = process.env.API_URL
  * フルスクリーン機能に必要な情報を取得・保持するStore
  */
 @Module({
-  name: 'fullscrean',
+  name: 'fullscreen',
   stateFactory: true,
   namespaced: true
 })
-export default class Fullscrean extends VuexModule {
-  private fullscrean: boolean = false
+export default class Fullscreen extends VuexModule {
+  private fullscreen: boolean = false
   private assetInitData: Asset = {
     asset_type: '',
     id: '',
@@ -39,8 +39,8 @@ export default class Fullscrean extends VuexModule {
   }
   private asset: Asset = this.assetInitData
 
-  public get getFullscrean() {
-    return this.fullscrean
+  public get getFullscreen() {
+    return this.fullscreen
   }
 
   public get getAsset() {
@@ -48,8 +48,8 @@ export default class Fullscrean extends VuexModule {
   }
 
   @Mutation
-  SET_FULLSCREAN(fullscrean: boolean) {
-    this.fullscrean = fullscrean
+  SET_FULLSCREEN(fullscreen: boolean) {
+    this.fullscreen = fullscreen
   }
 
   @Mutation
@@ -63,8 +63,8 @@ export default class Fullscrean extends VuexModule {
   }
 
   @Action
-  setFullscrean(fullscrean: boolean) {
-    this.SET_FULLSCREAN(fullscrean)
+  setFullscreen(fullscreen: boolean) {
+    this.SET_FULLSCREEN(fullscreen)
   }
   @Action
   setAsset(asset: Asset) {

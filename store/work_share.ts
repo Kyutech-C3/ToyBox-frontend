@@ -10,11 +10,11 @@ import { Work } from '@/types'
 config.rawError = true
 
 @Module({
-  name: 'share',
+  name: 'work_share',
   stateFactory: true,
   namespaced: true
 })
-export default class Share extends VuexModule {
+export default class WorkShare extends VuexModule {
   private work!: Work
 
   get getURL() {

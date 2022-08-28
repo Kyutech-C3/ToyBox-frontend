@@ -13,7 +13,7 @@
     "
   >
     <div class="w-4/5 text-gray-700 text-center mb-5">
-      {{ getInfomation }}
+      {{ getInformation }}
     </div>
     <div class="w-4/5 flex justify-center">
       <base-text-button
@@ -37,24 +37,24 @@ import { Vue, Component, Emit } from 'nuxt-property-decorator'
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 
 import { saveAs } from 'file-saver'
-import { confirmationStore, downloadAssetStore } from '@/store'
+import { confirmModalStore, downloadAssetStore } from '@/store'
 
 @Component({ components: { BaseTextButton } })
-export default class Confirmation extends Vue {
+export default class ConfirmModal extends Vue {
   get getApproveTitle() {
-    return confirmationStore.getApproveTitle
+    return confirmModalStore.getApproveTitle
   }
 
   get getRejectTitle() {
-    return confirmationStore.getRejectTitle
+    return confirmModalStore.getRejectTitle
   }
 
-  get getInfomation() {
-    return confirmationStore.getInfomation
+  get getInformation() {
+    return confirmModalStore.getInformation
   }
 
   get getType() {
-    return confirmationStore.getType
+    return confirmModalStore.getType
   }
 
   get getAsset() {
@@ -62,14 +62,14 @@ export default class Confirmation extends Vue {
   }
 
   approve() {
-    confirmationStore.approve()
+    confirmModalStore.approve()
     if (this.getType === 'download') {
       this.download(this.getAsset.asset_type, this.getAsset.id)
     }
   }
 
   reject() {
-    confirmationStore.reject
+    confirmModalStore.reject
   }
 
   @Emit()

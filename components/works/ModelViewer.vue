@@ -2,7 +2,7 @@
   <div>
     <div id="scene-container" ref="sceneContainer" />
     <span
-      v-if="!fullscrean"
+      v-if="!fullscreen"
       class="
         material-symbols-outlined
         cursor-pointer
@@ -18,7 +18,7 @@
         bg-white bg-opacity-30
         z-40
       "
-      @click="showFullscrean()"
+      @click="showFullscreen()"
     >
       fullscreen
     </span>
@@ -43,7 +43,7 @@ import {
   AnimationMixer,
   Clock
 } from 'three'
-import { fullscreanStore } from '@/store'
+import { fullscreenStore } from '@/store'
 import { Asset } from '@/types'
 
 @Component({})
@@ -68,19 +68,19 @@ export default class ModelViewer extends Vue {
   model!: Asset
 
   @Prop({ type: Boolean, required: false, default: false })
-  fullscrean!: boolean
+  fullscreen!: boolean
 
-  setFullscrean(boolean: boolean) {
-    fullscreanStore.setFullscrean(boolean)
+  setFullscreen(boolean: boolean) {
+    fullscreenStore.setFullscreen(boolean)
   }
 
   setAsset(asset: Asset) {
-    fullscreanStore.setAsset(asset)
+    fullscreenStore.setAsset(asset)
   }
 
-  showFullscrean() {
+  showFullscreen() {
     this.setAsset(this.model)
-    this.setFullscrean(true)
+    this.setFullscreen(true)
   }
 
   getURL(asset: Asset): string {
@@ -161,7 +161,7 @@ export default class ModelViewer extends Vue {
         requestAnimationFrame(tick)
       }
       tick()
-      if (!this.fullscrean) {
+      if (!this.fullscreen) {
         setTimeout(() => {
           if (this.count <= 1) {
             this.count = this.count + 1
@@ -212,7 +212,7 @@ export default class ModelViewer extends Vue {
       }
 
       animate()
-      if (!this.fullscrean) {
+      if (!this.fullscreen) {
         setTimeout(() => {
           if (this.count <= 1) {
             this.count = this.count + 1

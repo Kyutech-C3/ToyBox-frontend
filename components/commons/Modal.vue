@@ -22,10 +22,10 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { modalStore } from '~/store'
 import TagSelector from '@/components/works/TagSelector.vue'
-import Confirmation from '@/components/commons/Confirmation.vue'
+import ConfirmModal from '@/components/commons/ConfirmModal.vue'
 
 @Component({
-  components: { TagSelector, Confirmation }
+  components: { TagSelector, ConfirmModal }
 })
 export default class Modal extends Vue {
   get modalInner() {

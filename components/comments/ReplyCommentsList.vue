@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div>
-      <reply-comments-list-item
-        v-for="replyComment in replyComments"
-        :key="replyComment.id"
-        :reply-comment="replyComment"
-      />
-    </div>
+    <reply-comments-list-item
+      v-for="replyComment in replyComments"
+      :key="replyComment.id"
+      :reply-comment="replyComment"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 import ReplyCommentsListItem from '@/components/comments/ReplyCommentsListItem.vue'
 

@@ -6,10 +6,10 @@ import Modal from '@/store/modal'
 import Tag from '@/store/tag'
 import WorkFilter from '~/store/work_filter'
 import WorkPost from '@/store/work_post'
-import Confirmation from '@/store/confirmation'
+import ConfirmModal from '@/store/confirm_modal'
 import DownloadAsset from '@/store/download_asset'
-import Fullscrean from '@/store/fullscrean'
-import Share from '@/store/share'
+import Fullscreen from '@/store/fullscreen'
+import WorkShare from '~/store/work_share'
 
 let authStore: Auth
 let commentStore: Comment
@@ -17,10 +17,10 @@ let modalStore: Modal
 let tagStore: Tag
 let workFilterStore: WorkFilter
 let workPostStore: WorkPost
-let confirmationStore: Confirmation
+let confirmModalStore: ConfirmModal
 let downloadAssetStore: DownloadAsset
-let fullscreanStore: Fullscrean
-let shareStore: Share
+let fullscreenStore: Fullscreen
+let workShareStore: WorkShare
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -29,10 +29,10 @@ function initializeStores(store: Store<any>): void {
   tagStore = getModule(Tag, store)
   workFilterStore = getModule(WorkFilter, store)
   workPostStore = getModule(WorkPost, store)
-  confirmationStore = getModule(Confirmation, store)
+  confirmModalStore = getModule(ConfirmModal, store)
   downloadAssetStore = getModule(DownloadAsset, store)
-  fullscreanStore = getModule(Fullscrean, store)
-  shareStore = getModule(Share, store)
+  fullscreenStore = getModule(Fullscreen, store)
+  workShareStore = getModule(WorkShare, store)
 }
 
 export {
@@ -43,8 +43,8 @@ export {
   tagStore,
   workFilterStore,
   workPostStore,
-  confirmationStore,
+  confirmModalStore,
   downloadAssetStore,
-  fullscreanStore,
-  shareStore
+  fullscreenStore,
+  workShareStore
 }

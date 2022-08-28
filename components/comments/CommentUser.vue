@@ -16,7 +16,7 @@ import { User } from '@/types'
 import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
 
 @Component({ components: { UserRoundedIcon } })
-export default class UserTag extends Vue {
+export default class CommentUser extends Vue {
   @Prop({ type: Object, required: true })
   user!: User
 }

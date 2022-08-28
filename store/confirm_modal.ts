@@ -8,20 +8,20 @@ import {
 
 config.rawError = true
 
-type confirmationType = '' | 'download'
+type confirmModalType = '' | 'download'
 
 @Module({
-  name: 'confirmation',
+  name: 'confirm_modal',
   stateFactory: true,
   namespaced: true
 })
-export default class Confirmation extends VuexModule {
+export default class confirmModal extends VuexModule {
   private isApprove: boolean = false
   private isReject: boolean = false
   private approveTitle: string = ''
   private rejectTitle: string = ''
-  private infomation: string = ''
-  private type!: confirmationType
+  private information: string = ''
+  private type!: confirmModalType
 
   get getApprove() {
     return this.isApprove
@@ -39,8 +39,8 @@ export default class Confirmation extends VuexModule {
     return this.rejectTitle
   }
 
-  get getInfomation() {
-    return this.infomation
+  get getInformation() {
+    return this.information
   }
 
   get getType() {
@@ -53,7 +53,7 @@ export default class Confirmation extends VuexModule {
     this.isReject = false
     this.approveTitle = ''
     this.rejectTitle = ''
-    this.infomation = ''
+    this.information = ''
     this.type = ''
   }
   @Mutation
@@ -73,11 +73,11 @@ export default class Confirmation extends VuexModule {
     this.rejectTitle = rejectTitle
   }
   @Mutation
-  SET_INFORMATION(infomation: string) {
-    this.infomation = infomation
+  SET_INFORMATION(information: string) {
+    this.information = information
   }
   @Mutation
-  SET_TYPE(type: confirmationType) {
+  SET_TYPE(type: confirmModalType) {
     this.type = type
   }
 
@@ -102,11 +102,11 @@ export default class Confirmation extends VuexModule {
     this.SET_REJECT_TITLE(rejectTitle)
   }
   @Action
-  setInformation(infomation: string) {
-    this.SET_INFORMATION(infomation)
+  setInformation(information: string) {
+    this.SET_INFORMATION(information)
   }
   @Action
-  setType(type: confirmationType) {
+  setType(type: confirmModalType) {
     this.SET_TYPE(type)
   }
 }

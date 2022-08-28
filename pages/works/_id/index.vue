@@ -90,7 +90,7 @@
               v-if="asset.asset_type === ('zip' || 'model')"
               class="mx-3"
               :title="`${asset.asset_type} download`"
-              @click="openConfirmation(asset)"
+              @click="openConfirmModal(asset)"
             />
           </div>
         </div>
@@ -180,19 +180,19 @@ import CommentsList from '@/components/comments/CommentsList.vue'
 import BaseIconButton from '@/components/commons/BaseIconButton.vue'
 import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
-import Confirmation from '@/components/commons/Confirmation.vue'
+import ConfirmModal from '@/components/commons/ConfirmModal.vue'
 import MarkdownView from '@/components/commons/MarkdownView.vue'
-import Share from '@/components/works/Share.vue'
+import WorkShare from '@/components/works/WorkShare.vue'
 
 import axios from 'axios'
 import { Work, PostComment, Asset } from '@/types'
 import {
   authStore,
   commentStore,
-  confirmationStore,
+  confirmModalStore,
   modalStore,
   downloadAssetStore,
-  shareStore
+  workShareStore
 } from '~/store'
 
 type replyCommentType = {
@@ -213,7 +213,7 @@ type replyCommentType = {
     VisibilityStateTag,
     UserTag,
     MarkdownView,
-    Share
+    WorkShare
   },
   async asyncData({ route }) {
     const resWork = await axios.get(
@@ -277,20 +277,20 @@ export default class Works extends Vue {
   }
 
   openShareModal() {
-    shareStore.setWork(this.work)
-    modalStore.open(Share)
+    workShareStore.setWork(this.work)
+    modalStore.open(WorkShare)
   }
 
-  async openConfirmation(asset: Asset) {
+  async openConfirmModal(asset: Asset) {
     downloadAssetStore.setAsset(asset)
-    confirmationStore.init()
-    confirmationStore.setApproveTitle('ダウンロード')
-    confirmationStore.setRejectTitle('キャンセル')
-    confirmationStore.setInformation(
+    confirmModalStore.init()
+    confirmModalStore.setApproveTitle('ダウンロード')
+    confirmModalStore.setRejectTitle('キャンセル')
+    confirmModalStore.setInformation(
       `${asset.asset_type} のダウンロードが行われます。ダウンロードしますか？`
     )
-    confirmationStore.setType('download')
-    modalStore.open(Confirmation)
+    confirmModalStore.setType('download')
+    modalStore.open(ConfirmModal)
   }
 
   postComment() {

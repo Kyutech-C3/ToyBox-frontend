@@ -30,7 +30,7 @@
     <model-viewer
       v-if="getAsset.asset_type === 'model'"
       :model="getAsset"
-      :fullscrean="true"
+      :fullscreen="true"
     />
     <span
       class="
@@ -48,7 +48,7 @@
         rounded-full
         px-1
       "
-      @click="exitFullscrean()"
+      @click="exitFullscreen()"
     >
       fullscreen_exit
     </span>
@@ -58,28 +58,28 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Asset } from '@/types'
-import { fullscreanStore } from '@/store'
+import { fullscreenStore } from '@/store'
 import ModelViewer from '@/components/works/ModelViewer.vue'
 
 @Component({
   components: { ModelViewer }
 })
 export default class WorksCarousel extends Vue {
-  get getFullscrean() {
-    return fullscreanStore.getFullscrean
+  get getFullscreen() {
+    return fullscreenStore.getFullscreen
   }
 
   get getAsset() {
-    return fullscreanStore.getAsset
+    return fullscreenStore.getAsset
   }
 
-  setFullscrean(boolean: boolean) {
-    fullscreanStore.setFullscrean(boolean)
+  setFullscreen(boolean: boolean) {
+    fullscreenStore.setFullscreen(boolean)
   }
 
-  exitFullscrean() {
-    fullscreanStore.setFullscrean(false)
-    fullscreanStore.initAsset()
+  exitFullscreen() {
+    fullscreenStore.setFullscreen(false)
+    fullscreenStore.initAsset()
   }
 
   getURL(asset: Asset): string {
@@ -87,11 +87,11 @@ export default class WorksCarousel extends Vue {
   }
 
   mounted() {
-    window.addEventListener('popstate', this.exitFullscrean)
+    window.addEventListener('popstate', this.exitFullscreen)
   }
 
   beforeDestroy() {
-    window.removeEventListener('popstate', this.exitFullscrean)
+    window.removeEventListener('popstate', this.exitFullscreen)
   }
 }
 </script>
