@@ -18,7 +18,7 @@
           pattern="https://.*"
           class="
             w-72
-            text-xl
+            text-lg
             border-b-2
             placeholder-gray-400
             focus:outline-none

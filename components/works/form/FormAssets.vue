@@ -14,7 +14,7 @@
             opacity-60
             cursor-pointer
             bg-white
-            z-50
+            z-10
           "
           :icon="['fas', 'times']"
           @click="deleteAsset(i)"

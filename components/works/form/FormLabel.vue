@@ -1,5 +1,5 @@
 <template>
-  <div class="w-56 text-xl flex-shrink-0">
+  <div class="w-40 text-lg flex-shrink-0">
     {{ name }}
     <span v-if="required" class="text-red-600"> *</span>
     <info v-if="info" :info="info" />

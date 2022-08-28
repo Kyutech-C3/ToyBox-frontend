@@ -1,6 +1,6 @@
 <template>
   <div @keyup="changeBlockUnloadState">
-    <form-label name="本文" :required="true" />
+    <form-label name="本文" :required="true" class="mb-3" />
     <mavon-editor
       v-model="description"
       :toolbars="toolbarsOption"

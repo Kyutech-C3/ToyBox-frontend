@@ -32,7 +32,6 @@
         left-1/2
         -translate-x-1/2 -translate-y-1/2
       "
-      required
       :multiple="true"
       @change="onFilePicked($event)"
     />

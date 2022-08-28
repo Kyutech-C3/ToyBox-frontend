@@ -1,26 +1,46 @@
 <template>
   <form
-    class="
-      flex flex-col
-      items-left
-      m-auto
-      w-3/4
-      max-w-7xl
-      border-2
-      rounded-3xl
-      border-gray-400
-      px-16
-      py-7
-    "
+    class="m-auto max-w-[750px] w-[90vw]"
     autocomplete="off"
     @submit.prevent
   >
-    <form-tag class="my-3" />
-    <form-title v-model="workData.title" class="my-3" />
-    <form-assets v-model="workData.assets_id" class="mt-3" />
-    <form-url v-model="workData.urls" class="mb-5" />
-    <form-markdown v-model="workData.description" class="my-5" />
-    <form-submit-button class="mt-5 z-10" @submit="clickSubmit($event)" />
+    <div
+      class="
+        flex flex-col
+        items-left
+        m-0
+        w-full
+        border
+        rounded-3xl
+        border-gray-200
+        px-[5vw]
+        py-7
+        shadow-md
+        mb-5
+      "
+    >
+      <form-tag v-model="workData.tags_id" class="my-3" />
+      <form-title v-model="workData.title" class="my-3" />
+      <form-assets v-model="workData.assets_id" class="mt-3" />
+      <form-url v-model="workData.urls" />
+    </div>
+    <div
+      class="
+        flex flex-col
+        items-left
+        m-0
+        w-full
+        border
+        rounded-3xl
+        border-gray-200
+        px-[3vw]
+        py-7
+        shadow-md
+      "
+    >
+      <form-markdown v-model="workData.description" class="mb-1" />
+      <form-submit-button class="mt-5 z-10" @submit="clickSubmit($event)" />
+    </div>
   </form>
 </template>
 
@@ -33,8 +53,9 @@ import FormAssets from '@/components/works/form/FormAssets.vue'
 import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
+
 import { authStore, workPostStore } from '@/store'
-import { PostWork } from '@/types'
+import { PostWork, Tag } from '@/types'
 
 @Component({
   components: {
@@ -55,6 +76,7 @@ export default class WorksForm extends Vue {
 
   clickSubmit(visibility: string) {
     workPostStore.initAssetsViewInfo()
+    workPostStore.initIsBlockUnload()
     // バリデーションをクリアしたときのみ実行される
     // バックエンドにPOSTを記述
     this.workData.thumbnail_asset_id = this.workData.assets_id[0]

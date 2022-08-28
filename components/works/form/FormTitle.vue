@@ -8,13 +8,13 @@
       placeholder="title"
       required
       class="
-        w-72
-        text-xl
-        p-3
-        border-b-2 border-gray-400
+        w-full
+        text-lg
+        border-b-2 border-gray-300
         placeholder-gray-500
+        pl-[3px]
         focus:outline-none
-        focus:border-black
+        focus:border-gray-400
       "
       @change="changeBlockUnloadState"
       @keyup="changeBlockUnloadState"
