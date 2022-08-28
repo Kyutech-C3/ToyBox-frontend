@@ -42,6 +42,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
 
   created() {
     workPostStore.setAssetsViewInfo(this.putWorkData)
+    workPostStore.setSelectedTags(this.putWorkData.tags)
     this.workData = {
       title: this.putWorkData.title,
       description: this.putWorkData.description,
@@ -69,6 +70,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
 
   destroyed() {
     workPostStore.initAssetsViewInfo()
+    workPostStore.initSelectedTags()
   }
 }
 </script>

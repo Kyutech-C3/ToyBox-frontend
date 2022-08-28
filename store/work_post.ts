@@ -5,7 +5,7 @@ import {
   Action,
   config
 } from 'vuex-module-decorators'
-import { PostWork, Work, Asset } from '@/types'
+import { Tag, Work, Asset } from '@/types'
 
 config.rawError = true
 
@@ -17,6 +17,7 @@ config.rawError = true
 export default class WorkPost extends VuexModule {
   private assetsViewInfo: { url: string; asset_type: string }[] = []
   private isBlockUnload: boolean = false
+  private selectedTags: Tag[] = []
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
@@ -24,6 +25,10 @@ export default class WorkPost extends VuexModule {
   get getIsBlockUnload() {
     return this.isBlockUnload
   }
+  get getSelectedTags() {
+    return this.selectedTags
+  }
+
   @Mutation
   INIT_ASSETSVIEWINFO() {
     this.assetsViewInfo = []
@@ -58,6 +63,22 @@ export default class WorkPost extends VuexModule {
   INIT_ISBLOCKUNLOAD() {
     this.isBlockUnload = false
   }
+  @Mutation
+  SET_SELECTEDTAGS(selectedTags: Tag[]) {
+    this.selectedTags = selectedTags
+  }
+  @Mutation
+  ADD_SELECTEDTAGS(selectedTag: Tag) {
+    this.selectedTags.push(selectedTag)
+  }
+  @Mutation
+  DELETE_SELECTEDTAGS() {
+    this.selectedTags.pop()
+  }
+  @Mutation
+  INIT_SELECTEDTAGS() {
+    this.selectedTags = []
+  }
 
   @Action
   initAssetsViewInfo() {
@@ -82,5 +103,21 @@ export default class WorkPost extends VuexModule {
   @Action
   initIsBlockUnload() {
     this.INIT_ISBLOCKUNLOAD()
+  }
+  @Action
+  setSelectedTags(selectedTags: Tag[]) {
+    this.SET_SELECTEDTAGS(selectedTags)
+  }
+  @Action
+  addSelectedTags(selectedTag: Tag) {
+    this.ADD_SELECTEDTAGS(selectedTag)
+  }
+  @Action
+  deleteSelectedTags() {
+    this.DELETE_SELECTEDTAGS()
+  }
+  @Action
+  initSelectedTags() {
+    this.INIT_SELECTEDTAGS()
   }
 }
