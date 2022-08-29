@@ -5,6 +5,7 @@ import {
   Action,
   config
 } from 'vuex-module-decorators'
+import { ResponseComment } from '@/types'
 
 config.rawError = true
 
@@ -14,15 +15,15 @@ config.rawError = true
   namespaced: true
 })
 export default class Comment extends VuexModule {
-  private comments: string[] = []
+  private comments: ResponseComment[] = []
 
   get getComments() {
     return this.comments
   }
 
   @Mutation
-  ADD_COMMENTS(newComment: string) {
-    this.comments.push(newComment)
+  ADD_COMMENTS(resComments: ResponseComment[]) {
+    this.comments = resComments
   }
   @Mutation
   DELETE_COMMENTS(index: number) {
@@ -32,11 +33,11 @@ export default class Comment extends VuexModule {
   }
 
   @Action
-  addComment(newComment: string) {
-    this.ADD_COMMENTS(newComment)
+  addComments(resComments: ResponseComment[]) {
+    this.ADD_COMMENTS(resComments)
   }
   @Action
-  deleteComment(index: number) {
+  deleteComments(index: number) {
     this.DELETE_COMMENTS(index)
   }
 }

@@ -35,7 +35,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import BaseTag from '../commons/BaseTag.vue'
 import BaseTextButton from '../commons/BaseTextButton.vue'
 import { modalStore, tagStore, workFilterStore } from '~/store'
-import { Tag } from '~/types'
+import { GetTag } from '~/types'
 
 /**
  * Workの絞り込み条件を保持するStore
@@ -57,7 +57,7 @@ export default class WorkFilter extends Vue {
     return tags.filter((t) => selectedTags.some((st) => st.id === t.id))
   }
 
-  isSelected(tag: Tag) {
+  isSelected(tag: GetTag) {
     return workFilterStore.getFilterTags.some((t) => t.id === tag.id)
   }
 
@@ -66,7 +66,7 @@ export default class WorkFilter extends Vue {
     await tagStore.fetchTags()
   }
 
-  selectTag(tag: Tag) {
+  selectTag(tag: GetTag) {
     if (!this.isSelected(tag)) workFilterStore.addFilterTag(tag)
     else workFilterStore.deleteFilterTag(tag)
   }

@@ -1,18 +1,19 @@
 <template>
   <nuxt-link
     :to="`/users/${user.id}`"
-    class="
-      flex
-      items-center
-      pointer-events-auto
-      hover:bg-gray-200
-      rounded-full
-      px-2
-      py-1
-    "
+    class="flex items-center rounded-full"
+    :class="[
+      { 'pointer-events-auto hover:bg-gray-200': !noLink },
+      { 'pointer-events-none': noLink },
+      { 'p-1': invisibleName },
+      { 'pl-1 pr-2 py-1': !invisibleName }
+    ]"
   >
-    <user-rounded-icon :imageSrc="user.avatar_url" />
-    <div class="ml-3">
+    <user-rounded-icon
+      :imageSrc="user.avatar_url"
+      :size="invisibleName ? 'small' : 'base'"
+    />
+    <div v-if="!invisibleName" class="ml-3">
       {{ user.name }}
     </div>
   </nuxt-link>
@@ -27,5 +28,11 @@ import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
 export default class UserTag extends Vue {
   @Prop({ type: Object, required: true })
   user!: User
+
+  @Prop({ type: Boolean, required: false, default: false })
+  noLink!: boolean
+
+  @Prop({ type: Boolean, required: false, default: false })
+  invisibleName!: boolean
 }
 </script>

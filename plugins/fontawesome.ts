@@ -17,13 +17,16 @@ import {
   faTags,
   faPlusCircle,
   faInfoCircle,
-  faPen
+  faPen,
+  faReply,
+  faPaperPlane
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
   faYoutube,
   faTwitter,
-  faGithub
+  faGithub,
+  faMastodon
 } from '@fortawesome/free-brands-svg-icons'
 
 import { faHeart, faSave } from '@fortawesome/free-regular-svg-icons'
@@ -50,7 +53,10 @@ library.add(
   faTags,
   faPlusCircle,
   faInfoCircle,
-  faPen
+  faPen,
+  faReply,
+  faPaperPlane,
+  faMastodon
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
