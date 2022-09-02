@@ -2,7 +2,18 @@
   <div class="relative flex items-center w-full">
     <div
       v-if="getSelectedTags.length > 0"
-      class="absolute left-0 top-1/2 -translate-y-1/2 z-50 flex pb-1"
+      class="
+        selected-tags
+        absolute
+        left-0
+        top-1/2
+        -translate-y-1/2
+        z-50
+        flex
+        pb-0.5
+        overflow-x-scroll
+      "
+      :style="`max-width: ${(tagInput.clientWidth * 4) / 5}px;`"
       ref="selectedTagsRef"
     >
       <base-tag
@@ -16,7 +27,6 @@
     </div>
     <div class="relative items-center w-full">
       <input
-        v-model="searchTagKeyword"
         type="text"
         name="select tag"
         class="
@@ -41,11 +51,9 @@
       <ul
         v-if="(suggestTags.length >= 1 && focusInput) || showCreateItem()"
         class="
+          suggest-tag-list
           w-max
-          h-[calc(--suggest-list-height
-          *
-          21px)]
-          max-h-[17.5rem]
+          max-h-[10rem]
           block
           absolute
           z-50
@@ -54,14 +62,10 @@
           rounded-lg
           bg-white
           shadow-xl
-          overflow-hidden
+          overflow-x-hidden overflow-y-auto
         "
-        :class="[
-          `[--suggest-list-height: ${suggestTags.length > 10} ? '10':'${
-            suggestTags.length
-          }']`
-        ]"
         :style="`left:${inputPaddingLeft - 5}px;`"
+        ref="suggestTagList"
         @mouseover="suggestMouseOver = true"
         @mouseout="suggestMouseOver = false"
       >
@@ -108,10 +112,9 @@ import { Component, Prop, Vue, VModel, Ref } from 'nuxt-property-decorator'
 
 import BaseTag from '@/components/commons/BaseTag.vue'
 
-import { Tag } from '@/types'
+import { GetTag } from '@/types'
 import axios from 'axios'
 import { workPostStore, authStore } from '~/store'
-import auth from '~/middleware/auth'
 
 @Component({
   components: {
@@ -120,9 +123,11 @@ import auth from '~/middleware/auth'
 })
 export default class TagSelecter extends Vue {
   searchTagKeyword: string = ''
-  suggestTags: Tag[] = []
+  suggestTags: GetTag[] = []
   focusInput: boolean = false
   selectingSuggest: number = 0
+  suggestViewTop: number = 0
+  suggestViewBottom: number = 5
   inputPaddingLeft: number = 3
   previousInputWordCount: number = -1
   suggestMouseOver: boolean = false
@@ -132,6 +137,7 @@ export default class TagSelecter extends Vue {
 
   @Ref() selectedTagsRef!: HTMLDivElement
   @Ref() tagInput!: HTMLInputElement
+  @Ref() suggestTagList!: HTMLElement
 
   get getSelectedTags() {
     return workPostStore.getSelectedTags
@@ -150,22 +156,52 @@ export default class TagSelecter extends Vue {
   }
 
   mounted() {
+    console.log('mounted')
     this.updateInputPaddingLeft()
+    window.addEventListener('resize', () => {
+      console.log('resize')
+      this.selectedTagsRef.scrollLeft = this.selectedTagsRef.scrollWidth
+    })
   }
 
   updateInputPaddingLeft() {
     if (this.getSelectedTags.length > 0) {
-      this.inputPaddingLeft = this.selectedTagsRef.clientWidth
+      if (
+        (this.tagInput.clientWidth * 4) / 5 >
+        this.selectedTagsRef.clientWidth
+      ) {
+        this.inputPaddingLeft = this.selectedTagsRef.clientWidth
+      } else {
+        this.inputPaddingLeft = (this.tagInput.clientWidth * 4) / 5
+      }
     } else if (this.getSelectedTags.length === 0) {
       this.inputPaddingLeft = 3
     }
   }
 
+  bindKeyword() {
+    if (this.tagInput) {
+      this.searchTagKeyword = this.tagInput.value
+    } else {
+      this.searchTagKeyword = ''
+    }
+  }
+
   keydownHandler(event: KeyboardEvent): void {
-    console.log(event)
     switch (event.key) {
       case 'Enter':
-        event.preventDefault()
+        if (event.keyCode === 13) {
+          event.preventDefault()
+          this.suggestSelect(event)
+        } else {
+          this.searchTags()
+        }
+        if (this.selectedTagsRef) {
+          setTimeout(() => {
+            this.selectedTagsRef.scrollLeft =
+              this.selectedTagsRef.scrollWidth + 1000
+          }, 10)
+        }
         break
       case 'ArrowUp':
         event.preventDefault()
@@ -181,23 +217,25 @@ export default class TagSelecter extends Vue {
         break
       case 'Backspace':
         this.deleteKeyHandler()
+        if (this.selectedTagsRef) {
+          this.selectedTagsRef.scrollLeft = this.selectedTagsRef.scrollWidth
+        }
         break
+      // case ' ':
+      //   break
+      // default:
+      //   this.searchTags()
     }
-  }
-
-  keyupHandler(event: KeyboardEvent): void {
-    console.log(event)
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      this.suggestSelect(event)
-    } else {
+    if (event.code === 'Space') {
       this.searchTags()
     }
   }
 
+  keyupHandler(event: KeyboardEvent): void {
+    this.searchTags()
+  }
+
   deleteKeyHandler() {
-    console.log('delete')
-    console.log(this.searchTagKeyword.length)
     if (this.searchTagKeyword.length === 0) {
       if (this.getSelectedTags.length > 0) {
         workPostStore.deleteSelectedTags()
@@ -212,7 +250,7 @@ export default class TagSelecter extends Vue {
   }
 
   async searchTags() {
-    // console.log(event.key)
+    this.bindKeyword()
     if (this.previousInputWordCount !== this.searchTagKeyword.length) {
       console.log('search')
       try {
@@ -221,7 +259,7 @@ export default class TagSelecter extends Vue {
           .then((result) => {
             console.log(result)
             if (this.getSelectedTags.length > 0) {
-              this.suggestTags = result.data.filter((item: Tag) => {
+              this.suggestTags = result.data.filter((item: GetTag) => {
                 for (let i = 0; i < this.getSelectedTags.length; i++) {
                   if (item.id === this.getSelectedTags[i].id) {
                     return false
@@ -232,7 +270,6 @@ export default class TagSelecter extends Vue {
             } else {
               this.suggestTags = result.data
             }
-            console.log(this.suggestTags)
             this.selectingSuggest = 0
           })
       } catch (error) {
@@ -242,37 +279,55 @@ export default class TagSelecter extends Vue {
     }
   }
 
-  focusPrev(event: any) {
+  focusPrev(event: KeyboardEvent) {
     if (this.suggestTags.length > 0) {
       event.preventDefault()
       this.selectingSuggest--
+      if (this.selectingSuggest <= this.suggestViewTop) {
+        this.suggestTagList.scrollTop -= 29
+      }
       if (this.selectingSuggest <= -1) {
         this.selectingSuggest = this.suggestTags.length - 1
+        this.suggestTagList.scrollTop = this.suggestTagList.scrollHeight
+        this.suggestViewTop = this.suggestTags.length - 6
+        this.suggestViewBottom = this.suggestTags.length - 1
       }
-      console.log(this.selectingSuggest)
+      if (this.selectingSuggest <= this.suggestViewTop) {
+        this.suggestViewTop = this.selectingSuggest
+        this.suggestViewBottom = this.suggestViewTop + 5
+        // if (this.selectingSuggest < this.suggestViewBottom) {
+        //   this.suggestViewBottom = this.selectingSuggest
+        // }
+      }
     }
   }
 
-  focusNext(event: any) {
-    console.log(event.key)
+  focusNext(event: KeyboardEvent) {
     if (this.suggestTags.length > 0) {
       event.preventDefault()
       this.selectingSuggest++
-      if (this.suggestTags.length < this.selectingSuggest) {
-        this.selectingSuggest = 0
+      if (this.suggestViewBottom <= this.selectingSuggest) {
+        this.suggestTagList.scrollTop += 29
       }
-      console.log(this.selectingSuggest)
+      if (this.suggestTags.length - 1 < this.selectingSuggest) {
+        this.selectingSuggest = 0
+        this.suggestTagList.scrollTop = -this.suggestTagList.scrollHeight
+        this.suggestViewTop = 0
+        this.suggestViewBottom = 5
+      }
+      if (this.suggestViewBottom <= this.selectingSuggest) {
+        this.suggestViewBottom = this.selectingSuggest
+        this.suggestViewTop = this.suggestViewBottom - 5
+      }
     }
   }
 
-  suggestSelect(event: any) {
+  suggestSelect(event: KeyboardEvent) {
     console.log('selectSuggestTag')
-    console.log(event.key)
     if (this.suggestTags.length > 0) {
       workPostStore.addSelectedTags(this.suggestTags[this.selectingSuggest])
       workPostStore.changeIsBlockUnload()
       this.postTags.push(this.suggestTags[this.selectingSuggest].id)
-      console.log(this.suggestTags[this.selectingSuggest])
       this.initSuggest()
       this.initInputWord()
       setTimeout(() => {
@@ -292,7 +347,6 @@ export default class TagSelecter extends Vue {
     workPostStore.addSelectedTags(this.suggestTags[index])
     workPostStore.changeIsBlockUnload()
     this.postTags.push(this.suggestTags[index].id)
-    console.log(this.suggestTags[index])
     this.initSuggest()
     this.initInputWord()
     setTimeout(() => {
@@ -304,16 +358,14 @@ export default class TagSelecter extends Vue {
 
   showCreateItem() {
     let tagNotExist = true
-    this.suggestTags.forEach((item: Tag) => {
+    this.suggestTags.forEach((item: GetTag) => {
       if (item.name === this.searchTagKeyword) {
         tagNotExist = false
-        console.log(tagNotExist)
       }
     })
-    this.getSelectedTags.forEach((item: Tag) => {
+    this.getSelectedTags.forEach((item: GetTag) => {
       if (item.name === this.searchTagKeyword) {
         tagNotExist = false
-        console.log(tagNotExist)
       }
     })
     return this.searchTagKeyword.length > 0 && tagNotExist && this.getNowLogin
@@ -347,11 +399,11 @@ export default class TagSelecter extends Vue {
       this.updateInputPaddingLeft()
     }, 50)
     this.searchTags()
-    this.tagInput.focus()
   }
 
   initInputWord() {
     this.searchTagKeyword = ''
+    this.tagInput.value = ''
     this.previousInputWordCount = -1
   }
   initSuggest() {
@@ -360,3 +412,30 @@ export default class TagSelecter extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.selected-tags::-webkit-scrollbar {
+  height: 2px;
+}
+.selected-tags::-webkit-scrollbar-thumb {
+  background: rgb(255 237 213);
+  border-radius: 2px;
+}
+.selected-tags::-webkit-scrollbar-track {
+  background: rgba(221, 221, 221, 0);
+}
+.suggest-tagList {
+  scrollbar-width: 2px;
+  scrollbar-color: rag(225, 207, 145, 0) raga(0, 0, 0, 0);
+}
+.suggest-tag-list::-webkit-scrollbar {
+  width: 2px;
+}
+.suggest-tag-list::-webkit-scrollbar-thumb {
+  background: rgb(255, 207, 145);
+  border-radius: 2px;
+}
+.suggest-tag-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+</style>

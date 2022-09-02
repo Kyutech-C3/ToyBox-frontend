@@ -5,7 +5,7 @@ import {
   Action,
   config
 } from 'vuex-module-decorators'
-import { Tag, Work, Asset } from '@/types'
+import { GetTag, Work, Asset } from '@/types'
 
 config.rawError = true
 
@@ -18,7 +18,7 @@ export default class WorkPost extends VuexModule {
   private assetsViewInfo: { url: string; asset_type: string }[] = []
   private thumbnailViewInfo: string = ''
   private isBlockUnload: boolean = false
-  private selectedTags: Tag[] = []
+  private selectedTags: GetTag[] = []
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
@@ -76,11 +76,11 @@ export default class WorkPost extends VuexModule {
     this.isBlockUnload = false
   }
   @Mutation
-  SET_SELECTEDTAGS(selectedTags: Tag[]) {
+  SET_SELECTEDTAGS(selectedTags: GetTag[]) {
     this.selectedTags = selectedTags
   }
   @Mutation
-  ADD_SELECTEDTAGS(selectedTag: Tag) {
+  ADD_SELECTEDTAGS(selectedTag: GetTag) {
     this.selectedTags.push(selectedTag)
   }
   @Mutation
@@ -125,11 +125,11 @@ export default class WorkPost extends VuexModule {
     this.INIT_ISBLOCKUNLOAD()
   }
   @Action
-  setSelectedTags(selectedTags: Tag[]) {
+  setSelectedTags(selectedTags: GetTag[]) {
     this.SET_SELECTEDTAGS(selectedTags)
   }
   @Action
-  addSelectedTags(selectedTag: Tag) {
+  addSelectedTags(selectedTag: GetTag) {
     this.ADD_SELECTEDTAGS(selectedTag)
   }
   @Action
