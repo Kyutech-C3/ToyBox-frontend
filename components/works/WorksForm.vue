@@ -1,6 +1,6 @@
 <template>
   <form
-    class="m-auto max-w-[750px] w-[90vw]"
+    class="m-auto max-w-[900px] w-[90vw]"
     autocomplete="off"
     @submit.prevent
   >
@@ -22,12 +22,12 @@
       <form-tag
         v-model="workData.tags_id"
         :show-warning="showRequiredWarning.tagEmpty"
-        class="my-3"
+        class="mt-3"
       />
       <form-title
         v-model="workData.title"
         :show-warning="showRequiredWarning.titleEmpty"
-        class="my-3"
+        class="mt-3"
       />
       <form-thumbnail-preview
         v-model="workData.thumbnail_asset_id"
@@ -39,7 +39,7 @@
         :show-warning="showRequiredWarning.assetsEmpty"
         class="mt-3"
       />
-      <form-url v-model="workData.urls" />
+      <form-url v-model="workData.urls" class="mt-3" />
     </div>
     <div
       class="

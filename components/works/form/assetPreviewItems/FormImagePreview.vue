@@ -1,6 +1,6 @@
 <template>
-  <div class="w-32 h-32 rounded-xl">
-    <img class="w-full h-full object-cover rounded-xl" :src="imageUrl" />
+  <div class="w-32 h-32 rounded-xl overflow-hidden border border-gray-300">
+    <img class="w-full h-full object-cover" :src="imageUrl" />
   </div>
 </template>
 

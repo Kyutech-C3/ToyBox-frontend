@@ -1,7 +1,7 @@
 <template>
-  <div class="w-32 h-32 rounded-xl">
+  <div class="w-32 h-32 rounded-xl overflow-hidden border border-gray-300">
     <video
-      class="w-full h-full object-cover rounded-xl"
+      class="w-full h-full object-cover"
       :src="imageUrl"
       webkit-playsinline
       playsinline

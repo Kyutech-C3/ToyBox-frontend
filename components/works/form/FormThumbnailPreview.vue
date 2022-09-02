@@ -7,7 +7,7 @@
       :show-warning="showWarning"
     />
 
-    <div v-if="getThumbnailViewInfo" class="relative mb-5 mr-5">
+    <div v-if="getThumbnailViewInfo" class="relative mr-5">
       <font-awesome-icon
         class="
           w-6
@@ -33,8 +33,8 @@
 <script lang="ts">
 import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
-import FormImagePreview from '@/components/works/form/FormImagePreview.vue'
-import FormVideoPreview from '@/components/works/form/FormVideoPreview.vue'
+import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
+import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
 import FormInputThumbnail from '@/components/works/form/FormInputThumbnail.vue'
 import { workPostStore } from '@/store'
 

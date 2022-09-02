@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-start">
-    <form-label :name="count" />
+    <form-label :name="count" :show-warning="false" />
     <div class="flex flex-col">
       <div
         v-for="(url, i) in urls"

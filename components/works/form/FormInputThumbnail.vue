@@ -3,8 +3,6 @@
     v-if="!getThumbnailViewInfo"
     for="pickimg"
     class="
-      mr-5
-      mb-5
       p-3
       w-32
       h-32

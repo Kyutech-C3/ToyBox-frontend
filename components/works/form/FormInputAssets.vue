@@ -2,8 +2,6 @@
   <label
     for="pickimg"
     class="
-      mr-5
-      mb-5
       p-3
       w-32
       h-32
@@ -102,7 +100,7 @@ export default class FormInputAssets extends Vue {
     const assetTypeList: string[][] = Object.values(baseAssetType)
     assetTypeList.forEach((assetType) => {
       for (let i = 0; i < assetType.length; i++) {
-        if (assetType[i] === assetName.split('.').pop()) {
+        if (assetType[i] === assetName.split('.').pop()?.toLowerCase()) {
           // eslint-disable-next-line no-console
           console.log(Object.keys(baseAssetType)[index])
           response = Object.keys(baseAssetType)[index]
