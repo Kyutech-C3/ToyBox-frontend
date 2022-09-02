@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, VModel, Ref } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Ref } from 'nuxt-property-decorator'
 
 import BaseTag from '@/components/commons/BaseTag.vue'
 
@@ -223,13 +223,6 @@ export default class TagSelecter extends Vue {
           this.selectedTagsRef.scrollLeft = this.selectedTagsRef.scrollWidth
         }
         break
-      // case ' ':
-      //   break
-      // default:
-      //   this.searchTags()
-    }
-    if (event.code === 'Space') {
-      this.searchTags()
     }
   }
 
