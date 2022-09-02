@@ -392,7 +392,9 @@ export default class TagSelecter extends Vue {
 
   initInputWord() {
     this.searchTagKeyword = ''
-    this.tagInput.value = ''
+    if (this.tagInput) {
+      this.tagInput.value = ''
+    }
     this.previousInputWordCount = -1
   }
   initSuggest() {
