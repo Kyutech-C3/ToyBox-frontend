@@ -1,19 +1,18 @@
 <template>
   <div class="relative flex items-center w-full">
     <div
-      v-if="getSelectedTags.length > 0"
       class="
         selected-tags
         absolute
         left-0
         top-1/2
         -translate-y-1/2
-        z-50
+        z-30
         flex
         pb-0.5
         overflow-x-scroll
       "
-      :style="`max-width: ${(tagInput.clientWidth * 4) / 5}px;`"
+      :style="`max-width: ${selectedTagListMaxWidth}px;`"
       ref="selectedTagsRef"
     >
       <base-tag
@@ -128,9 +127,10 @@ export default class TagSelecter extends Vue {
   selectingSuggest: number = 0
   suggestViewTop: number = 0
   suggestViewBottom: number = 5
-  inputPaddingLeft: number = 3
+  inputPaddingLeft: number = 0
   previousInputWordCount: number = -1
   suggestMouseOver: boolean = false
+  selectedTagListMaxWidth: number = 0
 
   @VModel({ type: Array, required: true })
   postTags!: string[]
@@ -156,11 +156,13 @@ export default class TagSelecter extends Vue {
   }
 
   mounted() {
-    console.log('mounted')
-    this.updateInputPaddingLeft()
+    window.addEventListener('load', () => {
+      this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
+      setTimeout(() => this.updateInputPaddingLeft(), 10)
+    })
     window.addEventListener('resize', () => {
-      console.log('resize')
-      this.selectedTagsRef.scrollLeft = this.selectedTagsRef.scrollWidth
+      this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
+      this.updateInputPaddingLeft()
     })
   }
 
@@ -252,7 +254,6 @@ export default class TagSelecter extends Vue {
   async searchTags() {
     this.bindKeyword()
     if (this.previousInputWordCount !== this.searchTagKeyword.length) {
-      console.log('search')
       try {
         await axios
           .get(`${process.env.API_URL}/tags?w=${this.searchTagKeyword}`)
@@ -295,9 +296,6 @@ export default class TagSelecter extends Vue {
       if (this.selectingSuggest <= this.suggestViewTop) {
         this.suggestViewTop = this.selectingSuggest
         this.suggestViewBottom = this.suggestViewTop + 5
-        // if (this.selectingSuggest < this.suggestViewBottom) {
-        //   this.suggestViewBottom = this.selectingSuggest
-        // }
       }
     }
   }
@@ -323,7 +321,6 @@ export default class TagSelecter extends Vue {
   }
 
   suggestSelect(event: KeyboardEvent) {
-    console.log('selectSuggestTag')
     if (this.suggestTags.length > 0) {
       workPostStore.addSelectedTags(this.suggestTags[this.selectingSuggest])
       workPostStore.changeIsBlockUnload()
@@ -372,7 +369,6 @@ export default class TagSelecter extends Vue {
   }
 
   async createNewTag() {
-    console.log('create tag method')
     try {
       await axios
         .post(
@@ -425,17 +421,9 @@ export default class TagSelecter extends Vue {
   background: rgba(221, 221, 221, 0);
 }
 .suggest-tagList {
-  scrollbar-width: 2px;
-  scrollbar-color: rag(225, 207, 145, 0) raga(0, 0, 0, 0);
+  -ms-overflow-style: none;
 }
 .suggest-tag-list::-webkit-scrollbar {
-  width: 2px;
-}
-.suggest-tag-list::-webkit-scrollbar-thumb {
-  background: rgb(255, 207, 145);
-  border-radius: 2px;
-}
-.suggest-tag-list::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
+  display: none;
 }
 </style>
