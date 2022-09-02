@@ -6,8 +6,19 @@
       :info="info"
       :show-warning="showWarning"
     />
-    <div class="flex flex-wrap">
-      <div v-for="(imageURL, i) in assets" :key="i" class="relative mr-5">
+    <div class="asset-preview-grid w-full" style="--card-w: 8rem">
+      <div
+        v-for="(asset, i) in assets"
+        :key="i"
+        class="
+          relative
+          w-[var(--card-w)]
+          h-[var(--card-w)]
+          rounded-xl
+          overflow-hidden
+          border border-gray-300
+        "
+      >
         <font-awesome-icon
           class="
             w-6
@@ -25,12 +36,19 @@
           @click="deleteAsset(i)"
         />
         <form-image-preview
-          v-if="imageURL.asset_type === 'image'"
-          :image-url="imageURL.url"
+          v-if="asset.asset_type === 'image'"
+          :image-url="getURL(asset)"
+          :asset="asset"
         />
         <form-video-preview
-          v-if="imageURL.asset_type === 'video'"
-          :image-url="imageURL.url"
+          v-else-if="asset.asset_type === 'video'"
+          :image-url="getURL(asset)"
+        />
+        <form-zip-preview v-else-if="asset.asset_type === 'zip'" />
+        <model-viewer
+          v-else-if="asset.asset_type === 'model'"
+          :model="asset"
+          :mouse-control="false"
         />
       </div>
       <form-input-assets v-model="assetImage" />
@@ -43,15 +61,20 @@ import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
+import FormZipPreview from '@/components/works/form/assetPreviewItems/FormZipPreview.vue'
+import ModelViewer from '@/components/works/ModelViewer.vue'
 import FormInputAssets from '@/components/works/form/FormInputAssets.vue'
 import { workPostStore } from '@/store'
+import { Asset } from '~/types'
 
 @Component({
   components: {
     FormLabel,
     FormImagePreview,
     FormInputAssets,
-    FormVideoPreview
+    FormVideoPreview,
+    FormZipPreview,
+    ModelViewer
   }
 })
 export default class FormAssetsPreview extends Vue {
@@ -63,8 +86,11 @@ export default class FormAssetsPreview extends Vue {
   モデル [ .gltf, .fbx ]
   zip [.zip ]
 `
-  assets: { url: string; asset_type: string }[] =
-    workPostStore.getAssetsViewInfo
+  assets: Asset[] = []
+
+  get getAssetsViewInfo() {
+    return workPostStore.getAssetsViewInfo
+  }
 
   @VModel({ type: Array })
   assetImage!: string[]
@@ -72,8 +98,12 @@ export default class FormAssetsPreview extends Vue {
   @Prop({ type: Boolean, required: true })
   showWarning!: boolean
 
+  created() {
+    this.assets = this.getAssetsViewInfo
+  }
+
   mounted() {
-    this.assets = workPostStore.getAssetsViewInfo
+    this.assets = this.getAssetsViewInfo
   }
 
   deleteAsset(number: number) {
@@ -84,5 +114,22 @@ export default class FormAssetsPreview extends Vue {
     this.assets = workPostStore.getAssetsViewInfo
     workPostStore.changeIsBlockUnload()
   }
+
+  getURL(asset: Asset): string {
+    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
+  }
 }
 </script>
+
+<style scoped>
+.asset-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--card-w));
+  grid-row-gap: 15px;
+  row-gap: 15px;
+  grid-column-gap: 15px;
+  -moz-column-gap: 15px;
+  column-gap: 15px;
+  justify-items: center;
+}
+</style>

@@ -1,15 +1,13 @@
 <template>
-  <div class="w-32 h-32 rounded-xl overflow-hidden border border-gray-300">
-    <video
-      class="w-full h-full object-cover"
-      :src="imageUrl"
-      webkit-playsinline
-      playsinline
-      muted
-      autoplay
-      loop
-    />
-  </div>
+  <video
+    class="w-full h-full object-cover"
+    :src="imageUrl"
+    webkit-playsinline
+    playsinline
+    muted
+    autoplay
+    loop
+  />
 </template>
 
 <script lang="ts">

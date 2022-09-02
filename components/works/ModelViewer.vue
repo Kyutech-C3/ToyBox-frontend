@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div id="scene-container" ref="sceneContainer" />
+    <div
+      id="scene-container"
+      :class="{ ' pointer-events-none': !mouseControl }"
+      ref="sceneContainer"
+    />
     <span
       v-if="!fullscreen"
       class="
@@ -10,13 +14,13 @@
         text-2xl
         select-none
         absolute
-        bottom-0
-        right-5
         rounded-full
         px-1
         text-black
         bg-white bg-opacity-30
         z-40
+        bottom-3
+        right-3
       "
       @click="showFullscreen()"
     >
@@ -61,14 +65,19 @@ export default class ModelViewer extends Vue {
   directionalLight!: DirectionalLight
   count: number = 1
   clock = new Clock()
+
   mounted() {
     this.init()
   }
+
   @Prop({ type: Object, required: true })
   model!: Asset
 
   @Prop({ type: Boolean, required: false, default: false })
   fullscreen!: boolean
+
+  @Prop({ type: Boolean, required: false, default: true })
+  mouseControl!: boolean
 
   setFullscreen(boolean: boolean) {
     fullscreenStore.setFullscreen(boolean)

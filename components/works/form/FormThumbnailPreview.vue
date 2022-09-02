@@ -7,7 +7,18 @@
       :show-warning="showWarning"
     />
 
-    <div v-if="getThumbnailViewInfo" class="relative mr-5">
+    <div
+      v-if="getThumbnailViewInfo"
+      style="--card-w: 8rem"
+      class="
+        relative
+        w-[var(--card-w)]
+        h-[var(--card-w)]
+        rounded-xl
+        overflow-hidden
+        border border-gray-300
+      "
+    >
       <font-awesome-icon
         class="
           w-6
@@ -24,7 +35,7 @@
         :icon="['fas', 'times']"
         @click="deleteAsset()"
       />
-      <form-image-preview :image-url="getThumbnailViewInfo" />
+      <form-image-preview :image-url="getURL" :asset="getThumbnailViewInfo" />
     </div>
     <form-input-thumbnail v-model="thumbnail" />
   </div>
@@ -37,6 +48,7 @@ import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImag
 import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
 import FormInputThumbnail from '@/components/works/form/FormInputThumbnail.vue'
 import { workPostStore } from '@/store'
+import { Asset } from '~/types'
 
 @Component({
   components: {
@@ -53,6 +65,10 @@ export default class FormThumbnailPreview extends Vue {
 `
   get getThumbnailViewInfo() {
     return workPostStore.getThumbnailViewInfo
+  }
+
+  get getURL(): string {
+    return `${process.env.ASSET_BASE_URL}/${this.getThumbnailViewInfo.asset_type}/${this.getThumbnailViewInfo.id}/origin.${this.getThumbnailViewInfo.extention}`
   }
 
   @VModel({ type: String })

@@ -22,24 +22,24 @@
       <form-tag
         v-model="workData.tags_id"
         :show-warning="showRequiredWarning.tagEmpty"
-        class="mt-3"
+        class="mt-4"
       />
       <form-title
         v-model="workData.title"
         :show-warning="showRequiredWarning.titleEmpty"
-        class="mt-3"
+        class="mt-4"
       />
       <form-thumbnail-preview
         v-model="workData.thumbnail_asset_id"
         :show-warning="showRequiredWarning.thumbnailEmpty"
-        class="mt-3"
+        class="mt-4"
       />
       <form-assets-preview
         v-model="workData.assets_id"
         :show-warning="showRequiredWarning.assetsEmpty"
-        class="mt-3"
+        class="mt-4"
       />
-      <form-url v-model="workData.urls" class="mt-3" />
+      <form-url v-model="workData.urls" class="mt-4" />
     </div>
     <div
       class="
@@ -114,7 +114,6 @@ export default class WorksForm extends Vue {
   workData!: PostWork
 
   checkEmpty() {
-    console.log(this.workData.tags_id.length)
     if (this.workData.tags_id.length === 0) {
       this.showRequiredWarning.tagEmpty = true
     }
