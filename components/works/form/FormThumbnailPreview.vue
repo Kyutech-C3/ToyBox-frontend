@@ -45,17 +45,14 @@
 import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
-import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
 import FormInputThumbnail from '@/components/works/form/FormInputThumbnail.vue'
 import { workPostStore } from '@/store'
-import { Asset } from '~/types'
 
 @Component({
   components: {
     FormLabel,
     FormImagePreview,
-    FormInputThumbnail,
-    FormVideoPreview
+    FormInputThumbnail
   }
 })
 export default class FormThumbnailPreview extends Vue {
@@ -68,7 +65,7 @@ export default class FormThumbnailPreview extends Vue {
   }
 
   get getURL(): string {
-    return `${process.env.ASSET_BASE_URL}/${this.getThumbnailViewInfo.asset_type}/${this.getThumbnailViewInfo.id}/origin.${this.getThumbnailViewInfo.extention}`
+    return `${process.env.ASSET_BASE_URL}/${this.getThumbnailViewInfo[0].asset_type}/${this.getThumbnailViewInfo[0].id}/origin.${this.getThumbnailViewInfo[0].extention}`
   }
 
   @VModel({ type: String })
