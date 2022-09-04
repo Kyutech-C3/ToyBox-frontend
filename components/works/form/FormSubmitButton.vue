@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-end">
+  <div class="relative flex justify-end select-none">
     <button
       class="
         rounded-tl-lg rounded-bl-lg
@@ -48,7 +48,7 @@
           border-2 border-yellow-500
         "
       >
-        <ul class="z-10 relative">
+        <ul class="z-10 relative w-max">
           <li
             v-for="(range, i) in submitList"
             :key="i"

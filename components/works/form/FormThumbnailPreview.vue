@@ -35,7 +35,10 @@
         :icon="['fas', 'times']"
         @click="deleteAsset()"
       />
-      <form-image-preview :image-url="getURL" :asset="getThumbnailViewInfo" />
+      <form-image-preview
+        :image-url="getURL"
+        :asset="getThumbnailViewInfo[0]"
+      />
     </div>
     <form-input-thumbnail v-model="thumbnail" />
   </div>
