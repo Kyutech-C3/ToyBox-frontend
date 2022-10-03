@@ -188,7 +188,6 @@ export default class CommentsListItem extends Vue {
           )
           .then((result) => {
             this.replyComments = result.data
-            console.log(this.replyComments)
           })
           .catch((error) => {
             console.log(error)

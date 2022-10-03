@@ -1,30 +1,27 @@
 <template>
   <div class="flex items-center">
-    <form-label name="タグ" :required="true" />
-    <div
-      class="
-        w-48
-        p-2
-        border-2
-        rounded-xl
-        border-gray-400
-        text-center text-xl
-        cursor-pointer
-      "
-    >
-      <font-awesome-icon class="w-7 m-auto" :icon="['fas', 'plus']" />
-    </div>
+    <form-label name="タグ" :required="true" :show-warning="showWarning" />
+    <tag-selecter v-model="postTags" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
+
 import FormLabel from '@/components/works/form/FormLabel.vue'
+import TagSelecter from '@/components/commons/TagSelecter.vue'
 
 @Component({
   components: {
-    FormLabel
+    FormLabel,
+    TagSelecter
   }
 })
-export default class FormTag extends Vue {}
+export default class FormTag extends Vue {
+  @VModel({ type: Array, required: true })
+  postTags!: string[]
+
+  @Prop({ type: Boolean, required: true })
+  showWarning!: boolean
+}
 </script>

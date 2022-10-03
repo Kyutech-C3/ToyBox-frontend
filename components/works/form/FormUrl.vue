@@ -1,12 +1,12 @@
 <template>
   <div class="flex items-start">
-    <form-label :name="count" />
-    <div class="flex flex-col">
+    <form-label :name="count" :show-warning="false" />
+    <div class="flex flex-col w-full">
       <div
         v-for="(url, i) in urls"
         :key="i"
-        class="flex items-center cursor-pointer"
-        :class="{ 'mb-10': urls.length > 1 }"
+        class="flex items-center cursor-pointer w-full"
+        :class="{ 'mb-3': urls.length > 1 }"
       >
         <font-awesome-icon class="w-6 mr-3" :icon="whichIcon(i)" />
         <input
@@ -17,8 +17,8 @@
           placeholder="https://example.com"
           pattern="https://.*"
           class="
-            w-72
-            text-xl
+            w-full
+            text-lg
             border-b-2
             placeholder-gray-400
             focus:outline-none
@@ -35,9 +35,9 @@
     </div>
     <font-awesome-icon
       v-if="urls.length < 5"
-      class="w-7 cursor-pointer"
+      class="w-7 h-7 cursor-pointer"
+      :class="{ 'ml-5': urls.length > 0 }"
       :icon="['fas', 'plus']"
-      :class="{ 'ml-20': urls.length > 0 }"
       @click="addURL()"
     />
   </div>

@@ -21,10 +21,8 @@ import { authStore } from '~/store'
     WorksFilter,
     WorksList
   },
-  async asyncData({ store, route }) {
+  async asyncData({ route }) {
     let resUser
-    console.log(authStore.getAccessToken)
-    console.log(authStore.getUser.id)
     if (authStore.getUser.id === route.params.id) {
       resUser = await axios.get('/users/@me', {
         headers: {

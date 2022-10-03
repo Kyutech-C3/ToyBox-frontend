@@ -37,11 +37,13 @@ export default class Create extends mixins(BlockUnloadMixin) {
     thumbnail_asset_id: '',
     assets_id: [],
     urls: [],
-    tags_id: ['tag-12345'] // 仮置き
+    tags_id: []
   }
 
   created() {
     workPostStore.setAssetsViewInfo(this.putWorkData)
+    workPostStore.setSelectedTags(this.putWorkData.tags)
+    workPostStore.setThumbnailViewInfo(this.putWorkData.thumbnail)
     this.workData = {
       title: this.putWorkData.title,
       description: this.putWorkData.description,
@@ -59,12 +61,12 @@ export default class Create extends mixins(BlockUnloadMixin) {
         })
       }
     }
-    console.log(this.workData)
-    console.log(this.putWorkData)
   }
 
   destroyed() {
     workPostStore.initAssetsViewInfo()
+    workPostStore.initSelectedTags()
+    workPostStore.initThumbnailViewInfo()
   }
 }
 </script>

@@ -22,11 +22,13 @@ export default class Create extends mixins(BlockUnloadMixin) {
     thumbnail_asset_id: '',
     assets_id: [],
     urls: [],
-    tags_id: ['tag-12345'] // 仮置き
+    tags_id: []
   }
 
   destroyed() {
     workPostStore.initAssetsViewInfo()
+    workPostStore.initSelectedTags()
+    workPostStore.initThumbnailViewInfo()
   }
 }
 </script>

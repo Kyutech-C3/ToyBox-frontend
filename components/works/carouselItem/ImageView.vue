@@ -21,8 +21,8 @@
         text-2xl
         select-none
         absolute
-        bottom-0
-        right-5
+        bottom-3
+        right-3
         rounded-full
         px-1
         text-black

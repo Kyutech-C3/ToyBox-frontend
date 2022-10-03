@@ -5,7 +5,7 @@ import {
   Action,
   config
 } from 'vuex-module-decorators'
-import { PostWork, Work, Asset } from '@/types'
+import { GetTag, Work, Asset } from '@/types'
 
 config.rawError = true
 
@@ -15,34 +15,50 @@ config.rawError = true
   namespaced: true
 })
 export default class WorkPost extends VuexModule {
-  private assetsViewInfo: { url: string; asset_type: string }[] = []
+  private assetsViewInfo: Asset[] = []
+  private thumbnailViewInfo: Asset[] = []
   private isBlockUnload: boolean = false
+  private selectedTags: GetTag[] = []
+  // private thumbnailInitData: Asset = {
+  //   asset_type: '',
+  //   id: '',
+  //   user: {
+  //     id: '',
+  //     name: '',
+  //     email: '',
+  //     display_name: '',
+  //     created_at: '',
+  //     updated_at: ''
+  //   },
+  //   extention: '',
+  //   created_at: '',
+  //   updated_at: ''
+  // }
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
   }
+  get getThumbnailViewInfo() {
+    return this.thumbnailViewInfo
+  }
   get getIsBlockUnload() {
     return this.isBlockUnload
   }
+  get getSelectedTags() {
+    return this.selectedTags
+  }
+
   @Mutation
   INIT_ASSETSVIEWINFO() {
     this.assetsViewInfo = []
   }
   @Mutation
   SET_ASSETSVIEWINFO(editWorkData: Work) {
-    for (let i = 0; i < editWorkData.assets.length; i++) {
-      this.assetsViewInfo.push({
-        url: `${process.env.ASSET_BASE_URL}/${editWorkData.assets[i].asset_type}/${editWorkData.assets[i].id}/origin.${editWorkData.assets[i].extention}`,
-        asset_type: editWorkData.assets[i].asset_type
-      })
-    }
+    this.assetsViewInfo = editWorkData.assets
   }
   @Mutation
-  ADD_ASSETSVIEWINFO(asssets: Asset) {
-    this.assetsViewInfo.push({
-      url: `${process.env.ASSET_BASE_URL}/${asssets.asset_type}/${asssets.id}/origin.${asssets.extention}`,
-      asset_type: asssets.asset_type
-    })
+  ADD_ASSETSVIEWINFO(asset: Asset) {
+    this.assetsViewInfo.push(asset)
   }
   @Mutation
   DELETE_ASSETSVIEWINFO(number: number) {
@@ -51,12 +67,36 @@ export default class WorkPost extends VuexModule {
     })
   }
   @Mutation
+  INIT_THUMBNAILVIEWINFO() {
+    this.thumbnailViewInfo.length = 0
+  }
+  @Mutation
+  SET_THUMBNAILVIEWINFO(thumbnail: Asset) {
+    this.thumbnailViewInfo[0] = thumbnail
+  }
+  @Mutation
   CHANGE_ISBLOCKUNLOAD() {
     this.isBlockUnload = true
   }
   @Mutation
   INIT_ISBLOCKUNLOAD() {
     this.isBlockUnload = false
+  }
+  @Mutation
+  SET_SELECTEDTAGS(selectedTags: GetTag[]) {
+    this.selectedTags = selectedTags
+  }
+  @Mutation
+  ADD_SELECTEDTAGS(selectedTag: GetTag) {
+    this.selectedTags.push(selectedTag)
+  }
+  @Mutation
+  DELETE_SELECTEDTAGS() {
+    this.selectedTags.pop()
+  }
+  @Mutation
+  INIT_SELECTEDTAGS() {
+    this.selectedTags = []
   }
 
   @Action
@@ -68,12 +108,20 @@ export default class WorkPost extends VuexModule {
     this.SET_ASSETSVIEWINFO(editWorkData)
   }
   @Action
-  addAssetsViewInfo(asssets: Asset) {
-    this.ADD_ASSETSVIEWINFO(asssets)
+  addAssetsViewInfo(asset: Asset) {
+    this.ADD_ASSETSVIEWINFO(asset)
   }
   @Action
   deleteAssetsViewInfo(number: number) {
     this.DELETE_ASSETSVIEWINFO(number)
+  }
+  @Action
+  initThumbnailViewInfo() {
+    this.INIT_THUMBNAILVIEWINFO()
+  }
+  @Action
+  setThumbnailViewInfo(thumbnail: Asset) {
+    this.SET_THUMBNAILVIEWINFO(thumbnail)
   }
   @Action
   changeIsBlockUnload() {
@@ -82,5 +130,21 @@ export default class WorkPost extends VuexModule {
   @Action
   initIsBlockUnload() {
     this.INIT_ISBLOCKUNLOAD()
+  }
+  @Action
+  setSelectedTags(selectedTags: GetTag[]) {
+    this.SET_SELECTEDTAGS(selectedTags)
+  }
+  @Action
+  addSelectedTags(selectedTag: GetTag) {
+    this.ADD_SELECTEDTAGS(selectedTag)
+  }
+  @Action
+  deleteSelectedTags() {
+    this.DELETE_SELECTEDTAGS()
+  }
+  @Action
+  initSelectedTags() {
+    this.INIT_SELECTEDTAGS()
   }
 }
