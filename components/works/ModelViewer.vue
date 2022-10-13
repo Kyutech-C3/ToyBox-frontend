@@ -92,10 +92,6 @@ export default class ModelViewer extends Vue {
     this.setFullscreen(true)
   }
 
-  getURL(asset: Asset): string {
-    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
-  }
-
   init() {
     // set container
     this.container = this.$refs.sceneContainer
@@ -141,7 +137,7 @@ export default class ModelViewer extends Vue {
     this.renderer.setSize(this.width, this.height)
     if (this.model.extention === 'gltf') {
       const loader = new GLTFLoader()
-      loader.load(this.getURL(this.model), (data: any) => {
+      loader.load(this.model.url, (data: any) => {
         const gltf = data
         const object = gltf.scene
         object.scale.set(100.0, 100.0, 100.0)
@@ -181,7 +177,7 @@ export default class ModelViewer extends Vue {
     } else if (this.model.extention === 'fbx') {
       let mixer: AnimationMixer
       const loader = new FBXLoader()
-      loader.load(this.getURL(this.model), (object: any) => {
+      loader.load(this.model.url, (object: any) => {
         if (object.animations.length > 0) {
           //シーン内の特定のオブジェクトのアニメーション用のプレーヤー(アニメーションの調整)
           mixer = new AnimationMixer(object)

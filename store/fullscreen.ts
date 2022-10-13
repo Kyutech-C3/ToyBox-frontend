@@ -34,6 +34,7 @@ export default class Fullscreen extends VuexModule {
       updated_at: ''
     },
     extention: '',
+    url: '',
     created_at: '',
     updated_at: ''
   }

@@ -1,6 +1,6 @@
 <template>
   <label
-    v-if="!getThumbnailViewInfo"
+    v-if="getThumbnailViewInfo.length === 0"
     for="pickimg"
     class="
       p-3
@@ -87,6 +87,7 @@ export default class FormInputThumbnail extends Vue {
             .then((result) => {
               this.thumbnail = result.data.id
               workPostStore.setThumbnailViewInfo(result.data)
+              console.log(this.getThumbnailViewInfo)
             })
         } catch (error) {
           // eslint-disable-next-line no-console

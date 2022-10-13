@@ -24,7 +24,7 @@
         -translate-x-1/2 -translate-y-1/2
         object-contain
       "
-      :src="getURL(getAsset)"
+      :src="getAsset.url"
       alt="asset image"
     />
     <model-viewer
@@ -80,10 +80,6 @@ export default class WorksCarousel extends Vue {
   exitFullscreen() {
     fullscreenStore.setFullscreen(false)
     fullscreenStore.initAsset()
-  }
-
-  getURL(asset: Asset): string {
-    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
   }
 
   mounted() {

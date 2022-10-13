@@ -43,12 +43,12 @@ export default class Create extends mixins(BlockUnloadMixin) {
   created() {
     workPostStore.setAssetsViewInfo(this.putWorkData)
     workPostStore.setSelectedTags(this.putWorkData.tags)
-    workPostStore.setThumbnailViewInfo(this.putWorkData.thumbnail)
+    workPostStore.setThumbnailViewInfo(this.putWorkData.thumbnail[0])
     this.workData = {
       title: this.putWorkData.title,
       description: this.putWorkData.description,
       visibility: this.putWorkData.visibility,
-      thumbnail_asset_id: this.putWorkData.thumbnail.id,
+      thumbnail_asset_id: this.putWorkData.thumbnail[0].id,
       assets_id: this.putWorkData.assets.map((i) => i.id),
       urls: [],
       tags_id: this.putWorkData.tags.map((i) => i.id)
