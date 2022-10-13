@@ -11,14 +11,10 @@
     >
       <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
       <video v-else-if="asset.asset_type === 'video'" controls>
-        <source :src="getURL(asset)" type="video/mp4" />
+        <source :src="asset.url" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
       </video>
-      <audio
-        v-else-if="asset.asset_type === 'music'"
-        controls
-        :src="getURL(asset)"
-      >
+      <audio v-else-if="asset.asset_type === 'music'" controls :src="asset.url">
         Your browser does not support the <code>audio</code> element.
       </audio>
       <ModelViewer
@@ -82,10 +78,6 @@ export default class WorksCarousel extends Vue {
         this.showAssets.push(this.assets[i])
       }
     }
-  }
-
-  getURL(asset: Asset): string {
-    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
   }
 }
 </script>

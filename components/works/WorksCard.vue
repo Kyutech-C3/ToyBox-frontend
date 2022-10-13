@@ -3,10 +3,9 @@
     :to="'works/' + workData.id"
     class="
       w-[var(--card-w)]
-      h-96
-      m-2
+      h-[var(--card-h)]
       border border-gray-300
-      rounded-3xl
+      rounded-2xl
       shadow-md
       cursor-pointer
       hover:scale-105
@@ -14,6 +13,7 @@
       transform
       transition
       relative
+      overflow-hidden
     "
   >
     <div class="z-50 absolute right-3 top-3">
@@ -26,11 +26,7 @@
     <div class="h-1/2 border-b">
       <img
         class="h-full m-auto"
-        :src="
-          workData.thumbnail.length === 1
-            ? `${assetBaseURL}/image/${workData.thumbnail[0].id}/origin.${workData.thumbnail[0].extention}`
-            : 'https://avatars.githubusercontent.com/u/61457046'
-        "
+        :src="workData.thumbnail[0].url"
         alt="Thumbnail is not found"
       />
     </div>

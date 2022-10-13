@@ -10,7 +10,7 @@
         -translate-x-1/2 -translate-y-1/2
         object-contain
       "
-      :src="getURL(image)"
+      :src="image.url"
       alt="asset image"
     />
     <span
@@ -59,9 +59,5 @@ export default class ImageView extends Vue {
 
   @Prop({ type: Object, required: true })
   image!: Asset
-
-  getURL(asset: Asset): string {
-    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
-  }
 }
 </script>

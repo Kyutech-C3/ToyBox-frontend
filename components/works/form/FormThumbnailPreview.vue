@@ -8,7 +8,7 @@
     />
 
     <div
-      v-if="getThumbnailViewInfo"
+      v-if="getThumbnailViewInfo.length !== 0"
       style="--card-w: 8rem"
       class="
         relative
@@ -36,7 +36,7 @@
         @click="deleteAsset()"
       />
       <form-image-preview
-        :image-url="getURL"
+        :image-url="getThumbnailViewInfo[0].url"
         :asset="getThumbnailViewInfo[0]"
       />
     </div>
@@ -67,10 +67,6 @@ export default class FormThumbnailPreview extends Vue {
     return workPostStore.getThumbnailViewInfo
   }
 
-  get getURL(): string {
-    return `${process.env.ASSET_BASE_URL}/${this.getThumbnailViewInfo[0].asset_type}/${this.getThumbnailViewInfo[0].id}/origin.${this.getThumbnailViewInfo[0].extention}`
-  }
-
   @VModel({ type: String })
   thumbnail!: string
 
@@ -80,6 +76,7 @@ export default class FormThumbnailPreview extends Vue {
   deleteAsset() {
     this.thumbnail = ''
     workPostStore.initThumbnailViewInfo()
+    console.log(this.getThumbnailViewInfo)
     workPostStore.changeIsBlockUnload()
   }
 }

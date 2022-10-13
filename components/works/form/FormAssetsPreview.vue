@@ -37,12 +37,12 @@
         />
         <form-image-preview
           v-if="asset.asset_type === 'image'"
-          :image-url="getURL(asset)"
+          :image-url="asset.url"
           :asset="asset"
         />
         <form-video-preview
           v-else-if="asset.asset_type === 'video'"
-          :image-url="getURL(asset)"
+          :image-url="asset.url"
         />
         <form-zip-preview v-else-if="asset.asset_type === 'zip'" />
         <model-viewer
@@ -113,10 +113,6 @@ export default class FormAssetsPreview extends Vue {
     workPostStore.deleteAssetsViewInfo(number)
     this.assets = workPostStore.getAssetsViewInfo
     workPostStore.changeIsBlockUnload()
-  }
-
-  getURL(asset: Asset): string {
-    return `${process.env.ASSET_BASE_URL}/${asset.asset_type}/${asset.id}/origin.${asset.extention}`
   }
 }
 </script>

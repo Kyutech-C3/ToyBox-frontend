@@ -6,6 +6,7 @@ export type Asset = {
   id: string
   user: User
   extention: string
+  url: string
   created_at: string
   updated_at: string
 }
@@ -152,7 +153,7 @@ export type Work = {
   urls: UrlInfo[]
   visibility: string
   tags: GetTag[]
-  thumbnail: Asset
+  thumbnail: Asset[]
   created_at: string
   updated_at: string
 }
