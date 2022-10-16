@@ -64,15 +64,16 @@ export default class FormInputThumbnail extends Vue {
     return workPostStore.getThumbnailViewInfo
   }
 
+  get getPostThumbnailStatus() {
+    return workPostStore.getPostThumbnailStatus
+  }
+
   onFilePicked(event: Event<HTMLInputElement>) {
+    workPostStore.setPostThumbnailStatus()
     const file = event.target.files as FileList
-    // eslint-disable-next-line no-console
-    console.log(file.length)
     if (file.length !== 0 || file !== null) {
       for (let i = 0; i < file.length; i++) {
         // 本番環境では何らかのサービスに画像を保存する
-        // eslint-disable-next-line no-console
-        console.log(file[i])
         const params = new FormData()
         params.append('file', file[i])
         params.append('asset_type', this.getAssetType(file[i].name as string))
@@ -92,6 +93,7 @@ export default class FormInputThumbnail extends Vue {
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)
+          workPostStore.errorPostThumbnailStatus()
         }
       }
     }
@@ -108,7 +110,7 @@ export default class FormInputThumbnail extends Vue {
       for (let i = 0; i < assetType.length; i++) {
         if (assetType[i] === assetName.split('.').pop()) {
           // eslint-disable-next-line no-console
-          console.log(Object.keys(baseAssetType)[index])
+          // console.log(Object.keys(baseAssetType)[index])
           response = Object.keys(baseAssetType)[index]
         }
       }

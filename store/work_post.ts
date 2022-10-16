@@ -31,29 +31,22 @@ export default class WorkPost extends VuexModule {
     created_at: '',
     updated_at: ''
   }
+  private postAssetStatus: string = ''
+  private postThumbnailStatus: string = ''
   private isBlockUnload: boolean = false
   private selectedTags: GetTag[] = []
-  // private thumbnailInitData: Asset = {
-  //   asset_type: '',
-  //   id: '',
-  //   user: {
-  //     id: '',
-  //     name: '',
-  //     email: '',
-  //     display_name: '',
-  //     created_at: '',
-  //     updated_at: ''
-  //   },
-  //   extention: '',
-  //   created_at: '',
-  //   updated_at: ''
-  // }
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
   }
   get getThumbnailViewInfo() {
     return this.thumbnailViewInfo
+  }
+  get getPostAssetStatus() {
+    return this.postAssetStatus
+  }
+  get getPostThumbnailStatus() {
+    return this.postThumbnailStatus
   }
   get getIsBlockUnload() {
     return this.isBlockUnload
@@ -103,6 +96,30 @@ export default class WorkPost extends VuexModule {
     this.thumbnailViewInfo = thumbnail
   }
   @Mutation
+  SET_POSTASSETSTATUS() {
+    this.postAssetStatus = 'posting'
+  }
+  @Mutation
+  ERROR_POSTASSETSTATUS() {
+    this.postAssetStatus = 'error'
+  }
+  @Mutation
+  INIT_POSTASSETSTATUS() {
+    this.postAssetStatus = ''
+  }
+  @Mutation
+  SET_POSTTHUMBNAILTATUS() {
+    this.postThumbnailStatus = 'posting'
+  }
+  @Mutation
+  ERROR_POSTTHUMBNAILSTATUS() {
+    this.postThumbnailStatus = 'error'
+  }
+  @Mutation
+  INIT_POSTTHUMBNAILSTATUS() {
+    this.postThumbnailStatus = ''
+  }
+  @Mutation
   CHANGE_ISBLOCKUNLOAD() {
     this.isBlockUnload = true
   }
@@ -150,6 +167,30 @@ export default class WorkPost extends VuexModule {
   @Action
   setThumbnailViewInfo(thumbnail: Asset) {
     this.SET_THUMBNAILVIEWINFO(thumbnail)
+  }
+  @Action
+  setPostAssetStatus() {
+    this.SET_POSTASSETSTATUS()
+  }
+  @Action
+  errorPostAssetStatus() {
+    this.ERROR_POSTASSETSTATUS()
+  }
+  @Action
+  initPostAssetStatus() {
+    this.INIT_POSTASSETSTATUS()
+  }
+  @Action
+  setPostThumbnailStatus() {
+    this.SET_POSTTHUMBNAILTATUS()
+  }
+  @Action
+  errorPostThumbnailStatus() {
+    this.ERROR_POSTTHUMBNAILSTATUS()
+  }
+  @Action
+  initPostThumbnailStatus() {
+    this.INIT_POSTTHUMBNAILSTATUS()
   }
   @Action
   changeIsBlockUnload() {
