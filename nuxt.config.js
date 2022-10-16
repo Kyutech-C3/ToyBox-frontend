@@ -31,7 +31,7 @@ export default {
     '~/plugins/fontawesome.ts',
     { src: '~plugins/mavonEditor.ts', mode: 'client' },
     { src: '~/plugins/localStorage.ts', mode: 'client' },
-    { src: '~plugins/three.js', mode: 'client' }
+    { src: '~plugins/three.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
