@@ -1,6 +1,6 @@
 <template>
   <label
-    v-if="getThumbnailViewInfo.length === 0"
+    v-if="getThumbnailViewInfo.id === '' && getPostThumbnailStatus === ''"
     for="pickimg"
     class="
       p-3
@@ -21,7 +21,6 @@
       ref="pickimg"
       type="file"
       accept="image/png, image/jpeg, image/gif, image/bmp"
-      style="opacity: 0"
       class="
         absolute
         opacity-0
@@ -31,6 +30,7 @@
         left-1/2
         -translate-x-1/2 -translate-y-1/2
       "
+      style="opacity: 0"
       :multiple="true"
       @change="onFilePicked($event)"
     />

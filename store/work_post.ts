@@ -16,7 +16,21 @@ config.rawError = true
 })
 export default class WorkPost extends VuexModule {
   private assetsViewInfo: Asset[] = []
-  private thumbnailViewInfo: Asset[] = []
+  private thumbnailViewInfo: Asset = {
+    asset_type: '',
+    id: '',
+    url: '',
+    user: {
+      id: '',
+      name: '',
+      display_name: '',
+      created_at: '',
+      updated_at: ''
+    },
+    extension: '',
+    created_at: '',
+    updated_at: ''
+  }
   private isBlockUnload: boolean = false
   private selectedTags: GetTag[] = []
   // private thumbnailInitData: Asset = {
@@ -68,11 +82,25 @@ export default class WorkPost extends VuexModule {
   }
   @Mutation
   INIT_THUMBNAILVIEWINFO() {
-    this.thumbnailViewInfo.length = 0
+    this.thumbnailViewInfo = {
+      asset_type: '',
+      id: '',
+      url: '',
+      user: {
+        id: '',
+        name: '',
+        display_name: '',
+        created_at: '',
+        updated_at: ''
+      },
+      extension: '',
+      created_at: '',
+      updated_at: ''
+    }
   }
   @Mutation
   SET_THUMBNAILVIEWINFO(thumbnail: Asset) {
-    this.thumbnailViewInfo[0] = thumbnail
+    this.thumbnailViewInfo = thumbnail
   }
   @Mutation
   CHANGE_ISBLOCKUNLOAD() {
@@ -84,7 +112,7 @@ export default class WorkPost extends VuexModule {
   }
   @Mutation
   SET_SELECTEDTAGS(selectedTags: GetTag[]) {
-    this.selectedTags = selectedTags
+    selectedTags.map((tag) => this.selectedTags.push(tag))
   }
   @Mutation
   ADD_SELECTEDTAGS(selectedTag: GetTag) {
@@ -96,7 +124,7 @@ export default class WorkPost extends VuexModule {
   }
   @Mutation
   INIT_SELECTEDTAGS() {
-    this.selectedTags = []
+    this.selectedTags.splice(0)
   }
 
   @Action

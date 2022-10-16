@@ -20,7 +20,6 @@ export default class Auth extends VuexModule {
   private user: User = {
     id: '',
     name: '',
-    email: '',
     display_name: '',
     created_at: '',
     updated_at: ''

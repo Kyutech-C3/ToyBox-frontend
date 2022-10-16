@@ -26,7 +26,7 @@
     <div class="h-1/2 border-b">
       <img
         class="h-full m-auto"
-        :src="workData.thumbnail[0].url"
+        :src="workData.thumbnail.url"
         alt="Thumbnail is not found"
       />
     </div>

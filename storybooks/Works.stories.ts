@@ -23,7 +23,6 @@ card.argTypes = {
       user: {
         id: 'cd816281-7b09-4204-8d2a-0ecd077f746f',
         name: 'suu',
-        email: 'yumeyumeto.01@icloud.com',
         display_name: 'suu',
         avatar_url:
           'https://cdn.discordapp.com/avatars/553217152719519745/8d03f44d31f382248ffbb65d9a4f436b.png',
@@ -48,7 +47,7 @@ card.argTypes = {
           created_at: '2021-11-20T15:52:47.590564',
           work_id: '57df6a4c-6ca4-42a6-8635-0548deca12d2',
           asset_type: 'image',
-          extention: null,
+          extension: null,
           updated_at: '2021-11-20T15:52:53.042729'
         }
       ],
@@ -86,7 +85,7 @@ card.argTypes = {
           created_at: '2021-11-20T15:52:47.590564',
           work_id: '57df6a4c-6ca4-42a6-8635-0548deca12d2',
           asset_type: 'image',
-          extention: null,
+          extension: null,
           updated_at: '2021-11-20T15:52:53.042729'
         }
       ],

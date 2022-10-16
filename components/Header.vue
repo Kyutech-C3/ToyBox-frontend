@@ -157,10 +157,6 @@ export default class Header extends Vue {
     return authStore.getUser.name
   }
 
-  get getEmail() {
-    return authStore.getUser.email
-  }
-
   get getUserId() {
     return authStore.getUser.id
   }
@@ -177,7 +173,6 @@ export default class Header extends Vue {
     authStore.setUser({
       id: '',
       name: '',
-      email: '',
       display_name: '',
       created_at: '',
       updated_at: ''

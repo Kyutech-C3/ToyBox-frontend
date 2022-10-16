@@ -65,7 +65,6 @@ export default class CommentsField extends Vue {
   gestUser: User = {
     id: '0',
     name: 'ゲスト',
-    email: '',
     display_name: 'ゲスト',
     avatar_url: require('@/assets/image/gest-user.svg'),
     created_at: '',

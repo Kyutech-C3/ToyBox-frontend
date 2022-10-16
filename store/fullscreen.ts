@@ -27,13 +27,12 @@ export default class Fullscreen extends VuexModule {
     user: {
       id: '',
       name: '',
-      email: '',
       display_name: '',
 
       created_at: '',
       updated_at: ''
     },
-    extention: '',
+    extension: '',
     url: '',
     created_at: '',
     updated_at: ''

@@ -8,8 +8,7 @@
     />
 
     <div
-      v-if="getThumbnailViewInfo.length !== 0"
-      style="--card-w: 8rem"
+      v-if="getThumbnailViewInfo && getThumbnailViewInfo.id !== ''"
       class="
         relative
         w-[var(--card-w)]
@@ -36,8 +35,8 @@
         @click="deleteAsset()"
       />
       <form-image-preview
-        :image-url="getThumbnailViewInfo[0].url"
-        :asset="getThumbnailViewInfo[0]"
+        :image-url="getThumbnailViewInfo.url"
+        :asset="getThumbnailViewInfo"
       />
     </div>
     <form-input-thumbnail v-model="thumbnail" />

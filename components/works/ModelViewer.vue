@@ -135,7 +135,7 @@ export default class ModelViewer extends Vue {
     this.camera.aspect = this.width / this.height
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(this.width, this.height)
-    if (this.model.extention === 'gltf') {
+    if (this.model.extension === 'gltf') {
       const loader = new GLTFLoader()
       loader.load(this.model.url, (data: any) => {
         const gltf = data
@@ -174,7 +174,7 @@ export default class ModelViewer extends Vue {
           }
         }, 50)
       }
-    } else if (this.model.extention === 'fbx') {
+    } else if (this.model.extension === 'fbx') {
       let mixer: AnimationMixer
       const loader = new FBXLoader()
       loader.load(this.model.url, (object: any) => {
