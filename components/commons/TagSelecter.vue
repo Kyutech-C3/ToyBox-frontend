@@ -131,7 +131,6 @@ export default class TagSelecter extends Vue {
   previousInputWordCount: number = -1
   suggestMouseOver: boolean = false
   selectedTagListMaxWidth: number = 0
-  isFirstKeydown: boolean = true
 
   @VModel({ type: Array, required: true })
   postTags!: string[]
