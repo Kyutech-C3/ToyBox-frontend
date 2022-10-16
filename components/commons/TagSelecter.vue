@@ -70,7 +70,7 @@
       >
         <li
           v-for="(suggestTag, index) in suggestTags"
-          :id="index"
+          :id="String(index)"
           :key="suggestTag.id"
           class="
             w-full
@@ -131,6 +131,7 @@ export default class TagSelecter extends Vue {
   previousInputWordCount: number = -1
   suggestMouseOver: boolean = false
   selectedTagListMaxWidth: number = 0
+  isFirstKeydown: boolean = true
 
   @VModel({ type: Array, required: true })
   postTags!: string[]
@@ -156,10 +157,10 @@ export default class TagSelecter extends Vue {
   }
 
   mounted() {
-    window.addEventListener('load', () => {
+    if (this.tagInput) {
       this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
       setTimeout(() => this.updateInputPaddingLeft(), 10)
-    })
+    }
     window.addEventListener('resize', () => {
       this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
       this.updateInputPaddingLeft()
