@@ -91,14 +91,14 @@ export default class FormThumbnailPreview extends Vue {
   @Watch('getThumbnailViewInfo')
   onChangeThumbnailViewInfo() {
     if (this.getThumbnailViewInfo.id !== '') {
-      workPostStore.initPostThumbnailStatus()
+      workPostStore.setPostThumbnailStatus('')
     }
   }
 
   deleteAsset() {
     this.thumbnail = ''
     workPostStore.initThumbnailViewInfo()
-    workPostStore.initPostThumbnailStatus()
+    workPostStore.setPostThumbnailStatus('')
     workPostStore.changeIsBlockUnload()
   }
 }

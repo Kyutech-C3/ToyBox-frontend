@@ -31,7 +31,7 @@ export default class WorkPost extends VuexModule {
     created_at: '',
     updated_at: ''
   }
-  private postAssetStatus: string = ''
+  private postAssetStatus: 'posting' | 'error' | '' = ''
   private postThumbnailStatus: string = ''
   private isBlockUnload: boolean = false
   private selectedTags: GetTag[] = []
@@ -96,28 +96,12 @@ export default class WorkPost extends VuexModule {
     this.thumbnailViewInfo = thumbnail
   }
   @Mutation
-  SET_POSTASSETSTATUS() {
-    this.postAssetStatus = 'posting'
+  SET_POSTASSETSTATUS(status: 'posting' | 'error' | '') {
+    this.postAssetStatus = status
   }
   @Mutation
-  ERROR_POSTASSETSTATUS() {
-    this.postAssetStatus = 'error'
-  }
-  @Mutation
-  INIT_POSTASSETSTATUS() {
-    this.postAssetStatus = ''
-  }
-  @Mutation
-  SET_POSTTHUMBNAILTATUS() {
-    this.postThumbnailStatus = 'posting'
-  }
-  @Mutation
-  ERROR_POSTTHUMBNAILSTATUS() {
-    this.postThumbnailStatus = 'error'
-  }
-  @Mutation
-  INIT_POSTTHUMBNAILSTATUS() {
-    this.postThumbnailStatus = ''
+  SET_POSTTHUMBNAILSTATUS(status: 'posting' | 'error' | '') {
+    this.postThumbnailStatus = status
   }
   @Mutation
   CHANGE_ISBLOCKUNLOAD() {
@@ -169,28 +153,12 @@ export default class WorkPost extends VuexModule {
     this.SET_THUMBNAILVIEWINFO(thumbnail)
   }
   @Action
-  setPostAssetStatus() {
-    this.SET_POSTASSETSTATUS()
+  setPostAssetStatus(status: 'posting' | 'error' | '') {
+    this.SET_POSTASSETSTATUS(status)
   }
   @Action
-  errorPostAssetStatus() {
-    this.ERROR_POSTASSETSTATUS()
-  }
-  @Action
-  initPostAssetStatus() {
-    this.INIT_POSTASSETSTATUS()
-  }
-  @Action
-  setPostThumbnailStatus() {
-    this.SET_POSTTHUMBNAILTATUS()
-  }
-  @Action
-  errorPostThumbnailStatus() {
-    this.ERROR_POSTTHUMBNAILSTATUS()
-  }
-  @Action
-  initPostThumbnailStatus() {
-    this.INIT_POSTTHUMBNAILSTATUS()
+  setPostThumbnailStatus(status: 'posting' | 'error' | '') {
+    this.SET_POSTTHUMBNAILSTATUS(status)
   }
   @Action
   changeIsBlockUnload() {

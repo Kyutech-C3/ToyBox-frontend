@@ -118,7 +118,7 @@ export default class FormAssetsPreview extends Vue {
 
   @Watch('getAssetsViewInfo')
   onChangeThumbnailViewInfo() {
-    workPostStore.initPostAssetStatus()
+    workPostStore.setPostAssetStatus('')
   }
 
   deleteAsset(number: number) {
@@ -126,7 +126,7 @@ export default class FormAssetsPreview extends Vue {
       return number !== index
     })
     workPostStore.deleteAssetsViewInfo(number)
-    workPostStore.initPostAssetStatus()
+    workPostStore.setPostAssetStatus('')
     this.assets = workPostStore.getAssetsViewInfo
     workPostStore.changeIsBlockUnload()
   }

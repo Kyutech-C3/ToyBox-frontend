@@ -60,7 +60,7 @@ export default class FormInputAssets extends Vue {
   assetImage!: string[]
 
   onFilePicked(event: Event<HTMLInputElement>) {
-    workPostStore.setPostAssetStatus()
+    workPostStore.setPostAssetStatus('posting')
     const file = event.target.files as FileList
     // eslint-disable-next-line no-console
     if (file.length !== 0 || file !== null) {
@@ -85,7 +85,7 @@ export default class FormInputAssets extends Vue {
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)
-          workPostStore.errorPostAssetStatus()
+          workPostStore.setPostAssetStatus('error')
         }
       }
     }

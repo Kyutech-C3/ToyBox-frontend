@@ -69,7 +69,7 @@ export default class FormInputThumbnail extends Vue {
   }
 
   onFilePicked(event: Event<HTMLInputElement>) {
-    workPostStore.setPostThumbnailStatus()
+    workPostStore.setPostThumbnailStatus('posting')
     const file = event.target.files as FileList
     if (file.length !== 0 || file !== null) {
       for (let i = 0; i < file.length; i++) {
@@ -93,7 +93,7 @@ export default class FormInputThumbnail extends Vue {
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)
-          workPostStore.errorPostThumbnailStatus()
+          workPostStore.setPostThumbnailStatus('error')
         }
       }
     }
