@@ -27,7 +27,6 @@
     "@nuxtjs/markdownit": "^2.0.0",
     "@types/file-saver": "^2.0.5",
     "@types/three": "^0.143.1",
-    "caniuse-lite": "^1.0.30001312",
     "core-js": "^3.21.1",
     "file-saver": "^2.0.5",
     "github-markdown-css": "^5.1.0",
