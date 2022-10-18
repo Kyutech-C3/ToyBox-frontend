@@ -31,29 +31,22 @@ export default class WorkPost extends VuexModule {
     created_at: '',
     updated_at: ''
   }
+  private postAssetStatus: 'posting' | 'error' | '' = ''
+  private postThumbnailStatus: string = ''
   private isBlockUnload: boolean = false
   private selectedTags: GetTag[] = []
-  // private thumbnailInitData: Asset = {
-  //   asset_type: '',
-  //   id: '',
-  //   user: {
-  //     id: '',
-  //     name: '',
-  //     email: '',
-  //     display_name: '',
-  //     created_at: '',
-  //     updated_at: ''
-  //   },
-  //   extention: '',
-  //   created_at: '',
-  //   updated_at: ''
-  // }
 
   get getAssetsViewInfo() {
     return this.assetsViewInfo
   }
   get getThumbnailViewInfo() {
     return this.thumbnailViewInfo
+  }
+  get getPostAssetStatus() {
+    return this.postAssetStatus
+  }
+  get getPostThumbnailStatus() {
+    return this.postThumbnailStatus
   }
   get getIsBlockUnload() {
     return this.isBlockUnload
@@ -103,6 +96,14 @@ export default class WorkPost extends VuexModule {
     this.thumbnailViewInfo = thumbnail
   }
   @Mutation
+  SET_POSTASSETSTATUS(status: 'posting' | 'error' | '') {
+    this.postAssetStatus = status
+  }
+  @Mutation
+  SET_POSTTHUMBNAILSTATUS(status: 'posting' | 'error' | '') {
+    this.postThumbnailStatus = status
+  }
+  @Mutation
   CHANGE_ISBLOCKUNLOAD() {
     this.isBlockUnload = true
   }
@@ -150,6 +151,14 @@ export default class WorkPost extends VuexModule {
   @Action
   setThumbnailViewInfo(thumbnail: Asset) {
     this.SET_THUMBNAILVIEWINFO(thumbnail)
+  }
+  @Action
+  setPostAssetStatus(status: 'posting' | 'error' | '') {
+    this.SET_POSTASSETSTATUS(status)
+  }
+  @Action
+  setPostThumbnailStatus(status: 'posting' | 'error' | '') {
+    this.SET_POSTTHUMBNAILSTATUS(status)
   }
   @Action
   changeIsBlockUnload() {

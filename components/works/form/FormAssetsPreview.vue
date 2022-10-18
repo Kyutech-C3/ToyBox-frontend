@@ -51,19 +51,24 @@
           :mouse-control="false"
         />
       </div>
+      <loading
+        v-if="getPostAssetStatus === 'posting'"
+        class="rounded-xl overflow-hidden border border-gray-300"
+      />
       <form-input-assets v-model="assetImage" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, VModel, Prop, Watch } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
 import FormZipPreview from '@/components/works/form/assetPreviewItems/FormZipPreview.vue'
 import ModelViewer from '@/components/works/ModelViewer.vue'
 import FormInputAssets from '@/components/works/form/FormInputAssets.vue'
+import Loading from '@/components/commons/Loading.vue'
 import { workPostStore } from '@/store'
 import { Asset } from '~/types'
 
@@ -74,7 +79,8 @@ import { Asset } from '~/types'
     FormInputAssets,
     FormVideoPreview,
     FormZipPreview,
-    ModelViewer
+    ModelViewer,
+    Loading
   }
 })
 export default class FormAssetsPreview extends Vue {
@@ -92,6 +98,10 @@ export default class FormAssetsPreview extends Vue {
     return workPostStore.getAssetsViewInfo
   }
 
+  get getPostAssetStatus() {
+    return workPostStore.getPostAssetStatus
+  }
+
   @VModel({ type: Array })
   assetImage!: string[]
 
@@ -106,11 +116,17 @@ export default class FormAssetsPreview extends Vue {
     this.assets = this.getAssetsViewInfo
   }
 
+  @Watch('getAssetsViewInfo')
+  onChangeThumbnailViewInfo() {
+    workPostStore.setPostAssetStatus('')
+  }
+
   deleteAsset(number: number) {
     this.assetImage = this.assetImage.filter((_, index) => {
       return number !== index
     })
     workPostStore.deleteAssetsViewInfo(number)
+    workPostStore.setPostAssetStatus('')
     this.assets = workPostStore.getAssetsViewInfo
     workPostStore.changeIsBlockUnload()
   }

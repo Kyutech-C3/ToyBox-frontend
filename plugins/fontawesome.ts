@@ -19,7 +19,8 @@ import {
   faInfoCircle,
   faPen,
   faReply,
-  faPaperPlane
+  faPaperPlane,
+  faCircleNotch
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -56,7 +57,8 @@ library.add(
   faPen,
   faReply,
   faPaperPlane,
-  faMastodon
+  faMastodon,
+  faCircleNotch
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
