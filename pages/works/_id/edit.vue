@@ -7,7 +7,12 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import WorksForm from '@/components/works/WorksForm.vue'
 import { PostWork, Work } from '@/types'
 import axios from 'axios'
-import { authStore, workPostStore } from '~/store'
+import {
+  authStore,
+  workPostStore,
+  tagSelectorStore,
+  workFilterStore
+} from '~/store'
 import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
 
 @Component({
@@ -40,9 +45,14 @@ export default class Create extends mixins(BlockUnloadMixin) {
     tags_id: []
   }
 
+  beforeCreate() {
+    tagSelectorStore.initSelectedTags()
+    workFilterStore.deleteFilterVisibility()
+  }
+
   created() {
     workPostStore.setAssetsViewInfo(this.putWorkData)
-    workPostStore.setSelectedTags(this.putWorkData.tags)
+    tagSelectorStore.setSelectedTags(this.putWorkData.tags)
     workPostStore.setThumbnailViewInfo(this.putWorkData.thumbnail)
     this.workData = {
       title: this.putWorkData.title,
@@ -65,7 +75,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
 
   destroyed() {
     workPostStore.initAssetsViewInfo()
-    workPostStore.initSelectedTags()
+    tagSelectorStore.initSelectedTags()
     workPostStore.initThumbnailViewInfo()
   }
 }

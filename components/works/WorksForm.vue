@@ -19,11 +19,7 @@
         mb-5
       "
     >
-      <form-tag
-        v-model="workData.tags_id"
-        :show-warning="showRequiredWarning.tagEmpty"
-        class="mt-4"
-      />
+      <form-tag :show-warning="showRequiredWarning.tagEmpty" class="mt-4" />
       <form-title
         v-model="workData.title"
         :show-warning="showRequiredWarning.titleEmpty"
@@ -76,7 +72,7 @@ import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
 
-import { authStore, workPostStore } from '@/store'
+import { authStore, tagSelectorStore, workPostStore } from '@/store'
 import { PostWork } from '@/types'
 
 type RequiredType = {
@@ -107,6 +103,10 @@ export default class WorksForm extends Vue {
     descriptionEmpty: false
   }
 
+  get getSelectedTags() {
+    return tagSelectorStore.getSelectedTags
+  }
+
   @Prop({ type: Boolean, required: false, default: true })
   isNewWorks!: boolean
 
@@ -132,6 +132,9 @@ export default class WorksForm extends Vue {
   }
 
   clickSubmit(visibility: string) {
+    this.getSelectedTags.map((tag) => {
+      this.workData.tags_id.push(tag.id)
+    })
     this.checkEmpty()
     if (
       !this.showRequiredWarning.tagEmpty &&
@@ -169,7 +172,7 @@ export default class WorksForm extends Vue {
             })
         }
         workPostStore.initAssetsViewInfo()
-        workPostStore.initSelectedTags()
+        tagSelectorStore.initSelectedTags()
         workPostStore.initThumbnailViewInfo()
         workPostStore.initIsBlockUnload()
       } catch (error) {

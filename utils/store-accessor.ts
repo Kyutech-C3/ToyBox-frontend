@@ -10,6 +10,7 @@ import ConfirmModal from '@/store/confirm_modal'
 import DownloadAsset from '@/store/download_asset'
 import Fullscreen from '@/store/fullscreen'
 import WorkShare from '~/store/work_share'
+import TagSelector from '~/store/tag_selector'
 
 let authStore: Auth
 let commentStore: Comment
@@ -21,6 +22,7 @@ let confirmModalStore: ConfirmModal
 let downloadAssetStore: DownloadAsset
 let fullscreenStore: Fullscreen
 let workShareStore: WorkShare
+let tagSelectorStore: TagSelector
 
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
@@ -33,6 +35,7 @@ function initializeStores(store: Store<any>): void {
   downloadAssetStore = getModule(DownloadAsset, store)
   fullscreenStore = getModule(Fullscreen, store)
   workShareStore = getModule(WorkShare, store)
+  tagSelectorStore = getModule(TagSelector, store)
 }
 
 export {
@@ -46,5 +49,6 @@ export {
   confirmModalStore,
   downloadAssetStore,
   fullscreenStore,
-  workShareStore
+  workShareStore,
+  tagSelectorStore
 }

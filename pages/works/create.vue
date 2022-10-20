@@ -7,7 +7,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import WorksForm from '@/components/works/WorksForm.vue'
 import { PostWork } from '@/types'
 import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
-import { workPostStore } from '~/store'
+import { tagSelectorStore, workPostStore, workFilterStore } from '~/store'
 
 @Component({
   components: {
@@ -25,9 +25,14 @@ export default class Create extends mixins(BlockUnloadMixin) {
     tags_id: []
   }
 
+  beforeCreate() {
+    tagSelectorStore.initSelectedTags()
+    workFilterStore.deleteFilterVisibility()
+  }
+
   destroyed() {
     workPostStore.initAssetsViewInfo()
-    workPostStore.initSelectedTags()
+    tagSelectorStore.initSelectedTags()
     workPostStore.initThumbnailViewInfo()
   }
 }

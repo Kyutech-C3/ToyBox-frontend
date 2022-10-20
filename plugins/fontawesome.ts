@@ -20,7 +20,10 @@ import {
   faPen,
   faReply,
   faPaperPlane,
-  faCircleNotch
+  faCircleNotch,
+  faGlobe,
+  faSearch,
+  faMinus
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -58,7 +61,10 @@ library.add(
   faReply,
   faPaperPlane,
   faMastodon,
-  faCircleNotch
+  faCircleNotch,
+  faGlobe,
+  faSearch,
+  faMinus
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

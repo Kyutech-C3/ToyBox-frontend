@@ -1,81 +1,116 @@
 <template>
-  <div class="border border-gray-300 rounded-3xl px-10 py-5 w-[45rem] mx-auto">
+  <div
+    class="
+      border border-gray-300
+      rounded-3xl
+      px-10
+      py-5
+      w-[45rem]
+      mx-auto
+      relative
+    "
+  >
     <p>絞り込み</p>
-    <div class="flex items-center my-3">
+    <div class="flex items-center my-3 w-full mb-6">
       <font-awesome-icon class="w-7" :icon="['fas', 'tags']" />
-      <span class="mx-3">タグ</span>
-      <div class="w-0.5 h-7 mx-7 border border-gray-500" />
+      <span class="mx-3 w-20">タグ</span>
+      <tag-selecter :use-type="'filter'" />
+    </div>
+    <div v-if="getNowLogin" class="flex items-center my-3 w-full">
+      <font-awesome-icon class="w-5" :icon="['fas', 'globe']" />
+      <span class="mx-3 w-20">公開範囲</span>
       <base-tag
-        v-for="(tag, index) in tags"
+        v-for="(visibility, index) in visibilities"
         :key="index"
-        :text="tag"
-        class="
-          mx-1.5
-          px-5
-          py-0.5
-          cursor-pointer
-          border-gray-400
-          hover:border-gray-600
-          select-none
-        "
+        :pointer="true"
+        :size="'small'"
+        :text="visibility"
+        :selected="getFilterVisibility === visibility"
+        class="mr-2"
+        @click="onClickFilterVisibilities(visibility)"
       />
-      <font-awesome-icon
-        class="w-7 cursor-pointer mx-2"
-        :icon="['fas', 'plus-circle']"
-        @click="openTagSelector"
-      />
+    </div>
+    <div class="absolute bottom-7 right-10 flex items-center">
+      <div class="cursor-pointer" @click="(event) => $emit('clear', event)">
+        <font-awesome-icon
+          class="w-7 mr-5"
+          :class="{
+            'pointer-events-none text-gray-400':
+              getSearched &&
+              getFilterVisibility === '' &&
+              getSelectedTags.length === 0
+          }"
+          :icon="['fas', 'minus']"
+        />
+      </div>
+      <div
+        class="cursor-pointer"
+        :class="{
+          'pointer-events-none text-gray-400': getSearched
+        }"
+        @click="(event) => $emit('search', event)"
+      >
+        <font-awesome-icon class="w-7" :icon="['fas', 'search']" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Watch, Prop } from 'nuxt-property-decorator'
+
+import TagSelecter from '@/components/commons/TagSelecter.vue'
 import BaseTag from '@/components/commons/BaseTag.vue'
-import { modalStore } from '~/store'
-import TagSelector from './TagSelector.vue'
+
+import { Visibility } from '@/types'
+import { authStore, workFilterStore, tagSelectorStore } from '@/store'
 
 @Component({
   components: {
+    TagSelecter,
     BaseTag
   }
 })
 export default class WorksFilter extends Vue {
-  // タグの実装の参考にするため、コメントとして残しておく
-  // @Prop({ type: Array, required: true })
-  // communities!: Array<Community>
+  visibilities: Visibility[] = ['public', 'private']
 
-  tags: Array<string> = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5']
-  // selectCommunityNum: number = 0
+  get getNowLogin() {
+    return authStore.nowLogin
+  }
 
-  // selectingCommunities(index: string) {
-  //   if (Object.keys(this.$route.query).length === 0) {
-  //     this.selectCommunityNum = 1
-  //     this.$router.push(`${this.$route.fullPath}?c1=${index}`)
-  //   } else if (Object.values(this.$route.query).includes(index)) {
-  //     const newQuery = Object.values(this.$route.query).filter(
-  //       (item) => String(item).match(index) === null
-  //     )
-  //     let url = '/works?'
-  //     let queryNum = 1
-  //     newQuery.forEach((i) => {
-  //       if (queryNum >= 2) {
-  //         url += '&'
-  //       }
-  //       url += `c${queryNum}=${i}`
-  //       queryNum++
-  //       this.selectCommunityNum = queryNum - 1
-  //     })
-  //     this.$router.push(url)
-  //   } else {
-  //     this.selectCommunityNum += 1
-  //     this.$router.push(
-  //       `${this.$route.fullPath}&c${this.selectCommunityNum}=${index}`
-  //     )
-  //   }
-  // }
+  get getFilterVisibility() {
+    return workFilterStore.getFilterVisibility
+  }
 
-  openTagSelector() {
-    modalStore.setModalComponent(TagSelector)
+  get getSelectedTags() {
+    return tagSelectorStore.getSelectedTags
+  }
+
+  get getSearched() {
+    return workFilterStore.getSearched
+  }
+
+  @Prop({ type: Boolean, required: false, default: false })
+  includeDraft!: boolean
+
+  @Watch('getSelectedTags')
+  onChangeSelectedTags() {
+    workFilterStore.setSearched(false)
+  }
+
+  created() {
+    if (this.includeDraft) {
+      this.visibilities.push('draft')
+    }
+  }
+
+  onClickFilterVisibilities(visibility: Visibility) {
+    workFilterStore.setSearched(false)
+    if (this.getFilterVisibility === visibility) {
+      workFilterStore.deleteFilterVisibility()
+    } else {
+      workFilterStore.setFilterVisibility(visibility)
+    }
   }
 }
 </script>
