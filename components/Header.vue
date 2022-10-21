@@ -161,10 +161,6 @@ export default class Header extends Vue {
     return authStore.getUser.id
   }
 
-  mounted() {
-    console.log(authStore)
-  }
-
   clickLogin() {
     authStore.authDiscord()
   }
@@ -179,8 +175,13 @@ export default class Header extends Vue {
     })
     authStore.setAccessToken('')
     localStorage.removeItem('refresh_token')
-    this.activeNav = !this.activeNav
-    this.$router.push('/')
+    localStorage.removeItem('toybox-auth')
+    if (this.$route.path === '/') {
+      location.reload()
+    } else {
+      this.activeNav = !this.activeNav
+      this.$router.push('/')
+    }
   }
 }
 </script>
