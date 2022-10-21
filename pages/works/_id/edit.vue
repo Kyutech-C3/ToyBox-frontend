@@ -19,6 +19,7 @@ import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
   components: {
     WorksForm
   },
+  middleware: 'auth',
   async asyncData({ route }) {
     let resWork
     resWork = await axios.get(`/works/${route.params.id}`, {
