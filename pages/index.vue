@@ -30,13 +30,17 @@ import { authStore, tagSelectorStore, workFilterStore } from '@/store'
   },
   async asyncData() {
     workFilterStore.setSearched(true)
-    let query: string = '?tags='
-    tagSelectorStore.getSelectedTags.map((tag) => {
-      query += `${tag.id},`
-    })
-    query = query.slice(0, -1)
+    let query: string = ''
+    if (tagSelectorStore.getSelectedTags.length !== 0) {
+      query = '?tags='
+      tagSelectorStore.getSelectedTags.map((tag) => {
+        query += `${tag.id},`
+      })
+      query = query.slice(0, -1)
+    }
     if (workFilterStore.getFilterVisibility !== '') {
-      query += `&visibility=${workFilterStore.getFilterVisibility}`
+      query += query === '' ? '?' : '&'
+      query += `visibility=${workFilterStore.getFilterVisibility}`
     }
     const resWorks = await axios.get(`/works${query}`, {
       headers: {
@@ -46,7 +50,6 @@ import { authStore, tagSelectorStore, workFilterStore } from '@/store'
     if (resWorks.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
-    console.log(resWorks.data)
     return { works: resWorks.data }
   }
 })
@@ -69,15 +72,19 @@ export default class Index extends Vue {
 
   async searchWorks() {
     if (this.getNowLogin) {
+      this.query = ''
       workFilterStore.setSearched(true)
       this.processing = true
-      this.query = '?tags='
-      this.getSelectedTags.map((tag) => {
-        this.query += `${tag.id},`
-      })
-      this.query = this.query.slice(0, -1)
+      if (this.getSelectedTags.length !== 0) {
+        this.query = '?tags='
+        this.getSelectedTags.map((tag) => {
+          this.query += `${tag.id},`
+        })
+        this.query = this.query.slice(0, -1)
+      }
       if (this.getFilterVisibility !== '') {
-        this.query += `&visibility=${this.getFilterVisibility}`
+        this.query += this.query === '' ? '?' : '&'
+        this.query += `visibility=${this.getFilterVisibility}`
       }
       const resWorks = await axios.get(`/works${this.query}`, {
         headers: {
@@ -87,7 +94,6 @@ export default class Index extends Vue {
       if (resWorks.status !== 200) {
         alert('作品一覧の取得に失敗しました')
       }
-      console.log(resWorks.data)
       this.works.splice(0)
       this.works = resWorks.data
       this.processing = false
