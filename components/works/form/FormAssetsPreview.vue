@@ -51,10 +51,19 @@
           :mouse-control="false"
         />
       </div>
-      <loading
+      <div
         v-if="getPostAssetStatus === 'posting'"
-        class="rounded-xl overflow-hidden border border-gray-300"
-      />
+        class="
+          relative
+          w-full
+          h-full
+          rounded-xl
+          overflow-hidden
+          border border-gray-300
+        "
+      >
+        <loading />
+      </div>
       <form-input-assets v-model="assetImage" />
     </div>
   </div>
