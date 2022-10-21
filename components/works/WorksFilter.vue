@@ -31,17 +31,17 @@
       />
     </div>
     <div class="absolute bottom-7 right-10 flex items-center">
-      <div class="cursor-pointer" @click="(event) => $emit('clear', event)">
-        <font-awesome-icon
-          class="w-7 mr-5"
-          :class="{
-            'pointer-events-none text-gray-400':
-              getSearched &&
-              getFilterVisibility === '' &&
-              getSelectedTags.length === 0
-          }"
-          :icon="['fas', 'minus']"
-        />
+      <div
+        class="cursor-pointer"
+        :class="{
+          'pointer-events-none text-gray-400':
+            getSearched &&
+            getFilterVisibility === '' &&
+            getSelectedTags.length === 0
+        }"
+        @click="(event) => $emit('clear', event)"
+      >
+        <font-awesome-icon class="w-7 mr-5" :icon="['fas', 'minus']" />
       </div>
       <div
         class="cursor-pointer"
