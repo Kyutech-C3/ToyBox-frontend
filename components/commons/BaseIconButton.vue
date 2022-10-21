@@ -22,7 +22,7 @@
         { 'w-7': size === 'base' },
         { 'w-10': size === 'large' }
       ]"
-      :icon="['fas', 'pen']"
+      :icon="[fontAwesome.type, fontAwesome.name]"
     />
   </nuxt-link>
 </template>
@@ -43,5 +43,8 @@ export default class BaseIconButton extends Vue {
 
   @Prop({ type: Boolean, required: false, default: false })
   isBackground!: boolean
+
+  @Prop({ type: Object, required: true })
+  fontAwesome!: { type: string; name: string }
 }
 </script>

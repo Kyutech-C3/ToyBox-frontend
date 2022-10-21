@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    :to="'works/' + workData.id"
+    :to="'/works/' + workData.id"
     class="
       w-[var(--card-w)]
       h-[var(--card-h)]
@@ -21,6 +21,7 @@
         v-if="getUser.id === workData.user.id"
         :to="`/works/${workData.id}/edit`"
         :size="'small'"
+        :font-awesome="{ type: 'fas', name: 'pen' }"
       />
     </div>
     <div class="h-1/2 border-b">

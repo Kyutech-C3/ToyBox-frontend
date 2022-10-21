@@ -6,6 +6,7 @@
         :to="`/works/${work.id}/edit`"
         :is-background="true"
         :is-shadow="true"
+        :font-awesome="{ type: 'fas', name: 'pen' }"
         class="p-4"
       />
     </div>
@@ -217,10 +218,20 @@ type replyCommentType = {
   },
   async asyncData({ route }) {
     const resWork = await axios.get(
-      `${process.env.API_URL}/works/${route.params.id}`
+      `${process.env.API_URL}/works/${route.params.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.getAccessToken}`
+        }
+      }
     )
     const resComments = await axios.get(
-      `${process.env.API_URL}/works/${route.params.id}/comments`
+      `${process.env.API_URL}/works/${route.params.id}/comments`,
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.getAccessToken}`
+        }
+      }
     )
     commentStore.addComments(resComments.data)
     return { work: resWork.data }
@@ -252,10 +263,6 @@ export default class Works extends Vue {
 
   get getComments() {
     return commentStore.getComments
-  }
-
-  mounted() {
-    console.log(JSON.stringify(this.work, null, 2))
   }
 
   clickFavorite() {
@@ -307,11 +314,10 @@ export default class Works extends Vue {
             }
           )
           .then((result) => {
-            console.log(result)
             this.postCommentData.content = ''
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       } else {
         axios
@@ -320,15 +326,14 @@ export default class Works extends Vue {
             this.postCommentData
           )
           .then((result) => {
-            console.log(result)
             this.postCommentData.content = ''
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       this.errorPostComment = true
       setTimeout(() => {
         this.errorPostComment = false
@@ -350,11 +355,10 @@ export default class Works extends Vue {
             }
           )
           .then((result) => {
-            console.log(result)
             replyCommentData.reply_comment_data.content = ''
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       } else {
         axios
@@ -363,15 +367,14 @@ export default class Works extends Vue {
             replyCommentData.reply_comment_data
           )
           .then((result) => {
-            console.log(result)
             replyCommentData.reply_comment_data.content = ''
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       this.errorReplyComment = true
       setTimeout(() => {
         this.errorReplyComment = false
