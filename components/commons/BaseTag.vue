@@ -1,6 +1,12 @@
 <template>
   <div
-    class="bg-white rounded-lg border border-gray-400 w-auto"
+    class="
+      bg-white
+      rounded-lg
+      border border-gray-400
+      select-none
+      whitespace-nowrap
+    "
     :class="[
       { 'bg-slate-400': selected },
       { 'cursor-pointer': pointer },
@@ -8,6 +14,7 @@
       { 'px-4 py-0.5 mr-1': size === 'base' },
       { '': size === 'large' }
     ]"
+    @click="(event) => $emit('click', event)"
   >
     {{ text }}
   </div>

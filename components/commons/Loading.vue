@@ -1,13 +1,17 @@
 <template>
   <div
     class="
+      cursor-pointer
+      absolute
+      top-1/2
+      left-1/2
+      -translate-x-1/2 -translate-y-1/2
       flex
       justify-center
       items-center
-      cursor-pointer
-      relative
-      w-full
-      h-full
+      [--loading-h:120px]
+      h-[var(--loading-h)]
+      w-[var(--loading-h)]
     "
   >
     <div class="loader">Loading...</div>

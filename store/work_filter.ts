@@ -6,11 +6,12 @@ import {
   config
 } from 'vuex-module-decorators'
 import axios from 'axios'
-import { GetTag } from '~/types'
-import { tagStore } from '.'
+import { Visibility } from '~/types'
 
 config.rawError = true
 axios.defaults.baseURL = process.env.API_URL
+
+type FilterVisibility = Visibility | ''
 
 /**
  * 作品フィルターの条件を保持するStore
@@ -21,39 +22,44 @@ axios.defaults.baseURL = process.env.API_URL
   namespaced: true
 })
 export default class WorkFilter extends VuexModule {
-  private filterTagIds: string[] = []
+  private searched: boolean = true
+  private filterVisibility: FilterVisibility = ''
 
-  public get getFilterTags() {
-    return tagStore.getTags.filter((t) => this.filterTagIds.includes(t.id))
+  public get getSearched() {
+    return this.searched
+  }
+
+  public get getFilterVisibility() {
+    return this.filterVisibility
   }
 
   @Mutation
-  SET_FILTER_TAGS(tags: GetTag[]) {
-    this.filterTagIds = tags.map((t) => t.id)
+  SET_FILTER_VISIBILITY(visibility: Visibility) {
+    this.filterVisibility = visibility
   }
 
   @Mutation
-  ADD_FILTER_TAGS(id: string) {
-    this.filterTagIds.push(id)
+  DELETE_FILTER_VISIBILITY() {
+    this.filterVisibility = ''
   }
 
   @Mutation
-  DELETE_FILTER_TAGS(id: string) {
-    this.filterTagIds = this.filterTagIds.filter((i) => i !== id)
+  SET_SEARCHED(status: boolean) {
+    this.searched = status
   }
 
   @Action
-  public setFilterTags(tags: GetTag[]) {
-    this.SET_FILTER_TAGS(tags)
+  public setFilterVisibility(visibility: Visibility) {
+    this.SET_FILTER_VISIBILITY(visibility)
   }
 
   @Action
-  public addFilterTag(tag: GetTag) {
-    this.ADD_FILTER_TAGS(tag.id)
+  public deleteFilterVisibility() {
+    this.DELETE_FILTER_VISIBILITY()
   }
 
   @Action
-  public deleteFilterTag(tag: GetTag) {
-    this.DELETE_FILTER_TAGS(tag.id)
+  public setSearched(status: boolean) {
+    this.SET_SEARCHED(status)
   }
 }

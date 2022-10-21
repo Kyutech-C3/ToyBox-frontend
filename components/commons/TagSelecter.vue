@@ -35,7 +35,7 @@
           focus:border-gray-400
         "
         :style="`padding-left:${inputPaddingLeft}px;`"
-        autofocus
+        :autofocus="useType === 'create'"
         @keydown="keydownHandler"
         @keyup="keyupHandler"
         @focus="focusInput = true"
@@ -107,13 +107,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Ref } from 'nuxt-property-decorator'
-
+import { Component, Vue, Watch, Ref, Prop } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
 
 import { GetTag } from '@/types'
 import axios from 'axios'
-import { workPostStore, authStore } from '~/store'
+import { workPostStore, authStore, tagSelectorStore } from '~/store'
 
 @Component({
   components: {
@@ -131,16 +130,29 @@ export default class TagSelecter extends Vue {
   previousInputWordCount: number = -1
   suggestMouseOver: boolean = false
   selectedTagListMaxWidth: number = 0
-
-  @VModel({ type: Array, required: true })
-  postTags!: string[]
+  initSuggestTags: boolean = false
 
   @Ref() selectedTagsRef!: HTMLDivElement
   @Ref() tagInput!: HTMLInputElement
   @Ref() suggestTagList!: HTMLElement
 
+  @Prop({ type: String, required: true })
+  useType!: 'create' | 'filter'
+
+  @Watch('getSelectedTags')
+  onChangeSelectedTags() {
+    if (this.getSelectedTags.length === 0) {
+      this.initSuggestTags = true
+      this.searchTags()
+      this.initSuggestTags = false
+    }
+    setTimeout(() => {
+      this.updateInputPaddingLeft()
+    }, 20)
+  }
+
   get getSelectedTags() {
-    return workPostStore.getSelectedTags
+    return tagSelectorStore.getSelectedTags
   }
 
   get getNowLogin() {
@@ -233,20 +245,21 @@ export default class TagSelecter extends Vue {
   deleteKeyHandler() {
     if (this.searchTagKeyword.length === 0) {
       if (this.getSelectedTags.length > 0) {
-        workPostStore.deleteSelectedTags()
-        workPostStore.changeIsBlockUnload()
-        this.postTags.pop()
+        tagSelectorStore.deleteSelectedTags()
+        if (this.useType === 'create') {
+          workPostStore.changeIsBlockUnload()
+        }
         this.previousInputWordCount = -1
-        setTimeout(() => {
-          this.updateInputPaddingLeft()
-        }, 50)
       }
     }
   }
 
   async searchTags() {
     this.bindKeyword()
-    if (this.previousInputWordCount !== this.searchTagKeyword.length) {
+    if (
+      this.previousInputWordCount !== this.searchTagKeyword.length ||
+      this.initSuggestTags
+    ) {
       try {
         await axios
           .get(`${process.env.API_URL}/tags?w=${this.searchTagKeyword}`)
@@ -315,14 +328,12 @@ export default class TagSelecter extends Vue {
 
   suggestSelect(event: KeyboardEvent) {
     if (this.suggestTags.length > 0) {
-      workPostStore.addSelectedTags(this.suggestTags[this.selectingSuggest])
-      workPostStore.changeIsBlockUnload()
-      this.postTags.push(this.suggestTags[this.selectingSuggest].id)
+      tagSelectorStore.addSelectedTags(this.suggestTags[this.selectingSuggest])
+      if (this.useType === 'create') {
+        workPostStore.changeIsBlockUnload()
+      }
       this.initSuggest()
       this.initInputWord()
-      setTimeout(() => {
-        this.updateInputPaddingLeft()
-      }, 50)
       this.searchTags()
     }
     if (
@@ -334,14 +345,12 @@ export default class TagSelecter extends Vue {
   }
 
   suggestSelectByClick(index: number) {
-    workPostStore.addSelectedTags(this.suggestTags[index])
-    workPostStore.changeIsBlockUnload()
-    this.postTags.push(this.suggestTags[index].id)
+    tagSelectorStore.addSelectedTags(this.suggestTags[index])
+    if (this.useType === 'create') {
+      workPostStore.changeIsBlockUnload()
+    }
     this.initSuggest()
     this.initInputWord()
-    setTimeout(() => {
-      this.updateInputPaddingLeft()
-    }, 50)
     this.searchTags()
     this.tagInput.focus()
   }
@@ -358,7 +367,12 @@ export default class TagSelecter extends Vue {
         tagNotExist = false
       }
     })
-    return this.searchTagKeyword.length > 0 && tagNotExist && this.getNowLogin
+    return (
+      this.searchTagKeyword.length > 0 &&
+      tagNotExist &&
+      this.getNowLogin &&
+      this.useType === 'create'
+    )
   }
 
   async createNewTag() {
@@ -375,18 +389,16 @@ export default class TagSelecter extends Vue {
         )
         .then((result) => {
           console.log(result.data)
-          workPostStore.addSelectedTags(result.data)
-          workPostStore.changeIsBlockUnload()
-          this.postTags.push(result.data.id)
+          tagSelectorStore.addSelectedTags(result.data)
+          if (this.useType === 'create') {
+            workPostStore.changeIsBlockUnload()
+          }
         })
     } catch (error) {
       console.log(error)
     }
     this.initSuggest()
     this.initInputWord()
-    setTimeout(() => {
-      this.updateInputPaddingLeft()
-    }, 50)
     this.searchTags()
   }
 
@@ -399,7 +411,7 @@ export default class TagSelecter extends Vue {
   }
   initSuggest() {
     this.selectingSuggest = 0
-    this.suggestTags.length = 0
+    this.suggestTags.splice(0)
   }
 }
 </script>
