@@ -18,7 +18,7 @@ export default class WorkShare extends VuexModule {
   private work!: Work
 
   get getURL() {
-    return `${process.env.BASE_URL}/works/${this.work.id}`
+    return `${process.env.BASE_URL}works/${this.work.id}`
   }
 
   get getWork() {

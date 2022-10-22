@@ -82,7 +82,7 @@ export default class ConfirmModal extends Vue {
   }
 
   async download(type: string, id: string) {
-    const url = `${process.env.ASSET_BASE_URL}/${type}/${id}/origin.zip`
+    const url = `${process.env.ASSET_BASE_URL}${type}/${id}/origin.zip`
     const data = await fetch(url)
     const blob = await data.blob()
     saveAs(blob, 'origin.zip')
