@@ -264,7 +264,6 @@ export default class TagSelecter extends Vue {
         await axios
           .get(`${process.env.API_URL}/tags?w=${this.searchTagKeyword}`)
           .then((result) => {
-            console.log(result)
             if (this.getSelectedTags.length > 0) {
               this.suggestTags = result.data.filter((item: GetTag) => {
                 for (let i = 0; i < this.getSelectedTags.length; i++) {
@@ -280,7 +279,7 @@ export default class TagSelecter extends Vue {
             this.selectingSuggest = 0
           })
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
       this.previousInputWordCount = this.searchTagKeyword.length
     }
@@ -388,14 +387,13 @@ export default class TagSelecter extends Vue {
           }
         )
         .then((result) => {
-          console.log(result.data)
           tagSelectorStore.addSelectedTags(result.data)
           if (this.useType === 'create') {
             workPostStore.changeIsBlockUnload()
           }
         })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     this.initSuggest()
     this.initInputWord()
