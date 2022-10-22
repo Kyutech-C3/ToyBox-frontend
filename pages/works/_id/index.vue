@@ -193,7 +193,8 @@ import {
   confirmModalStore,
   modalStore,
   downloadAssetStore,
-  workShareStore
+  workShareStore,
+  workFilterStore
 } from '~/store'
 
 type replyCommentType = {
@@ -263,6 +264,10 @@ export default class Works extends Vue {
 
   get getComments() {
     return commentStore.getComments
+  }
+
+  created() {
+    workFilterStore.setUseConditionsWhenAsyncData(true)
   }
 
   clickFavorite() {
