@@ -3,6 +3,7 @@
     <works-filter
       v-if="getNowLogin"
       :include-draft="false"
+      class="mb-10"
       @search="searchWorks"
       @clear="clear"
     />
@@ -89,12 +90,8 @@ export default class Index extends Vue {
 
   @Watch('scrollY')
   handleBottom() {
-    // console.log(this.workList)
     if (this.workList) {
-      // console.log(this.workList.scrollHeight)
-      // console.log(this.workList.clientHeight)
       this.bottom = this.workList.scrollHeight - 260
-      // console.log(this.bottom)
     }
     if (this.bottom <= this.scrollY) {
       if (!this.nextContentLoadProcessing && !this.isWorksEmpty) {
@@ -151,10 +148,6 @@ export default class Index extends Vue {
         if (resWorks.data.length === 0) {
           this.isWorksEmpty = true
         } else {
-          console.log(this.works[0].id)
-          console.log(this.works[this.works.length - 1].id)
-          console.log(resWorks.data[0].id)
-          // this.works.concat(resWorks.data)
           resWorks.data.map((item: Work) => {
             this.works.push(item)
           })
