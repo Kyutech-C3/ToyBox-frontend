@@ -1,15 +1,10 @@
 <template>
-  <header
-    class="
-      py-3
-      text-center
-      justify-around
-      border-solid border-b-2 border-gray-200
-      flex
-      w-full
-      relative
-    "
-  >
+  <header class="py-3 text-center justify-around flex w-full relative">
+    <div
+      v-if="!nowLogin"
+      class="triangle absolute -top-5 -right-10"
+      @click="$router.push('/login')"
+    ></div>
     <div class="justify-center flex">
       <nuxt-link to="/" class="hover:opacity-50 transition">
         <div class="text-4xl text-gray-600">
@@ -20,19 +15,28 @@
     <div
       class="flex justify-start items-center absolute right-10 top-0 bottom-0"
     >
+      <!-- ヘルプ -->
+      <a
+        href="https://chivalrous-botany-faf.notion.site/ToyBox-876fd578573a418b99bbfe6d3973aa91"
+        target="_blank"
+        title="ヘルプ"
+        name="ヘルプ"
+        charset="UTF-8"
+        type="text/html"
+        class="mr-5"
+      >
+        <font-awesome-icon
+          :icon="['far', 'question-circle']"
+          class="w-5 text-gray-400 hover:text-gray-600"
+        />
+      </a>
       <!-- not logged in  -->
       <div v-if="$route.path !== '/works/create'">
         <base-text-button
           v-if="nowLogin"
-          class="mx-5"
+          class="mr-5"
           title="投稿"
           @click="$router.push('/works/create')"
-        />
-        <base-text-button
-          v-else
-          class="mx-5"
-          title="ログイン"
-          @click="clickLogin"
         />
       </div>
       <!-- logged in -->
@@ -196,5 +200,15 @@ export default class Header extends Vue {
   top: -30px;
   right: 25px;
   left: auto;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-right: 50px solid transparent;
+  border-left: 50px solid transparent;
+  border-bottom: 50px solid #ffeed4;
+  border-top: 0;
+  transform: rotate(45deg);
 }
 </style>
