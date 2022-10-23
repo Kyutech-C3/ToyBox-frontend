@@ -4,6 +4,6 @@ import createPersistedState from 'vuex-persistedstate'
 export default ({ store }: Context) => {
   createPersistedState({
     key: 'toybox-auth',
-    paths: ['auth.accessToken', 'auth.user']
+    paths: ['auth.accessToken']
   })(store)
 }

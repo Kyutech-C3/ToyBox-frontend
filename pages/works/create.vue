@@ -13,7 +13,7 @@ import { tagSelectorStore, workPostStore, workFilterStore } from '~/store'
   components: {
     WorksForm
   },
-  middleware: 'auth'
+  middleware: 'auth_check'
 })
 export default class Create extends mixins(BlockUnloadMixin) {
   workData: PostWork = {

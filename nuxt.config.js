@@ -139,7 +139,7 @@ export default {
   },
   ssr: false,
 
-  router: { base: '/' },
+  router: { base: '/', middleware: 'auth' },
 
   watchers: {
     webpack: {
