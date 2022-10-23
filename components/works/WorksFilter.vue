@@ -5,9 +5,11 @@
       rounded-3xl
       px-10
       py-5
-      w-[45rem]
+      w-[95vw]
+      max-w-[45rem]
       mx-auto
       relative
+      bg-white
     "
   >
     <p>絞り込み</p>

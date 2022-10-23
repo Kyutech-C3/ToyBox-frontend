@@ -13,6 +13,7 @@
         py-10
         px-20
         mb-10
+        bg-white
       "
     >
       <div>{{ error.statusCode }}</div>
@@ -29,7 +30,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
-import { workPostStore } from '@/store'
 
 @Component({
   components: {

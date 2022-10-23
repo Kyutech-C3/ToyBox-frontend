@@ -1,5 +1,5 @@
 <template>
-  <footer class="py-8 border-solid border-t-2 border-gray-200 w-full">
+  <footer class="py-8 w-full">
     <div class="flex justify-center">
       <a class="mx-8" href="https://compositecomputer.club" target="_blank">
         <img
@@ -24,7 +24,9 @@
         />
       </a>
     </div>
-    <div class="text-center my-6">© C3 2021 - {{ date }}</div>
+    <div class="text-center my-6">
+      © 2021 - {{ date }} Composite Computer Club
+    </div>
   </footer>
 </template>
 

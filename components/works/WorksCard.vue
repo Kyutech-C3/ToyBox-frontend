@@ -4,7 +4,6 @@
     class="
       w-[var(--card-w)]
       h-[var(--card-h)]
-      border border-gray-300
       rounded-2xl
       shadow-md
       cursor-pointer
@@ -14,6 +13,7 @@
       transition
       relative
       overflow-hidden
+      bg-white
     "
   >
     <div class="z-50 absolute right-3 top-3">
@@ -87,8 +87,6 @@ import { authStore } from '~/store'
   }
 })
 export default class WorksCard extends Vue {
-  assetBaseURL?: string = process.env.ASSET_BASE_URL
-
   @Prop({ type: Object, required: true })
   workData!: Work
 

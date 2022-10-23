@@ -10,13 +10,12 @@
         items-left
         m-0
         w-full
-        border
         rounded-3xl
-        border-gray-200
         px-[5vw]
         py-7
         shadow-md
         mb-5
+        bg-white
       "
     >
       <form-tag :show-warning="showRequiredWarning.tagEmpty" class="mt-4" />
@@ -43,12 +42,11 @@
         items-left
         m-0
         w-full
-        border
         rounded-3xl
-        border-gray-200
         px-[3vw]
         py-7
         shadow-md
+        bg-white
       "
     >
       <form-markdown
@@ -155,8 +153,6 @@ export default class WorksForm extends Vue {
               }
             })
             .then((result) => {
-              console.log(result)
-
               this.$router.push('/')
             })
         } else {
@@ -167,7 +163,6 @@ export default class WorksForm extends Vue {
               }
             })
             .then((result) => {
-              console.log(result)
               this.$router.push('/')
             })
         }
@@ -176,7 +171,7 @@ export default class WorksForm extends Vue {
         workPostStore.initThumbnailViewInfo()
         workPostStore.initIsBlockUnload()
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     } else {
       setTimeout(() => {

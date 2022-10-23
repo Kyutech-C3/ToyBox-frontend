@@ -88,11 +88,10 @@ export default class FormInputThumbnail extends Vue {
             .then((result) => {
               this.thumbnail = result.data.id
               workPostStore.setThumbnailViewInfo(result.data)
-              console.log(this.getThumbnailViewInfo)
             })
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.log(error)
+          console.error(error)
           workPostStore.setPostThumbnailStatus('error')
         }
       }

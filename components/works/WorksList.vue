@@ -1,5 +1,15 @@
 <template>
-  <div class="c-grid px-10 py-5 [--card-w:18rem] [--card-h:22rem] z-0">
+  <div
+    class="
+      c-grid
+      py-5
+      px-2
+      [--card-w:18rem] [--card-h:22rem]
+      z-0
+      max-w-[980px]
+      mx-auto
+    "
+  >
     <works-card v-for="(work, index) in works" :key="index" :work-data="work" />
   </div>
 </template>

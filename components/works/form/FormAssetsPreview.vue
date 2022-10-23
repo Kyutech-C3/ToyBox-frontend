@@ -99,7 +99,7 @@ export default class FormAssetsPreview extends Vue {
   動画 [ .mp4 ]
   音源 [ .mp3, .wav, .m4a ]
   モデル [ .gltf, .fbx ]
-  zip [.zip ]
+  zip [ .zip ]
 `
   assets: Asset[] = []
 

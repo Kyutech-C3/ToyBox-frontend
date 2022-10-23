@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'overflow-hidden h-screen': getFullscreen }">
     <Header />
-    <Nuxt class="mx-auto my-12 max-w-[90rem]" />
+    <Nuxt class="mx-auto mb-12 mt-10 max-w-[90rem]" />
     <Footer />
     <modal />
     <fullscreen-view v-if="getFullscreen" />
@@ -42,6 +42,10 @@ html {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+body {
+  background-color: #ffeed4;
 }
 
 .button--green {
