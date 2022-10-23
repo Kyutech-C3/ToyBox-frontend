@@ -31,6 +31,10 @@ export default class Create extends mixins(BlockUnloadMixin) {
     workFilterStore.deleteFilterVisibility()
   }
 
+  created() {
+    workFilterStore.setUseConditionsWhenAsyncData(false)
+  }
+
   destroyed() {
     workPostStore.initAssetsViewInfo()
     tagSelectorStore.initSelectedTags()

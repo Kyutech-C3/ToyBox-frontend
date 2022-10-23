@@ -52,6 +52,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
   }
 
   created() {
+    workFilterStore.setUseConditionsWhenAsyncData(false)
     workPostStore.setAssetsViewInfo(this.putWorkData)
     tagSelectorStore.setSelectedTags(this.putWorkData.tags)
     workPostStore.setThumbnailViewInfo(this.putWorkData.thumbnail)

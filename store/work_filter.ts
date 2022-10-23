@@ -24,6 +24,7 @@ type FilterVisibility = Visibility | ''
 export default class WorkFilter extends VuexModule {
   private searched: boolean = true
   private filterVisibility: FilterVisibility = ''
+  private useConditionsWhenAsyncData: boolean = false
 
   public get getSearched() {
     return this.searched
@@ -31,6 +32,10 @@ export default class WorkFilter extends VuexModule {
 
   public get getFilterVisibility() {
     return this.filterVisibility
+  }
+
+  public get getUseConditionsWhenAsyncData() {
+    return this.useConditionsWhenAsyncData
   }
 
   @Mutation
@@ -48,6 +53,11 @@ export default class WorkFilter extends VuexModule {
     this.searched = status
   }
 
+  @Mutation
+  SET_USECONDITIONSWHENASYNCDATA(status: boolean) {
+    this.useConditionsWhenAsyncData = status
+  }
+
   @Action
   public setFilterVisibility(visibility: Visibility) {
     this.SET_FILTER_VISIBILITY(visibility)
@@ -61,5 +71,10 @@ export default class WorkFilter extends VuexModule {
   @Action
   public setSearched(status: boolean) {
     this.SET_SEARCHED(status)
+  }
+
+  @Action
+  public setUseConditionsWhenAsyncData(status: boolean) {
+    this.SET_USECONDITIONSWHENASYNCDATA(status)
   }
 }
