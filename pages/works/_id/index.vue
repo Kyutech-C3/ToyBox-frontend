@@ -10,15 +10,7 @@
         class="p-4"
       />
     </div>
-    <div
-      class="
-        w-full
-        rounded-2xl
-        border border-gray-100
-        overflow-hidden
-        shadow-md
-      "
-    >
+    <div class="w-full rounded-2xl overflow-hidden shadow-md bg-white">
       <works-carousel :assets="work.assets" />
       <div
         v-if="work.urls.length > 0"
@@ -98,19 +90,7 @@
       </div>
     </div>
 
-    <div
-      class="
-        w-full
-        rounded-2xl
-        border border-gray-100
-        my-10
-        bg-white
-        shadow-md
-        px-5
-        py-5
-        relative
-      "
-    >
+    <div class="w-full rounded-2xl my-10 bg-white shadow-md px-5 py-5 relative">
       <div class="absolute m-0 top-5 right-5">
         {{
           work.updated_at
@@ -141,17 +121,7 @@
       <markdown-view :markdown-text="work.description" />
     </div>
     <!-- コメント -->
-    <div
-      class="
-        w-full
-        rounded-2xl
-        border border-gray-100
-        bg-white
-        shadow-md
-        px-5
-        py-3
-      "
-    >
+    <div class="w-full rounded-2xl bg-white shadow-md px-5 py-3">
       <div class="text-xl">コメント</div>
       <comments-field
         v-model="postCommentData"
@@ -234,7 +204,7 @@ type replyCommentType = {
         }
       }
     )
-    commentStore.addComments(resComments.data)
+    commentStore.setComments(resComments.data)
     return { work: resWork.data }
   }
 })
@@ -319,6 +289,7 @@ export default class Works extends Vue {
             }
           )
           .then((result) => {
+            commentStore.addComments(result.data)
             this.postCommentData.content = ''
           })
           .catch((error) => {
@@ -331,6 +302,7 @@ export default class Works extends Vue {
             this.postCommentData
           )
           .then((result) => {
+            commentStore.addComments(result.data)
             this.postCommentData.content = ''
           })
           .catch((error) => {
@@ -360,6 +332,10 @@ export default class Works extends Vue {
             }
           )
           .then((result) => {
+            commentStore.setTempReplyCommentInfo({
+              tempReplyComment: result.data,
+              parentCommentId: replyCommentData.comment_id
+            })
             replyCommentData.reply_comment_data.content = ''
           })
           .catch((error) => {
@@ -372,6 +348,10 @@ export default class Works extends Vue {
             replyCommentData.reply_comment_data
           )
           .then((result) => {
+            commentStore.setTempReplyCommentInfo({
+              tempReplyComment: result.data,
+              parentCommentId: replyCommentData.comment_id
+            })
             replyCommentData.reply_comment_data.content = ''
           })
           .catch((error) => {

@@ -1,13 +1,23 @@
 <template>
-  <nuxt-link
-    :to="`/users/${user.id}`"
-    class="flex items-start rounded-full pointer-events-auto"
+  <div
+    class="flex items-start rounded-full"
+    :class="{ 'pointer-events-none': user.id === '0' }"
   >
-    <user-rounded-icon :imageSrc="user.avatar_url" />
-    <div class="ml-3 text-xs">
-      {{ user.name }}
-    </div>
-  </nuxt-link>
+    <nuxt-link
+      :to="`/users/${user.id}`"
+      :class="{ 'pointer-events-auto': user.id !== '0' }"
+    >
+      <user-rounded-icon :imageSrc="user.avatar_url" />
+    </nuxt-link>
+    <nuxt-link
+      :to="`/users/${user.id}`"
+      :class="{ 'pointer-events-auto': user.id !== '0' }"
+    >
+      <div class="ml-3 text-xs">
+        {{ user.name }}
+      </div>
+    </nuxt-link>
+  </div>
 </template>
 
 <script lang="ts">

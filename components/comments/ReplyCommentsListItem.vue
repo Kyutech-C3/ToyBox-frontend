@@ -54,7 +54,6 @@ export default class ReplyCommentsListItem extends Vue {
   }
 
   dateFormatter(date: string): string {
-    console.log(date)
     const splitFullDate = date.split('T')
     const splitDate = splitFullDate[0].split('-')
     const splitTime = splitFullDate[1].split('.')

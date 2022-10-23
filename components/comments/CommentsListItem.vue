@@ -62,7 +62,7 @@
       </div>
     </div>
     <div
-      v-if="comment.number_of_reply > 0"
+      v-if="number_of_reply > 0"
       class="
         text-blue-600
         mr-3
@@ -73,7 +73,7 @@
         flex
         items-center
       "
-      @click="getReplyComments()"
+      @click="showReplyComments"
     >
       <span v-if="!showReplyList" class="material-symbols-outlined text-lg">
         arrow_drop_down
@@ -81,18 +81,20 @@
       <span v-if="showReplyList" class="material-symbols-outlined text-lg">
         arrow_drop_up
       </span>
-      <span class="text-xs"> {{ comment.number_of_reply }} 件の返信 </span>
+      <span class="text-xs"> {{ number_of_reply }} 件の返信 </span>
     </div>
     <reply-comments-list
       v-if="showReplyList"
       class="pl-12 w-full -translate-y-3"
       :reply-comments="replyComments"
+      :is-reply-comments-empty="isReplyCommentsEmpty"
+      @click="getMoreReply"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
+import { Component, Vue, Prop, Emit, Watch } from 'nuxt-property-decorator'
 
 import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
 import CommentUser from '@/components/comments/CommentUser.vue'
@@ -106,7 +108,7 @@ import {
   PostComment,
   ResponseReplyComment
 } from '@/types'
-import { authStore } from '~/store'
+import { authStore, commentStore } from '~/store'
 import axios from 'axios'
 
 type replyCommentType = {
@@ -135,9 +137,28 @@ export default class CommentsListItem extends Vue {
 
   replyCommentData: PostComment = { content: '' }
   replyComments: ResponseReplyComment[] = []
+  number_of_reply: number = 0
+  query: string = ''
+  isReplyCommentsEmpty: boolean = false
 
   showReplyTextarea: boolean = false
   showReplyList: boolean = false
+
+  get getUser(): User {
+    return authStore.getUser
+  }
+
+  get getAccessToken() {
+    return authStore.getAccessToken
+  }
+
+  get getTempReplyCommentInfo() {
+    return commentStore.getTempReplyCommentInfo
+  }
+
+  get getTempReplyComment() {
+    return commentStore.getTempReplyComment
+  }
 
   @Prop({ type: Object, required: true })
   comment!: ResponseComment
@@ -153,12 +174,16 @@ export default class CommentsListItem extends Vue {
     }
   }
 
-  get getUser(): User {
-    return authStore.getUser
+  @Watch('getTempReplyComment')
+  handlePostReplyComment() {
+    if (this.getTempReplyCommentInfo.parentCommentId === this.comment.id) {
+      this.replyComments.push(this.getTempReplyCommentInfo.tempReplyComment)
+      this.number_of_reply += 1
+    }
   }
 
-  get getAccessToken() {
-    return authStore.getAccessToken
+  created() {
+    this.number_of_reply = this.comment.number_of_reply
   }
 
   closeReplyTextarea() {
@@ -173,30 +198,53 @@ export default class CommentsListItem extends Vue {
     return `${splitDate[0]}年${splitDate[1]}月${splitDate[2]}日 ${splitTime[0]}`
   }
 
-  getReplyComments() {
-    if (!this.showReplyList) {
-      try {
-        axios
-          .get(
-            `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${this.getAccessToken}`
-              }
+  getReplyComments(type: string) {
+    try {
+      axios
+        .get(
+          `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}${this.query}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.getAccessToken}`
             }
-          )
-          .then((result) => {
+          }
+        )
+        .then((result) => {
+          if (type === 'show') {
+            this.replyComments.splice(0)
             this.replyComments = result.data
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-        this.showReplyList = true
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
+          } else if ('more') {
+            result.data.map((item: ResponseReplyComment) => {
+              this.replyComments.push(item)
+            })
+          }
+          if (result.data.length < 10) {
+            this.isReplyCommentsEmpty = true
+          } else {
+            this.isReplyCommentsEmpty = false
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  getMoreReply() {
+    this.query = `?offset_id=${
+      this.replyComments[this.replyComments.length - 1].id
+    }`
+    this.getReplyComments('more')
+  }
+
+  showReplyComments() {
+    if (this.showReplyList) {
       this.showReplyList = false
+    } else {
+      this.getReplyComments('show')
+      this.showReplyList = true
     }
   }
 }
