@@ -27,9 +27,9 @@ import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
-import axios from 'axios'
 import { Work } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '@/store'
+import { AxiosClient } from '@/utils/axios'
 
 @Component({
   components: {
@@ -53,14 +53,11 @@ import { authStore, tagSelectorStore, workFilterStore } from '@/store'
         query += `visibility=${workFilterStore.getFilterVisibility}`
       }
     }
-    const resWorks = await axios.get(`/works${query}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.getAccessToken}`
-      }
-    })
+    const resWorks = await AxiosClient.client('GET', `/works${query}`, true)
     if (resWorks.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
+
     return { works: resWorks.data }
   }
 })
@@ -135,11 +132,11 @@ export default class Index extends Vue {
       }
       this.query += this.query === '' ? '?' : '&'
       this.query += `oldest_id=${this.works[this.works.length - 1].id}`
-      const resWorks = await axios.get(`/works${this.query}`, {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      })
+      const resWorks = await AxiosClient.client(
+        'GET',
+        `/works${this.query}`,
+        true
+      )
       if (resWorks.status !== 200) {
         alert('作品一覧の取得に失敗しました')
       }
@@ -173,11 +170,11 @@ export default class Index extends Vue {
         this.query += this.query === '' ? '?' : '&'
         this.query += `visibility=${this.getFilterVisibility}`
       }
-      const resWorks = await axios.get(`/works${this.query}`, {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      })
+      const resWorks = await AxiosClient.client(
+        'GET',
+        `/works${this.query}`,
+        true
+      )
       if (resWorks.status !== 200) {
         alert('作品一覧の取得に失敗しました')
       }

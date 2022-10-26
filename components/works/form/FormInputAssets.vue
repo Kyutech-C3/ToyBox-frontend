@@ -39,8 +39,9 @@
 
 <script lang="ts">
 import { Component, VModel, Vue } from 'nuxt-property-decorator'
-import axios from 'axios'
-import { authStore, workPostStore } from '@/store'
+
+import { AxiosClient } from '@/utils/axios'
+import { workPostStore } from '@/store'
 
 interface Event<T = EventTarget> {
   target: T
@@ -62,26 +63,23 @@ export default class FormInputAssets extends Vue {
   onFilePicked(event: Event<HTMLInputElement>) {
     workPostStore.setPostAssetStatus('posting')
     const file = event.target.files as FileList
-    // eslint-disable-next-line no-console
     if (file.length !== 0 || file !== null) {
       for (let i = 0; i < file.length; i++) {
         // 本番環境では何らかのサービスに画像を保存する
-        // eslint-disable-next-line no-console
         const params = new FormData()
         params.append('file', file[i])
         params.append('asset_type', this.getAssetType(file[i].name as string))
         try {
-          axios
-            .post('/assets', params, {
-              headers: {
-                'content-type': 'multipart/form-data',
-                Authorization: `Bearer ${authStore.getAccessToken}`
-              }
-            })
-            .then((result) => {
-              this.assetImage.push(result.data.id)
-              workPostStore.addAssetsViewInfo(result.data)
-            })
+          AxiosClient.client(
+            'POST',
+            '/assets',
+            true,
+            params,
+            'multipart/form-data'
+          ).then((result) => {
+            this.assetImage.push(result.data.id)
+            workPostStore.addAssetsViewInfo(result.data)
+          })
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)

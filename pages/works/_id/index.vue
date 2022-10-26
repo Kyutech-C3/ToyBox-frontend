@@ -155,7 +155,7 @@ import ConfirmModal from '@/components/commons/ConfirmModal.vue'
 import MarkdownView from '@/components/commons/MarkdownView.vue'
 import WorkShare from '@/components/works/WorkShare.vue'
 
-import axios from 'axios'
+import { AxiosClient } from '@/utils/axios'
 import { Work, PostComment, Asset } from '@/types'
 import {
   authStore,
@@ -188,21 +188,15 @@ type replyCommentType = {
     WorkShare
   },
   async asyncData({ route }) {
-    const resWork = await axios.get(
+    const resWork = await AxiosClient.client(
+      'GET',
       `${process.env.API_URL}/works/${route.params.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      }
+      true
     )
-    const resComments = await axios.get(
+    const resComments = await AxiosClient.client(
+      'GET',
       `${process.env.API_URL}/works/${route.params.id}/comments`,
-      {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      }
+      true
     )
     commentStore.setComments(resComments.data)
     return { work: resWork.data }
@@ -278,16 +272,12 @@ export default class Works extends Vue {
   postComment() {
     try {
       if (this.nowLogin) {
-        axios
-          .post(
-            `${process.env.API_URL}/works/${this.$route.params.id}/comments`,
-            this.postCommentData,
-            {
-              headers: {
-                Authorization: `Bearer ${this.getAccessToken}`
-              }
-            }
-          )
+        AxiosClient.client(
+          'POST',
+          `${process.env.API_URL}/works/${this.$route.params.id}/comments`,
+          true,
+          this.postCommentData
+        )
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
@@ -296,11 +286,12 @@ export default class Works extends Vue {
             console.error(error)
           })
       } else {
-        axios
-          .post(
-            `${process.env.API_URL}/works/${this.$route.params.id}/comments`,
-            this.postCommentData
-          )
+        AxiosClient.client(
+          'POST',
+          `${process.env.API_URL}/works/${this.$route.params.id}/comments`,
+          false,
+          this.postCommentData
+        )
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
@@ -321,16 +312,12 @@ export default class Works extends Vue {
   replyComment(replyCommentData: replyCommentType) {
     try {
       if (this.nowLogin) {
-        axios
-          .post(
-            `${process.env.API_URL}/works/${this.$route.params.id}/comments?reply_at=${replyCommentData.comment_id}`,
-            replyCommentData.reply_comment_data,
-            {
-              headers: {
-                Authorization: `Bearer ${this.getAccessToken}`
-              }
-            }
-          )
+        AxiosClient.client(
+          'POST',
+          `${process.env.API_URL}/works/${this.$route.params.id}/comments?reply_at=${replyCommentData.comment_id}`,
+          true,
+          replyCommentData.reply_comment_data
+        )
           .then((result) => {
             commentStore.setTempReplyCommentInfo({
               tempReplyComment: result.data,
@@ -342,11 +329,12 @@ export default class Works extends Vue {
             console.error(error)
           })
       } else {
-        axios
-          .post(
-            `${process.env.API_URL}/works/${this.$route.params.id}/comments?reply_at=${replyCommentData.comment_id}`,
-            replyCommentData.reply_comment_data
-          )
+        AxiosClient.client(
+          'POST',
+          `${process.env.API_URL}/works/${this.$route.params.id}/comments?reply_at=${replyCommentData.comment_id}`,
+          false,
+          replyCommentData.reply_comment_data
+        )
           .then((result) => {
             commentStore.setTempReplyCommentInfo({
               tempReplyComment: result.data,

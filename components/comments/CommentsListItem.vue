@@ -109,7 +109,7 @@ import {
   ResponseReplyComment
 } from '@/types'
 import { authStore, commentStore } from '~/store'
-import axios from 'axios'
+import { AxiosClient } from '@/utils/axios'
 
 type replyCommentType = {
   comment_id: string
@@ -200,15 +200,11 @@ export default class CommentsListItem extends Vue {
 
   getReplyComments(type: string) {
     try {
-      axios
-        .get(
-          `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}${this.query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${this.getAccessToken}`
-            }
-          }
-        )
+      AxiosClient.client(
+        'GET',
+        `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}${this.query}`,
+        true
+      )
         .then((result) => {
           if (type === 'show') {
             this.replyComments.splice(0)

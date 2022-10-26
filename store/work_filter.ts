@@ -1,15 +1,5 @@
-import {
-  Module,
-  VuexModule,
-  Mutation,
-  Action,
-  config
-} from 'vuex-module-decorators'
-import axios from 'axios'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { Visibility } from '~/types'
-
-config.rawError = true
-axios.defaults.baseURL = process.env.API_URL
 
 type FilterVisibility = Visibility | ''
 

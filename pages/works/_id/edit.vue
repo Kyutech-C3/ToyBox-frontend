@@ -4,15 +4,12 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
+
 import WorksForm from '@/components/works/WorksForm.vue'
+
 import { PostWork, Work } from '@/types'
-import axios from 'axios'
-import {
-  authStore,
-  workPostStore,
-  tagSelectorStore,
-  workFilterStore
-} from '~/store'
+import { AxiosClient } from '@/utils/axios'
+import { workPostStore, tagSelectorStore, workFilterStore } from '~/store'
 import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
 
 @Component({
@@ -22,11 +19,7 @@ import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
   middleware: 'auth_check',
   async asyncData({ route }) {
     let resWork
-    resWork = await axios.get(`/works/${route.params.id}`, {
-      headers: {
-        Authorization: `Bearer ${authStore.getAccessToken}`
-      }
-    })
+    resWork = await AxiosClient.client('GET', `/works/${route.params.id}`, true)
     if (!resWork.data) {
       console.error(resWork.status)
     }

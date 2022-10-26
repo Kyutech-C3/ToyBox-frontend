@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
-import axios from 'axios'
+
 import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
 import FormAssetsPreview from '@/components/works/form/FormAssetsPreview.vue'
@@ -70,7 +70,8 @@ import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
 
-import { authStore, tagSelectorStore, workPostStore } from '@/store'
+import { AxiosClient } from '@/utils/axios'
+import { tagSelectorStore, workPostStore } from '@/store'
 import { PostWork } from '@/types'
 
 type RequiredType = {
@@ -146,25 +147,20 @@ export default class WorksForm extends Vue {
       this.workData.visibility = visibility
       try {
         if (this.isNewWorks) {
-          axios
-            .post('/works', this.workData, {
-              headers: {
-                Authorization: `Bearer ${authStore.getAccessToken}`
-              }
-            })
-            .then((result) => {
+          AxiosClient.client('POST', '/works', true, this.workData).then(
+            (result) => {
               this.$router.push('/')
-            })
+            }
+          )
         } else {
-          axios
-            .put(`/works/${this.$route.params.id}`, this.workData, {
-              headers: {
-                Authorization: `Bearer ${authStore.getAccessToken}`
-              }
-            })
-            .then((result) => {
-              this.$router.push('/')
-            })
+          AxiosClient.client(
+            'PUT',
+            `/works/${this.$route.params.id}`,
+            true,
+            this.workData
+          ).then((result) => {
+            this.$router.push('/')
+          })
         }
         workPostStore.initAssetsViewInfo()
         tagSelectorStore.initSelectedTags()

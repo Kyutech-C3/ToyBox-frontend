@@ -40,8 +40,9 @@
 
 <script lang="ts">
 import { Component, VModel, Vue } from 'nuxt-property-decorator'
-import axios from 'axios'
-import { authStore, workPostStore } from '@/store'
+
+import { AxiosClient } from '@/utils/axios'
+import { workPostStore } from '@/store'
 
 interface Event<T = EventTarget> {
   target: T
@@ -78,17 +79,16 @@ export default class FormInputThumbnail extends Vue {
         params.append('file', file[i])
         params.append('asset_type', this.getAssetType(file[i].name as string))
         try {
-          axios
-            .post('/assets', params, {
-              headers: {
-                'content-type': 'multipart/form-data',
-                Authorization: `Bearer ${authStore.getAccessToken}`
-              }
-            })
-            .then((result) => {
-              this.thumbnail = result.data.id
-              workPostStore.setThumbnailViewInfo(result.data)
-            })
+          AxiosClient.client(
+            'POST',
+            '/assets',
+            true,
+            params,
+            'multipart/form-data'
+          ).then((result) => {
+            this.thumbnail = result.data.id
+            workPostStore.setThumbnailViewInfo(result.data)
+          })
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(error)

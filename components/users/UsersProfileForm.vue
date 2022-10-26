@@ -62,9 +62,11 @@
 
 <script lang="ts">
 import { Component, Vue, VModel } from 'nuxt-property-decorator'
-import axios from 'axios'
+
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersTextField from '@/components/users/UsersTextField.vue'
+
+import { AxiosClient } from '@/utils/axios'
 import { User } from '~/types'
 import { authStore } from '~/store'
 
@@ -94,23 +96,14 @@ export default class UsersProfileForm extends Vue {
     this.twitterId = twitter_id ?? ''
   }
 
-  async putUserInfo() {
-    await axios
-      .put(
-        '/users/@me',
-        {
-          display_name: this.displayName,
-          avatar_url: this.avatarUrl,
-          profile: this.profile,
-          twitter_id: this.twitterId,
-          github_id: this.githubId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`
-          }
-        }
-      )
+  putUserInfo() {
+    AxiosClient.client('POST', '/users/@me', true, {
+      display_name: this.displayName,
+      avatar_url: this.avatarUrl,
+      profile: this.profile,
+      twitter_id: this.twitterId,
+      github_id: this.githubId
+    })
       .then((value) => {
         this.user.display_name = this.displayName
         this.user.avatar_url = this.avatarUrl

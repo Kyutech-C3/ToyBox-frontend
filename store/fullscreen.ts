@@ -1,15 +1,5 @@
-import {
-  Module,
-  VuexModule,
-  Mutation,
-  Action,
-  config
-} from 'vuex-module-decorators'
-import axios from 'axios'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { Asset } from '~/types'
-
-config.rawError = true
-axios.defaults.baseURL = process.env.API_URL
 
 /**
  * フルスクリーン機能に必要な情報を取得・保持するStore

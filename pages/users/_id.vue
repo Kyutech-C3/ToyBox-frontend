@@ -22,9 +22,9 @@ import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
-import axios from 'axios'
 import { User, Work } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '~/store'
+import { AxiosClient } from '@/utils/axios'
 
 @Component({
   components: {
@@ -46,23 +46,23 @@ import { authStore, tagSelectorStore, workFilterStore } from '~/store'
       query += `&visibility=${workFilterStore.getFilterVisibility}`
     }
     if (authStore.getUser.id === route.params.id) {
-      resUser = await axios.get('/users/@me', {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      })
-      resWorks = await axios.get(`/users/@me/works${query}`, {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      })
+      resUser = await AxiosClient.client('GET', '/users/@me', true)
+      resWorks = await AxiosClient.client(
+        'GET',
+        `/users/@me/works${query}`,
+        true
+      )
     } else {
-      resUser = await axios.get(`/users/${route.params.id}`)
-      resWorks = await axios.get(`/users/${route.params.id}/works${query}`, {
-        headers: {
-          Authorization: `Bearer ${authStore.getAccessToken}`
-        }
-      })
+      resUser = await AxiosClient.client(
+        'GET',
+        `/users/${route.params.id}`,
+        false
+      )
+      resWorks = await AxiosClient.client(
+        'GET',
+        `/users/${route.params.id}/works${query}`,
+        true
+      )
     }
     if (!resUser.data) {
       alert('ユーザー情報の取得に失敗しました')
@@ -115,19 +115,16 @@ export default class Users extends Vue {
       }
       let resWorks
       if (this.getUser.id === this.$route.params.id) {
-        resWorks = await axios.get(`/users/@me/works${this.query}`, {
-          headers: {
-            Authorization: `Bearer ${authStore.getAccessToken}`
-          }
-        })
+        resWorks = await AxiosClient.client(
+          'GET',
+          `/users/@me/works${this.query}`,
+          true
+        )
       } else {
-        resWorks = await axios.get(
+        resWorks = await AxiosClient.client(
+          'GET',
           `/users/${this.$route.params.id}/works${this.query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authStore.getAccessToken}`
-            }
-          }
+          true
         )
       }
       if (resWorks.status !== 200) {

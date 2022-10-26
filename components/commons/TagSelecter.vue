@@ -111,7 +111,7 @@ import { Component, Vue, Watch, Ref, Prop } from 'nuxt-property-decorator'
 import BaseTag from '@/components/commons/BaseTag.vue'
 
 import { GetTag } from '@/types'
-import axios from 'axios'
+import { AxiosClient } from '@/utils/axios'
 import { workPostStore, authStore, tagSelectorStore } from '~/store'
 
 @Component({
@@ -261,23 +261,25 @@ export default class TagSelecter extends Vue {
       this.initSuggestTags
     ) {
       try {
-        await axios
-          .get(`${process.env.API_URL}/tags?w=${this.searchTagKeyword}`)
-          .then((result) => {
-            if (this.getSelectedTags.length > 0) {
-              this.suggestTags = result.data.filter((item: GetTag) => {
-                for (let i = 0; i < this.getSelectedTags.length; i++) {
-                  if (item.id === this.getSelectedTags[i].id) {
-                    return false
-                  }
+        AxiosClient.client(
+          'GET',
+          `${process.env.API_URL}/tags?w=${this.searchTagKeyword}`,
+          false
+        ).then((result) => {
+          if (this.getSelectedTags.length > 0) {
+            this.suggestTags = result.data.filter((item: GetTag) => {
+              for (let i = 0; i < this.getSelectedTags.length; i++) {
+                if (item.id === this.getSelectedTags[i].id) {
+                  return false
                 }
-                return true
-              })
-            } else {
-              this.suggestTags = result.data
-            }
-            this.selectingSuggest = 0
-          })
+              }
+              return true
+            })
+          } else {
+            this.suggestTags = result.data
+          }
+          this.selectingSuggest = 0
+        })
       } catch (error) {
         console.error(error)
       }
@@ -376,24 +378,17 @@ export default class TagSelecter extends Vue {
     )
   }
 
-  async createNewTag() {
+  createNewTag() {
     try {
-      await axios
-        .post(
-          `${process.env.API_URL}/tags`,
-          { name: this.searchTagKeyword, color: '#ffffff' },
-          {
-            headers: {
-              Authorization: `Bearer ${this.getAccessToken}`
-            }
-          }
-        )
-        .then((result) => {
-          tagSelectorStore.addSelectedTags(result.data)
-          if (this.useType === 'create') {
-            workPostStore.changeIsBlockUnload()
-          }
-        })
+      AxiosClient.client('POST', `${process.env.API_URL}/tags`, true, {
+        name: this.searchTagKeyword,
+        color: '#ffffff'
+      }).then((result) => {
+        tagSelectorStore.addSelectedTags(result.data)
+        if (this.useType === 'create') {
+          workPostStore.changeIsBlockUnload()
+        }
+      })
     } catch (error) {
       console.error(error)
     }
