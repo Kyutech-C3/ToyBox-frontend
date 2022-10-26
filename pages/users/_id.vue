@@ -2,7 +2,6 @@
   <div>
     <users-profile :user="user" />
     <works-filter
-      v-if="getNowLogin"
       :include-draft="getUser.id === $route.params.id"
       @search="searchWorks"
       @clear="clear"

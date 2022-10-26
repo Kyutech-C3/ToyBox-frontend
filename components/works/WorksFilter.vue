@@ -11,6 +11,7 @@
       relative
       bg-white
     "
+    :class="getNowLogin ? 'py-5' : 'pt-5 pb-12'"
   >
     <p>絞り込み</p>
     <div class="flex items-center my-3 w-full mb-6">

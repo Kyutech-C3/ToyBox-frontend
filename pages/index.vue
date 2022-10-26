@@ -1,7 +1,6 @@
 <template>
   <div>
     <works-filter
-      v-if="getNowLogin"
       :include-draft="false"
       class="mb-10"
       @search="searchWorks"
