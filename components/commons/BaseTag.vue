@@ -1,17 +1,11 @@
 <template>
   <div
-    class="
-      bg-white
-      rounded-lg
-      border border-gray-400
-      select-none
-      whitespace-nowrap
-    "
+    class="bg-white border border-gray-400 select-none whitespace-nowrap"
     :class="[
       { 'bg-slate-400': selected },
       { 'cursor-pointer': pointer },
-      { 'px-2 py-0 text-sm mr-0.5': size === 'small' },
-      { 'px-4 py-0.5 mr-1': size === 'base' },
+      { 'px-2 py-0 text-sm mr-0.5 rounded-md': size === 'small' },
+      { 'px-4 py-0.5 mr-1 rounded-lg': size === 'base' },
       { '': size === 'large' }
     ]"
     @click="(event) => $emit('click', event)"

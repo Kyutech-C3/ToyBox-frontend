@@ -106,16 +106,27 @@
       </div>
       <user-tag
         :user="work.user"
+        font-weight="medium"
         class="my-3 w-max text-gray-600 -translate-x-1"
       />
       <!-- タグ -->
       <works-content icon="tags">
-        <base-tag
-          v-for="tag in work.tags"
-          :key="tag.id"
-          :text="tag.name"
-          class="mr-4 text-gray-600"
-        />
+        <div
+          class="
+            tag-slider
+            pb-0.5
+            overflow-x-scroll overflow-y-hidden
+            flex
+            w-full
+          "
+        >
+          <base-tag
+            v-for="tag in work.tags"
+            :key="tag.id"
+            :text="tag.name"
+            class="mr-1 text-gray-600"
+          />
+        </div>
       </works-content>
       <!-- 説明 -->
       <markdown-view :markdown-text="work.description" />
@@ -363,5 +374,18 @@ export default class Works extends Vue {
 
 .material-symbols-unliked {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.tag-slider::-webkit-scrollbar {
+  height: 3px;
+}
+
+.tag-slider::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 3px;
+}
+
+.tag-slider::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
 }
 </style>

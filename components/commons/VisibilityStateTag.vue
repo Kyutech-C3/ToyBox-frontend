@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-md text-xs"
+    class="rounded-md text-xs flex items-center"
     :class="[
       { 'bg-green-300': visibility === 'public' },
       { 'bg-orange-300': visibility === 'private' },
@@ -10,7 +10,22 @@
       { 'px-3 py-2': size === 'large' }
     ]"
   >
-    {{ visibility }}
+    <font-awesome-icon
+      v-if="visibility === 'public'"
+      :icon="['fas', 'globe']"
+      class="w-2.5 mr-1"
+    />
+    <font-awesome-icon
+      v-else-if="visibility === 'private'"
+      :icon="['fas', 'lock']"
+      class="w-2 mr-1"
+    />
+    <font-awesome-icon
+      v-else-if="visibility === 'draft'"
+      :icon="['fas', 'save']"
+      class="w-2 mr-1"
+    />
+    <p>{{ visibility }}</p>
   </div>
 </template>
 

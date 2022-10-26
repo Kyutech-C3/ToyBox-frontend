@@ -83,7 +83,7 @@ export default class FormSubmitButton extends Vue {
   option = 0
   submitList = [
     {
-      icon: ['fas', 'upload'],
+      icon: ['fas', 'globe'],
       name: '公開',
       value: 'public'
     },

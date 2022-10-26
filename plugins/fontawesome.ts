@@ -24,7 +24,8 @@ import {
   faGlobe,
   faSearch,
   faMinus,
-  faCaretDown
+  faCaretDown,
+  faSave
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -34,11 +35,7 @@ import {
   faMastodon
 } from '@fortawesome/free-brands-svg-icons'
 
-import {
-  faHeart,
-  faSave,
-  faQuestionCircle
-} from '@fortawesome/free-regular-svg-icons'
+import { faHeart, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
 

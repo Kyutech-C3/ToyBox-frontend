@@ -13,7 +13,14 @@
       :imageSrc="user.avatar_url"
       :size="invisibleName ? 'small' : 'base'"
     />
-    <div v-if="!invisibleName" class="ml-3">
+    <div
+      v-if="!invisibleName"
+      class="ml-3"
+      :class="[
+        { 'font-medium': fontWeight === 'medium' },
+        { 'font-normal': fontWeight === 'base' }
+      ]"
+    >
       {{ user.name }}
     </div>
   </nuxt-link>
@@ -34,5 +41,8 @@ export default class UserTag extends Vue {
 
   @Prop({ type: Boolean, required: false, default: false })
   invisibleName!: boolean
+
+  @Prop({ type: String, required: false, default: 'base' })
+  fontWeight!: 'base' | 'medium'
 }
 </script>

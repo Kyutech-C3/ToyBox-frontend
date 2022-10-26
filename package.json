@@ -28,6 +28,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/three": "^0.143.1",
     "core-js": "^3.21.1",
+    "dayjs": "^1.11.6",
     "file-saver": "^2.0.5",
     "github-markdown-css": "^5.1.0",
     "hooper": "^0.3.4",

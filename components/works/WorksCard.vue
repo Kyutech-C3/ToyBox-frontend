@@ -7,7 +7,7 @@
       rounded-2xl
       shadow-md
       cursor-pointer
-      hover:scale-105
+      hover:scale-[1.01]
       hover:shadow-lg
       transform
       transition
@@ -24,32 +24,56 @@
         :font-awesome="{ type: 'fas', name: 'pen' }"
       />
     </div>
-    <div class="h-1/2 border-b">
+    <div class="h-[12rem] border-b relative">
       <img
         class="h-full m-auto"
         :src="workData.thumbnail.url"
         alt="Thumbnail is not found"
       />
+      <visibility-state-tag
+        v-if="getNowLogin"
+        :visibility="workData.visibility"
+        class="absolute left-3 top-3"
+      />
     </div>
     <div class="h-1/2 py-3 px-2.5">
-      <div
-        class="mx-auto w-min flex items-center"
-        :class="workData.visibility === 'private' ? 'pl-3.5' : ''"
-      >
-        <div>
-          <div class="text-center text-xl w-max">
-            {{ workData.title }}
-          </div>
-          <div class="w-11/12 mx-auto my-0.5 border border-blue-500" />
+      <div class="mx-auto w-min flex items-center flex-col mb-3">
+        <div class="text-center text-xl w-max">
+          {{ workData.title }}
         </div>
-        <font-awesome-icon
-          v-if="workData.visibility === 'private'"
-          :icon="['fas', 'lock']"
-          class="w-2 ml-1.5 text-gray-500"
+        <div
+          class="w-11/12 mx-auto border"
+          :class="[
+            { 'border-green-300': workData.visibility === 'public' },
+            { 'border-orange-300': workData.visibility === 'private' },
+            { 'border-blue-300': workData.visibility === 'draft' }
+          ]"
         />
       </div>
-      <div class="flex justify-center mt-2 h-8">
-        <base-tag v-for="tag in workData.tags" :key="tag.id" :text="tag.name" />
+      <div
+        class="
+          tag-slider
+          flex
+          mb-3
+          mx-auto
+          w-fit
+          max-w-[90%]
+          pb-0.5
+          rounded-md
+          overflow-x-scroll overflow-y-hidden
+        "
+      >
+        <base-tag
+          v-for="tag in workData.tags"
+          :key="tag.id"
+          :text="tag.name"
+          size="small"
+        />
+      </div>
+      <div class="flex justify-end text-xs">
+        <span class="mr-3">
+          {{ $dayjs(workData.created_at).format('MM月DD日 hh:mm:ss') }}
+        </span>
       </div>
       <user-tag :user="workData.user" class="absolute bottom-2" />
       <!-- バックエンドが複数ユーザーに対応するまでコメントアウト -->
@@ -73,9 +97,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
 import BaseTag from '@/components/commons/BaseTag.vue'
 import UserTag from '@/components/commons/UserTag.vue'
 import BaseIconButton from '@/components/commons/BaseIconButton.vue'
+import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
+
 import { Work } from '@/types'
 import { authStore } from '~/store'
 
@@ -83,7 +110,8 @@ import { authStore } from '~/store'
   components: {
     BaseTag,
     UserTag,
-    BaseIconButton
+    BaseIconButton,
+    VisibilityStateTag
   }
 })
 export default class WorksCard extends Vue {
@@ -92,6 +120,10 @@ export default class WorksCard extends Vue {
 
   get getUser() {
     return authStore.getUser
+  }
+
+  get getNowLogin() {
+    return authStore.nowLogin
   }
 
   dateFormatter(date: string): string {
@@ -119,3 +151,18 @@ export default class WorksCard extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.tag-slider::-webkit-scrollbar {
+  height: 3px;
+}
+
+.tag-slider::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 3px;
+}
+
+.tag-slider::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+}
+</style>

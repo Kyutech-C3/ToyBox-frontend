@@ -50,7 +50,7 @@
             h-12
             cursor-pointer
             pointer-events-none
-            border-solid border-2 border-gray-400
+            shadow-md
           "
         />
       </button>
