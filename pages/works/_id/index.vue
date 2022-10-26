@@ -204,7 +204,6 @@ type replyCommentType = {
 })
 export default class Works extends Vue {
   work!: Work
-  // comments!: ResponseComment[]
 
   postCommentData: PostComment = { content: '' }
 
@@ -257,7 +256,7 @@ export default class Works extends Vue {
     modalStore.open(WorkShare)
   }
 
-  async openConfirmModal(asset: Asset) {
+  openConfirmModal(asset: Asset) {
     downloadAssetStore.setAsset(asset)
     confirmModalStore.init()
     confirmModalStore.setApproveTitle('ダウンロード')
