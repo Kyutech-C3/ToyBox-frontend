@@ -144,7 +144,6 @@ export default class Index extends Vue {
         alert('作品一覧の取得に失敗しました')
       }
       setTimeout(() => {
-        this.nextContentLoadProcessing = false
         if (resWorks.data.length === 0) {
           this.isWorksEmpty = true
         } else {
@@ -152,11 +151,13 @@ export default class Index extends Vue {
             this.works.push(item)
           })
         }
+        this.nextContentLoadProcessing = false
       }, 1000)
     }
   }
 
   async searchWorks() {
+    this.isWorksEmpty = false
     if (this.getNowLogin) {
       this.query = ''
       workFilterStore.setSearched(true)
