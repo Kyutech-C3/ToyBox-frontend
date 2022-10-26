@@ -312,7 +312,10 @@ export default class TagSelecter extends Vue {
       if (this.suggestViewBottom <= this.selectingSuggest) {
         this.suggestTagList.scrollTop += 29
       }
-      if (this.suggestTags.length - 1 < this.selectingSuggest) {
+      if (
+        this.suggestTags.length - (this.showCreateItem() ? 0 : 1) <
+        this.selectingSuggest
+      ) {
         this.selectingSuggest = 0
         this.suggestTagList.scrollTop = -this.suggestTagList.scrollHeight
         this.suggestViewTop = 0
@@ -326,7 +329,12 @@ export default class TagSelecter extends Vue {
   }
 
   suggestSelect(event: KeyboardEvent) {
-    if (this.suggestTags.length > 0) {
+    if (
+      this.suggestTags.length === this.selectingSuggest &&
+      this.searchTagKeyword.length > 0
+    ) {
+      this.createNewTag()
+    } else if (this.suggestTags.length > 0) {
       tagSelectorStore.addSelectedTags(this.suggestTags[this.selectingSuggest])
       if (this.useType === 'create') {
         workPostStore.changeIsBlockUnload()
@@ -334,12 +342,6 @@ export default class TagSelecter extends Vue {
       this.initSuggest()
       this.initInputWord()
       this.searchTags()
-    }
-    if (
-      this.suggestTags.length === this.selectingSuggest &&
-      this.searchTagKeyword.length > 0
-    ) {
-      this.createNewTag()
     }
   }
 
