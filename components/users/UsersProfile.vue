@@ -2,36 +2,59 @@
   <div
     v-if="user !== undefined"
     class="
-      w-3/4
+      max-w-[900px]
+      w-[95vw]
       flex flex-col
       content-center
       justify-center
       items-center
-      border-2 border-gray-400
       rounded-3xl
       mx-auto
       mb-12
+      pb-10
+      bg-white
+      relative
+      overflow-hidden
+      shadow-lg
     "
   >
-    <user-rounded-icon :imageSrc="user.avatar_url" isLarge class="my-5" />
-    <div class="text-4xl m-5">
+    <base-text-button
+      v-if="enabledEditButtonStatus()"
+      title="プロフィール編集"
+      class="absolute top-6 right-7 z-10"
+      @click="showEditProfileModal = true"
+    />
+    <users-profile-form
+      v-show="showEditProfileModal && enabledEditButtonStatus()"
+      v-model="user"
+      @close-edit-profile-modal="showEditProfileModal = false"
+    />
+    <div class="bg-gray-300 w-full h-64 z-0 relative overflow-hidden mb-10">
+      <img
+        src="@/assets/image/bg-gray.png"
+        alt="バーナー画像"
+        class="
+          absolute
+          w-full
+          top-1/2
+          left-1/2
+          -translate-x-1/2 -translate-y1/2
+        "
+      />
+    </div>
+    <div class="z-10 absolute left-1/2 -translate-x-1/2 top-36">
+      <user-rounded-icon :imageSrc="user.avatar_url" :size="'large'" />
+    </div>
+    <div class="text-3xl m-3 font-bold">
       {{ user.display_name }}
     </div>
-    <div class="text-2xl m-5">
-      {{ user.profile }}
+    <div class="text-md m-4" :class="{ 'text-gray-400': !user.profile }">
+      {{ user.profile ? user.profile : 'プロフィールがありません' }}
     </div>
-    <div v-show="!disabledEditButton" class="m-5">
-      <base-text-button
-        title="プロフィール編集"
-        @click="showEditProfileModal = true"
-      />
-      <users-profile-form
-        v-show="showEditProfileModal"
-        :user="user"
-        @close-edit-profile-modal="showEditProfileModal = false"
-      />
-    </div>
-    <div class="flex justify-center w-full my-5">
+    <div
+      v-if="user.github_id || user.twitter_id"
+      class="flex justify-center w-full my-5"
+    >
       <a
         v-if="user.github_id !== ''"
         :href="'https://github.com/' + user.github_id"
@@ -62,10 +85,13 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersProfileForm from '@/components/users/UsersProfileForm.vue'
 import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+
 import { User } from '~/types'
+import { authStore } from '@/store'
 
 @Component({
   components: {
@@ -78,9 +104,14 @@ export default class UsersProfile extends Vue {
   @Prop({ type: Object, required: true })
   user!: User
 
-  @Prop({ type: Boolean, required: false, default: false })
-  disabledEditButton!: boolean
-
   showEditProfileModal: boolean = false
+
+  get getUser() {
+    return authStore.getUser
+  }
+
+  enabledEditButtonStatus() {
+    return this.getUser.id === this.user.id
+  }
 }
 </script>

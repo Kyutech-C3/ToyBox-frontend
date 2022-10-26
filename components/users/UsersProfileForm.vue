@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      bg-gray-300
+      bg-gray-400
       fixed
       h-screen
       inset-0
@@ -9,9 +9,20 @@
       flex
       justify-center
       items-center
+      z-50
     "
   >
-    <div class="w-1/2 flex flex-col bg-white rounded-md p-10">
+    <div
+      class="
+        max-w-[600px]
+        w-[95vw]
+        flex flex-col
+        bg-[#ffeed4]
+        rounded-2xl
+        p-10
+        shadow-2xl
+      "
+    >
       <users-text-field
         v-model="displayName"
         label="名前"
@@ -50,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import axios from 'axios'
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
 import UsersTextField from '@/components/users/UsersTextField.vue'
@@ -64,7 +75,7 @@ import { authStore } from '~/store'
   }
 })
 export default class UsersProfileForm extends Vue {
-  @Prop({ type: Object, required: false, default: [] })
+  @VModel({ type: Object, required: true })
   user!: User
 
   displayName: string = ''
@@ -101,8 +112,11 @@ export default class UsersProfileForm extends Vue {
         }
       )
       .then((value) => {
-        console.log(value)
-        alert('ユーザー情報を変更しました')
+        this.user.display_name = this.displayName
+        this.user.avatar_url = this.avatarUrl
+        this.user.profile = this.profile
+        this.user.twitter_id = this.twitterId
+        this.user.github_id = this.githubId
         this.closeEditProfileModal()
       })
       .catch((error) => console.error(error))

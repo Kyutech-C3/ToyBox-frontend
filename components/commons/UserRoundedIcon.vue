@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div
+    class="rounded-full bg-white relative overflow-hidden shadow-md"
+    :class="[
+      { 'w-6 h-6': size === 'small' },
+      { 'w-8 h-8': size === 'base' },
+      { 'w-32 h-32': size === 'large' }
+    ]"
+  >
     <img
-      class="border-gray-400 rounded-full"
-      :class="[
-        { 'w-6 h-6 border': size === 'small' },
-        { 'w-8 h-8 border': size === 'base' },
-        { 'w-64 h-64 border-2': size === 'large' }
-      ]"
       :src="imageSrc"
       alt="icon"
+      class="absolute h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <label class="mb-3">
-    <div class="text-2xl mb-1">{{ label }}</div>
+    <div class="text-xl mb-1">{{ label }}</div>
     <textarea
       v-if="textarea"
       v-model="text"
