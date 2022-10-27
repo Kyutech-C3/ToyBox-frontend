@@ -25,7 +25,11 @@ import {
   faSearch,
   faMinus,
   faCaretDown,
-  faSave
+  faSave,
+  faEllipsisH,
+  faTrashAlt,
+  faChevronDown,
+  faChevronUp
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -68,7 +72,11 @@ library.add(
   faSearch,
   faMinus,
   faQuestionCircle,
-  faCaretDown
+  faCaretDown,
+  faEllipsisH,
+  faTrashAlt,
+  faChevronDown,
+  faChevronUp
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
