@@ -112,9 +112,19 @@ export default class Auth extends VuexModule {
         })
         .catch((error) => {
           console.error(error)
-          alert('ログイン認証に失敗しました。もう一度ログインしてください。')
           localStorage.removeItem('refresh_token')
+          localStorage.removeItem('toybox-auth')
+          this.setAccessToken('')
+          this.setUser({
+            id: '',
+            name: '',
+            display_name: '',
+            created_at: '',
+            updated_at: ''
+          })
+          alert('ログイン認証に失敗しました。もう一度ログインしてください。')
           reject(error)
+          location.reload
         })
     })
   }
