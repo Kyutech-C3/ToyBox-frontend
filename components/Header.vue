@@ -1,15 +1,13 @@
 <template>
-  <header class="py-3 text-center justify-around flex w-full relative">
+  <header class="py-3 text-center justify-around flex w-full h-24 relative">
     <div
       v-if="!nowLogin"
       class="triangle absolute -top-5 -right-10"
       @click="$router.push('/login')"
     ></div>
-    <div class="justify-center flex">
-      <nuxt-link to="/" class="hover:opacity-50 transition">
-        <div class="text-4xl text-gray-600">
-          <img src="../assets/image/ToyBoxlogo.png" />
-        </div>
+    <div class="justify-center flex h-full">
+      <nuxt-link to="/" class="hover:opacity-50 h-full">
+        <img src="../assets/image/ToyBoxLogo.png" class="h-full" />
       </nuxt-link>
     </div>
     <div
