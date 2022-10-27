@@ -3,7 +3,7 @@
     class="
       rounded-2xl
       w-3/4
-      bg-orange-100
+      bg-white
       px-5
       pb-16
       pt-20
@@ -12,6 +12,7 @@
       flex-col
       items-center
       relative
+      shadow-xl
     "
   >
     <span
@@ -78,7 +79,16 @@
       <input
         :value="getURL"
         readonly
-        class="h-9 px-3 rounded-lg outline-none w-96 text-gray-600 pr-9"
+        class="
+          h-9
+          px-3
+          rounded-lg
+          outline-none
+          w-96
+          text-gray-600
+          pr-9
+          border-b border-gray-300
+        "
       />
       <span
         class="
@@ -94,12 +104,13 @@
           right-0
           text-gray-500
           hover:text-gray-600
-          bg-white
+          bg-orange-100
           rounded-lg
-          w-9
-          h-9
+          w-10
+          h-8
           text-center
           leading-9
+          shadow shadow-gray-400
         "
         @click="copyURL"
       >

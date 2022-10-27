@@ -1,6 +1,5 @@
 <template>
-  <nuxt-link
-    :to="'/works/' + workData.id"
+  <div
     class="
       w-[var(--card-w)]
       h-[var(--card-h)]
@@ -16,27 +15,27 @@
       bg-white
     "
   >
+    <visibility-state-tag
+      v-if="getNowLogin"
+      :visibility="workData.visibility"
+      class="absolute left-3 top-3"
+    />
     <div class="z-50 absolute right-3 top-3">
       <base-icon-button
         v-if="getUser.id === workData.user.id"
-        :to="`/works/${workData.id}/edit`"
         :size="'small'"
         :font-awesome="{ type: 'fas', name: 'pen' }"
+        @click="$router.push(`/works/${workData.id}/edit`)"
       />
     </div>
-    <div class="h-[12rem] border-b relative">
+    <nuxt-link :to="'/works/' + workData.id" class="h-[12rem] border-b block">
       <img
         class="h-full m-auto"
         :src="workData.thumbnail.url"
         alt="Thumbnail is not found"
       />
-      <visibility-state-tag
-        v-if="getNowLogin"
-        :visibility="workData.visibility"
-        class="absolute left-3 top-3"
-      />
-    </div>
-    <div class="h-1/2 py-3 px-2.5">
+    </nuxt-link>
+    <nuxt-link :to="'/works/' + workData.id" class="h-1/2 py-3 px-2.5 block">
       <div class="mx-auto w-min flex items-center flex-col mb-3">
         <div class="text-center text-xl w-max">
           {{ workData.title }}
@@ -91,8 +90,8 @@
             {{ user.name }}
           </div>
         </div> -->
-    </div>
-  </nuxt-link>
+    </nuxt-link>
+  </div>
 </template>
 
 <script lang="ts">

@@ -93,7 +93,7 @@ export default class FormSubmitButton extends Vue {
       value: 'private'
     },
     {
-      icon: ['far', 'save'],
+      icon: ['fas', 'save'],
       name: '下書き保存',
       value: 'draft'
     }

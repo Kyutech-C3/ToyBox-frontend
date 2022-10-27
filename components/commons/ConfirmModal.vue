@@ -3,13 +3,14 @@
     class="
       rounded-xl
       w-2/3
-      bg-orange-50
+      bg-white
       px-5
       py-10
       flex
       justify-center
       items-center
       flex-col
+      shadow-xl
     "
   >
     <div class="w-4/5 text-gray-700 text-center mb-5">
