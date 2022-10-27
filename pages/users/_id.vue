@@ -34,9 +34,13 @@ import { AxiosClient } from '@/utils/axios'
   },
   async asyncData({ route }) {
     workFilterStore.setSearched(true)
+    let User
     let resUser
     let resWorks
-    let query: string = '?tags='
+    let query: string = ''
+    if (tagSelectorStore.getSelectedTags.length !== 0) {
+      query = '?tags='
+    }
     tagSelectorStore.getSelectedTags.map((tag) => {
       query += `${tag.id},`
     })
@@ -44,7 +48,13 @@ import { AxiosClient } from '@/utils/axios'
     if (workFilterStore.getFilterVisibility !== '') {
       query += `&visibility=${workFilterStore.getFilterVisibility}`
     }
-    if (authStore.getUser.id === route.params.id) {
+    if (authStore.getUser.id === '' && authStore.getAccessToken !== '') {
+      User = await AxiosClient.client('GET', '/users/@me', true)
+    }
+    if (
+      User?.data.id === route.params.id ||
+      authStore.getUser.id === route.params.id
+    ) {
       resUser = await AxiosClient.client('GET', '/users/@me', true)
       resWorks = await AxiosClient.client(
         'GET',
