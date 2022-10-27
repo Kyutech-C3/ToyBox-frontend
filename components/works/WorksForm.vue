@@ -131,6 +131,7 @@ export default class WorksForm extends Vue {
   }
 
   clickSubmit(visibility: string) {
+    this.workData.tags_id.splice(0)
     this.getSelectedTags.map((tag) => {
       this.workData.tags_id.push(tag.id)
     })
