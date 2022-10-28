@@ -7,7 +7,7 @@
     ></div>
     <div class="justify-center flex h-full">
       <nuxt-link to="/" class="hover:opacity-50 h-full">
-        <img src="../assets/image/ToyBoxLogo.png" class="h-full" />
+        <img src="@/assets/image/ToyBoxlogo.png" class="h-full" />
       </nuxt-link>
     </div>
     <div
