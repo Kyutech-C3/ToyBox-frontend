@@ -65,7 +65,7 @@ export default class ConfirmModal extends Vue {
   approve() {
     confirmModalStore.approve()
     if (this.getType === 'download') {
-      this.download(this.getAsset.asset_type, this.getAsset.id)
+      this.download()
     }
   }
 
@@ -82,9 +82,8 @@ export default class ConfirmModal extends Vue {
     }
   }
 
-  async download(type: string, id: string) {
-    const url = `${process.env.ASSET_BASE_URL}${type}/${id}/origin.zip`
-    const data = await fetch(url)
+  async download() {
+    const data = await fetch(this.getAsset.url)
     const blob = await data.blob()
     saveAs(blob, 'origin.zip')
   }
