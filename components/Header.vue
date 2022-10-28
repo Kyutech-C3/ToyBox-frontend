@@ -5,7 +5,7 @@
       class="triangle absolute -top-5 -right-10"
       @click="$router.push('/login')"
     ></div>
-    <div class="justify-center flex h-full">
+    <div class="h-24 absolute top-0 left-1/2 -translate-x-1/2">
       <nuxt-link to="/" class="hover:opacity-50 h-full">
         <img src="@/assets/image/ToyBoxlogo.png" class="h-full" />
       </nuxt-link>
@@ -13,9 +13,27 @@
     <div
       class="flex justify-start items-center absolute right-10 top-0 bottom-0"
     >
+      <!-- バグ・要望フォーム -->
+      <a
+        v-if="nowLogin"
+        href="https://forms.gle/ndPfoZNgUFqrJHQj8"
+        target="_blank"
+        title="バグ・要望フォーム"
+        name="バグ・要望フォーム"
+        charset="UTF-8"
+        type="text/html"
+        class="mr-5 text-gray-400 hover:text-gray-600 flex justify-center"
+      >
+        <span class="text-xs mr-2">バグ・要望フォーム</span>
+        <font-awesome-icon :icon="['fas', 'vote-yea']" class="w-5 m-0" />
+      </a>
       <!-- ヘルプ -->
       <a
-        href="https://chivalrous-botany-faf.notion.site/ToyBox-876fd578573a418b99bbfe6d3973aa91"
+        :href="
+          nowLogin
+            ? 'https://chivalrous-botany-faf.notion.site/ToyBox-876fd578573a418b99bbfe6d3973aa91'
+            : 'https://chivalrous-botany-faf.notion.site/ToyBox-8ee26f10ff4e45d9aa19a69850b7e68d'
+        "
         target="_blank"
         title="ヘルプ"
         name="ヘルプ"

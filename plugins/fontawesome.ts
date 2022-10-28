@@ -29,7 +29,8 @@ import {
   faEllipsisH,
   faTrashAlt,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
+  faVoteYea
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -76,7 +77,8 @@ library.add(
   faEllipsisH,
   faTrashAlt,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
+  faVoteYea
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
