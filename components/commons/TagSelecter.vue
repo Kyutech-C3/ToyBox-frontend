@@ -173,8 +173,10 @@ export default class TagSelecter extends Vue {
       setTimeout(() => this.updateInputPaddingLeft(), 10)
     }
     window.addEventListener('resize', () => {
-      this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
-      this.updateInputPaddingLeft()
+      if (this.tagInput) {
+        this.selectedTagListMaxWidth = (this.tagInput.clientWidth * 4) / 5
+        this.updateInputPaddingLeft()
+      }
     })
   }
 
