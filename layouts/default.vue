@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ 'overflow-hidden h-screen': getFullscreen }">
+  <div
+    class="overflow-x-hidden"
+    :class="{ 'overflow-y-hidden h-screen': getFullscreen }"
+  >
     <Header />
     <Nuxt class="mx-auto mb-12 mt-10 max-w-[90rem]" />
     <Footer />
