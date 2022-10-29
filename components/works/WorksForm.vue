@@ -59,7 +59,7 @@
         @click="shareDiscord = !shareDiscord"
       >
         <div class="flex items-center mr-3">
-          <span class="text-sm">Discordの「みんあの作品」に共有</span>
+          <span class="text-sm">Discordの「みんなの作品」に共有</span>
           <font-awesome-icon
             v-if="shareDiscord"
             :icon="['far', 'check-circle']"
