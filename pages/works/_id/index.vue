@@ -184,7 +184,7 @@
       >
         <div class="flex items-center">
           <div class="inline-flex mr-3 items-center">
-            <p class="text-xl mr-1.5 w-5">
+            <p class="text-xl mr-1.5">
               {{ likes }}
             </p>
             <span
@@ -202,7 +202,8 @@
                 },
                 {
                   'material-symbols-unliked': !isLiked
-                }
+                },
+                { 'pointer-events-none': !clickFavoriteStatus }
               ]"
             >
               favorite
@@ -359,8 +360,9 @@ export default class Works extends Vue {
 
   postCommentData: PostComment = { content: '' }
 
-  likes: number = 10
+  likes: number = 0
   isLiked: boolean = false
+  clickFavoriteStatus: boolean = true
   activeNav: boolean = false
   deleteCheckStatus: boolean = false
   visibilityChangeStatus: boolean = false
@@ -410,13 +412,42 @@ export default class Works extends Vue {
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     this.workVisibility = this.work.visibility
+    this.likes = this.work.favorite_count ? this.work.favorite_count : 0
+    this.isLiked = this.work.is_favorite ? this.work.is_favorite : false
   }
 
   clickFavorite() {
-    if (!this.isLiked) {
-      this.liked()
-    } else {
-      this.unliked()
+    if (this.nowLogin) {
+      if (!this.isLiked) {
+        AxiosClient.client(
+          'POST',
+          `${process.env.API_URL}/works/${this.work.id}/favorite`,
+          true
+        )
+          .then((result) => {
+            this.liked()
+            this.clickFavoriteStatus = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      } else {
+        AxiosClient.client(
+          'DELETE',
+          `${process.env.API_URL}/works/${this.work.id}/favorite`,
+          true
+        )
+          .then((result) => {
+            this.unliked()
+            this.clickFavoriteStatus = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      }
+      setTimeout(() => {
+        this.clickFavoriteStatus = true
+      }, 1000)
     }
   }
 
