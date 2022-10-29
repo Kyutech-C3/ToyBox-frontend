@@ -79,7 +79,6 @@ export default class Auth extends VuexModule {
         .then((result: any) => {
           this.setUser(result.data)
           resolve()
-          console.log(result)
         })
         .catch(() => {
           // access_tokenが失効してしまった場合
@@ -89,7 +88,7 @@ export default class Auth extends VuexModule {
               resolve()
             })
             .catch((error) => {
-              console.log(error)
+              console.error(error)
               reject(error)
             })
         })
@@ -105,7 +104,6 @@ export default class Auth extends VuexModule {
           refresh_token: token
         })
         .then((result) => {
-          console.log(result)
           this.setAccessToken(result.data.access_token)
           localStorage.setItem('refresh_token', result.data.refresh_token)
           resolve()

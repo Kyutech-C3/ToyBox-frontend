@@ -548,7 +548,6 @@ export default class Works extends Vue {
           true
         )
           .then((result) => {
-            console.log(result)
             this.deleteStatus = result.data.status === 'OK'
             this.$router.push('/')
           })
@@ -598,7 +597,6 @@ export default class Works extends Vue {
           postData
         )
           .then((result) => {
-            console.log(result)
             setTimeout(() => {
               this.work = result.data
               this.errorChangeVisibility = false
