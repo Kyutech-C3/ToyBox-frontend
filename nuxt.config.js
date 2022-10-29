@@ -87,7 +87,8 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxt/postcss8',
     '@nuxtjs/markdownit',
-    '@nuxtjs/composition-api/module'
+    '@nuxtjs/composition-api/module',
+    '@nuxtjs/google-analytics'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -159,6 +160,16 @@ export default {
         works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
         return urls
       })
+    }
+  },
+
+  googleAnalytics: {
+    id: process.env.GOOGLE_ANALYTICS_ID
+  },
+
+  publicRuntimeConfig: {
+    googleAnalytics: {
+      id: process.env.GOOGLE_ANALYTICS_ID
     }
   }
 }
