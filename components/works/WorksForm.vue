@@ -54,11 +54,29 @@
         :show-warning="showRequiredWarning.descriptionEmpty"
         class="mb-1"
       />
-      <form-submit-button
-        class="mt-5 z-10"
-        :work-visibility="workData.visibility"
-        @submit="clickSubmit($event)"
-      />
+      <div
+        class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end"
+        @click="shareDiscord = !shareDiscord"
+      >
+        <div class="flex items-center mr-3">
+          <span class="text-sm">Discordの「みんあの作品」に共有</span>
+          <font-awesome-icon
+            v-if="shareDiscord"
+            :icon="['far', 'check-circle']"
+            class="w-5 ml-3 text-red-500"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="['far', 'circle']"
+            class="w-5 ml-3"
+          />
+        </div>
+        <form-submit-button
+          class=""
+          :work-visibility="workData.visibility"
+          @submit="clickSubmit($event)"
+        />
+      </div>
     </div>
   </form>
 </template>
@@ -106,6 +124,8 @@ export default class WorksForm extends Vue {
     descriptionEmpty: false
   }
 
+  shareDiscord: boolean = true
+
   get getSelectedTags() {
     return tagSelectorStore.getSelectedTags
   }
@@ -152,11 +172,14 @@ export default class WorksForm extends Vue {
       this.workData.visibility = visibility
       try {
         if (this.isNewWorks) {
-          AxiosClient.client('POST', '/works', true, this.workData).then(
-            (result) => {
-              this.$router.push('/')
-            }
-          )
+          AxiosClient.client(
+            'POST',
+            `/works?post_discord=${this.shareDiscord}`,
+            true,
+            this.workData
+          ).then((result) => {
+            this.$router.push('/')
+          })
         } else {
           AxiosClient.client(
             'PUT',

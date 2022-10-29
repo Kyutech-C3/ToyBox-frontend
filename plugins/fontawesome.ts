@@ -43,7 +43,12 @@ import {
   faSoundcloud
 } from '@fortawesome/free-brands-svg-icons'
 
-import { faHeart, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import {
+  faHeart,
+  faQuestionCircle,
+  faCheckCircle,
+  faCircle
+} from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
 
@@ -84,7 +89,9 @@ library.add(
   faVoteYea,
   faUnity,
   faSoundcloud,
-  faCube
+  faCube,
+  faCheckCircle,
+  faCircle
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
