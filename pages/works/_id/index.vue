@@ -571,7 +571,10 @@ export default class Works extends Vue {
       this.changeVisibilityType = visibility
       this.changeVisibilityProcessing = true
       this.workVisibility = ''
-      const assets_id: string[] = [this.work.thumbnail.id]
+      const assets_id: string[] = []
+      this.work.assets.map((asset) => {
+        assets_id.push(asset.id)
+      })
       let urls: BaseUrlInfo[] = []
       this.work.urls.map((url) => {
         urls.push({ url: url.url, url_type: url.url_type })
