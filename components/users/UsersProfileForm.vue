@@ -97,7 +97,7 @@ export default class UsersProfileForm extends Vue {
   }
 
   putUserInfo() {
-    AxiosClient.client('POST', '/users/@me', true, {
+    AxiosClient.client('PUT', '/users/@me', true, {
       display_name: this.displayName,
       avatar_url: this.avatarUrl,
       profile: this.profile,
