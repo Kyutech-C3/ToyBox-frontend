@@ -33,6 +33,11 @@ import { AxiosClient } from '@/utils/axios'
     Loading
   },
   async asyncData({ route }) {
+    if (workFilterStore.getOnPageName !== 'user') {
+      workFilterStore.deleteFilterVisibility()
+      tagSelectorStore.initSelectedTags()
+      workFilterStore.setOnPageName('user')
+    }
     workFilterStore.setSearched(true)
     let User
     let resUser

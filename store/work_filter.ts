@@ -2,6 +2,7 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { Visibility } from '~/types'
 
 type FilterVisibility = Visibility | ''
+type PageName = 'top' | 'user'
 
 /**
  * 作品フィルターの条件を保持するStore
@@ -15,6 +16,7 @@ export default class WorkFilter extends VuexModule {
   private searched: boolean = true
   private filterVisibility: FilterVisibility = ''
   private useConditionsWhenAsyncData: boolean = false
+  private onPageName: PageName = 'top'
 
   public get getSearched() {
     return this.searched
@@ -26,6 +28,10 @@ export default class WorkFilter extends VuexModule {
 
   public get getUseConditionsWhenAsyncData() {
     return this.useConditionsWhenAsyncData
+  }
+
+  public get getOnPageName() {
+    return this.onPageName
   }
 
   @Mutation
@@ -48,6 +54,11 @@ export default class WorkFilter extends VuexModule {
     this.useConditionsWhenAsyncData = status
   }
 
+  @Mutation
+  SET_ONPAGENAME(pageName: PageName) {
+    this.onPageName = pageName
+  }
+
   @Action
   public setFilterVisibility(visibility: Visibility) {
     this.SET_FILTER_VISIBILITY(visibility)
@@ -66,5 +77,10 @@ export default class WorkFilter extends VuexModule {
   @Action
   public setUseConditionsWhenAsyncData(status: boolean) {
     this.SET_USECONDITIONSWHENASYNCDATA(status)
+  }
+
+  @Action
+  public setOnPageName(pageName: PageName) {
+    this.SET_ONPAGENAME(pageName)
   }
 }

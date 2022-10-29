@@ -27,7 +27,12 @@ import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
 import { Work } from '@/types'
-import { authStore, tagSelectorStore, workFilterStore } from '@/store'
+import {
+  authStore,
+  tagSelectorStore,
+  workFilterStore,
+  workPostStore
+} from '@/store'
 import { AxiosClient } from '@/utils/axios'
 
 @Component({
@@ -37,9 +42,17 @@ import { AxiosClient } from '@/utils/axios'
     Loading
   },
   async asyncData() {
+    if (workFilterStore.getOnPageName !== 'top') {
+      workFilterStore.deleteFilterVisibility()
+      tagSelectorStore.initSelectedTags()
+      workFilterStore.setOnPageName('top')
+    }
     workFilterStore.setSearched(true)
     let query: string = ''
-    if (workFilterStore.getUseConditionsWhenAsyncData) {
+    if (
+      workFilterStore.getUseConditionsWhenAsyncData &&
+      workFilterStore.getOnPageName === 'top'
+    ) {
       if (tagSelectorStore.getSelectedTags.length !== 0) {
         query = '?tags='
         tagSelectorStore.getSelectedTags.map((tag) => {
@@ -82,6 +95,10 @@ export default class Index extends Vue {
 
   get getFilterVisibility() {
     return workFilterStore.getFilterVisibility
+  }
+
+  get getOnPageName() {
+    return workFilterStore.getOnPageName
   }
 
   @Watch('scrollY')
