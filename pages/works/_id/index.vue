@@ -151,16 +151,19 @@
       <works-carousel :assets="work.assets" />
       <div
         v-if="work.urls.length > 0"
-        class="flex items-center w-full px-5 py-3"
+        class="flex items-center px-5 py-3 overflow-x-scroll overflow-y-hidden"
       >
-        <font-awesome-icon
-          class="w-6 text-gray-500 mr-5"
-          :icon="['fas', 'link']"
-        />
+        <div>
+          <font-awesome-icon
+            class="w-6 h-6 text-gray-500 mr-3"
+            :icon="['fas', 'link']"
+          />
+        </div>
+
         <a
           v-for="url in work.urls"
           :key="url.id"
-          class="mx-3 hover:text-blue-600 hover:underline"
+          class="mr-3 hover:text-blue-600 hover:underline"
           :href="url.url"
           target="_blank"
         >
