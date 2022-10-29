@@ -6,7 +6,7 @@ services:
       args:
         WORKDIR: front
     ports:
-      - 3000:3000
+      - 3030:3000
     volumes:
       - .:/front
     working_dir: /front
@@ -14,4 +14,4 @@ services:
       - .env
     environment:
       - CHOKIDAR_USEPOLLING=true
-    command: sh -c "yarn run dev:host"
+    command: sh -c "yarn run generate:host && yarn run start:host"

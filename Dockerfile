@@ -9,7 +9,7 @@ EXPOSE 3000
 ENV HOST 0.0.0.0 \
     HOME=/${WORKDIR}
 
-WORKDIR ${HOME}
+WORKDIR /front
 
 RUN apk update && \
     apk add --no-cache python3 make g++ && \
