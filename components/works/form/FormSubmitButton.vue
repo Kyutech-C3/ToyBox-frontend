@@ -75,7 +75,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Visibility } from '~/types'
 
 @Component
 export default class FormSubmitButton extends Vue {
@@ -98,6 +99,14 @@ export default class FormSubmitButton extends Vue {
       value: 'draft'
     }
   ]
+  visibilityToOption = { public: 0, private: 1, draft: 2 }
+
+  @Prop({ type: String, required: false, default: 'public' })
+  workVisibility!: Visibility
+
+  created() {
+    this.option = this.visibilityToOption[this.workVisibility]
+  }
 
   clickOption(index: number) {
     this.openList = !this.openList

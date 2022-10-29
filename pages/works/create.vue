@@ -19,7 +19,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
   workData: PostWork = {
     title: '',
     description: '',
-    visibility: '',
+    visibility: 'public',
     thumbnail_asset_id: '',
     assets_id: [],
     urls: [],

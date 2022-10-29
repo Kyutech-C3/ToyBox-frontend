@@ -54,7 +54,11 @@
         :show-warning="showRequiredWarning.descriptionEmpty"
         class="mb-1"
       />
-      <form-submit-button class="mt-5 z-10" @submit="clickSubmit($event)" />
+      <form-submit-button
+        class="mt-5 z-10"
+        :work-visibility="workData.visibility"
+        @submit="clickSubmit($event)"
+      />
     </div>
   </form>
 </template>
