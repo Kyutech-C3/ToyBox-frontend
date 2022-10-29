@@ -47,7 +47,15 @@ interface Event<T = EventTarget> {
   target: T
 }
 
-const baseAssetType: Object = {
+type baseAssetExtensionType = {
+  image: string[]
+  video: string[]
+  music: string[]
+  zip: string[]
+  model: string[]
+}
+
+const baseAssetExtension: baseAssetExtensionType = {
   image: ['png', 'jpg', 'jpeg', 'bmp'],
   video: ['mp4'],
   music: ['mp3', 'wav', 'm4a'],
@@ -68,22 +76,27 @@ export default class FormInputAssets extends Vue {
         // 本番環境では何らかのサービスに画像を保存する
         const params = new FormData()
         params.append('file', file[i])
-        params.append('asset_type', this.getAssetType(file[i].name as string))
-        try {
-          AxiosClient.client(
-            'POST',
-            '/assets',
-            true,
-            params,
-            'multipart/form-data'
-          ).then((result) => {
-            this.assetImage.push(result.data.id)
-            workPostStore.addAssetsViewInfo(result.data)
-          })
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error)
-          workPostStore.setPostAssetStatus('error')
+        const assetType = this.getAssetType(file[i].name as string)
+        if (baseAssetExtension.image.includes(assetType)) {
+          params.append('asset_type', assetType)
+          try {
+            AxiosClient.client(
+              'POST',
+              '/assets',
+              true,
+              params,
+              'multipart/form-data'
+            ).then((result) => {
+              this.assetImage.push(result.data.id)
+              workPostStore.addAssetsViewInfo(result.data)
+            })
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error)
+            workPostStore.setPostAssetStatus('error')
+          }
+        } else {
+          workPostStore.setPostAssetStatus('')
         }
       }
     }
@@ -95,13 +108,13 @@ export default class FormInputAssets extends Vue {
   getAssetType(assetName: string) {
     let index: number = 0
     let response: string = ''
-    const assetTypeList: string[][] = Object.values(baseAssetType)
+    const assetTypeList: string[][] = Object.values(baseAssetExtension)
     assetTypeList.forEach((assetType) => {
       for (let i = 0; i < assetType.length; i++) {
         if (assetType[i] === assetName.split('.').pop()?.toLowerCase()) {
           // eslint-disable-next-line no-console
-          // console.log(Object.keys(baseAssetType)[index])
-          response = Object.keys(baseAssetType)[index]
+          // console.log(Object.keys(baseAssetExtension)[index])
+          response = Object.keys(baseAssetExtension)[index]
         }
       }
       index++

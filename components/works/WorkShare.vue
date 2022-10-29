@@ -36,7 +36,7 @@
     <div class="mb-5 text-xl font-bold text-gray-500">SNSで共有</div>
     <div class="mb-10 flex justify-center w-full">
       <a
-        :href="this.twitterURL()"
+        :href="twitterURL()"
         target="_blank"
         class="
           flex
@@ -55,7 +55,7 @@
       </a>
       <a
         v-if="getNowLogin"
-        :href="this.mastodonURL()"
+        :href="mastodonURL()"
         target="_blank"
         class="
           flex
