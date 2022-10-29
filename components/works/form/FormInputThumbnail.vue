@@ -86,7 +86,7 @@ export default class FormInputThumbnail extends Vue {
         const params = new FormData()
         params.append('file', file[i])
         const assetType = this.getAssetType(file[i].name as string)
-        if (baseAssetExtension.image.includes(assetType)) {
+        if (['image'].includes(assetType)) {
           params.append('asset_type', assetType)
           try {
             AxiosClient.client(
