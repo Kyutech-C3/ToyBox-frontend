@@ -54,11 +54,11 @@
         :show-warning="showRequiredWarning.descriptionEmpty"
         class="mb-1"
       />
-      <div
-        class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end"
-        @click="shareDiscord = !shareDiscord"
-      >
-        <div class="flex items-center mr-3">
+      <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
+        <div
+          class="flex items-center mr-3"
+          @click="shareDiscord = !shareDiscord"
+        >
           <span class="text-sm">Discordの「みんなの作品」に共有</span>
           <font-awesome-icon
             v-if="shareDiscord"
