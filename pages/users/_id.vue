@@ -38,7 +38,6 @@ import { AxiosClient } from '@/utils/axios'
       tagSelectorStore.initSelectedTags()
       workFilterStore.setOnPageName('user')
     }
-    workFilterStore.setSearched(true)
     let User
     let resUser
     let resWorks
@@ -113,6 +112,7 @@ export default class Users extends Vue {
 
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
+    workFilterStore.setSearched(true)
   }
 
   async searchWorks() {

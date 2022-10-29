@@ -27,12 +27,7 @@ import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
 import { Work } from '@/types'
-import {
-  authStore,
-  tagSelectorStore,
-  workFilterStore,
-  workPostStore
-} from '@/store'
+import { authStore, tagSelectorStore, workFilterStore } from '@/store'
 import { AxiosClient } from '@/utils/axios'
 
 @Component({
@@ -47,7 +42,6 @@ import { AxiosClient } from '@/utils/axios'
       tagSelectorStore.initSelectedTags()
       workFilterStore.setOnPageName('top')
     }
-    workFilterStore.setSearched(true)
     let query: string = ''
     if (
       workFilterStore.getUseConditionsWhenAsyncData &&
@@ -118,6 +112,7 @@ export default class Index extends Vue {
     if (this.works.length < this.limit) {
       this.isWorksEmpty = true
     }
+    workFilterStore.setSearched(true)
   }
 
   mounted() {
