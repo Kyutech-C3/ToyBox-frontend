@@ -232,13 +232,14 @@
 
     <div class="w-full rounded-2xl my-10 bg-white shadow-md px-5 py-5 relative">
       <div class="absolute m-0 top-5 right-5">
-        {{
-          work.updated_at
-            .replace('T', ' ')
-            .replace('-', '/')
-            .replace('-', '/')
-            .split('.')[0]
-        }}
+        <div>
+          投稿日時：
+          {{ $dayjs(work.created_at).format('MM月DD日 hh:mm:ss') }}
+        </div>
+        <div>
+          更新日時：
+          {{ $dayjs(work.updated_at).format('MM月DD日 hh:mm:ss') }}
+        </div>
       </div>
       <div class="flex items-center text-black">
         <div class="mr-6 text-4xl text-">{{ work.title }}</div>

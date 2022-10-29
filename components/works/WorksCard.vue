@@ -71,7 +71,7 @@
       </div>
       <div class="flex justify-end text-xs">
         <span class="mr-3">
-          {{ $dayjs(workData.created_at).format('MM月DD日 hh:mm:ss') }}
+          {{ $dayjs(workData.created_at).format('MM月DD日 HH:mm:ss') }}
         </span>
       </div>
       <user-tag :user="workData.user" class="absolute bottom-2" />
