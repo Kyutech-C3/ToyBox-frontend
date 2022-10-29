@@ -30,14 +30,17 @@ import {
   faTrashAlt,
   faChevronDown,
   faChevronUp,
-  faVoteYea
+  faVoteYea,
+  faCube
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
   faYoutube,
   faTwitter,
   faGithub,
-  faMastodon
+  faMastodon,
+  faUnity,
+  faSoundcloud
 } from '@fortawesome/free-brands-svg-icons'
 
 import { faHeart, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
@@ -78,7 +81,10 @@ library.add(
   faTrashAlt,
   faChevronDown,
   faChevronUp,
-  faVoteYea
+  faVoteYea,
+  faUnity,
+  faSoundcloud,
+  faCube
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

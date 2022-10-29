@@ -46,7 +46,7 @@
 <script lang="ts">
 import { Component, Vue, VModel, Emit } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
-import { UrlInfo } from '@/types'
+import { BaseUrlInfo } from '@/types'
 import { workPostStore } from '@/store'
 
 @Component({
@@ -56,7 +56,7 @@ import { workPostStore } from '@/store'
 })
 export default class FormUrl extends Vue {
   @VModel({ type: Array })
-  urls!: UrlInfo[]
+  urls!: BaseUrlInfo[]
 
   changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
@@ -69,17 +69,7 @@ export default class FormUrl extends Vue {
   addURL() {
     this.urls.push({
       url: '',
-      url_type: 'other',
-      id: '',
-      user: {
-        id: '',
-        name: '',
-        display_name: '',
-        created_at: '',
-        updated_at: ''
-      },
-      created_at: '',
-      updated_at: ''
+      url_type: 'other'
     })
   }
 
@@ -103,8 +93,12 @@ export default class FormUrl extends Vue {
       case 'www.youtube.com':
       case 'youtu.be':
         return ['fab', 'youtube']
-      case 'twitter.com':
-        return ['fab', 'twitter']
+      case 'unityroom.com':
+        return ['fab', 'unity']
+      case 'soundcloud.com':
+        return ['fab', 'soundcloud']
+      case 'sketchfab.com':
+        return ['fas', 'cube']
       default:
         return ['fas', 'link']
     }
