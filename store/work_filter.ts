@@ -2,7 +2,7 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { Visibility } from '~/types'
 
 type FilterVisibility = Visibility | ''
-type PageName = 'top' | 'user'
+type PageName = 'top' | 'user' | 'menu'
 
 /**
  * 作品フィルターの条件を保持するStore

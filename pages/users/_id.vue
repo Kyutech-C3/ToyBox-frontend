@@ -34,7 +34,9 @@ import { AxiosClient } from '@/utils/axios'
   },
   async asyncData({ route }) {
     if (workFilterStore.getOnPageName !== 'user') {
-      workFilterStore.deleteFilterVisibility()
+      if (workFilterStore.getOnPageName !== 'menu') {
+        workFilterStore.deleteFilterVisibility()
+      }
       tagSelectorStore.initSelectedTags()
       workFilterStore.setOnPageName('user')
     }
@@ -49,8 +51,9 @@ import { AxiosClient } from '@/utils/axios'
       query += `${tag.id},`
     })
     query = query.slice(0, -1)
+    query += query === '' ? '?' : '&'
     if (workFilterStore.getFilterVisibility !== '') {
-      query += `&visibility=${workFilterStore.getFilterVisibility}`
+      query += `visibility=${workFilterStore.getFilterVisibility}`
     }
     if (authStore.getUser.id === '' && authStore.getAccessToken !== '') {
       User = await AxiosClient.client('GET', '/users/@me', true)

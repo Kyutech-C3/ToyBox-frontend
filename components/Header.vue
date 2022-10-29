@@ -67,6 +67,7 @@
             cursor-pointer
             pointer-events-none
             shadow-md
+            bg-white
           "
         />
       </button>
@@ -99,11 +100,26 @@
         {{ getName }}
       </div>
       <div class="border-solid border-b border-gray-200 w-10/12 my-1 mx-auto" />
-      <div
-        v-for="(menuItem, index) in menuItems"
-        :key="index"
-        @click="activeNav = !activeNav"
-      >
+      <div @click="activeNav = !activeNav">
+        <!-- my profile link -->
+        <div
+          class="
+            grid
+            py-1
+            px-2
+            my-3
+            mx-auto
+            rounded
+            hover:text-white
+            hover:underline
+            text-gray-200
+          "
+          @click="toDraftPage"
+        >
+          下書き
+        </div>
+      </div>
+      <div @click="activeNav = !activeNav">
         <!-- my profile link -->
         <nuxt-link
           class="
@@ -117,9 +133,9 @@
             hover:underline
             text-gray-200
           "
-          :to="`/users/${getUserId}${index === 0 ? '/draft' : ''}`"
+          :to="`/users/${getUserId}`"
         >
-          {{ menuItem }}
+          マイページ
         </nuxt-link>
       </div>
       <div class="border-solid border-b border-gray-200 w-10/12 my-1 mx-auto" />
@@ -154,7 +170,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
-import { authStore } from '@/store'
+import { authStore, workFilterStore } from '@/store'
 
 @Component({
   components: {
@@ -163,7 +179,6 @@ import { authStore } from '@/store'
 })
 export default class Header extends Vue {
   activeNav: Boolean = false
-  menuItems: string[] = ['下書き', 'マイページ']
 
   get nowLogin() {
     return authStore.nowLogin
@@ -179,6 +194,12 @@ export default class Header extends Vue {
 
   get getUserId() {
     return authStore.getUser.id
+  }
+
+  toDraftPage() {
+    workFilterStore.setOnPageName('menu')
+    workFilterStore.setFilterVisibility('draft')
+    this.$router.push(`/users/${this.getUserId}`)
   }
 
   clickLogin() {
