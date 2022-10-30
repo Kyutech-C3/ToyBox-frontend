@@ -95,7 +95,7 @@ import { Asset } from '~/types'
 export default class FormAssetsPreview extends Vue {
   info: string = `
 対応形式：
-  画像 [ .png, .jpg, .jpeg, .bmp ]
+  画像 [.png, .PNG, .JPG, .JPEG, .jpg, .jpeg, .bmp, .gif, .GIF]
   動画 [ .mp4 ]
   音源 [ .mp3, .wav, .m4a ]
   モデル [ .gltf, .fbx ]
