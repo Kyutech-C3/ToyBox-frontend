@@ -57,7 +57,7 @@ type baseAssetExtensionType = {
 
 const baseAssetExtension: baseAssetExtensionType = {
   image: ['png', 'PNG', 'JPG', 'JPEG', 'jpg', 'jpeg', 'bmp', 'gif', 'GIF'],
-  video: ['mp4'],
+  video: ['mp4', 'mov'],
   music: ['mp3', 'wav', 'm4a'],
   zip: ['zip'],
   model: ['gltf', 'fbx']
