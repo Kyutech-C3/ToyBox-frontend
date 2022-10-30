@@ -142,7 +142,7 @@ export default class Index extends Vue {
         this.query += `visibility=${this.getFilterVisibility}`
       }
       this.query += this.query === '' ? '?' : '&'
-      this.query += `oldest_id=${this.works[this.works.length - 1].id}`
+      this.query += `oldest_work_id=${this.works[this.works.length - 1].id}`
       const resWorks = await AxiosClient.client(
         'GET',
         `/works${this.query}`,
