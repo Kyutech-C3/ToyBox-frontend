@@ -18,7 +18,7 @@
     <visibility-state-tag
       v-if="getNowLogin"
       :visibility="workData.visibility"
-      class="absolute left-3 top-3"
+      class="absolute left-3 top-3 z-20"
     />
     <div class="z-50 absolute right-3 top-3">
       <base-icon-button
@@ -28,9 +28,22 @@
         @click="$router.push(`/works/${workData.id}/edit`)"
       />
     </div>
-    <nuxt-link :to="'/works/' + workData.id" class="h-[12rem] border-b block">
+    <nuxt-link
+      :to="'/works/' + workData.id"
+      class="h-[12rem] border-b block relative overflow-hidden"
+    >
       <img
-        class="h-full m-auto"
+        class="
+          h-auto
+          w-auto
+          m-auto
+          absolute
+          top-1/2
+          left-1/2
+          -translate-x-1/2 -translate-y-1/2
+          object-cover
+          max-h-full max-w-full
+        "
         :src="workData.thumbnail.url"
         alt="Thumbnail is not found"
       />
