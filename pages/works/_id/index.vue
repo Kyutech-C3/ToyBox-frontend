@@ -235,11 +235,11 @@
       <div class="absolute m-0 top-5 right-5">
         <div>
           投稿日時：
-          {{ $dayjs(work.created_at).format('MM月DD日 hh:mm:ss') }}
+          {{ $dayjs(work.created_at).format('MM月DD日 HH:mm:ss') }}
         </div>
         <div>
           更新日時：
-          {{ $dayjs(work.updated_at).format('MM月DD日 hh:mm:ss') }}
+          {{ $dayjs(work.updated_at).format('MM月DD日 HH:mm:ss') }}
         </div>
       </div>
       <div class="flex items-center text-black">
