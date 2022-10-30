@@ -1,5 +1,5 @@
 <template>
-  <div class="w-4/6 relative text-gray-400">
+  <div class="w-[70vw] max-w-[1000px] relative text-gray-400">
     <div
       v-if="activeNav"
       class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
