@@ -112,8 +112,16 @@ h2,
 h3 {
   border-bottom: dotted 3px rgb(96, 170, 255);
   margin-bottom: 10px;
-  margin-top: 10px;
+  padding-bottom: 5px;
+  padding-top: 10px;
 }
+
+.markdown-view p {
+  margin-bottom: 20px;
+  margin-top: 5px;
+  font-size: medium;
+}
+
 .markdown-view hr {
   border-bottom: dotted 3px rgb(96, 170, 255);
   border-right: none;
