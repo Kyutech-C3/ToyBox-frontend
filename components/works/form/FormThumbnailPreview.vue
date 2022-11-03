@@ -72,7 +72,7 @@ import { workPostStore } from '@/store'
 export default class FormThumbnailPreview extends Vue {
   info: string = `
 対応形式：
-  画像 [.png, .PNG, .JPG, .JPEG, .jpg, .jpeg, .bmp, .gif, .GIF]
+  画像 [ .png .jpg .jpeg .bmp .gif ]
 `
   get getThumbnailViewInfo() {
     return workPostStore.getThumbnailViewInfo

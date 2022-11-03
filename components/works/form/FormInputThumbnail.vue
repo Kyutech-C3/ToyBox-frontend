@@ -122,7 +122,7 @@ export default class FormInputThumbnail extends Vue {
     const assetTypeList: string[][] = Object.values(baseAssetExtension)
     assetTypeList.forEach((assetType) => {
       for (let i = 0; i < assetType.length; i++) {
-        if (assetType[i] === assetName.split('.').pop()) {
+        if (assetType[i] === assetName.split('.').pop()?.toLowerCase()) {
           // eslint-disable-next-line no-console
           // console.log(Object.keys(baseAssetExtension)[index])
           response = Object.keys(baseAssetExtension)[index]
