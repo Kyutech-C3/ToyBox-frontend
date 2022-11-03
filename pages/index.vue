@@ -166,42 +166,38 @@ export default class Index extends Vue {
 
   async searchWorks() {
     this.isWorksEmpty = false
-    if (this.getNowLogin) {
-      this.query = ''
-      workFilterStore.setSearched(true)
-      this.processing = true
-      if (this.getSelectedTags.length !== 0) {
-        this.query = '?tags='
-        this.getSelectedTags.map((tag) => {
-          this.query += `${tag.id},`
-        })
-        this.query = this.query.slice(0, -1)
-      }
-      if (this.getFilterVisibility !== '') {
-        this.query += this.query === '' ? '?' : '&'
-        this.query += `visibility=${this.getFilterVisibility}`
-      }
-      const resWorks = await AxiosClient.client(
-        'GET',
-        `/works${this.query}`,
-        true
-      )
-      if (resWorks.status !== 200) {
-        alert('作品一覧の取得に失敗しました')
-      }
-      this.works.splice(0)
-      this.works = resWorks.data
-      this.processing = false
+    this.query = ''
+    workFilterStore.setSearched(true)
+    this.processing = true
+    if (this.getSelectedTags.length !== 0) {
+      this.query = '?tags='
+      this.getSelectedTags.map((tag) => {
+        this.query += `${tag.id},`
+      })
+      this.query = this.query.slice(0, -1)
     }
+    if (this.getFilterVisibility !== '') {
+      this.query += this.query === '' ? '?' : '&'
+      this.query += `visibility=${this.getFilterVisibility}`
+    }
+    const resWorks = await AxiosClient.client(
+      'GET',
+      `/works${this.query}`,
+      this.getNowLogin ? true : false
+    )
+    if (resWorks.status !== 200) {
+      alert('作品一覧の取得に失敗しました')
+    }
+    this.works.splice(0)
+    this.works = resWorks.data
+    this.processing = false
   }
 
   async clear() {
-    if (this.getNowLogin) {
-      workFilterStore.deleteFilterVisibility()
-      tagSelectorStore.initSelectedTags()
-      await this.searchWorks()
-      workFilterStore.setSearched(true)
-    }
+    workFilterStore.deleteFilterVisibility()
+    tagSelectorStore.initSelectedTags()
+    await this.searchWorks()
+    workFilterStore.setSearched(true)
   }
 }
 </script>
