@@ -11,6 +11,9 @@ export type Asset = {
   updated_at: string
 }
 
+/** An enumeration. */
+export type AssetType = 'zip' | 'image' | 'video' | 'music' | 'model'
+
 export type BaseFavorite = {
   work: Work
   user: User
@@ -24,7 +27,7 @@ export type BaseUrlInfo = {
 
 export type Body_post_asset_api_v1_assets_post = {
   file: File | ReadStream
-  asset_type: string
+  asset_type: AssetType
 }
 
 export type DeleteStatus = {
