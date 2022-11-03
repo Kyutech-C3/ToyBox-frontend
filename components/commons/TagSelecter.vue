@@ -335,7 +335,8 @@ export default class TagSelecter extends Vue {
   suggestSelect(event: KeyboardEvent) {
     if (
       this.suggestTags.length === this.selectingSuggest &&
-      this.searchTagKeyword.length > 0
+      this.searchTagKeyword.length > 0 &&
+      this.useType === 'create'
     ) {
       this.createNewTag()
     } else if (this.suggestTags.length > 0) {
