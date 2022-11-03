@@ -23,6 +23,7 @@ export default class TagSelector extends VuexModule {
 
   @Mutation
   SET_SELECTEDTAGS(selectedTags: GetTag[]) {
+    this.selectedTags.splice(0)
     selectedTags.map((tag) => this.selectedTags.push(tag))
   }
   @Mutation

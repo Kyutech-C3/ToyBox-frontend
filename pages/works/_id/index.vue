@@ -267,6 +267,7 @@
             :key="tag.id"
             :text="tag.name"
             class="mr-1 text-gray-600"
+            @click="toSearchWorkListByTag(tag)"
           />
         </div>
       </works-content>
@@ -309,7 +310,14 @@ import MarkdownView from '@/components/commons/MarkdownView.vue'
 import WorkShare from '@/components/works/WorkShare.vue'
 
 import { AxiosClient } from '@/utils/axios'
-import { Work, PostComment, Asset, PostWork, BaseUrlInfo } from '@/types'
+import {
+  Work,
+  PostComment,
+  Asset,
+  PostWork,
+  BaseUrlInfo,
+  GetTag
+} from '@/types'
 import {
   authStore,
   commentStore,
@@ -317,7 +325,8 @@ import {
   modalStore,
   downloadAssetStore,
   workShareStore,
-  workFilterStore
+  workFilterStore,
+  tagSelectorStore
 } from '~/store'
 
 type replyCommentType = {
@@ -666,6 +675,13 @@ export default class Works extends Vue {
         }, 3000)
       }
     }
+  }
+
+  toSearchWorkListByTag(tag: GetTag) {
+    tagSelectorStore.setSelectedTags([tag])
+    workFilterStore.setOnPageName('top')
+    workFilterStore.setUseConditionsWhenAsyncData(true)
+    this.$router.push('/')
   }
 }
 </script>
