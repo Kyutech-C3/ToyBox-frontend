@@ -1,9 +1,14 @@
 <template>
-  <div class="w-[70vw] max-w-[1000px] relative text-gray-400">
+  <div class="w-[95vw] max-w-[800px] relative text-gray-400">
     <div
       v-if="activeNav"
       class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
       @click="changeNavStatus"
+    />
+    <div
+      v-if="showFavoriteUser"
+      class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
+      @click="changeFavoriteUserStatus"
     />
     <div
       v-if="getUser.id === work.user.id"
@@ -180,11 +185,15 @@
           py-4
           rounded-b-2xl
           border-t border-gray-200
+          relative
         "
       >
-        <div class="flex items-center">
-          <div class="inline-flex mr-3 items-center">
-            <p class="text-xl mr-1.5">
+        <div class="flex items-center relative select-none">
+          <div
+            class="inline-flex mr-3 items-center"
+            :class="{ 'pointer-events-none': !nowLogin }"
+          >
+            <p class="text-xl pr-2 cursor-pointer" @click="getFavoriteUser">
               {{ likes }}
             </p>
             <span
@@ -193,7 +202,6 @@
                 cursor-pointer
                 transition-all
                 text-3xl
-                select-none
               "
               @click="clickFavorite"
               :class="[
@@ -208,6 +216,30 @@
             >
               favorite
             </span>
+          </div>
+          <div
+            v-if="showFavoriteUser"
+            class="
+              absolute
+              w-max
+              max-h-[198px]
+              bottom-10
+              -left-2
+              bg-white
+              rounded-lg
+              shadow-md shadow-gray-300
+              z-40
+              overflow-x-hidden overflow-y-auto
+            "
+          >
+            <user-tag
+              v-for="favoriteUser in favoriteUsers"
+              :key="favoriteUser.id"
+              class="w-full !px-5 !py-1.5"
+              :rounded="false"
+              :user="favoriteUser"
+              size="small"
+            />
           </div>
           <!-- バックの実装までコメ -->
           <!-- <div class="mr-3">1000 view</div> -->
@@ -316,6 +348,8 @@ import {
   Asset,
   PostWork,
   BaseUrlInfo,
+  User,
+  BaseFavorite,
   GetTag
 } from '@/types'
 import {
@@ -398,6 +432,8 @@ export default class Works extends Vue {
   changeVisibilityType: string = ''
   changeVisibilityProcessing: boolean = false
   errorChangeVisibility: boolean = false
+  favoriteUsers: User[] = []
+  showFavoriteUser: boolean = false
 
   errorPostComment: boolean = false
   errorReplyComment: boolean = false
@@ -675,6 +711,37 @@ export default class Works extends Vue {
         }, 3000)
       }
     }
+  }
+
+  /*
+    機能：作品に対していいねしたユーザー一覧の取得
+  */
+  getFavoriteUser() {
+    if (this.favoriteUsers.length === 0) {
+      try {
+        AxiosClient.client('GET', `/works/${this.work.id}/favorite`, true)
+          .then((result) => {
+            result.data.favorites.map((item: BaseFavorite) => {
+              this.favoriteUsers.push(item.user)
+            })
+            this.showFavoriteUser = true
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      } catch (error) {
+        console.error(error)
+      }
+    } else {
+      this.showFavoriteUser = true
+    }
+  }
+
+  /*
+    機能：いいねしたユーザー一覧を非表示にする
+  */
+  changeFavoriteUserStatus() {
+    this.showFavoriteUser = false
   }
 
   toSearchWorkListByTag(tag: GetTag) {
