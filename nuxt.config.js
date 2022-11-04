@@ -88,7 +88,16 @@ export default {
     '@nuxt/postcss8',
     '@nuxtjs/markdownit',
     '@nuxtjs/composition-api/module',
-    '@nuxtjs/google-analytics'
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: process.env.GOOGLE_ANALYTICS_ID,
+        config: {
+          send_page_view: false
+        },
+        debug: true
+      }
+    ]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
