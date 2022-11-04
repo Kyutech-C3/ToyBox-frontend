@@ -1,12 +1,21 @@
 <template>
   <hooper
     :settings="hooperSettings"
-    class="bg-black rounded-t-2xl overflow-hidden pb-5 relative"
+    class="
+      bg-black
+      rounded-t-2xl
+      overflow-hidden
+      pb-5
+      relative
+      max-h-[500px]
+      min-h-[250px]
+      !h-[56vw]
+    "
   >
     <slide
       v-for="asset in showAssets"
       :key="asset.id"
-      class="flex justify-center items-center h-96 relative"
+      class="flex justify-center items-center relative"
       :class="{ 'bg-white': asset.asset_type === 'model' }"
     >
       <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
@@ -83,9 +92,6 @@ export default class WorksCarousel extends Vue {
 </script>
 
 <style scoped>
-.hooper {
-  height: 39vw;
-}
 ::v-deep .hooper-next,
 ::v-deep .hooper-prev {
   background-color: white;
