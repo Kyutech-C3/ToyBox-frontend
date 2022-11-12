@@ -5,7 +5,7 @@
     :class="[
       { shadow: isShadow },
       {
-        'border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-gray-100':
+        ' border-hover-base-button-color text-hover-base-button-color hover:border-hover-base-button-color hover:text-hover-base-text-color hover:bg-hover-base-button-color hover:text-gray-100':
           color === 'yellow'
       },
       {

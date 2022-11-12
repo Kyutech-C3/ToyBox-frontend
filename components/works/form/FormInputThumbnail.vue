@@ -96,8 +96,6 @@ export default class FormInputThumbnail extends Vue {
               params,
               'multipart/form-data'
             ).then((result) => {
-              console.log('success')
-              console.log(result)
               this.thumbnail = result.data.id
               workPostStore.setThumbnailViewInfo(result.data)
             })

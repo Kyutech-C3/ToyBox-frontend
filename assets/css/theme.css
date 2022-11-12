@@ -1,0 +1,19 @@
+.theme-base {
+  --bg-color: #ffeed4;
+  --base-text-color: #000000;
+  --base-light-text-color: #9ca3af;
+  --hover-base-text-color: #4b5563;
+  --light-bg-color: #9ca3af;
+  --base-button-color: #fed7aa;
+  --hover-base-button-color: #fdba74;
+}
+
+.theme-winter {
+  --bg-color: #2e3555;
+  --base-text-color: #ffffff;
+  --base-light-text-color: #ffffff;
+  --hover-base-text-color: #4b5563;
+  --light-bg-color: #9ca3af;
+  --base-button-color: #fed7aa;
+  --hover-base-button-color: #fdba74;
+}

@@ -40,6 +40,8 @@
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-property-decorator": "^2.9.1",
     "three": "^0.146.0",
+    "tsparticles": "^2.5.3",
+    "vue2-particles": "^2.5.3",
     "vuex-module-decorators": "^2.0.0",
     "vuex-persistedstate": "^4.1.0"
   },

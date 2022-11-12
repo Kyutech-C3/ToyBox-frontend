@@ -13,7 +13,10 @@
     <div v-if="nextContentLoadProcessing" class="relative w-full h-28">
       <loading />
     </div>
-    <div v-if="isWorksEmpty" class="text-center my-5 text-gray-500">
+    <div
+      v-if="isWorksEmpty"
+      class="text-center my-5 text-base-light-text-color"
+    >
       これ以上、作品がありません
     </div>
   </div>
