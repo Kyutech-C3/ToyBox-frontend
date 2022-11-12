@@ -154,6 +154,21 @@ export default class WorksForm extends Vue {
     }
   }
 
+  submitSuccessProcess() {
+    workPostStore.initAssetsViewInfo()
+    tagSelectorStore.initSelectedTags()
+    workPostStore.initThumbnailViewInfo()
+    workPostStore.initIsBlockUnload()
+    this.$router.push('/')
+  }
+
+  submitErrorProcess(error: Error) {
+    console.error(error)
+    alert(
+      '作品投稿に失敗しました。もう一度試すか、それでもダメな場合は管理者に報告してください。'
+    )
+  }
+
   clickSubmit(visibility: string) {
     this.workData.tags_id.splice(0)
     this.getSelectedTags.map((tag) => {
@@ -177,23 +192,29 @@ export default class WorksForm extends Vue {
             `/works?post_discord=${this.shareDiscord}`,
             true,
             this.workData
-          ).then((result) => {
-            this.$router.push('/')
-          })
+          )
+            .then((result) => {
+              this.submitSuccessProcess()
+            })
+            .catch((error) => {
+              this.submitErrorProcess(error)
+              return
+            })
         } else {
           AxiosClient.client(
             'PUT',
             `/works/${this.$route.params.id}`,
             true,
             this.workData
-          ).then((result) => {
-            this.$router.push('/')
-          })
+          )
+            .then((result) => {
+              this.submitSuccessProcess()
+            })
+            .catch((error) => {
+              this.submitErrorProcess(error)
+              return
+            })
         }
-        workPostStore.initAssetsViewInfo()
-        tagSelectorStore.initSelectedTags()
-        workPostStore.initThumbnailViewInfo()
-        workPostStore.initIsBlockUnload()
       } catch (error) {
         console.error(error)
       }
