@@ -191,6 +191,9 @@ export default class Index extends Vue {
     if (resWorks.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
+    if (this.works.length < this.limit) {
+      this.isWorksEmpty = true
+    }
     this.works.splice(0)
     this.works = resWorks.data
     this.processing = false
@@ -200,6 +203,7 @@ export default class Index extends Vue {
     workFilterStore.deleteFilterVisibility()
     tagSelectorStore.initSelectedTags()
     await this.searchWorks()
+    workFilterStore.setSearched(true)
   }
 }
 </script>
