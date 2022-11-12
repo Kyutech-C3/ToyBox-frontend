@@ -19,6 +19,7 @@
       placeholder="コメント"
       maxlength="500"
       @focus="focusCommentForm = true"
+      v-on:keydown.ctrl.enter="click"
     />
     <div
       v-if="focusCommentForm"
