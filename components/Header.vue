@@ -209,7 +209,7 @@ export default class Header extends Vue {
   toDraftPage() {
     workFilterStore.setOnPageName('menu')
     workFilterStore.setFilterVisibility('draft')
-    this.$router.push(`/users/${this.getUserId}`)
+    this.$router.push(`/users/${this.getUserId}#user_work`)
   }
 
   clickLogin() {

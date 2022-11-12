@@ -5,6 +5,7 @@
       :include-draft="getUser.id === $route.params.id"
       @search="searchWorks"
       @clear="clear"
+      id="user_work"
     />
     <div class="relative w-full min-h-[50vh]">
       <works-list v-if="!processing" :works="works" />
