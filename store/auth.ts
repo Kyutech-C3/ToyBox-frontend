@@ -69,8 +69,8 @@ export default class Auth extends VuexModule {
   @Action
   public fetchUser(accessToken?: string): Promise<void> {
     const token = accessToken || this.accessToken
-    return new Promise((resolve, reject) => {
-      axios
+    return new Promise(async (resolve, reject) => {
+      await axios
         .get('/users/@me', {
           headers: {
             Authorization: `Bearer ${token}`
@@ -98,8 +98,8 @@ export default class Auth extends VuexModule {
   @Action
   private getAccessTokenByRefreshToken(refreshToken?: string): Promise<void> {
     const token = refreshToken || String(localStorage.getItem('refresh_token'))
-    return new Promise((resolve, reject) => {
-      axios
+    return new Promise(async (resolve, reject) => {
+      await axios
         .post('/auth/token', {
           refresh_token: token
         })
