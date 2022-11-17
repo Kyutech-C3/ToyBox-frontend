@@ -13,7 +13,10 @@
     <div v-if="nextContentLoadProcessing" class="relative w-full h-28">
       <loading />
     </div>
-    <div v-if="isWorksEmpty" class="text-center my-5 text-gray-500">
+    <div
+      v-if="isWorksEmpty"
+      class="text-center my-5 text-base-light-text-color"
+    >
       これ以上、作品がありません
     </div>
   </div>
@@ -188,6 +191,9 @@ export default class Index extends Vue {
     if (resWorks.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
+    if (this.works.length < this.limit) {
+      this.isWorksEmpty = true
+    }
     this.works.splice(0)
     this.works = resWorks.data
     this.processing = false
@@ -197,6 +203,7 @@ export default class Index extends Vue {
     workFilterStore.deleteFilterVisibility()
     tagSelectorStore.initSelectedTags()
     await this.searchWorks()
+    workFilterStore.setSearched(true)
   }
 }
 </script>

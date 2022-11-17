@@ -19,7 +19,11 @@
       :class="{ 'bg-white': asset.asset_type === 'model' }"
     >
       <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
-      <video v-else-if="asset.asset_type === 'video'" controls>
+      <video
+        v-else-if="asset.asset_type === 'video'"
+        controls
+        class="h-full w-full"
+      >
         <source :src="asset.url" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
       </video>

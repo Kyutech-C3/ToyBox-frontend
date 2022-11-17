@@ -22,7 +22,13 @@
         name="バグ・要望フォーム"
         charset="UTF-8"
         type="text/html"
-        class="mr-5 text-gray-400 hover:text-gray-600 flex justify-center"
+        class="
+          mr-5
+          text-base-light-text-color
+          hover:text-hover-base-text-color
+          flex
+          justify-center
+        "
       >
         <span class="text-xs mr-2">バグ・要望フォーム</span>
         <font-awesome-icon :icon="['fas', 'vote-yea']" class="w-5 m-0" />
@@ -43,7 +49,11 @@
       >
         <font-awesome-icon
           :icon="['far', 'question-circle']"
-          class="w-5 text-gray-400 hover:text-gray-600"
+          class="
+            w-5
+            text-base-light-text-color
+            hover:text-hover-base-text-color
+          "
         />
       </a>
       <!-- not logged in  -->

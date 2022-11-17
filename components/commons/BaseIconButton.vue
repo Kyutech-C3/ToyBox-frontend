@@ -12,7 +12,9 @@
     "
     :class="[
       { shadow: isShadow },
-      isBackground ? 'bg-orange-200 hover:bg-orange-300' : 'hover:bg-gray-100'
+      isBackground
+        ? 'bg-base-button-color hover:bg-hover-base-button-color'
+        : 'hover:bg-gray-100'
     ]"
     @click="(event) => $emit('click', event)"
   >
