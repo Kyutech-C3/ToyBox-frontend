@@ -25,6 +25,7 @@ import Loading from '@/components/commons/Loading.vue'
 import { User, Work } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '~/store'
 import { AxiosClient } from '@/utils/axios'
+import { Query } from '@/utils/query'
 
 @Component({
   components: {
@@ -44,18 +45,11 @@ import { AxiosClient } from '@/utils/axios'
     let User
     let resUser
     let resWorks
-    let query: string = ''
-    if (tagSelectorStore.getSelectedTags.length !== 0) {
-      query = '?tags='
-    }
-    tagSelectorStore.getSelectedTags.map((tag) => {
-      query += `${tag.id},`
-    })
-    query = query.slice(0, -1)
-    query += query === '' ? '?' : '&'
-    if (workFilterStore.getFilterVisibility !== '') {
-      query += `visibility=${workFilterStore.getFilterVisibility}`
-    }
+    const query: Query = new Query()
+    query.create(
+      tagSelectorStore.getSelectedTags,
+      workFilterStore.getFilterVisibility
+    )
     if (authStore.getUser.id === '' && authStore.getAccessToken !== '') {
       User = await AxiosClient.client('GET', '/users/@me', true)
     }
@@ -66,7 +60,7 @@ import { AxiosClient } from '@/utils/axios'
       resUser = await AxiosClient.client('GET', '/users/@me', true)
       resWorks = await AxiosClient.client(
         'GET',
-        `/users/@me/works${query}`,
+        `/users/@me/works${query.getQuery()}`,
         true
       )
     } else {
@@ -77,7 +71,7 @@ import { AxiosClient } from '@/utils/axios'
       )
       resWorks = await AxiosClient.client(
         'GET',
-        `/users/${route.params.id}/works${query}`,
+        `/users/${route.params.id}/works${query.getQuery()}`,
         true
       )
     }
@@ -96,7 +90,7 @@ export default class Users extends Vue {
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
   processing: boolean = false
-  query: string = ''
+  query: Query = new Query()
 
   get getUser() {
     return authStore.getUser
@@ -123,25 +117,19 @@ export default class Users extends Vue {
     if (this.getNowLogin) {
       workFilterStore.setSearched(true)
       this.processing = true
-      this.query = '?tags='
-      this.getSelectedTags.map((tag) => {
-        this.query += `${tag.id},`
-      })
-      this.query = this.query.slice(0, -1)
-      if (this.getFilterVisibility !== '') {
-        this.query += `&visibility=${this.getFilterVisibility}`
-      }
+      this.query.init()
+      this.query.create(this.getSelectedTags, this.getFilterVisibility)
       let resWorks
       if (this.getUser.id === this.$route.params.id) {
         resWorks = await AxiosClient.client(
           'GET',
-          `/users/@me/works${this.query}`,
+          `/users/@me/works${this.query.getQuery()}`,
           true
         )
       } else {
         resWorks = await AxiosClient.client(
           'GET',
-          `/users/${this.$route.params.id}/works${this.query}`,
+          `/users/${this.$route.params.id}/works${this.query.getQuery()}`,
           true
         )
       }
