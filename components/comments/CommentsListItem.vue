@@ -28,16 +28,35 @@
     </div>
     <div v-if="showReplyTextarea" class="pl-10 w-full mt-3">
       <div class="flex items-start">
-        <user-tag
+        <!-- <user-tag
           :user="getUser"
           :invisible-name="true"
           class="p-0 w-max text-gray-600"
-        />
+        /> -->
         <textarea
           v-model="replyCommentData.content"
-          class="mt-1 ml-1 border-b focus:outline-0 resize-none w-[90%] h-6"
+          class="
+            mt-1
+            ml-1
+            border-b
+            focus:outline-0
+            resize-none
+            w-[90%]
+            h-6
+            text-base-text-color
+          "
           placeholder="返信"
           maxlength="500"
+          v-on:keydown.ctrl.enter="
+            if (replyCommentData.content.length !== 0) {
+              replyComment(comment.id, replyCommentData)
+            }
+          "
+          v-on:keydown.meta.enter="
+            if (replyCommentData.content.length !== 0) {
+              replyComment(comment.id, replyCommentData)
+            }
+          "
         />
       </div>
       <div class="flex justify-end pr-8 mt-1 items-center">
@@ -108,13 +127,11 @@ import {
   PostComment,
   ResponseReplyComment
 } from '@/types'
+import { ReplyCommentType } from '@/types/common'
+
 import { authStore, commentStore } from '~/store'
 import { AxiosClient } from '@/utils/axios'
-
-type replyCommentType = {
-  comment_id: string
-  reply_comment_data: PostComment
-}
+import { Query } from '@/utils/query'
 
 @Component({
   components: {
@@ -138,7 +155,7 @@ export default class CommentsListItem extends Vue {
   replyCommentData: PostComment = { content: '' }
   replyComments: ResponseReplyComment[] = []
   number_of_reply: number = 0
-  query: string = ''
+  query: Query = new Query()
   isReplyCommentsEmpty: boolean = false
 
   showReplyTextarea: boolean = false
@@ -167,7 +184,7 @@ export default class CommentsListItem extends Vue {
   replyComment(
     comment_id: string,
     replyCommentData: PostComment
-  ): replyCommentType {
+  ): ReplyCommentType {
     return {
       comment_id: comment_id,
       reply_comment_data: replyCommentData
@@ -177,7 +194,9 @@ export default class CommentsListItem extends Vue {
   @Watch('getTempReplyComment')
   handlePostReplyComment() {
     if (this.getTempReplyCommentInfo.parentCommentId === this.comment.id) {
-      this.replyComments.push(this.getTempReplyCommentInfo.tempReplyComment)
+      if (this.isReplyCommentsEmpty) {
+        this.replyComments.push(this.getTempReplyCommentInfo.tempReplyComment)
+      }
       this.number_of_reply += 1
     }
   }
@@ -202,7 +221,9 @@ export default class CommentsListItem extends Vue {
     try {
       AxiosClient.client(
         'GET',
-        `${process.env.API_URL}/works/${this.$route.params.id}/comments/${this.comment.id}${this.query}`,
+        `${process.env.API_URL}/works/${this.$route.params.id}/comments/${
+          this.comment.id
+        }${this.query.getQuery()}`,
         true
       )
         .then((result) => {
@@ -229,9 +250,14 @@ export default class CommentsListItem extends Vue {
   }
 
   getMoreReply() {
-    this.query = `?offset_id=${
+    this.query.create(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
       this.replyComments[this.replyComments.length - 1].id
-    }`
+    )
     this.getReplyComments('more')
   }
 

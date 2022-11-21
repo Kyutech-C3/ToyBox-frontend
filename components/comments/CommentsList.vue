@@ -18,11 +18,7 @@ import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator'
 import CommentsListItem from '@/components/comments/CommentsListItem.vue'
 
 import { ResponseComment, PostComment } from '@/types'
-
-type replyCommentType = {
-  comment_id: string
-  reply_comment_data: PostComment
-}
+import { ReplyCommentType } from '@/types/common'
 
 @Component({
   components: {
@@ -34,7 +30,7 @@ export default class CommentsList extends Vue {
   comments!: ResponseComment[]
 
   @Emit('replyComment')
-  replyComment(replyCommentData: replyCommentType): replyCommentType {
+  replyComment(replyCommentData: ReplyCommentType): ReplyCommentType {
     return replyCommentData
   }
 }

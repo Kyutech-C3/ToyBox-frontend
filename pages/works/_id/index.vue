@@ -264,7 +264,11 @@
     </div>
 
     <div class="w-full rounded-2xl my-10 bg-white shadow-md px-5 py-5 relative">
-      <div class="absolute m-0 top-5 right-5">
+      <div class="flex items-start text-black">
+        <div class="mr-4 text-4xl w-3/5">{{ work.title }}</div>
+        <visibility-state-tag :visibility="work.visibility" />
+      </div>
+      <div class="absolute m-0 top-5 right-5 text-sm">
         <div>
           投稿日時：
           {{ $dayjs(work.created_at).format('MM月DD日 HH:mm:ss') }}
@@ -273,10 +277,6 @@
           更新日時：
           {{ $dayjs(work.updated_at).format('MM月DD日 HH:mm:ss') }}
         </div>
-      </div>
-      <div class="flex items-center text-black">
-        <div class="mr-6 text-4xl text-">{{ work.title }}</div>
-        <visibility-state-tag :visibility="work.visibility" />
       </div>
       <user-tag
         :user="work.user"
@@ -352,6 +352,8 @@ import {
   BaseFavorite,
   GetTag
 } from '@/types'
+import { ReplyCommentType } from '@/types/common'
+
 import {
   authStore,
   commentStore,
@@ -362,11 +364,6 @@ import {
   workFilterStore,
   tagSelectorStore
 } from '~/store'
-
-type replyCommentType = {
-  comment_id: string
-  reply_comment_data: PostComment
-}
 
 @Component({
   components: {
@@ -563,7 +560,7 @@ export default class Works extends Vue {
     }
   }
 
-  replyComment(replyCommentData: replyCommentType) {
+  replyComment(replyCommentData: ReplyCommentType) {
     try {
       if (this.nowLogin) {
         AxiosClient.client(
