@@ -145,7 +145,9 @@ export default class Index extends Vue {
         this.query += `visibility=${this.getFilterVisibility}`
       }
       this.query += this.query === '' ? '?' : '&'
-      this.query += `oldest_work_id=${this.works[0].id}`
+      this.query += `newest_work_id=${this.works[this.works.length - 1].id}`
+      this.query += this.query === '' ? '?' : '&'
+      this.query += `limit=${this.limit}`
       const resWorks = await AxiosClient.client(
         'GET',
         `/works${this.query}`,
@@ -183,6 +185,8 @@ export default class Index extends Vue {
       this.query += this.query === '' ? '?' : '&'
       this.query += `visibility=${this.getFilterVisibility}`
     }
+    this.query += this.query === '' ? '?' : '&'
+    this.query += `limit=${this.limit}`
     const resWorks = await AxiosClient.client(
       'GET',
       `/works${this.query}`,
