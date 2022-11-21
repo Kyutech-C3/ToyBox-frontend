@@ -14,4 +14,4 @@ services:
       - .env
     environment:
       - CHOKIDAR_USEPOLLING=true
-    command: sh -c "yarn run generate:host && yarn run start:host"
+    command: sh -c "yarn install && yarn run generate:host && yarn run start:host"

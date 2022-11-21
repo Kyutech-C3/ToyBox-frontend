@@ -16,6 +16,5 @@ RUN apk update && \
     apk add git
 
 COPY package*.json ./
-RUN yarn install
 
 COPY . ./
