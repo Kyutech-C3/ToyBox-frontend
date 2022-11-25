@@ -8,7 +8,7 @@
       left-1/2
       -translate-x-1/2
       w-screen
-      h-screen
+      h-full
       z-40
       bg-black
     "

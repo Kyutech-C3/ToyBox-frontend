@@ -10,6 +10,7 @@
       max-h-[500px]
       min-h-[250px]
       !h-[56vw]
+      isolate
     "
   >
     <slide
@@ -76,12 +77,12 @@ export default class WorksCarousel extends Vue {
   assets!: Asset[]
 
   hooperSettings: any = {
-    infiniteScroll: true,
+    infiniteScroll: false,
     centerMode: true,
     keysControl: false,
     itemsToShow: 1,
     mouseDrag: false,
-    transition: 1000,
+    transition: 500,
     wheelControl: false
   }
 
