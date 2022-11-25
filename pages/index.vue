@@ -99,7 +99,7 @@ export default class Index extends Vue {
   @Watch('scrollY')
   handleBottom() {
     if (this.workList) {
-      this.bottom = this.workList.scrollHeight - 260
+      this.bottom = Math.floor(this.workList.scrollHeight * 0.9)
     }
     if (this.bottom <= this.scrollY) {
       if (!this.nextContentLoadProcessing && !this.isWorksEmpty) {
@@ -128,37 +128,35 @@ export default class Index extends Vue {
   }
 
   async getNextContent() {
-    if (this.getNowLogin) {
-      this.query.init()
-      workFilterStore.setSearched(true)
-      this.query.create(
-        this.getSelectedTags,
-        this.getFilterVisibility,
-        this.works[this.works.length - 1].id,
-        undefined,
-        undefined,
-        undefined,
-        this.limit
-      )
-      const resWorks = await AxiosClient.client(
-        'GET',
-        `/works${this.query.getQuery()}`,
-        true
-      )
-      if (resWorks.status !== 200) {
-        alert('作品一覧の取得に失敗しました')
-      }
-      setTimeout(() => {
-        if (resWorks.data.length === 0) {
-          this.isWorksEmpty = true
-        } else {
-          resWorks.data.map((item: Work) => {
-            this.works.push(item)
-          })
-        }
-        this.nextContentLoadProcessing = false
-      }, 1000)
+    this.query.init()
+    workFilterStore.setSearched(true)
+    this.query.create(
+      this.getSelectedTags,
+      this.getFilterVisibility,
+      this.works[this.works.length - 1].id,
+      undefined,
+      undefined,
+      undefined,
+      this.limit
+    )
+    const resWorks = await AxiosClient.client(
+      'GET',
+      `/works${this.query.getQuery()}`,
+      true
+    )
+    if (resWorks.status !== 200) {
+      alert('作品一覧の取得に失敗しました')
     }
+    setTimeout(() => {
+      if (resWorks.data.length === 0) {
+        this.isWorksEmpty = true
+      } else {
+        resWorks.data.map((item: Work) => {
+          this.works.push(item)
+        })
+      }
+      this.nextContentLoadProcessing = false
+    }, 1000)
   }
 
   async searchWorks() {
