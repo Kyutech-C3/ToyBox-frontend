@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[95vw] max-w-[800px] relative text-gray-400">
+  <div class="w-[98vw] max-w-[800px] relative text-gray-400">
     <div
       v-if="activeNav"
       class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
@@ -10,10 +10,12 @@
       class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
       @click="changeFavoriteUserStatus"
     />
+    <!-- サイドメニュー -->
     <div
       v-if="getUser.id === work.user.id"
       class="z-30 absolute -right-20 top-0"
     >
+      <!-- 編集 -->
       <base-icon-button
         :is-background="true"
         :is-shadow="true"
@@ -22,6 +24,7 @@
         class="p-4 mb-3"
         @click="$router.push(`/works/${work.id}/edit`)"
       />
+      <!-- その他 -->
       <base-icon-button
         :to="`/works/${work.id}/edit`"
         :is-background="true"
@@ -30,6 +33,7 @@
         class="p-4"
         @click="changeNavStatus"
       />
+      <!-- その他のメニュー一覧 -->
       <div
         v-if="activeNav"
         class="
@@ -152,6 +156,7 @@
         </div>
       </div>
     </div>
+    <!-- 作品トップ -->
     <div class="w-full rounded-2xl overflow-hidden shadow-md bg-white">
       <works-carousel :assets="work.assets" />
       <div
@@ -217,9 +222,11 @@
               favorite
             </span>
           </div>
+          <!-- いいねユーザー一覧 -->
           <div
             v-if="showFavoriteUser"
             class="
+              favorite-user
               absolute
               w-max
               max-h-[198px]
@@ -230,6 +237,7 @@
               shadow-md shadow-gray-300
               z-40
               overflow-x-hidden overflow-y-auto
+              isolate
             "
           >
             <user-tag
@@ -263,12 +271,25 @@
       </div>
     </div>
 
-    <div class="w-full rounded-2xl my-10 bg-white shadow-md px-5 py-5 relative">
-      <div class="flex items-start text-black">
-        <div class="mr-4 text-4xl w-3/5">{{ work.title }}</div>
-        <visibility-state-tag :visibility="work.visibility" />
-      </div>
-      <div class="absolute m-0 top-5 right-5 text-sm">
+    <div
+      class="
+        w-full
+        rounded-2xl
+        my-10
+        bg-white
+        shadow-md
+        px-5
+        pb-5
+        pt-4
+        relative
+      "
+    >
+      <visibility-state-tag
+        :visibility="work.visibility"
+        class="text-black w-fit"
+      />
+      <div class="mr-4 text-4xl text-black my-3">{{ work.title }}</div>
+      <div class="text-sm">
         <div>
           投稿日時：
           {{ $dayjs(work.created_at).format('MM月DD日 HH:mm:ss') }}
@@ -762,14 +783,24 @@ export default class Works extends Vue {
 .tag-slider::-webkit-scrollbar {
   height: 3px;
 }
+.favorite-user::-webkit-scrollbar {
+  width: 6px;
+}
 
 .tag-slider::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 3px;
+}
+.favorite-user::-webkit-scrollbar-thumb {
   background: #d8d8d8;
   border-radius: 3px;
 }
 
 .tag-slider::-webkit-scrollbar-track {
   background: rgb(255, 255, 255);
+}
+.favorite-user::-webkit-scrollbar-track {
+  border-radius: 3px;
 }
 
 .loader,
