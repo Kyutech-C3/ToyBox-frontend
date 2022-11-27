@@ -8,30 +8,48 @@
       left-1/2
       -translate-x-1/2
       w-screen
-      h-full
+      svh-full
       z-40
       bg-black
     "
   >
-    <img
-      v-if="getAsset.asset_type === 'image'"
-      class="
-        w-full
-        h-full
-        absolute
-        top-1/2
-        left-1/2
-        -translate-x-1/2 -translate-y-1/2
-        object-contain
-      "
-      :src="getAsset.url"
-      alt="asset image"
-    />
-    <model-viewer
-      v-if="getAsset.asset_type === 'model'"
-      :model="getAsset"
-      :fullscreen="true"
-    />
+    <hooper
+      :settings="hooperSettings"
+      class="bg-black overflow-hidden relative isolate w-screen svh-full"
+    >
+      <slide
+        v-for="asset in getAssets"
+        :key="asset.id"
+        class="flex justify-center items-center relative w-full h-full"
+        :class="{ 'bg-white': asset.asset_type === 'model' }"
+      >
+        <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
+        <video
+          v-else-if="asset.asset_type === 'video'"
+          controls
+          class="h-full w-full"
+        >
+          <source :src="asset.url" type="video/mp4" />
+          Sorry, your browser doesn't support embedded videos.
+        </video>
+        <audio
+          v-else-if="asset.asset_type === 'music'"
+          controls
+          :src="asset.url"
+        >
+          Your browser does not support the <code>audio</code> element.
+        </audio>
+        <ModelViewer
+          v-else-if="asset.asset_type === 'model'"
+          :model="asset"
+          :enable-fullscreen="false"
+          ref="modelViewer"
+        />
+        <div v-else>{{ asset.asset_type }} file is not supported.</div>
+      </slide>
+      <hooper-pagination slot="hooper-addons" />
+      <hooper-navigation slot="hooper-addons" />
+    </hooper>
     <span
       class="
         material-symbols-outlined
@@ -61,16 +79,42 @@ import { Asset } from '@/types'
 import { fullscreenStore } from '@/store'
 import ModelViewer from '@/components/works/ModelViewer.vue'
 
+import {
+  Hooper,
+  Slide,
+  Pagination as HooperPagination,
+  Navigation as HooperNavigation
+} from 'hooper'
+import 'hooper/dist/hooper.css'
+import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
+
 @Component({
-  components: { ModelViewer }
+  components: {
+    Hooper,
+    Slide,
+    HooperPagination,
+    HooperNavigation,
+    ItemImageView,
+    ModelViewer
+  }
 })
 export default class WorksCarousel extends Vue {
+  hooperSettings: any = {
+    infiniteScroll: false,
+    centerMode: true,
+    keysControl: false,
+    itemsToShow: 1,
+    mouseDrag: false,
+    transition: 500,
+    wheelControl: false
+  }
+
   get getFullscreen() {
     return fullscreenStore.getFullscreen
   }
 
-  get getAsset() {
-    return fullscreenStore.getAsset
+  get getAssets(): Asset[] {
+    return fullscreenStore.getAssets
   }
 
   setFullscreen(boolean: boolean) {
@@ -79,7 +123,7 @@ export default class WorksCarousel extends Vue {
 
   exitFullscreen() {
     fullscreenStore.setFullscreen(false)
-    fullscreenStore.initAsset()
+    fullscreenStore.initAssets()
   }
 
   mounted() {

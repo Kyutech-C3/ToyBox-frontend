@@ -11,30 +11,14 @@ import { Asset } from '~/types'
 })
 export default class Fullscreen extends VuexModule {
   private fullscreen: boolean = false
-  private assetInitData: Asset = {
-    asset_type: '',
-    id: '',
-    user: {
-      id: '',
-      name: '',
-      display_name: '',
-
-      created_at: '',
-      updated_at: ''
-    },
-    extension: '',
-    url: '',
-    created_at: '',
-    updated_at: ''
-  }
-  private asset: Asset = this.assetInitData
+  private assets: Asset[] = []
 
   public get getFullscreen() {
     return this.fullscreen
   }
 
-  public get getAsset() {
-    return this.asset
+  public get getAssets() {
+    return this.assets
   }
 
   @Mutation
@@ -43,25 +27,28 @@ export default class Fullscreen extends VuexModule {
   }
 
   @Mutation
-  SET_ASSET(asset: Asset) {
-    this.asset = asset
+  SET_ASSETS(assets: Asset[]) {
+    this.assets.splice(0)
+    this.assets.push(...assets)
   }
 
   @Mutation
-  INIT_ASSET() {
-    this.asset = this.assetInitData
+  INIT_ASSETS() {
+    this.assets.splice(0)
   }
 
   @Action
   setFullscreen(fullscreen: boolean) {
     this.SET_FULLSCREEN(fullscreen)
   }
+
   @Action
-  setAsset(asset: Asset) {
-    this.SET_ASSET(asset)
+  setAssets(assets: Asset[]) {
+    this.SET_ASSETS(assets)
   }
+
   @Action
-  initAsset() {
-    this.INIT_ASSET()
+  initAssets() {
+    this.INIT_ASSETS()
   }
 }

@@ -40,7 +40,7 @@ export default class FormImagePreview extends Vue {
   }
 
   setAsset(asset: Asset) {
-    fullscreenStore.setAsset(asset)
+    fullscreenStore.setAssets([asset])
   }
   showFullscreen() {
     this.setAsset(this.asset)
