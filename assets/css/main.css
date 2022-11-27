@@ -1,9 +1,9 @@
 .vh-full {
-  height: 100vh;
-  height: 100lvh;
+  height: 100vh !important;
+  height: 100lvh !important;
 }
 
 .svh-full {
-  height: 100vh;
-  height: 100svh;
+  height: 100vh !important;
+  height: 100svh !important;
 }
