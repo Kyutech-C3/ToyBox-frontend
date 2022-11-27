@@ -128,6 +128,10 @@ export default class WorksCarouselThumb extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.thumb-slider {
+  scrollbar-width: thin;
+  scrollbar-color: #fdba74 rgba(204, 204, 204, 0);
+}
 .thumb-slider::-webkit-scrollbar {
   height: 3px;
 }
