@@ -1,12 +1,9 @@
 {
-  "eslint.enable": true,
-  "stylelint.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "nuxt.isNuxtApp": true
+  "editor.formatOnSave": true
 }
