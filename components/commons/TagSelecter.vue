@@ -80,7 +80,7 @@
             px-5
             py-0.5
           "
-          :class="{ 'bg-orange-300': selectingSuggest === index }"
+          :class="{ 'bg-hover-base-button-color': selectingSuggest === index }"
           @click="suggestSelectByClick(index)"
         >
           <span>{{ suggestTag.name }}</span>

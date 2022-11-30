@@ -3,8 +3,8 @@
     <button
       class="
         rounded-tl-lg rounded-bl-lg
-        border-2 border-yellow-500
-        text-yellow-500
+        border-2 border-hover-base-button-color
+        text-hover-base-button-color
         transition-colors
         px-4
         py-2.5
@@ -21,8 +21,8 @@
     <div
       class="
         rounded-tr-lg rounded-br-lg
-        border-2 border-yellow-500
-        bg-yellow-500
+        border-2 border-hover-base-button-color
+        bg-hover-base-button-color
         text-gray-100
         transition-colors
         px-2
@@ -45,7 +45,7 @@
           bg-white
           px-5
           py-2
-          border-2 border-yellow-500
+          border-2 border-hover-base-button-color
         "
       >
         <ul class="z-10 relative w-max">
@@ -147,7 +147,7 @@ export default class FormSubmitButton extends Vue {
 }
 .balloon:after {
   bottom: -20px;
-  border-top: 10px solid #f59e0b;
+  border-top: 10px solid var(--hover-base-button-color);
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
   border-bottom: 10px solid transparent;
