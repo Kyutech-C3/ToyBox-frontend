@@ -86,12 +86,30 @@
       @mouseenter="showSwiperButtonNext = true"
     ></div>
     <div
-      class="absolute top-0 left-0 h-full w-[10%] z-10"
+      class="
+        absolute
+        top-0
+        left-0
+        h-[43vw]
+        min-h-[68%]
+        max-h-[85%]
+        w-[10%]
+        z-10
+      "
       @mouseover="showSwiperButtonPrev = true"
       @mouseleave="showSwiperButtonPrev = false"
     ></div>
     <div
-      class="absolute top-0 right-0 h-full w-[10%] z-10"
+      class="
+        absolute
+        top-0
+        right-0
+        h-[43vw]
+        min-h-[68%]
+        max-h-[85%]
+        w-[10%]
+        z-10
+      "
       @mouseenter="showSwiperButtonNext = true"
       @mouseout="showSwiperButtonNext = false"
     ></div>

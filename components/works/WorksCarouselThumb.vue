@@ -16,7 +16,10 @@
       "
       ref="SliderWrapper"
     >
-      <div class="flex justify-center items-center h-full w-max" ref="Slider">
+      <div
+        class="flex justify-center items-center h-full w-max mx-auto my-0"
+        ref="Slider"
+      >
         <div
           v-for="(asset, index) in assets"
           :key="index"

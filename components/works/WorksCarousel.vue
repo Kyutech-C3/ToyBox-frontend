@@ -3,7 +3,11 @@
     <!-- main swiper -->
     <works-carousel-main :assets="showAssets" v-model="slideNumber" />
     <!-- thumb swiper -->
-    <works-carousel-thumb :assets="showAssets" v-model="slideNumber" />
+    <works-carousel-thumb
+      v-if="showAssets.length > 1"
+      :assets="showAssets"
+      v-model="slideNumber"
+    />
   </div>
 </template>
 
