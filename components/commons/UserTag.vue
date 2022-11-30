@@ -22,7 +22,7 @@
         { 'font-normal': fontWeight === 'base' }
       ]"
     >
-      {{ user.name }}
+      {{ user.display_name }}
     </div>
   </nuxt-link>
 </template>
