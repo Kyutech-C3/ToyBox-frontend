@@ -6,7 +6,7 @@
       ref="sceneContainer"
     />
     <span
-      v-if="!fullscreen"
+      v-if="!fullscreen && enableFullscreen"
       class="
         material-symbols-outlined
         cursor-pointer
@@ -77,6 +77,9 @@ export default class ModelViewer extends Vue {
   fullscreen!: boolean
 
   @Prop({ type: Boolean, required: false, default: true })
+  enableFullscreen!: boolean
+
+  @Prop({ type: Boolean, required: false, default: true })
   mouseControl!: boolean
 
   setFullscreen(boolean: boolean) {
@@ -84,7 +87,7 @@ export default class ModelViewer extends Vue {
   }
 
   setAsset(asset: Asset) {
-    fullscreenStore.setAsset(asset)
+    fullscreenStore.setAssets([asset])
   }
 
   showFullscreen() {

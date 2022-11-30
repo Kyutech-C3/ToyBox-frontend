@@ -32,6 +32,7 @@ import Loading from '@/components/commons/Loading.vue'
 import { Work } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '@/store'
 import { AxiosClient } from '@/utils/axios'
+import { Query } from '@/utils/query'
 
 @Component({
   components: {
@@ -45,24 +46,21 @@ import { AxiosClient } from '@/utils/axios'
       tagSelectorStore.initSelectedTags()
       workFilterStore.setOnPageName('top')
     }
-    let query: string = ''
+    const query = new Query()
     if (
       workFilterStore.getUseConditionsWhenAsyncData &&
       workFilterStore.getOnPageName === 'top'
     ) {
-      if (tagSelectorStore.getSelectedTags.length !== 0) {
-        query = '?tags='
-        tagSelectorStore.getSelectedTags.map((tag) => {
-          query += `${tag.id},`
-        })
-        query = query.slice(0, -1)
-      }
-      if (workFilterStore.getFilterVisibility !== '') {
-        query += query === '' ? '?' : '&'
-        query += `visibility=${workFilterStore.getFilterVisibility}`
-      }
+      query.create(
+        tagSelectorStore.getSelectedTags,
+        workFilterStore.getFilterVisibility
+      )
     }
-    const resWorks = await AxiosClient.client('GET', `/works${query}`, true)
+    const resWorks = await AxiosClient.client(
+      'GET',
+      `/works${query.getQuery()}`,
+      true
+    )
     if (resWorks.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
@@ -72,7 +70,7 @@ import { AxiosClient } from '@/utils/axios'
 })
 export default class Index extends Vue {
   works: Array<Work> = []
-  query: string = ''
+  query: Query = new Query()
   processing: boolean = false
   scrollY: number = 0
   isWorksEmpty: boolean = false
@@ -101,7 +99,7 @@ export default class Index extends Vue {
   @Watch('scrollY')
   handleBottom() {
     if (this.workList) {
-      this.bottom = this.workList.scrollHeight - 260
+      this.bottom = Math.floor(this.workList.scrollHeight * 0.9)
     }
     if (this.bottom <= this.scrollY) {
       if (!this.nextContentLoadProcessing && !this.isWorksEmpty) {
@@ -130,62 +128,54 @@ export default class Index extends Vue {
   }
 
   async getNextContent() {
-    if (this.getNowLogin) {
-      this.query = ''
-      workFilterStore.setSearched(true)
-      if (this.getSelectedTags.length !== 0) {
-        this.query = '?tags='
-        this.getSelectedTags.map((tag) => {
-          this.query += `${tag.id},`
-        })
-        this.query = this.query.slice(0, -1)
-      }
-      if (this.getFilterVisibility !== '') {
-        this.query += this.query === '' ? '?' : '&'
-        this.query += `visibility=${this.getFilterVisibility}`
-      }
-      this.query += this.query === '' ? '?' : '&'
-      this.query += `oldest_work_id=${this.works[0].id}`
-      const resWorks = await AxiosClient.client(
-        'GET',
-        `/works${this.query}`,
-        true
-      )
-      if (resWorks.status !== 200) {
-        alert('作品一覧の取得に失敗しました')
-      }
-      setTimeout(() => {
-        if (resWorks.data.length === 0) {
-          this.isWorksEmpty = true
-        } else {
-          resWorks.data.map((item: Work) => {
-            this.works.push(item)
-          })
-        }
-        this.nextContentLoadProcessing = false
-      }, 1000)
+    this.query.init()
+    workFilterStore.setSearched(true)
+    this.query.create(
+      this.getSelectedTags,
+      this.getFilterVisibility,
+      this.works[this.works.length - 1].id,
+      undefined,
+      undefined,
+      undefined,
+      this.limit
+    )
+    const resWorks = await AxiosClient.client(
+      'GET',
+      `/works${this.query.getQuery()}`,
+      true
+    )
+    if (resWorks.status !== 200) {
+      alert('作品一覧の取得に失敗しました')
     }
+    setTimeout(() => {
+      if (resWorks.data.length === 0) {
+        this.isWorksEmpty = true
+      } else {
+        resWorks.data.map((item: Work) => {
+          this.works.push(item)
+        })
+      }
+      this.nextContentLoadProcessing = false
+    }, 1000)
   }
 
   async searchWorks() {
     this.isWorksEmpty = false
-    this.query = ''
+    this.query.init()
     workFilterStore.setSearched(true)
     this.processing = true
-    if (this.getSelectedTags.length !== 0) {
-      this.query = '?tags='
-      this.getSelectedTags.map((tag) => {
-        this.query += `${tag.id},`
-      })
-      this.query = this.query.slice(0, -1)
-    }
-    if (this.getFilterVisibility !== '') {
-      this.query += this.query === '' ? '?' : '&'
-      this.query += `visibility=${this.getFilterVisibility}`
-    }
+    this.query.create(
+      this.getSelectedTags,
+      this.getFilterVisibility,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      this.limit
+    )
     const resWorks = await AxiosClient.client(
       'GET',
-      `/works${this.query}`,
+      `/works${this.query.getQuery()}`,
       this.getNowLogin ? true : false
     )
     if (resWorks.status !== 200) {

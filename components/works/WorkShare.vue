@@ -162,7 +162,7 @@ export default class WorkShare extends Vue {
   }
 
   getShareText() {
-    return `ToyBox\n作品名：${this.getWork.title}\n制作者：${this.getWork.user.name}\n\n`
+    return `ToyBox\n作品名：${this.getWork.title}\n制作者：${this.getWork.user.display_name}\n\n`
   }
 
   twitterURL() {

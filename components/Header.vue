@@ -107,7 +107,7 @@
       />
       <!-- name -->
       <div class="text-gray-200 mb-6">
-        {{ getName }}
+        {{ getDisplayName }}
       </div>
       <div class="border-solid border-b border-gray-200 w-10/12 my-1 mx-auto" />
       <div @click="activeNav = !activeNav">
@@ -198,8 +198,8 @@ export default class Header extends Vue {
     return authStore.getUser.avatar_url
   }
 
-  get getName() {
-    return authStore.getUser.name
+  get getDisplayName() {
+    return authStore.getUser.display_name
   }
 
   get getUserId() {
@@ -209,7 +209,7 @@ export default class Header extends Vue {
   toDraftPage() {
     workFilterStore.setOnPageName('menu')
     workFilterStore.setFilterVisibility('draft')
-    this.$router.push(`/users/${this.getUserId}`)
+    this.$router.push(`/users/${this.getUserId}#user_work`)
   }
 
   clickLogin() {

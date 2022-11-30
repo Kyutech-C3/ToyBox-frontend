@@ -65,7 +65,8 @@ export default {
     '~/assets/css/tailwind.css',
     'github-markdown-css',
     '~/assets/css/markdown.css',
-    '~/assets/css/theme.css'
+    '~/assets/css/theme.css',
+    '~/assets/css/main.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -170,16 +171,6 @@ export default {
         works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
         return urls
       })
-    }
-  },
-
-  googleAnalytics: {
-    id: process.env.GOOGLE_ANALYTICS_ID
-  },
-
-  publicRuntimeConfig: {
-    googleAnalytics: {
-      id: process.env.GOOGLE_ANALYTICS_ID
     }
   }
 }

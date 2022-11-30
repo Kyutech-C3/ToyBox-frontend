@@ -51,7 +51,7 @@
     <nuxt-link :to="'/works/' + workData.id" class="h-1/2 py-3 px-2.5 block">
       <div class="mx-auto w-min flex items-center flex-col mb-3">
         <div class="text-center text-xl w-max">
-          {{ workData.title }}
+          {{ getTitle }}
         </div>
         <div
           class="w-11/12 mx-auto border"
@@ -136,6 +136,15 @@ export default class WorksCard extends Vue {
 
   get getNowLogin() {
     return authStore.nowLogin
+  }
+
+  get getTitle() {
+    const limitTitle = 10
+    const title =
+      this.workData.title.length > limitTitle
+        ? this.workData.title.substr(0, limitTitle) + '...'
+        : this.workData.title
+    return title
   }
 
   dateFormatter(date: string): string {

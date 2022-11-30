@@ -14,7 +14,7 @@
       :class="{ 'pointer-events-auto': user.id !== '0' }"
     >
       <div class="ml-3 text-xs">
-        {{ user.name }}
+        {{ user.display_name }}
       </div>
     </nuxt-link>
   </div>
