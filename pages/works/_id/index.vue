@@ -43,7 +43,7 @@
           top-[150px]
           right-0
           w-44
-          bg-orange-200
+          bg-base-button-color
           z-50
           overflow-hidden
           text-gray-500
@@ -52,7 +52,14 @@
         "
       >
         <div
-          class="flex cursor-pointer z-50 py-5 px-5 hover:bg-orange-300"
+          class="
+            flex
+            cursor-pointer
+            z-50
+            py-5
+            px-5
+            hover:bg-hover-base-button-color
+          "
           @click="deleteCheckStatus = !deleteCheckStatus"
         >
           <font-awesome-icon
@@ -86,7 +93,7 @@
             z-50
             py-5
             px-5
-            hover:bg-orange-300
+            hover:bg-hover-base-button-color
             border-t-[0.5px] border-gray-400
           "
           @click="visibilityChangeStatus = !visibilityChangeStatus"
