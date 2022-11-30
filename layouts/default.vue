@@ -1,9 +1,9 @@
 <template>
   <div
     class="overflow-x-hidden"
-    :class="[getFullscreen ? 'overflow-y-hidden svh-full' : 'vh-full']"
+    :class="{ 'overflow-y-hidden svh-full': getFullscreen }"
   >
-    <div class="h-full bg-bg-color w-[100vw] fixed top-0 left-0 -z-10">
+    <div class="vh-full bg-bg-color w-[100vw] fixed top-0 left-0 -z-10">
       <!-- container log (:particlesLoaded="particlesLoaded") -->
       <Particles
         v-if="useCustomTheme"

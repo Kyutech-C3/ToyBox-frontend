@@ -99,7 +99,7 @@ export default class Index extends Vue {
   @Watch('scrollY')
   handleBottom() {
     if (this.workList) {
-      this.bottom = Math.floor(this.workList.scrollHeight * 0.9)
+      this.bottom = Math.floor(this.workList.clientHeight)
     }
     if (this.bottom <= this.scrollY) {
       if (!this.nextContentLoadProcessing && !this.isWorksEmpty) {
@@ -124,7 +124,7 @@ export default class Index extends Vue {
   }
 
   handleScroll() {
-    this.scrollY = window.scrollY
+    this.scrollY = window.scrollY + window.innerHeight - 450
   }
 
   async getNextContent() {
