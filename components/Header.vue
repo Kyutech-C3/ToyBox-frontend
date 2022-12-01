@@ -254,7 +254,7 @@ export default class Header extends Vue {
   border-style: solid;
   border-right: 50px solid transparent;
   border-left: 50px solid transparent;
-  border-bottom: 50px solid #ffeed4;
+  border-bottom: 50px solid var(--bg-color);
   border-top: 0;
   transform: rotate(45deg);
 }
