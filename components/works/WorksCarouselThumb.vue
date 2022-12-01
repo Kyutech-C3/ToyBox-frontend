@@ -91,10 +91,6 @@ import {
   Ref
 } from 'nuxt-property-decorator'
 
-import { Swiper } from 'swiper'
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper-bundle.min.js'
-
 import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
 
 import { Asset } from '@/types'
