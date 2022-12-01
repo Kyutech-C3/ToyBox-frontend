@@ -73,15 +73,13 @@ export default class Default extends Vue {
   }
 
   initTheme() {
-    if (this.getNowLogin) {
-      const winter = ['1', '12']
-      if (winter.includes(this.nowMonth)) {
-        this.themeClass = 'theme-winter'
-      } else {
-        this.themeClass = 'theme-base'
-      }
-      this.useCustomTheme = this.themeClass !== 'theme-base'
+    const winter = ['1', '12']
+    if (winter.includes(this.nowMonth)) {
+      this.themeClass = 'theme-winter'
+    } else {
+      this.themeClass = 'theme-base'
     }
+    this.useCustomTheme = this.themeClass !== 'theme-base'
   }
 
   async particlesInit(engine: Engine): Promise<void> {
