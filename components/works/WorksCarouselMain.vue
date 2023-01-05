@@ -70,7 +70,7 @@
           swiper.isBeginning
       }"
       @mouseover="showSwiperButtonPrev = true"
-    ></div>
+    />
     <div
       class="
         swiper-button-next
@@ -84,7 +84,7 @@
         'pointer-events-none after:!text-hover-base-text-color': swiper.isEnd
       }"
       @mouseenter="showSwiperButtonNext = true"
-    ></div>
+    />
     <div
       class="
         absolute
@@ -96,9 +96,10 @@
         w-[10%]
         z-10
       "
+      :class="{ ' pointer-events-none': assets.length <= 1 }"
       @mouseover="showSwiperButtonPrev = true"
       @mouseleave="showSwiperButtonPrev = false"
-    ></div>
+    />
     <div
       class="
         absolute
@@ -110,9 +111,10 @@
         w-[10%]
         z-10
       "
+      :class="{ ' pointer-events-none': assets.length <= 1 }"
       @mouseenter="showSwiperButtonNext = true"
       @mouseout="showSwiperButtonNext = false"
-    ></div>
+    />
     <!-- fullscreen navigation -->
     <span
       class="
