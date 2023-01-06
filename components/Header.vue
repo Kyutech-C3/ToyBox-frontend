@@ -7,7 +7,11 @@
     ></div>
     <div class="h-24 absolute top-0 left-1/2 -translate-x-1/2">
       <nuxt-link to="/" class="hover:opacity-50 h-full">
-        <img src="@/assets/image/ToyBoxlogo.png" class="h-full" />
+        <img
+          src="@/assets/image/ToyBoxlogo.png"
+          class="h-full"
+          alt="ToyBox logo"
+        />
       </nuxt-link>
     </div>
     <div
@@ -79,6 +83,7 @@
             shadow-md
             bg-white
           "
+          alt="user icon"
         />
       </button>
     </div>
@@ -104,6 +109,7 @@
       <img
         :src="getIcon"
         class="rounded-full w-16 h-16 mx-auto my-1 pointer-events-none"
+        alt="user icon"
       />
       <!-- name -->
       <div class="text-gray-200 mb-6">

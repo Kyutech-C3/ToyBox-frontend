@@ -45,7 +45,7 @@
           max-h-full max-w-full
         "
         :src="workData.thumbnail.url"
-        alt="Thumbnail is not found"
+        alt="work thumbnail"
         loading="lazy"
       />
     </nuxt-link>

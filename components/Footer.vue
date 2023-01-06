@@ -5,6 +5,7 @@
         <img
           src="../assets/image/C3logo.png"
           class="hover:opacity-50 transition h-10"
+          alt="C3 logo"
         />
       </a>
       <a
