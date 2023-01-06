@@ -25,7 +25,7 @@
       </a>
     </div>
     <div class="text-center my-6 text-base-text-color">
-      © 2021 - {{ date }} Composite Computer Club
+      © 2022 - {{ date }} Composite Computer Club
     </div>
   </footer>
 </template>
