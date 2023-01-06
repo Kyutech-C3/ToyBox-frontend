@@ -104,7 +104,8 @@ export default {
         },
         debug: true
       }
-    ]
+    ],
+    '@nuxtjs/sitemap'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -161,6 +162,27 @@ export default {
   watchers: {
     webpack: {
       ignored: /.git/
+    }
+  },
+
+  sitemap: {
+    hostname: process.env.BASE_URL,
+    defaults: {
+      lastmod: new Date(),
+      changefreq: 'always'
+    },
+    cacheTime: 1000 * 60 * 60 * 24,
+    exclude: ['/tmp', '/login', '/discord', '/works/create', '/works/*/edit'],
+    async routes() {
+      return Promise.all([
+        await axios.get(process.env.API_URL + '/users?limit=9999'),
+        await axios.get(process.env.API_URL + '/works?limit=9999')
+      ]).then(([users, works]) => {
+        const urls = []
+        users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
+        works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
+        return urls
+      })
     }
   },
 
