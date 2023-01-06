@@ -27,7 +27,6 @@
     <div class="relative items-center w-full">
       <input
         type="text"
-        name="select tag"
         class="
           w-full
           border-b-2 border-gray-300
