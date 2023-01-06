@@ -108,6 +108,55 @@ export default class Users extends Vue {
     return workFilterStore.getFilterVisibility
   }
 
+  head() {
+    const title: string = `ToyBox ユーザー - ${this.user.display_name}`
+    const url: string = `${process.env.BASE_URL}users/${this.user.id}`
+    const description: string = this.user.profile ? this.user.profile : ''
+    return {
+      title: title,
+      htmlAttrs: {
+        lang: 'ja',
+        prefix:
+          'og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#'
+      },
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: description
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: url
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        { hid: 'og:type', property: 'og:type', content: 'article' },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.user.avatar_url
+        }
+      ],
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: url
+        }
+      ]
+    }
+  }
+
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     workFilterStore.setSearched(true)

@@ -9,7 +9,7 @@
   >
     <img
       :src="imageSrc"
-      alt="icon"
+      alt="user icon"
       class="absolute h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     />
   </div>
