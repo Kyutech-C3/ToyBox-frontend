@@ -479,6 +479,57 @@ export default class Works extends Vue {
     return commentStore.getComments
   }
 
+  head() {
+    const title: string = `ToyBox 作品 - ${this.work.title}`
+    const url: string = `${process.env.BASE_URL}works/${this.work.id}`
+    const description: string = this.work.description
+      ? this.work.description
+      : ''
+    return {
+      title: title,
+      htmlAttrs: {
+        lang: 'ja',
+        prefix:
+          'og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#'
+      },
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: description
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: url
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        { hid: 'og:type', property: 'og:type', content: 'article' },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.work.thumbnail.url
+        }
+      ],
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: url
+        }
+      ]
+    }
+  }
+
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     this.workVisibility = this.work.visibility
