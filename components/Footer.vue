@@ -5,6 +5,7 @@
         <img
           src="../assets/image/C3logo.png"
           class="hover:opacity-50 transition h-10"
+          alt="C3 logo"
         />
       </a>
       <a
@@ -25,7 +26,7 @@
       </a>
     </div>
     <div class="text-center my-6 text-base-text-color">
-      © 2021 - {{ date }} Composite Computer Club
+      © 2022 - {{ date }} Composite Computer Club
     </div>
   </footer>
 </template>
