@@ -38,13 +38,13 @@
             <source :src="asset.url" type="video/mp4" />
             Sorry, your browser doesn't support embedded videos.
           </video>
-          <audio
+          <item-audio-view
             v-else-if="asset.asset_type === 'music'"
             controls
             :src="asset.url"
           >
             Your browser does not support the <code>audio</code> element.
-          </audio>
+          </item-audio-view>
           <ModelViewer
             v-else-if="asset.asset_type === 'model'"
             :model="asset"
@@ -147,6 +147,7 @@ import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper-bundle.min.js'
 
 import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
+import ItemAudioView from '@/components/works/carouselItem/AudioView.vue'
 
 import { Asset } from '@/types'
 import ModelViewer from '@/components/works/ModelViewer.vue'
@@ -155,6 +156,7 @@ import { fullscreenStore } from '@/store'
 @Component({
   components: {
     ItemImageView,
+    ItemAudioView,
     ModelViewer
   }
 })
