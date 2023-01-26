@@ -14,7 +14,7 @@ export default {
       {
         name: 'copyright',
         content:
-          '© 2022' + new Date().getFullYear() + ' Composite Computer Club'
+          '© 2022 - ' + new Date().getFullYear() + ' Composite Computer Club'
       },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
@@ -56,6 +56,11 @@ export default {
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'
+      },
+      {
+        hid: 'canonical',
+        rel: 'canonical',
+        href: 'https://toybox.compositecomputer.club/'
       }
     ]
   },
@@ -99,7 +104,8 @@ export default {
         },
         debug: true
       }
-    ]
+    ],
+    '@nuxtjs/sitemap'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -156,6 +162,27 @@ export default {
   watchers: {
     webpack: {
       ignored: /.git/
+    }
+  },
+
+  sitemap: {
+    hostname: process.env.BASE_URL,
+    defaults: {
+      lastmod: new Date(),
+      changefreq: 'always'
+    },
+    cacheTime: 1000 * 60 * 60 * 24,
+    exclude: ['/tmp', '/login', '/discord', '/works/create', '/works/*/edit'],
+    async routes() {
+      return Promise.all([
+        await axios.get(process.env.API_URL + '/users?limit=9999'),
+        await axios.get(process.env.API_URL + '/works?limit=9999')
+      ]).then(([users, works]) => {
+        const urls = []
+        users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
+        works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
+        return urls
+      })
     }
   },
 

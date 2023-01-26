@@ -62,7 +62,7 @@ export class AxiosClient {
           }
         } catch (e: unknown) {
           console.error('再ログインが必要')
-          window.location.href = `${process.env.BASE_URL}/login`
+          window.location.href = `${process.env.BASE_URL}login`
         }
       }
       throw e

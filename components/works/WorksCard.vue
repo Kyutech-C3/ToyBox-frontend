@@ -45,7 +45,8 @@
           max-h-full max-w-full
         "
         :src="workData.thumbnail.url"
-        alt="Thumbnail is not found"
+        alt="work thumbnail"
+        loading="lazy"
       />
     </nuxt-link>
     <nuxt-link :to="'/works/' + workData.id" class="h-1/2 py-3 px-2.5 block">

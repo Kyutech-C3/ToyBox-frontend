@@ -1,6 +1,10 @@
 <template>
   <div class="relative w-full h-full">
-    <img class="w-full h-full object-cover" :src="imageUrl" />
+    <img
+      class="w-full h-full object-cover"
+      :src="imageUrl"
+      alt="asset image preview"
+    />
     <span
       class="
         material-symbols-outlined
