@@ -173,3 +173,8 @@ export type Work = {
   created_at: string
   updated_at: string
 }
+
+export type Works = {
+  works: Work[]
+  works_total_count: number
+}
