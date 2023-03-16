@@ -2,7 +2,7 @@
   <div
     v-if="user !== undefined"
     class="
-      max-w-[900px]
+      max-w-full
       w-[95vw]
       flex flex-col
       content-center

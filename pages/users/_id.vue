@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="!max-w-[1220px]">
     <users-profile :user="user" />
     <works-filter
       :include-draft="getUser.id === $route.params.id"
@@ -7,6 +7,9 @@
       @clear="clear"
       id="user_work"
     />
+    <div class="px-10 text-end my-3 text-gray-600">
+      {{ getWorksLength }} / {{ works_total_count }}
+    </div>
     <div class="relative w-full min-h-[50vh]">
       <works-list v-if="!processing" :works="works" />
       <loading v-else />
@@ -81,11 +84,16 @@ import { Query } from '@/utils/query'
     if (!resWorks.data) {
       alert('ユーザーの作品情報の取得に失敗しました')
     }
-    return { works: resWorks.data, user: resUser.data }
+    return {
+      works: resWorks.data.works,
+      works_total_count: resWorks.data.works_total_count,
+      user: resUser.data
+    }
   }
 })
 export default class Users extends Vue {
   works!: Work[]
+  works_total_count: number = 0
   user!: User
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
@@ -106,6 +114,10 @@ export default class Users extends Vue {
 
   get getFilterVisibility() {
     return workFilterStore.getFilterVisibility
+  }
+
+  get getWorksLength() {
+    return this.works.length
   }
 
   head() {
@@ -186,7 +198,8 @@ export default class Users extends Vue {
         alert('作品一覧の取得に失敗しました')
       }
       this.works.splice(0)
-      this.works = resWorks.data
+      this.works = resWorks.data.works
+      this.works_total_count = resWorks.data.works_total_count
       this.processing = false
     }
   }

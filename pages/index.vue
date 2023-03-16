@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <works-filter
-      :include-draft="false"
-      class="mb-10"
-      @search="searchWorks"
-      @clear="clear"
-    />
+  <div class="!max-w-[1220px]">
+    <works-filter :include-draft="false" @search="searchWorks" @clear="clear" />
+    <div class="px-10 text-end my-3 text-gray-600">
+      {{ getWorksLength }} / {{ works_total_count }}
+    </div>
     <div class="relative w-full min-h-[50vh]" ref="workList">
       <works-list v-if="!processing" :works="works" />
       <loading v-else />
     </div>
-    <div v-if="nextContentLoadProcessing" class="relative w-full h-28">
+    <div v-if="nextContentLoadProcessing" class="relative w-full">
       <loading />
     </div>
     <div
@@ -29,7 +27,7 @@ import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
-import { Work } from '@/types'
+import { Work, Works } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '@/store'
 import { AxiosClient } from '@/utils/axios'
 import { Query } from '@/utils/query'
@@ -65,11 +63,15 @@ import { Query } from '@/utils/query'
       alert('作品一覧の取得に失敗しました')
     }
 
-    return { works: resWorks.data }
+    return {
+      works: resWorks.data.works,
+      works_total_count: resWorks.data.works_total_count
+    }
   }
 })
 export default class Index extends Vue {
   works: Array<Work> = []
+  works_total_count: number = 0
   query: Query = new Query()
   processing: boolean = false
   scrollY: number = 0
@@ -94,6 +96,10 @@ export default class Index extends Vue {
 
   get getOnPageName() {
     return workFilterStore.getOnPageName
+  }
+
+  get getWorksLength() {
+    return this.works.length
   }
 
   @Watch('scrollY')
@@ -139,19 +145,20 @@ export default class Index extends Vue {
       undefined,
       this.limit
     )
-    const resWorks = await AxiosClient.client(
+    const res = await AxiosClient.client(
       'GET',
       `/works${this.query.getQuery()}`,
       true
     )
-    if (resWorks.status !== 200) {
+    if (res.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
+    const resWorks: Works = res.data.works
     setTimeout(() => {
-      if (resWorks.data.length === 0) {
+      if (resWorks.works.length === 0) {
         this.isWorksEmpty = true
       } else {
-        resWorks.data.map((item: Work) => {
+        resWorks.works.map((item: Work) => {
           this.works.push(item)
         })
       }
@@ -173,19 +180,20 @@ export default class Index extends Vue {
       undefined,
       this.limit
     )
-    const resWorks = await AxiosClient.client(
+    const res = await AxiosClient.client(
       'GET',
       `/works${this.query.getQuery()}`,
       this.getNowLogin ? true : false
     )
-    if (resWorks.status !== 200) {
+    if (res.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
     if (this.works.length < this.limit) {
       this.isWorksEmpty = true
     }
     this.works.splice(0)
-    this.works = resWorks.data
+    this.works = res.data.works
+    this.works_total_count = res.data.works_total_count
     this.processing = false
   }
 
