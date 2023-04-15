@@ -34,6 +34,7 @@
         absolute
         w-full
         text-center
+        z-50
       "
       :class="[
         { 'hover:translate-y-1 -bottom-1': !showAll },
@@ -77,6 +78,7 @@ export default class MarkdownView extends Vue {
   content: '';
   height: 20%;
   width: 100%;
+  z-index: 20;
 }
 
 .markdown-view {
