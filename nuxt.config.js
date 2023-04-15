@@ -76,7 +76,8 @@ export default {
     { src: '~/plugins/localStorage.ts', mode: 'client' },
     { src: '~/plugins/three.ts', mode: 'client' },
     { src: '~/plugins/dayjs.ts', mode: 'client' },
-    { src: '~/plugins/prism.ts', mode: 'client' }
+    { src: '~/plugins/prism.ts', mode: 'client' },
+    { src: '~/plugins/markdownit.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -89,7 +90,6 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/tailwindcss',
     '@nuxt/postcss8',
-    '@nuxtjs/markdownit',
     '@nuxtjs/composition-api/module',
     [
       '@nuxtjs/google-gtag',

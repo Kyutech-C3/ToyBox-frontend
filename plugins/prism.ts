@@ -1,6 +1,12 @@
+import 'clipboard'
+
 import Prism from 'prismjs'
+
 // テーマ
 import 'prismjs/themes/prism.css'
+import 'prismjs/plugins/toolbar/prism-toolbar'
+import 'prismjs/plugins/toolbar/prism-toolbar.css'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 
 // 言語ハイライト
 import 'prismjs/components/prism-bash'
