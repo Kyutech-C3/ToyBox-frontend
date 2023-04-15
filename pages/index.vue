@@ -8,7 +8,10 @@
       <works-list v-if="!processing" :works="resWorks.works" />
       <loading v-else />
     </div>
-    <div v-if="nextContentLoadProcessing" class="relative w-full">
+    <div
+      v-if="nextContentLoadProcessing"
+      class="relative w-full h-[var(--loading-h)] [--loading-h:120px]"
+    >
       <loading />
     </div>
     <div
@@ -45,6 +48,15 @@ import { Query } from '@/utils/query'
       workFilterStore.setOnPageName('top')
     }
     const query = new Query()
+    query.create(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      5
+    )
     if (
       workFilterStore.getUseConditionsWhenAsyncData &&
       workFilterStore.getOnPageName === 'top'
@@ -74,7 +86,7 @@ export default class Index extends Vue {
   isWorksEmpty: boolean = false
   nextContentLoadProcessing: boolean = false
   bottom: number = 0
-  limit: number = 30
+  limit: number = 5
 
   @Ref() workList!: HTMLDivElement
 
@@ -149,7 +161,7 @@ export default class Index extends Vue {
     if (res.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
-    const resWorks: ResWorks = res.data.works
+    const resWorks: ResWorks = res.data
     setTimeout(() => {
       if (resWorks.works.length === 0) {
         this.isWorksEmpty = true
@@ -157,6 +169,11 @@ export default class Index extends Vue {
         resWorks.works.map((item: Work) => {
           this.resWorks.works.push(item)
         })
+        this.resWorks.works_total_count = resWorks.works_total_count
+
+        if (resWorks.works.length < this.limit) {
+          this.isWorksEmpty = true
+        }
       }
       this.nextContentLoadProcessing = false
     }, 1000)
