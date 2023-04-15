@@ -12,6 +12,7 @@
       "
       :src="image.url"
       alt="asset image"
+      loading="lazy"
     />
   </div>
 </template>

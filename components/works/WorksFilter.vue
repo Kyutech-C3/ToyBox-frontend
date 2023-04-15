@@ -6,12 +6,11 @@
       px-10
       py-5
       w-[95vw]
-      max-w-[45rem]
+      max-w-full
       mx-auto
       relative
       bg-white
     "
-    :class="getNowLogin ? 'py-5' : 'pt-5 pb-12'"
   >
     <p>絞り込み</p>
     <div class="flex items-center my-3 w-full mb-6">
@@ -33,7 +32,7 @@
         @click="onClickFilterVisibilities(visibility)"
       />
     </div>
-    <div class="absolute bottom-7 right-10 flex items-center">
+    <div class="flex items-center justify-end">
       <div
         class="cursor-pointer"
         :class="{

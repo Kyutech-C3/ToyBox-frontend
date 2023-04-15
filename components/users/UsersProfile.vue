@@ -2,7 +2,7 @@
   <div
     v-if="user !== undefined"
     class="
-      max-w-[900px]
+      max-w-full
       w-[95vw]
       flex flex-col
       content-center
@@ -32,7 +32,7 @@
     <div class="bg-gray-300 w-full h-64 z-0 relative overflow-hidden mb-10">
       <img
         src="@/assets/image/bg-gray.png"
-        alt="バーナー画像"
+        alt="user banner image"
         class="
           absolute
           w-full
