@@ -34,6 +34,7 @@
         absolute
         w-full
         text-center
+        z-50
       "
       :class="[
         { 'hover:translate-y-1 -bottom-1': !showAll },
@@ -49,6 +50,8 @@
 <script lang="ts">
 import { Vue, Component, Prop, Ref } from 'nuxt-property-decorator'
 
+import Prism from '@/plugins/prism'
+
 @Component
 export default class MarkdownView extends Vue {
   showAll: boolean = false
@@ -61,123 +64,160 @@ export default class MarkdownView extends Vue {
 
   mounted() {
     this.markdownViewHeiht = this.markdownView.getBoundingClientRect().height
+    Prism.highlightAll()
   }
 }
 </script>
 
 <style lang="scss">
 .hidden-blur::before {
-  background: linear-gradient(to top, #ffffff 30%, #ffffff51 100%);
+  background: linear-gradient(to top, #ffffff 20%, #ffffff00 100%);
   position: absolute;
   bottom: 0;
   left: 0;
   content: '';
   height: 20%;
   width: 100%;
-}
-
-.markdown-view ol {
-  @apply list-decimal;
-  @apply pl-10;
-}
-
-.markdown-view ul {
-  @apply list-disc;
-  @apply pl-10;
-}
-
-.markdown-view h1 {
-  @apply text-4xl;
-  @apply font-semibold;
-}
-
-.markdown-view h2 {
-  @apply text-3xl;
-  @apply font-semibold;
-}
-
-.markdown-view h3 {
-  @apply text-2xl;
-  @apply font-semibold;
+  z-index: 20;
 }
 
 .markdown-view {
   @apply text-xl;
-}
-.markdown-view {
-  overflow-wrap: break-word;
-}
-.markdown-view h1,
-h2,
-h3 {
-  border-bottom: dotted 3px rgb(96, 170, 255);
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  padding-top: 10px;
+  @apply break-words;
+
+  ol {
+    @apply list-decimal;
+    @apply pl-10;
+  }
+
+  ul {
+    @apply list-disc;
+    @apply pl-10;
+  }
+
+  h1 {
+    @apply text-6xl;
+  }
+
+  h2 {
+    @apply text-5xl;
+  }
+
+  h3 {
+    @apply text-4xl;
+  }
+
+  h1,
+  h2,
+  h3 {
+    --bg-color: rgb(96, 170, 255);
+    @apply font-semibold;
+    @apply border-b-[3px];
+    @apply border-b-bg-color;
+    @apply border-dotted;
+    @apply mb-6;
+    @apply pb-[5px];
+    @apply pt-[10px];
+  }
+
+  p {
+    @apply mb-5;
+    @apply mt-[5px];
+
+    code {
+      @apply bg-[#f0f0f0];
+      @apply py-[1px];
+      @apply px-[5px];
+      @apply rounded-[5px];
+      @apply text-[#905];
+    }
+  }
+
+  pre {
+    @apply rounded-2xl;
+    code {
+      @apply text-base;
+    }
+  }
+
+  hr {
+    --bg-color: rgb(96, 170, 255);
+    @apply border-b-[3px];
+    @apply border-b-bg-color;
+    @apply border-dotted;
+    @apply my-8;
+    @apply mx-0;
+  }
 }
 
-.markdown-view p {
-  margin-bottom: 20px;
-  margin-top: 5px;
-  font-size: medium;
+.markdown-view img {
+  @apply block;
+  @apply w-4/5;
+  @apply h-auto;
+  @apply my-0;
+  @apply mx-auto;
+  @apply rounded-[20px];
+  @apply pointer-events-none;
 }
 
-.markdown-view hr {
-  border-bottom: dotted 3px rgb(96, 170, 255);
-  border-right: none;
-  border-top: none;
-  border-left: none;
-}
-.markdown-view p img {
-  display: block;
-  width: 80%;
-  height: auto;
-  margin: 0 auto;
-  border-radius: 20px;
-  pointer-events: none;
-}
 table {
-  border-collapse: collapse;
-  border: 1px solid rgb(198, 198, 198);
-  margin: 0 auto;
-  border-radius: 10px;
-  overflow: hidden;
+  --bg-color: rgb(198, 198, 198);
+  @apply border-collapse;
+  @apply border;
+  @apply border-bg-color;
+  @apply my-6;
+  @apply mx-auto;
+  @apply rounded-[10px];
+  @apply overflow-hidden;
   box-shadow: 0 0 0 1px rgb(198, 198, 198);
 }
 
 th,
 td {
-  padding: 5px 10px;
-  border: 1px solid rgb(198, 198, 198);
+  --bg-color: rgb(198, 198, 198);
+  @apply py-[5px];
+  @apply px-[10px];
+  @apply border;
+  @apply border-bg-color;
 }
 
 th {
-  background: #ebf8ff;
+  @apply bg-[#ebf8ff];
 }
+
 @media screen and (max-width: 600px) {
-  .markdown-view h1,
-  h2,
-  h3 {
-    padding: 0 5px;
+  .markdown-view {
+    h1,
+    h2,
+    h3 {
+      @apply py-0;
+      @apply px-[5px];
+    }
+
+    p {
+      @apply my-0;
+      @apply mx-auto;
+    }
+
+    blockquote {
+      p {
+        @apply w-full;
+        @apply my-4;
+        @apply mx-0;
+      }
+    }
+
+    p,
+    blockquote {
+      @apply w-[95%];
+      @apply my-8;
+      @apply mx-auto;
+    }
   }
-  .markdown-view p img {
-    width: 90%;
-    border-radius: 10px;
-  }
-  .markdown-view p,
-  blockquote {
-    width: 95%;
-  }
-  .markdown-view p {
-    margin: 0 auto;
-  }
-  .markdown-view p,
-  blockquote {
-    margin: 2rem auto;
-  }
-  .markdown-view blockquote p {
-    width: 100%;
-    margin: 1rem 0;
+
+  .markdown-view img {
+    @apply w-[90%];
+    @apply rounded-[10px];
   }
 }
 </style>

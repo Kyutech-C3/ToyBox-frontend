@@ -8,7 +8,7 @@
         text-center
         flex
         w-full
-        max-w-[1000px]
+        max-w-[1220px]
         h-[20vw]
         min-h-[4rem]
         max-h-24

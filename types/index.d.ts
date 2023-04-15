@@ -174,7 +174,7 @@ export type Work = {
   updated_at: string
 }
 
-export type Works = {
+export type ResWorks = {
   works: Work[]
   works_total_count: number
 }
