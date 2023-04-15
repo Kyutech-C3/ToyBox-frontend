@@ -75,7 +75,8 @@ export default {
     { src: '~/plugins/mavonEditor.ts', mode: 'client' },
     { src: '~/plugins/localStorage.ts', mode: 'client' },
     { src: '~/plugins/three.ts', mode: 'client' },
-    { src: '~/plugins/dayjs.ts', mode: 'client' }
+    { src: '~/plugins/dayjs.ts', mode: 'client' },
+    { src: '~/plugins/prism.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
