@@ -48,15 +48,6 @@ import { Query } from '@/utils/query'
       workFilterStore.setOnPageName('top')
     }
     const query = new Query()
-    query.create(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      5
-    )
     if (
       workFilterStore.getUseConditionsWhenAsyncData &&
       workFilterStore.getOnPageName === 'top'
@@ -86,7 +77,7 @@ export default class Index extends Vue {
   isWorksEmpty: boolean = false
   nextContentLoadProcessing: boolean = false
   bottom: number = 0
-  limit: number = 5
+  limit: number = 30
 
   @Ref() workList!: HTMLDivElement
 
