@@ -23,9 +23,9 @@ export class Query {
     biggest_tag_id?: string,
     w?: string
   ) {
-    if (tags) {
+    if (tags && tags.length > 0) {
       this.addQuestionOrAnd()
-      this.query += 'tags='
+      this.query += 'tag_ids='
       tags.map((tag) => {
         this.query += `${tag.id},`
       })
