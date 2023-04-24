@@ -194,6 +194,8 @@ export default class Index extends Vue {
     }
     if (this.resWorks.works.length < this.limit) {
       this.isWorksEmpty = true
+    } else {
+      this.isWorksEmpty = false
     }
     this.resWorks = res.data
     this.processing = false
@@ -204,6 +206,7 @@ export default class Index extends Vue {
     tagSelectorStore.initSelectedTags()
     await this.searchWorks()
     workFilterStore.setSearched(true)
+    this.isWorksEmpty = false
   }
 }
 </script>

@@ -22,7 +22,7 @@
       />
       <nuxt-link to="/" class="hover:opacity-50 h-full">
         <img
-          src="@/assets/images/ToyBoxlogo.png"
+          src="@/assets/images/ToyBoxLogo.png"
           class="h-full"
           alt="ToyBox logo"
         />
@@ -89,19 +89,6 @@
           class="hover:opacity-60 transition"
           @click="activeNav = true"
         >
-          <!-- <img
-            :src="getIcon"
-            class="
-              rounded-full
-              w-12
-              h-12
-              cursor-pointer
-              pointer-events-none
-              shadow-md
-              bg-white
-            "
-            alt="user icon"
-          /> -->
           <user-rounded-icon :image-src="getIcon" size="large" />
         </button>
       </div>
@@ -124,11 +111,6 @@
         "
       >
         <!-- icon -->
-        <!-- <img
-          :src="getIcon"
-          class="rounded-full w-16 h-16 mx-auto my-1 pointer-events-none"
-          alt="user icon"
-        /> -->
         <user-rounded-icon
           :image-src="getIcon"
           size="xx-large"
