@@ -68,7 +68,7 @@ export default class CommentsField extends Vue {
     id: '0',
     name: 'ゲスト',
     display_name: 'ゲスト',
-    avatar_url: require('@/assets/image/gest-user.svg'),
+    avatar_url: require('@/assets/images/guest-user.svg'),
     created_at: '',
     updated_at: ''
   }

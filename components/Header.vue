@@ -22,7 +22,7 @@
       />
       <nuxt-link to="/" class="hover:opacity-50 h-full">
         <img
-          src="@/assets/image/ToyBoxlogo.png"
+          src="@/assets/images/ToyBoxlogo.png"
           class="h-full"
           alt="ToyBox logo"
         />
@@ -84,9 +84,12 @@
           />
         </div>
         <!-- logged in -->
-        <button class="hover:opacity-60 transition" @click="activeNav = true">
-          <img
-            v-if="nowLogin"
+        <button
+          v-if="nowLogin"
+          class="hover:opacity-60 transition"
+          @click="activeNav = true"
+        >
+          <!-- <img
             :src="getIcon"
             class="
               rounded-full
@@ -98,7 +101,8 @@
               bg-white
             "
             alt="user icon"
-          />
+          /> -->
+          <user-rounded-icon :image-src="getIcon" size="large" />
         </button>
       </div>
       <!-- navigation -->
@@ -120,10 +124,15 @@
         "
       >
         <!-- icon -->
-        <img
+        <!-- <img
           :src="getIcon"
           class="rounded-full w-16 h-16 mx-auto my-1 pointer-events-none"
           alt="user icon"
+        /> -->
+        <user-rounded-icon
+          :image-src="getIcon"
+          size="xx-large"
+          class="mx-auto my-3"
         />
         <!-- name -->
         <div class="text-gray-200 mb-6">
@@ -262,11 +271,14 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import BaseTextButton from '@/components/commons/BaseTextButton.vue'
+import UserRoundedIcon from '@/components/commons/UserRoundedIcon.vue'
+
 import { authStore, workFilterStore } from '@/store'
 
 @Component({
   components: {
-    BaseTextButton
+    BaseTextButton,
+    UserRoundedIcon
   }
 })
 export default class Header extends Vue {
@@ -278,7 +290,11 @@ export default class Header extends Vue {
   }
 
   get getIcon() {
-    return authStore.getUser.avatar_url
+    if (authStore.getUser.avatar_url) {
+      return authStore.getUser.avatar_url
+    } else {
+      return ''
+    }
   }
 
   get getDisplayName() {
