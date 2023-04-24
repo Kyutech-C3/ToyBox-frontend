@@ -278,24 +278,12 @@
       </div>
     </div>
 
-    <div
-      class="
-        w-full
-        rounded-2xl
-        my-10
-        bg-white
-        shadow-md
-        px-5
-        pb-5
-        pt-4
-        relative
-      "
-    >
+    <div class="work-info">
       <visibility-state-tag
         :visibility="work.visibility"
         class="text-black w-fit"
       />
-      <div class="mr-4 text-4xl text-black my-3">{{ work.title }}</div>
+      <div class="work-info__title">{{ work.title }}</div>
       <div class="text-sm">
         <div>
           投稿日時：
@@ -829,7 +817,36 @@ export default class Works extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.work-info {
+  @apply w-full;
+  @apply rounded-2xl;
+  @apply my-10;
+  @apply bg-white;
+  @apply shadow-md;
+  @apply px-5;
+  @apply pb-5;
+  @apply pt-4;
+  @apply relative;
+
+  &__title {
+    @apply text-4xl;
+    @apply text-black;
+    @apply my-3;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .work-info {
+    @apply px-3;
+    @apply py-3;
+
+    &__title {
+      @apply text-2xl;
+    }
+  }
+}
+
 .material-symbols-liked {
   font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }

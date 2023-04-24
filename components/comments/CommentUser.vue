@@ -7,7 +7,7 @@
       :to="`/users/${user.id}`"
       :class="{ 'pointer-events-auto': user.id !== '0' }"
     >
-      <user-rounded-icon :imageSrc="user.avatar_url" />
+      <user-rounded-icon :image-src="user.avatar_url" />
     </nuxt-link>
     <nuxt-link
       :to="`/users/${user.id}`"

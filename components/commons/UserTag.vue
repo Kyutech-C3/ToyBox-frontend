@@ -11,7 +11,7 @@
     ]"
   >
     <user-rounded-icon
-      :imageSrc="user.avatar_url"
+      :image-src="user.avatar_url ? user.avatar_url : ''"
       :size="invisibleName || size === 'small' ? 'small' : 'base'"
     />
     <div

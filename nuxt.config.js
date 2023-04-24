@@ -174,7 +174,9 @@ export default {
       ]).then(([users, works]) => {
         const urls = []
         users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
-        works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
+        works.data.works.map((work) =>
+          urls.push({ route: `/works/${work.id}` })
+        )
         return urls
       })
     }

@@ -2,17 +2,7 @@
   <!-- eslint-disable-next-line vue/no-v-html -->
   <div class="relative">
     <div
-      class="
-        markdown-view
-        w-full
-        mt-5
-        pt-5
-        pb-10
-        px-4
-        bg-gray-50
-        rounded-xl
-        text-gray-600
-      "
+      class="markdown-view"
       :class="[
         {
           'hidden-blur overflow-hidden max-h-96':
@@ -82,7 +72,15 @@ export default class MarkdownView extends Vue {
 }
 
 .markdown-view {
-  @apply text-xl;
+  @apply w-full;
+  @apply mt-5;
+  @apply pt-5;
+  @apply pb-10;
+  @apply px-4;
+  @apply bg-gray-50;
+  @apply rounded-xl;
+  @apply text-gray-600;
+  @apply text-base;
   @apply break-words;
 
   ol {
@@ -96,15 +94,27 @@ export default class MarkdownView extends Vue {
   }
 
   h1 {
-    @apply text-6xl;
+    @apply text-4xl;
   }
 
   h2 {
-    @apply text-5xl;
+    @apply text-3xl;
+    @apply px-2;
   }
 
   h3 {
-    @apply text-4xl;
+    @apply text-2xl;
+    @apply px-4;
+  }
+
+  h4 {
+    @apply text-xl;
+    @apply px-6;
+  }
+
+  h5 {
+    @apply text-lg;
+    @apply px-8;
   }
 
   h1,
@@ -115,7 +125,22 @@ export default class MarkdownView extends Vue {
     @apply border-b-[3px];
     @apply border-b-bg-color;
     @apply border-dotted;
-    @apply mb-6;
+    @apply mt-8;
+    @apply mb-5;
+    @apply pb-[5px];
+    @apply pt-[10px];
+  }
+
+  h4,
+  h5 {
+    --bg-color: rgb(96, 170, 255);
+    @apply font-semibold;
+    @apply border-b-[2px];
+    @apply border-b-bg-color;
+    @apply border-dotted;
+    @apply font-semibold;
+    @apply mt-4;
+    @apply mb-2;
     @apply pb-[5px];
     @apply pt-[10px];
   }
@@ -123,6 +148,7 @@ export default class MarkdownView extends Vue {
   p {
     @apply mb-5;
     @apply mt-[5px];
+    @apply leading-8;
 
     code {
       @apply bg-[#f0f0f0];
@@ -187,19 +213,50 @@ th {
 
 @media screen and (max-width: 600px) {
   .markdown-view {
+    @apply px-2.5;
+    @apply text-sm;
+
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-xl;
+      @apply px-2;
+    }
+
+    h3 {
+      @apply text-lg;
+      @apply px-4;
+    }
+
+    h4 {
+      @apply text-base;
+      @apply px-6;
+    }
+
+    h5 {
+      @apply text-sm;
+      @apply px-8;
+    }
+
     h1,
     h2,
     h3 {
+      @apply mt-6;
+      @apply mb-2;
       @apply py-0;
-      @apply px-[5px];
     }
 
     p {
-      @apply my-0;
       @apply mx-auto;
+      @apply mt-3;
+      @apply mb-4;
     }
 
     blockquote {
+      @apply my-4;
+
       p {
         @apply w-full;
         @apply my-4;
@@ -210,8 +267,15 @@ th {
     p,
     blockquote {
       @apply w-[95%];
-      @apply my-8;
       @apply mx-auto;
+    }
+
+    pre {
+      @apply rounded-xl;
+
+      code {
+        @apply text-sm;
+      }
     }
   }
 
