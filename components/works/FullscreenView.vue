@@ -32,13 +32,13 @@
           <source :src="asset.url" type="video/mp4" />
           Sorry, your browser doesn't support embedded videos.
         </video>
-        <audio
+        <item-audio-viewer
           v-else-if="asset.asset_type === 'music'"
           controls
           :src="asset.url"
         >
           Your browser does not support the <code>audio</code> element.
-        </audio>
+        </item-audio-viewer>
         <ModelViewer
           v-else-if="asset.asset_type === 'model'"
           :model="asset"
@@ -87,6 +87,7 @@ import {
 } from 'hooper'
 import 'hooper/dist/hooper.css'
 import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
+import ItemAudioViewer from '@/components/works/carouselItem/AudioView.vue'
 
 @Component({
   components: {
@@ -95,7 +96,8 @@ import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
     HooperPagination,
     HooperNavigation,
     ItemImageView,
-    ModelViewer
+    ModelViewer,
+    ItemAudioViewer
   }
 })
 export default class WorksCarousel extends Vue {
