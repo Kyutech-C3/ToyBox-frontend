@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <a class="mx-8" href="https://compositecomputer.club" target="_blank">
         <img
-          src="../assets/image/C3logo.png"
+          src="../assets/images/C3logo.png"
           class="hover:opacity-50 transition h-10"
           alt="C3 logo"
         />

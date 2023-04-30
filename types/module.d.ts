@@ -1,5 +1,7 @@
 import MarkdownIt from 'markdown-it'
 
+declare module 'katex'
+
 declare module 'vue/types/vue' {
   // Vueインスタンス(this)の型追加
   interface Vue {

@@ -80,7 +80,9 @@ export default {
     { src: '~/plugins/mavonEditor.ts', mode: 'client' },
     { src: '~/plugins/localStorage.ts', mode: 'client' },
     { src: '~/plugins/three.ts', mode: 'client' },
-    { src: '~/plugins/dayjs.ts', mode: 'client' }
+    { src: '~/plugins/dayjs.ts', mode: 'client' },
+    { src: '~/plugins/prism.ts', mode: 'client' },
+    { src: '~/plugins/markdownit.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -93,7 +95,6 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/tailwindcss',
     '@nuxt/postcss8',
-    '@nuxtjs/markdownit',
     '@nuxtjs/composition-api/module',
     [
       '@nuxtjs/google-gtag',
@@ -104,8 +105,7 @@ export default {
         },
         debug: true
       }
-    ],
-    '@nuxtjs/sitemap'
+    ]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -165,27 +165,6 @@ export default {
     }
   },
 
-  sitemap: {
-    hostname: process.env.BASE_URL,
-    defaults: {
-      lastmod: new Date(),
-      changefreq: 'always'
-    },
-    cacheTime: 1000 * 60 * 60 * 24,
-    exclude: ['/tmp', '/login', '/discord', '/works/create', '/works/*/edit'],
-    async routes() {
-      return Promise.all([
-        await axios.get(process.env.API_URL + '/users?limit=9999'),
-        await axios.get(process.env.API_URL + '/works?limit=9999')
-      ]).then(([users, works]) => {
-        const urls = []
-        users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
-        works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
-        return urls
-      })
-    }
-  },
-
   generate: {
     fallback: true,
     async routes() {
@@ -195,7 +174,9 @@ export default {
       ]).then(([users, works]) => {
         const urls = []
         users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
-        works.data.map((work) => urls.push({ route: `/works/${work.id}` }))
+        works.data.works.map((work) =>
+          urls.push({ route: `/works/${work.id}` })
+        )
         return urls
       })
     }

@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <works-filter
-      :include-draft="false"
-      class="mb-10"
-      @search="searchWorks"
-      @clear="clear"
-    />
+  <div class="!max-w-[1220px]">
+    <works-filter :include-draft="false" @search="searchWorks" @clear="clear" />
+    <div class="px-10 text-end my-3 text-gray-600">
+      {{ getWorksLength }} / {{ resWorks.works_total_count }}
+    </div>
     <div class="relative w-full min-h-[50vh]" ref="workList">
-      <works-list v-if="!processing" :works="works" />
+      <works-list v-if="!processing" :works="resWorks.works" />
       <loading v-else />
     </div>
-    <div v-if="nextContentLoadProcessing" class="relative w-full h-28">
+    <div
+      v-if="nextContentLoadProcessing"
+      class="relative w-full h-[var(--loading-h)] [--loading-h:120px]"
+    >
       <loading />
     </div>
     <div
@@ -29,7 +30,7 @@ import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
 
-import { Work } from '@/types'
+import { Work, ResWorks } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '@/store'
 import { AxiosClient } from '@/utils/axios'
 import { Query } from '@/utils/query'
@@ -65,11 +66,11 @@ import { Query } from '@/utils/query'
       alert('作品一覧の取得に失敗しました')
     }
 
-    return { works: resWorks.data }
+    return { resWorks: resWorks.data }
   }
 })
 export default class Index extends Vue {
-  works: Array<Work> = []
+  resWorks!: ResWorks
   query: Query = new Query()
   processing: boolean = false
   scrollY: number = 0
@@ -96,6 +97,10 @@ export default class Index extends Vue {
     return workFilterStore.getOnPageName
   }
 
+  get getWorksLength() {
+    return this.resWorks.works.length
+  }
+
   @Watch('scrollY')
   handleBottom() {
     if (this.workList) {
@@ -110,7 +115,7 @@ export default class Index extends Vue {
   }
 
   created() {
-    if (this.works.length < this.limit) {
+    if (this.resWorks.works.length < this.limit) {
       this.isWorksEmpty = true
     }
     workFilterStore.setSearched(true)
@@ -118,7 +123,7 @@ export default class Index extends Vue {
 
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
-    if (this.works.length < this.limit) {
+    if (this.resWorks.works.length < this.limit) {
       this.isWorksEmpty = true
     }
   }
@@ -133,27 +138,33 @@ export default class Index extends Vue {
     this.query.create(
       this.getSelectedTags,
       this.getFilterVisibility,
-      this.works[this.works.length - 1].id,
+      this.resWorks.works[this.resWorks.works.length - 1].id,
       undefined,
       undefined,
       undefined,
       this.limit
     )
-    const resWorks = await AxiosClient.client(
+    const res = await AxiosClient.client(
       'GET',
       `/works${this.query.getQuery()}`,
       true
     )
-    if (resWorks.status !== 200) {
+    if (res.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
+    const resWorks: ResWorks = res.data
     setTimeout(() => {
-      if (resWorks.data.length === 0) {
+      if (resWorks.works.length === 0) {
         this.isWorksEmpty = true
       } else {
-        resWorks.data.map((item: Work) => {
-          this.works.push(item)
+        resWorks.works.map((item: Work) => {
+          this.resWorks.works.push(item)
         })
+        this.resWorks.works_total_count = resWorks.works_total_count
+
+        if (resWorks.works.length < this.limit) {
+          this.isWorksEmpty = true
+        }
       }
       this.nextContentLoadProcessing = false
     }, 1000)
@@ -173,19 +184,20 @@ export default class Index extends Vue {
       undefined,
       this.limit
     )
-    const resWorks = await AxiosClient.client(
+    const res = await AxiosClient.client(
       'GET',
       `/works${this.query.getQuery()}`,
       this.getNowLogin ? true : false
     )
-    if (resWorks.status !== 200) {
+    if (res.status !== 200) {
       alert('作品一覧の取得に失敗しました')
     }
-    if (this.works.length < this.limit) {
+    if (this.resWorks.works.length < this.limit) {
       this.isWorksEmpty = true
+    } else {
+      this.isWorksEmpty = false
     }
-    this.works.splice(0)
-    this.works = resWorks.data
+    this.resWorks = res.data
     this.processing = false
   }
 
@@ -194,6 +206,7 @@ export default class Index extends Vue {
     tagSelectorStore.initSelectedTags()
     await this.searchWorks()
     workFilterStore.setSearched(true)
+    this.isWorksEmpty = false
   }
 }
 </script>
