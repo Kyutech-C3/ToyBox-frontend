@@ -1,19 +1,24 @@
 <template>
-  <div class="relative">
+  <div
+    class="w-full"
+    :class="[
+      isFullscreen ? 'absolute top-1/2 -translate-y-1/2 h-full' : 'relative'
+    ]"
+  >
     <!-- top swiper -->
     <div
       class="
         swiper
         bg-black
-        rounded-t-2xl
         overflow-hidden
         relative
-        max-h-[500px]
         min-h-[250px]
-        !h-[56vw]
         isolate
         !pb-2
       "
+      :class="[
+        isFullscreen ? 'h-full' : 'max-h-[500px] !h-[56vw] rounded-t-2xl'
+      ]"
     >
       <div class="swiper-wrapper flex justify-center items-center">
         <div
@@ -26,6 +31,7 @@
             items-center
             relative
             bg-black
+            select-none
           "
           :class="{ 'bg-white': asset.asset_type === 'model' }"
         >
@@ -151,7 +157,6 @@ import ItemAudioView from '@/components/works/carouselItem/AudioView.vue'
 
 import { Asset } from '@/types'
 import ModelViewer from '@/components/works/ModelViewer.vue'
-import { fullscreenStore } from '@/store'
 
 @Component({
   components: {
@@ -187,6 +192,9 @@ export default class WorksCarouselBody extends Vue {
     }
   })
 
+  fullscreenTarget!: HTMLElement
+  isFullscreen: boolean = false
+
   @Prop({ type: Array, required: true })
   assets!: Asset[]
 
@@ -203,11 +211,20 @@ export default class WorksCarouselBody extends Vue {
     this.swiper.on('slideChange', () => {
       this.slideNumber = this.swiper.realIndex
     })
+    this.fullscreenTarget = document.getElementById(
+      'works-carousel'
+    ) as HTMLElement
+    document.addEventListener('fullscreenchange', () => {
+      this.isFullscreen = document.fullscreenElement ? true : false
+    })
   }
 
   showFullscreen() {
-    fullscreenStore.setAssets(this.assets)
-    fullscreenStore.setFullscreen(true)
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      this.fullscreenTarget?.requestFullscreen()
+    }
   }
 }
 </script>
