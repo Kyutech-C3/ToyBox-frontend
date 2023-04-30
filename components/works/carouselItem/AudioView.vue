@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 import PeakAnalyzer from '@/utils/audioAnalyzer'
 
@@ -164,12 +164,6 @@ export default class AudioView extends Vue {
       this.audioCurrentTime = 0
     })
 
-    // this.audio.addEventListener('timeupdate', () => {
-    //   // console.log(this.audio.playbackRate)
-    //   // console.log(this.audio.currentTime)
-    //   // console.log(Math.floor(this.audio.currentTime))
-    //   this.audioCurrentTime = this.audio.currentTime
-    // })
     this.timeUpdateHandler()
 
     this.analyzer = new PeakAnalyzer()
