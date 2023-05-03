@@ -50,18 +50,10 @@ interface Event<T = EventTarget> {
 
 type baseAssetExtensionType = {
   image: string[]
-  video: string[]
-  music: string[]
-  zip: string[]
-  model: string[]
 }
 
 const baseAssetExtension: baseAssetExtensionType = {
-  image: ['png', 'PNG', 'JPG', 'JPEG', 'jpg', 'jpeg', 'bmp', 'gif', 'GIF'],
-  video: ['mp4'],
-  music: ['mp3', 'wav', 'm4a'],
-  zip: ['zip'],
-  model: ['gltf', 'fbx']
+  image: ['png', 'PNG', 'JPG', 'JPEG', 'jpg', 'jpeg', 'bmp', 'gif', 'GIF']
 }
 
 @Component
