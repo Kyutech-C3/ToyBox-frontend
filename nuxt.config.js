@@ -159,7 +159,7 @@ export default {
   },
   ssr: false,
 
-  router: { base: '/', middleware: 'auth' },
+  router: { base: '/', middleware: 'fetch_user' },
 
   watchers: {
     webpack: {

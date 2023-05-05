@@ -53,7 +53,7 @@ export class AxiosClient {
         try {
           // アクセストークンが間違っている可能性がある
           // トークンをリフレッシュする
-          await authStore.authAgain()
+          await authStore.authAgain(false)
           // 再リクエスト
           if (data) {
             return await this.request(method, url, auth, data, content_type)
