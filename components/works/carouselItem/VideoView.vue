@@ -22,9 +22,7 @@ export default class VideoView extends Vue {
   @Ref() videoPlayer!: HTMLVideoElement
 
   mounted() {
-    this.player = videojs(this.videoPlayer, this.options, () => {
-      console.log('onPlayerReady', this)
-    })
+    this.player = videojs(this.videoPlayer, this.options, () => {})
   }
 
   beforeDestroy() {
