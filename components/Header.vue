@@ -2,7 +2,7 @@
   <div class="relative">
     <div
       v-if="!nowLogin"
-      class="triangle absolute -top-5 -right-10"
+      class="triangle absolute -top-5 -right-10 z-40"
       @click="$router.push('/login')"
     />
     <header
