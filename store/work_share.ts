@@ -27,7 +27,7 @@ export default class WorkShare extends VuexModule {
 
   @Mutation
   SET_WORK(work: Work) {
-    this.work = work
+    this.work ? Object.assign(this.work, work) : (this.work = work)
   }
 
   @Action

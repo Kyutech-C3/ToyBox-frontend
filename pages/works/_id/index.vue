@@ -531,6 +531,10 @@ export default class Works extends Vue {
     this.isLiked = this.work.is_favorite ? this.work.is_favorite : false
   }
 
+  destroyed() {
+    modalStore.close()
+  }
+
   clickFavorite() {
     if (this.nowLogin) {
       if (!this.isLiked) {

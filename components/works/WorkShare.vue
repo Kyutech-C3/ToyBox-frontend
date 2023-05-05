@@ -2,7 +2,9 @@
   <div
     class="
       rounded-2xl
-      w-3/4
+      w-[95%]
+      min-w-[300px]
+      max-w-[700px]
       bg-white
       px-5
       pb-16
@@ -34,7 +36,7 @@
       close
     </span>
     <div class="mb-5 text-xl font-bold text-gray-500">SNSで共有</div>
-    <div class="mb-10 flex justify-center w-full">
+    <div class="mb-10 flex justify-around flex-wrap w-full max-w-[540px]">
       <a
         :href="twitterURL()"
         target="_blank"
@@ -48,6 +50,7 @@
           text-white
           rounded-xl
           px-5
+          m-2
         "
       >
         <font-awesome-icon :icon="['fab', 'twitter']" class="w-10 h-10 mr-2" />
@@ -67,7 +70,7 @@
           text-white
           rounded-xl
           px-5
-          ml-5
+          m-2
         "
       >
         <font-awesome-icon :icon="['fab', 'mastodon']" class="w-10 h-10 mr-2" />
@@ -75,7 +78,7 @@
       </a>
     </div>
     <div class="mb-5 text-xl font-bold text-gray-500">リンク</div>
-    <div class="flex justify-center items-center relative">
+    <div class="flex justify-center items-center relative w-4/5 max-w-[500px]">
       <input
         :value="getURL"
         readonly
@@ -84,8 +87,8 @@
           px-3
           rounded-lg
           outline-none
-          w-96
           text-gray-600
+          w-full
           pr-9
           border-b border-gray-300
         "
