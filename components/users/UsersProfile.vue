@@ -43,7 +43,7 @@
       />
     </div>
     <div class="z-10 absolute left-1/2 -translate-x-1/2 top-36">
-      <user-rounded-icon :image-src="user.avatar_url" :size="'large'" />
+      <user-rounded-icon :image-src="user.avatar_url" :size="'full'" />
     </div>
     <div class="text-3xl m-3 font-bold">
       {{ user.display_name }}

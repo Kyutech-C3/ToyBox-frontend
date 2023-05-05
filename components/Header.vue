@@ -89,7 +89,7 @@
           class="hover:opacity-60 transition"
           @click="activeNav = true"
         >
-          <user-rounded-icon :image-src="getIcon" size="large" />
+          <user-rounded-icon :image-src="getIcon" size="lg" />
         </button>
       </div>
       <!-- navigation -->
@@ -113,7 +113,7 @@
         <!-- icon -->
         <user-rounded-icon
           :image-src="getIcon"
-          size="xx-large"
+          size="2xl"
           class="mx-auto my-3"
         />
         <!-- name -->
