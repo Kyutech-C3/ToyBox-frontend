@@ -149,15 +149,7 @@
 </template>
 
 <script lang="ts">
-import {
-  Vue,
-  Component,
-  Prop,
-  VModel,
-  Model,
-  ModelSync,
-  Watch
-} from 'nuxt-property-decorator'
+import { Vue, Component, Prop, ModelSync, Watch } from 'nuxt-property-decorator'
 
 import { Swiper, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper-bundle.min.css'

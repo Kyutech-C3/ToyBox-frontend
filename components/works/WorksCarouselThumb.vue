@@ -97,7 +97,6 @@ import {
   Vue,
   Component,
   Prop,
-  VModel,
   ModelSync,
   Watch,
   Ref

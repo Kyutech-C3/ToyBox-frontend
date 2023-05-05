@@ -344,7 +344,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
 
 import WorksCarousel from '@/components/works/WorksCarousel.vue'
 import WorksTitle from '@/components/works/WorksTitle.vue'

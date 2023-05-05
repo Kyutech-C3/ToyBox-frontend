@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Emit } from 'nuxt-property-decorator'
+import { Component, Vue, VModel } from 'nuxt-property-decorator'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import { BaseUrlInfo } from '@/types'
 import { workPostStore } from '@/store'
