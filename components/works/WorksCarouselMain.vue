@@ -1,19 +1,25 @@
 <template>
-  <div class="relative">
+  <div
+    class="w-full"
+    :class="[
+      {
+        'absolute top-1/2 -translate-y-1/2 h-full':
+          !$device.isMobileOrTablet && isFullscreen
+      },
+      {
+        'fixed top-0 left-0 svh-full z-50':
+          $device.isMobileOrTablet && isFullscreen
+      },
+      { relative: !isFullscreen }
+    ]"
+  >
     <!-- top swiper -->
     <div
-      class="
-        swiper
-        bg-black
-        rounded-t-2xl
-        overflow-hidden
-        relative
-        max-h-[500px]
-        min-h-[250px]
-        !h-[56vw]
-        isolate
-        !pb-2
-      "
+      class="swiper bg-black overflow-hidden relative min-h-[250px] isolate"
+      :class="[
+        { 'h-full': isFullscreen },
+        { 'max-h-[500px] !h-[56vw] rounded-t-2xl': !isFullscreen }
+      ]"
     >
       <div class="swiper-wrapper flex justify-center items-center">
         <div
@@ -26,29 +32,28 @@
             items-center
             relative
             bg-black
+            select-none
           "
           :class="{ 'bg-white': asset.asset_type === 'model' }"
         >
           <item-image-view v-if="asset.asset_type === 'image'" :image="asset" />
-          <video
+          <item-video-view
             v-else-if="asset.asset_type === 'video'"
-            controls
-            class="h-full w-full"
-          >
-            <source :src="asset.url" type="video/mp4" />
-            Sorry, your browser doesn't support embedded videos.
-          </video>
-          <audio
+            :options="getVideoOptions(asset.url)"
+          />
+          <item-audio-view
             v-else-if="asset.asset_type === 'music'"
             controls
             :src="asset.url"
+            element-name="carousel-main"
           >
             Your browser does not support the <code>audio</code> element.
-          </audio>
+          </item-audio-view>
           <ModelViewer
             v-else-if="asset.asset_type === 'model'"
             :model="asset"
             :enable-fullscreen="false"
+            :fullscreen="isFullscreen"
             ref="modelViewer"
           />
           <div v-else>{{ asset.asset_type }} file is not supported.</div>
@@ -57,6 +62,7 @@
     </div>
     <!-- swiper navigation -->
     <div
+      v-if="$device.isDesktop"
       class="
         swiper-button-prev
         -translate-x-16
@@ -72,6 +78,7 @@
       @mouseover="showSwiperButtonPrev = true"
     />
     <div
+      v-if="$device.isDesktop"
       class="
         swiper-button-next
         translate-x-16
@@ -86,6 +93,7 @@
       @mouseenter="showSwiperButtonNext = true"
     />
     <div
+      v-if="$device.isDesktop"
       class="
         absolute
         top-0
@@ -101,6 +109,7 @@
       @mouseleave="showSwiperButtonPrev = false"
     />
     <div
+      v-if="$device.isDesktop"
       class="
         absolute
         top-0
@@ -124,12 +133,12 @@
         text-2xl
         select-none
         absolute
-        bottom-3
+        bottom-0
         right-3
         rounded-full
         px-1
-        text-black
-        bg-white bg-opacity-30
+        text-white
+        bg-black bg-opacity-30
         z-30
       "
       @click="showFullscreen()"
@@ -140,25 +149,30 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, VModel, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, ModelSync, Watch } from 'nuxt-property-decorator'
 
 import { Swiper, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper-bundle.min.js'
 
 import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
+import ItemVideoView from '@/components/works/carouselItem/VideoView.vue'
+import ItemAudioView from '@/components/works/AudioView.vue'
+import ModelViewer from '@/components/works/ModelViewer.vue'
 
 import { Asset } from '@/types'
-import ModelViewer from '@/components/works/ModelViewer.vue'
-import { fullscreenStore } from '@/store'
+import { VideoJSOptions } from '@/types/common'
 
 @Component({
   components: {
     ItemImageView,
-    ModelViewer
+    ItemAudioView,
+    ModelViewer,
+    ItemVideoView
   }
 })
-export default class WorksCarouselBody extends Vue {
+export default class WorksCarouselMain extends Vue {
+  [x: string]: any
   showSwiperButtonPrev: boolean = false
   showSwiperButtonNext: boolean = false
 
@@ -172,7 +186,8 @@ export default class WorksCarouselBody extends Vue {
       slideShadows: false
     },
     setWrapperSize: true,
-    grabCursor: true,
+    grabCursor: false,
+    allowTouchMove: this.$device.isMobileOrTablet,
     modules: [Navigation, Pagination],
     pagination: {
       el: '.swiper-pagination',
@@ -185,11 +200,22 @@ export default class WorksCarouselBody extends Vue {
     }
   })
 
+  fullscreenTarget!: HTMLElement
+
   @Prop({ type: Array, required: true })
   assets!: Asset[]
 
-  @VModel({ type: Number, required: true })
+  @ModelSync('slideNumberValue', 'changeSlideNumber', {
+    type: Number,
+    required: true
+  })
   slideNumber!: number
+
+  @ModelSync('isFullscreenValue', 'changeIsFullscreen', {
+    type: Boolean,
+    required: true
+  })
+  isFullscreen!: boolean
 
   @Watch('slideNumber')
   moveSlide(index: number) {
@@ -201,11 +227,46 @@ export default class WorksCarouselBody extends Vue {
     this.swiper.on('slideChange', () => {
       this.slideNumber = this.swiper.realIndex
     })
+    this.fullscreenTarget = document.getElementById(
+      'works-carousel'
+    ) as HTMLElement
+    document.addEventListener('fullscreenchange', () => {
+      this.isFullscreen = document.fullscreenElement ? true : false
+    })
+  }
+
+  getVideoOptions(url: string): VideoJSOptions {
+    return {
+      autoplay: false,
+      controls: true,
+      loop: false,
+      muted: false,
+      playsinline: true,
+      preload: 'auto',
+      poster: '',
+      sources: [
+        {
+          src: url,
+          type: 'video/mp4'
+        },
+        {
+          src: url,
+          type: 'video/quicktime'
+        }
+      ]
+    }
   }
 
   showFullscreen() {
-    fullscreenStore.setAssets(this.assets)
-    fullscreenStore.setFullscreen(true)
+    if (this.$device.isMobileOrTablet) {
+      this.isFullscreen = !this.isFullscreen
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen()
+      } else {
+        this.fullscreenTarget?.requestFullscreen()
+      }
+    }
   }
 }
 </script>

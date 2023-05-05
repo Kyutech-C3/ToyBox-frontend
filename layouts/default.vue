@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="overflow-x-hidden"
-    :class="{ 'overflow-y-hidden svh-full': getFullscreen }"
-  >
+  <div class="overflow-x-hidden">
     <div class="vh-full bg-bg-color w-[100vw] fixed top-0 left-0 -z-10">
       <!-- container log (:particlesLoaded="particlesLoaded") -->
       <Particles
@@ -16,25 +13,24 @@
     <Nuxt class="mx-auto mb-12 mt-10 max-w-[90rem]" />
     <Footer />
     <modal />
-    <fullscreen-view v-if="getFullscreen" />
   </div>
 </template>
 
 <script lang="ts">
 import Modal from '@/components/commons/Modal.vue'
-import FullscreenView from '@/components/works/FullscreenView.vue'
+import FormAssetPreview from '@/components/works/form/FormAssetPreview.vue'
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
 // @ts-ignore
 import Particles from 'vue2-particles'
 import { loadFull } from 'tsparticles'
 import { Engine } from 'tsparticles-engine/types'
 
-import { fullscreenStore, authStore } from '@/store'
+import { previewStore, authStore } from '@/store'
 
 Vue.use(Particles)
 
 @Component({
-  components: { Modal, FullscreenView }
+  components: { Modal, FormAssetPreview }
 })
 export default class Default extends Vue {
   head() {
@@ -59,8 +55,8 @@ export default class Default extends Vue {
     return authStore.nowLogin
   }
 
-  get getFullscreen() {
-    return fullscreenStore.getFullscreen
+  get getIsPreview() {
+    return previewStore.getIsPreview
   }
 
   @Watch('getNowLogin')

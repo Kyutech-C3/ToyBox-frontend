@@ -19,7 +19,7 @@
       id="pickimg"
       ref="pickimg"
       type="file"
-      accept="image/png, image/jpeg, image/gif, image/bmp, video/mp4, audio/mp4, audio/wav, audio/mpeg, application/zip, .gltf, .fbx"
+      accept="image/png, image/jpeg, image/gif, image/bmp, video/mp4, video/quicktime, audio/wav, audio/mpeg, audio/aac, application/zip, .gltf, .fbx"
       style="opacity: 0"
       class="
         absolute

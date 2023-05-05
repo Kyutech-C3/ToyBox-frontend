@@ -8,7 +8,7 @@ import WorkFilter from '~/store/work_filter'
 import WorkPost from '@/store/work_post'
 import ConfirmModal from '@/store/confirm_modal'
 import DownloadAsset from '@/store/download_asset'
-import Fullscreen from '@/store/fullscreen'
+import Preview from '~/store/preview'
 import WorkShare from '~/store/work_share'
 import TagSelector from '~/store/tag_selector'
 
@@ -20,7 +20,7 @@ let workFilterStore: WorkFilter
 let workPostStore: WorkPost
 let confirmModalStore: ConfirmModal
 let downloadAssetStore: DownloadAsset
-let fullscreenStore: Fullscreen
+let previewStore: Preview
 let workShareStore: WorkShare
 let tagSelectorStore: TagSelector
 
@@ -33,7 +33,7 @@ function initializeStores(store: Store<any>): void {
   workPostStore = getModule(WorkPost, store)
   confirmModalStore = getModule(ConfirmModal, store)
   downloadAssetStore = getModule(DownloadAsset, store)
-  fullscreenStore = getModule(Fullscreen, store)
+  previewStore = getModule(Preview, store)
   workShareStore = getModule(WorkShare, store)
   tagSelectorStore = getModule(TagSelector, store)
 }
@@ -48,7 +48,7 @@ export {
   workPostStore,
   confirmModalStore,
   downloadAssetStore,
-  fullscreenStore,
+  previewStore,
   workShareStore,
   tagSelectorStore
 }

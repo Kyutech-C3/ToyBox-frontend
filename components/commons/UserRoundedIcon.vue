@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-full bg-white relative overflow-hidden shadow-md"
+    class="rounded-full bg-white relative overflow-hidden shadow-md isolate"
     :class="[
       { 'w-6 h-6': size === 'small' },
       { 'w-8 h-8': size === 'base' },
