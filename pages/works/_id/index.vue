@@ -1,5 +1,8 @@
 <template>
-  <div class="w-[98vw] max-w-[800px] relative text-gray-400">
+  <div
+    class="w-[98vw] max-w-[800px] relative text-gray-400"
+    :class="{ 'overflow-y-hidden h-0': isFullscreen }"
+  >
     <div
       v-if="activeNav"
       class="fixed w-[100vw] h-[100vh] z-30 left-0 top-0"
@@ -165,7 +168,7 @@
     </div>
     <!-- 作品トップ -->
     <div class="w-full rounded-2xl overflow-hidden shadow-md bg-white">
-      <works-carousel :assets="work.assets" />
+      <works-carousel :assets="work.assets" v-model="isFullscreen" />
       <div
         v-if="work.urls.length > 0"
         class="flex items-center px-5 py-3 overflow-x-scroll overflow-y-hidden"
@@ -341,7 +344,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Watch } from 'nuxt-property-decorator'
 
 import WorksCarousel from '@/components/works/WorksCarousel.vue'
 import WorksTitle from '@/components/works/WorksTitle.vue'
@@ -412,6 +415,7 @@ import {
   }
 })
 export default class Works extends Vue {
+  [x: string]: any
   work!: Work
 
   postCommentData: PostComment = { content: '' }
@@ -447,6 +451,8 @@ export default class Works extends Vue {
   errorChangeVisibility: boolean = false
   favoriteUsers: User[] = []
   showFavoriteUser: boolean = false
+
+  isFullscreen: boolean = false
 
   errorPostComment: boolean = false
   errorReplyComment: boolean = false

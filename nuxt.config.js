@@ -105,7 +105,8 @@ export default {
         },
         debug: true
       }
-    ]
+    ],
+    '@nuxtjs/device'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

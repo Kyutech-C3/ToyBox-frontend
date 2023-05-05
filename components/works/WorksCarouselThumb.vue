@@ -28,12 +28,14 @@
             justify-center
             items-center
             relative
-            border
-            bg-white
+            bg-gray-500
             w-[18vw]
             max-w-[150px]
             min-w-[90px]
             m-1
+            select-none
+            rounded
+            overflow-hidden
           "
           :class="[
             { 'bg-white': asset.asset_type === 'model' },
@@ -57,15 +59,24 @@
             class="h-full w-full thumbnail"
           >
             <source :src="asset.url" type="video/mp4" />
+            <source :src="asset.url" type="video/quicktime" />
             Sorry, your browser doesn't support embedded videos.
           </video>
-          <audio
-            v-else-if="asset.asset_type === 'music'"
-            controls
-            :src="asset.url"
-          >
-            Your browser does not support the <code>audio</code> element.
-          </audio>
+          <div v-else-if="asset.asset_type === 'music'">
+            <item-audio-view
+              v-if="$device.isDesktop"
+              controls
+              :src="asset.url"
+              :show-audio-time="false"
+              element-name="carousel-thumb"
+              size="small"
+            >
+              Your browser does not support the <code>audio</code> element.
+            </item-audio-view>
+            <audio v-else controls :src="asset.url">
+              Your browser does not support the <code>audio</code> element.
+            </audio>
+          </div>
           <ModelViewer
             v-else-if="asset.asset_type === 'model'"
             :model="asset"
@@ -87,11 +98,13 @@ import {
   Component,
   Prop,
   VModel,
+  ModelSync,
   Watch,
   Ref
 } from 'nuxt-property-decorator'
 
 import ItemImageView from '@/components/works/carouselItem/ImageView.vue'
+import ItemAudioView from '@/components/works/AudioView.vue'
 
 import { Asset } from '@/types'
 import ModelViewer from '@/components/works/ModelViewer.vue'
@@ -99,17 +112,22 @@ import ModelViewer from '@/components/works/ModelViewer.vue'
 @Component({
   components: {
     ItemImageView,
-    ModelViewer
+    ModelViewer,
+    ItemAudioView
   }
 })
 export default class WorksCarouselThumb extends Vue {
+  [x: string]: any
   @Ref() Slider!: HTMLDivElement
   @Ref() SliderWrapper!: HTMLDivElement
 
   @Prop({ type: Array, required: true })
   assets!: Asset[]
 
-  @VModel({ type: Number, required: true })
+  @ModelSync('slideNumberValue', 'changeSlideNumber', {
+    type: Number,
+    required: true
+  })
   slideNumber!: number
 
   @Watch('slideNumber')

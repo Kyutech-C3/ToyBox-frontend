@@ -17,24 +17,29 @@
           rounded-xl
           overflow-hidden
           border border-gray-300
+          bg-black
         "
       >
-        <font-awesome-icon
+        <span
           class="
-            w-6
-            h-6
-            rounded-full
-            absolute
-            top-1.5
-            right-1.5
-            opacity-60
+            material-symbols-outlined
             cursor-pointer
-            bg-white
+            transition-all
+            text-base
+            select-none
+            absolute
+            top-1
+            right-1
+            rounded-full
+            px-1
+            text-black
+            bg-white bg-opacity-30
             z-10
           "
-          :icon="['fas', 'times']"
           @click="deleteAsset(i)"
-        />
+        >
+          close
+        </span>
         <form-image-preview
           v-if="asset.asset_type === 'image'"
           :image-url="asset.url"
@@ -44,12 +49,41 @@
           v-else-if="asset.asset_type === 'video'"
           :image-url="asset.url"
         />
+        <item-audio-view
+          v-else-if="asset.asset_type === 'music'"
+          controls
+          :src="asset.url"
+          :show-audio-time="false"
+          element-name="carousel-post-asset"
+          size="small"
+        >
+          Your browser does not support the <code>audio</code> element.
+        </item-audio-view>
         <form-zip-preview v-else-if="asset.asset_type === 'zip'" />
         <model-viewer
           v-else-if="asset.asset_type === 'model'"
           :model="asset"
           :mouse-control="false"
         />
+        <span
+          class="
+            material-symbols-outlined
+            cursor-pointer
+            transition-all
+            text-base
+            select-none
+            absolute
+            bottom-1
+            right-1
+            rounded-full
+            px-1
+            text-black
+            bg-white bg-opacity-30
+          "
+          @click="showPreview(i)"
+        >
+          fullscreen
+        </span>
       </div>
       <div
         v-if="getPostAssetStatus === 'posting'"
@@ -75,10 +109,11 @@ import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
 import FormVideoPreview from '@/components/works/form/assetPreviewItems/FormVideoPreview.vue'
 import FormZipPreview from '@/components/works/form/assetPreviewItems/FormZipPreview.vue'
+import ItemAudioView from '@/components/works/AudioView.vue'
 import ModelViewer from '@/components/works/ModelViewer.vue'
 import FormInputAssets from '@/components/works/form/FormInputAssets.vue'
 import Loading from '@/components/commons/Loading.vue'
-import { workPostStore } from '@/store'
+import { workPostStore, previewStore } from '@/store'
 import { Asset } from '~/types'
 
 @Component({
@@ -88,11 +123,12 @@ import { Asset } from '~/types'
     FormInputAssets,
     FormVideoPreview,
     FormZipPreview,
+    ItemAudioView,
     ModelViewer,
     Loading
   }
 })
-export default class FormAssetsPreview extends Vue {
+export default class FormAssets extends Vue {
   info: string = `
 対応形式：
   画像 [ .png .jpg .jpeg .bmp .gif ]
@@ -138,6 +174,12 @@ export default class FormAssetsPreview extends Vue {
     workPostStore.setPostAssetStatus('')
     this.assets = workPostStore.getAssetsViewInfo
     workPostStore.changeIsBlockUnload()
+  }
+
+  showPreview(assetIndex: number) {
+    previewStore.setAssetType('asset')
+    previewStore.setAsset(assetIndex)
+    previewStore.setIsPreview(true)
   }
 }
 </script>

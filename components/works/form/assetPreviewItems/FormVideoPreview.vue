@@ -1,13 +1,15 @@
 <template>
   <video
     class="w-full h-full object-cover"
-    :src="imageUrl"
     webkit-playsinline
     playsinline
     muted
     autoplay
     loop
-  />
+  >
+    <source :src="imageUrl" type="video/mp4" />
+    <source :src="imageUrl" type="video/quicktime" />
+  </video>
 </template>
 
 <script lang="ts">

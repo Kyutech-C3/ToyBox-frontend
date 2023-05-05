@@ -7,7 +7,7 @@
       { 'pointer-events-none': noLink },
       { 'p-1': invisibleName },
       { 'pl-1 pr-2 py-1': !invisibleName },
-      { 'rounded-full': rounded }
+      { 'rounded-full isolate': rounded }
     ]"
   >
     <user-rounded-icon

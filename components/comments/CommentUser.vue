@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-start rounded-full"
+    class="flex items-start rounded-full isolate"
     :class="{ 'pointer-events-none': user.id === '0' }"
   >
     <nuxt-link
