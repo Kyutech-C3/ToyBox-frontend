@@ -82,7 +82,8 @@ export default {
     { src: '~/plugins/three.ts', mode: 'client' },
     { src: '~/plugins/dayjs.ts', mode: 'client' },
     { src: '~/plugins/prism.ts', mode: 'client' },
-    { src: '~/plugins/markdownit.ts', mode: 'client' }
+    { src: '~/plugins/markdownit.ts', mode: 'client' },
+    { src: '~/plugins/error-handler', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -103,7 +104,7 @@ export default {
         config: {
           send_page_view: false
         },
-        debug: true
+        debug: false
       }
     ],
     '@nuxtjs/device'
