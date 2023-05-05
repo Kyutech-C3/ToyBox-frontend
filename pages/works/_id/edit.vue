@@ -17,11 +17,18 @@ import BlockUnloadMixin from '~/mixins/BlockUnloadMixin'
     WorksForm
   },
   middleware: 'auth_check',
-  async asyncData({ route }) {
+  async asyncData({ route, store, error }) {
     let resWork
     resWork = await AxiosClient.client('GET', `/works/${route.params.id}`, true)
     if (!resWork.data) {
       console.error(resWork.status)
+    }
+    if (resWork.data.user.id !== store.state.auth.user.id) {
+      console.error('他人の作品は編集できません')
+      throw error({
+        statusCode: 403,
+        message: '他人の作品は編集できません'
+      })
     }
     return { putWorkData: resWork.data }
   }
