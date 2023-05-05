@@ -26,7 +26,7 @@
         v-if="getThumbnailViewInfo && getThumbnailViewInfo.id !== ''"
         class="relative w-full h-full"
       >
-        <font-awesome-icon
+        <!-- <font-awesome-icon
           class="
             w-6
             h-6
@@ -41,11 +41,50 @@
           "
           :icon="['fas', 'times']"
           @click="deleteAsset()"
-        />
+        /> -->
+        <span
+          class="
+            material-symbols-outlined
+            cursor-pointer
+            transition-all
+            text-base
+            select-none
+            absolute
+            top-1
+            right-1
+            rounded-full
+            px-1
+            text-black
+            bg-white bg-opacity-30
+            z-10
+          "
+          @click="deleteAsset()"
+        >
+          close
+        </span>
         <form-image-preview
           :image-url="getThumbnailViewInfo.url"
           :asset="getThumbnailViewInfo"
         />
+        <span
+          class="
+            material-symbols-outlined
+            cursor-pointer
+            transition-all
+            text-base
+            select-none
+            absolute
+            bottom-1
+            right-1
+            rounded-full
+            px-1
+            text-black
+            bg-white bg-opacity-30
+          "
+          @click="showPreview()"
+        >
+          fullscreen
+        </span>
       </div>
       <loading v-if="getPostThumbnailStatus === 'posting'" />
     </div>
@@ -59,7 +98,7 @@ import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
 import FormInputThumbnail from '@/components/works/form/FormInputThumbnail.vue'
 import Loading from '@/components/commons/Loading.vue'
-import { workPostStore } from '@/store'
+import { workPostStore, previewStore } from '@/store'
 
 @Component({
   components: {
@@ -69,7 +108,7 @@ import { workPostStore } from '@/store'
     Loading
   }
 })
-export default class FormThumbnailPreview extends Vue {
+export default class FormThumbnail extends Vue {
   info: string = `
 対応形式：
   画像 [ .png .jpg .jpeg .bmp .gif ]
@@ -100,6 +139,11 @@ export default class FormThumbnailPreview extends Vue {
     workPostStore.initThumbnailViewInfo()
     workPostStore.setPostThumbnailStatus('')
     workPostStore.changeIsBlockUnload()
+  }
+
+  showPreview() {
+    previewStore.setAssetType('thumbnail')
+    previewStore.setIsPreview(true)
   }
 }
 </script>

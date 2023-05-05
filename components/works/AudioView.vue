@@ -1,8 +1,11 @@
 <template>
-  <div class="w-full h-full relative">
+  <div
+    class="w-full h-full relative"
+    :class="{ 'pointer-events-none': size === 'small' }"
+  >
     <canvas
-      v-if="!isError"
-      id="audio-waveform"
+      v-show="analyzingStatus === 'processed'"
+      :id="`audio-waveform-${elementName}`"
       class="
         w-[90%]
         h-[25%]
@@ -16,12 +19,25 @@
       height="500px"
       @click="changeCurrentTime($event)"
     />
-    <slot v-else />
-    <div class="absolute left-[50px] top-[50px] text-5xl">
+    <slot v-if="analyzingStatus === 'error'" />
+    <div
+      v-else-if="analyzingStatus === 'processing'"
+      class="
+        absolute
+        top-1/2
+        left-1/2
+        -translate-x-1/2 -translate-y-1/2
+        text-orange-200
+      "
+      :class="{ 'text-xs': size === 'small' }"
+    >
+      Wave analyzing...
+    </div>
+    <div v-if="size === 'base'" class="absolute left-[35px] bottom-0 z-20">
       <span
         v-if="isPlay"
         role="button"
-        class="material-symbols-outlined inline-block"
+        class="material-symbols-outlined inline-block text-4xl text-white"
         @click="pause()"
       >
         pause
@@ -29,20 +45,20 @@
       <span
         v-else
         role="button"
-        class="material-symbols-outlined inline-block"
+        class="material-symbols-outlined inline-block text-4xl text-white"
         @click="play()"
       >
         play_arrow
       </span>
     </div>
-    <div class="absolute bottom-10 left-10 text-white">
+    <div v-if="size === 'base'" class="absolute bottom-14 left-10 text-white">
       {{
         `${Math.floor(audioCurrentTime / 60)}:${(
           '0' + Math.floor(audioCurrentTime % 60)
         ).slice(-2)}`
       }}
     </div>
-    <div class="absolute bottom-10 right-10 text-white">
+    <div v-if="size === 'base'" class="absolute bottom-14 right-10 text-white">
       {{
         `${Math.floor(audioLength / 60)}:${(
           '0' + Math.floor(audioLength % 60)
@@ -130,19 +146,31 @@ export default class AudioView extends Vue {
   }
   barPlayingColorIndex!: number
   hoverBarIndex!: number
+  analyzingStatus: '' | 'processing' | 'processed' | 'error' = ''
 
   @Prop({ type: String, required: true })
   src!: string
 
+  @Prop({ type: String, required: true })
+  elementName!: string
+
+  @Prop({ type: String, required: false, default: 'base' })
+  size!: 'small' | 'base'
+
   created() {
+    this.analyzingStatus = 'processing'
     this.audio = new Audio(this.src)
   }
 
   mounted() {
-    this.waveformCanvas = document.querySelector('#audio-waveform')
+    this.waveformCanvas = document.querySelector(
+      `#audio-waveform-${this.elementName}`
+    )
 
     window.addEventListener('resize', () => {
-      this.waveformCanvas = document.querySelector('#audio-waveform')
+      this.waveformCanvas = document.querySelector(
+        `#audio-waveform-${this.elementName}`
+      )
     })
 
     this.waveformCanvas?.addEventListener(
@@ -174,11 +202,13 @@ export default class AudioView extends Vue {
         console.log(peaksArr)
         this.peaksArr = peaksArr
         this.barLength = peaksArr[0].length
+        this.analyzingStatus = 'processed'
         this.drawWaveform()
       })
       .catch((err) => {
         console.error(err)
         this.isError = true
+        this.analyzingStatus = 'error'
       })
   }
 
@@ -216,8 +246,9 @@ export default class AudioView extends Vue {
   // マウスのクリック位置に基づいて再生位置の変更を行う
   changeCurrentTime(event: PointerEvent) {
     const rect = this.waveformCanvas?.getBoundingClientRect()
-    this.audio.currentTime =
+    this.audio.currentTime = Math.floor(
       (this.audioLength / rect?.width!) * (event.x - rect?.left!)
+    )
     if (!this.isPlay) {
       this.play()
     }
@@ -349,3 +380,9 @@ export default class AudioView extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+</style>

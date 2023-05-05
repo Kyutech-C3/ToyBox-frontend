@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import TagSelecter from '@/components/commons/TagSelecter.vue'

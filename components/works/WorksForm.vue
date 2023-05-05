@@ -1,6 +1,7 @@
 <template>
   <form
     class="m-auto max-w-[900px] w-[90vw]"
+    :class="{ 'svh-full overflow-y-hidden': getIsPreview }"
     autocomplete="off"
     @submit.prevent
   >
@@ -24,12 +25,12 @@
         :show-warning="showRequiredWarning.titleEmpty"
         class="mt-4"
       />
-      <form-thumbnail-preview
+      <form-thumbnail
         v-model="workData.thumbnail_asset_id"
         :show-warning="showRequiredWarning.thumbnailEmpty"
         class="mt-4"
       />
-      <form-assets-preview
+      <form-assets
         v-model="workData.assets_id"
         :show-warning="showRequiredWarning.assetsEmpty"
         class="mt-4"
@@ -78,6 +79,7 @@
         />
       </div>
     </div>
+    <form-asset-preview v-if="getIsPreview" />
   </form>
 </template>
 
@@ -86,14 +88,15 @@ import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 
 import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
-import FormAssetsPreview from '@/components/works/form/FormAssetsPreview.vue'
-import FormThumbnailPreview from '@/components/works/form/FormThumbnailPreview.vue'
+import FormAssets from '@/components/works/form/FormAssets.vue'
+import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
 import FormUrl from '@/components/works/form/FormUrl.vue'
 import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
+import FormAssetPreview from '@/components/works/form/FormAssetPreview.vue'
 
 import { AxiosClient } from '@/utils/axios'
-import { tagSelectorStore, workPostStore } from '@/store'
+import { previewStore, tagSelectorStore, workPostStore } from '@/store'
 import { PostWork } from '@/types'
 
 type RequiredType = {
@@ -108,11 +111,12 @@ type RequiredType = {
   components: {
     FormTag,
     FormTitle,
-    FormAssetsPreview,
-    FormThumbnailPreview,
+    FormAssets,
+    FormThumbnail,
     FormUrl,
     FormMarkdown,
-    FormSubmitButton
+    FormSubmitButton,
+    FormAssetPreview
   }
 })
 export default class WorksForm extends Vue {
@@ -128,6 +132,10 @@ export default class WorksForm extends Vue {
 
   get getSelectedTags() {
     return tagSelectorStore.getSelectedTags
+  }
+
+  get getIsPreview(): boolean {
+    return previewStore.getIsPreview
   }
 
   @Prop({ type: Boolean, required: false, default: true })

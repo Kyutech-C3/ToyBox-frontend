@@ -5,32 +5,11 @@
       :class="{ ' pointer-events-none': !mouseControl }"
       ref="sceneContainer"
     />
-    <span
-      v-if="!fullscreen && enableFullscreen"
-      class="
-        material-symbols-outlined
-        cursor-pointer
-        transition-all
-        text-2xl
-        select-none
-        absolute
-        rounded-full
-        px-1
-        text-black
-        bg-white bg-opacity-30
-        z-40
-        bottom-3
-        right-3
-      "
-      @click="showFullscreen()"
-    >
-      fullscreen
-    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
 
 import { Ref } from '@nuxtjs/composition-api'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -47,7 +26,6 @@ import {
   AnimationMixer,
   Clock
 } from 'three'
-import { fullscreenStore } from '@/store'
 import { Asset } from '@/types'
 
 @Component({})
@@ -66,10 +44,6 @@ export default class ModelViewer extends Vue {
   count: number = 1
   clock = new Clock()
 
-  mounted() {
-    this.init()
-  }
-
   @Prop({ type: Object, required: true })
   model!: Asset
 
@@ -82,17 +56,15 @@ export default class ModelViewer extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
   mouseControl!: boolean
 
-  setFullscreen(boolean: boolean) {
-    fullscreenStore.setFullscreen(boolean)
+  @Watch('fullscreen')
+  onFullscreenChange() {
+    setTimeout(() => {
+      this.init()
+    }, 20)
   }
 
-  setAsset(asset: Asset) {
-    fullscreenStore.setAssets([asset])
-  }
-
-  showFullscreen() {
-    this.setAsset(this.model)
-    this.setFullscreen(true)
+  mounted() {
+    this.init()
   }
 
   init() {
@@ -169,14 +141,6 @@ export default class ModelViewer extends Vue {
         requestAnimationFrame(tick)
       }
       tick()
-      if (!this.fullscreen) {
-        setTimeout(() => {
-          if (this.count <= 1) {
-            this.count = this.count + 1
-            this.init()
-          }
-        }, 50)
-      }
     } else if (this.model.extension === 'fbx') {
       let mixer: AnimationMixer
       const loader = new FBXLoader()
@@ -220,14 +184,6 @@ export default class ModelViewer extends Vue {
       }
 
       animate()
-      if (!this.fullscreen) {
-        setTimeout(() => {
-          if (this.count <= 1) {
-            this.count = this.count + 1
-            this.init()
-          }
-        }, 50)
-      }
     }
   }
 }
