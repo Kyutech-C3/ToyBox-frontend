@@ -38,6 +38,7 @@ import { authStore } from '@/store'
 export default class Login extends Vue {
   authDiscord() {
     authStore.authDiscord()
+    this.$gtag('event', 'login_button_auth')
   }
 
   backPage() {
