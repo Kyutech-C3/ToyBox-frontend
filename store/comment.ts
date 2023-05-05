@@ -64,10 +64,7 @@ export default class Comment extends VuexModule {
 
   @Mutation
   SET_TEMPREPLYCOMMENTSINFO(postResReplyCommentInfo: TempReplyCommentInfo) {
-    this.tempReplyCommentInfo.tempReplyComment =
-      postResReplyCommentInfo.tempReplyComment
-    this.tempReplyCommentInfo.parentCommentId =
-      postResReplyCommentInfo.parentCommentId
+    Object.assign(this.tempReplyCommentInfo, postResReplyCommentInfo)
   }
 
   @Action
