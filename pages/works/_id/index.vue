@@ -608,6 +608,11 @@ export default class Works extends Vue {
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
+            this.$gtag('event', 'success_post_comment', {
+              user_name: this.getUser.name,
+              user_display_name: this.getUser.display_name,
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -622,6 +627,11 @@ export default class Works extends Vue {
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
+            this.$gtag('event', 'success_post_comment', {
+              user_name: 'ゲスト',
+              user_display_name: 'ゲスト',
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -651,6 +661,11 @@ export default class Works extends Vue {
               parentCommentId: replyCommentData.comment_id
             })
             replyCommentData.reply_comment_data.content = ''
+            this.$gtag('event', 'success_post_reply_comment', {
+              user_name: this.getUser.name,
+              user_display_name: this.getUser.display_name,
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -668,6 +683,11 @@ export default class Works extends Vue {
               parentCommentId: replyCommentData.comment_id
             })
             replyCommentData.reply_comment_data.content = ''
+            this.$gtag('event', 'success_post_reply_comment', {
+              user_name: 'ゲスト',
+              user_display_name: 'ゲスト',
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
