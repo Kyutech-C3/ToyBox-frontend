@@ -116,7 +116,6 @@ import ModelViewer from '@/components/works/ModelViewer.vue'
   }
 })
 export default class WorksCarouselThumb extends Vue {
-  [x: string]: any
   @Ref() Slider!: HTMLDivElement
   @Ref() SliderWrapper!: HTMLDivElement
 

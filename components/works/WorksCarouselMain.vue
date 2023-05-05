@@ -172,7 +172,6 @@ import { VideoJSOptions } from '@/types/common'
   }
 })
 export default class WorksCarouselMain extends Vue {
-  [x: string]: any
   showSwiperButtonPrev: boolean = false
   showSwiperButtonNext: boolean = false
 

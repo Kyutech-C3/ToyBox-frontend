@@ -415,7 +415,6 @@ import {
   }
 })
 export default class Works extends Vue {
-  [x: string]: any
   work!: Work
 
   postCommentData: PostComment = { content: '' }
