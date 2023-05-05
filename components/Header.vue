@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div class="relative">
+    <div
+      v-if="!nowLogin"
+      class="triangle absolute -top-5 -right-10"
+      @click="$router.push('/login')"
+    />
     <header
       class="
         py-3
@@ -15,11 +20,6 @@
         relative
       "
     >
-      <div
-        v-if="!nowLogin"
-        class="triangle absolute -top-5 -right-10"
-        @click="$router.push('/login')"
-      />
       <nuxt-link to="/" class="hover:opacity-50 h-full">
         <img
           src="@/assets/images/ToyBoxLogo.png"
