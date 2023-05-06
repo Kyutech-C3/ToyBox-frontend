@@ -9,9 +9,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Watch, Ref } from 'nuxt-property-decorator'
 
-import { Ref } from '@nuxtjs/composition-api'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
@@ -30,7 +29,6 @@ import { Asset } from '@/types'
 
 @Component({})
 export default class ModelViewer extends Vue {
-  container!: Ref<HTMLElement>
   scene!: Scene
   renderer!: WebGLRenderer
   camera!: PerspectiveCamera
@@ -43,6 +41,8 @@ export default class ModelViewer extends Vue {
   directionalLight!: DirectionalLight
   count: number = 1
   clock = new Clock()
+
+  @Ref() sceneContainer!: HTMLDivElement
 
   @Prop({ type: Object, required: true })
   model!: Asset
@@ -68,14 +68,12 @@ export default class ModelViewer extends Vue {
   }
 
   init() {
-    // set container
-    this.container = this.$refs.sceneContainer
     // add camera
-    this.width = this.container.clientWidth
-    this.height = this.container.clientHeight
+    this.width = this.sceneContainer.clientWidth
+    this.height = this.sceneContainer.clientHeight
     if (this.width < 768) {
-      this.width = this.container.clientWidth
-      this.height = this.container.clientHeight
+      this.width = this.sceneContainer.clientWidth
+      this.height = this.sceneContainer.clientHeight
     }
     const fov = 45 // Field of view
     const aspect = this.width / this.height
@@ -95,7 +93,7 @@ export default class ModelViewer extends Vue {
     const ambientLight = new AmbientLight(0xffffff)
     this.scene.add(ambientLight)
     // add controls
-    this.controls = new OrbitControls(this.camera, this.container)
+    this.controls = new OrbitControls(this.camera, this.sceneContainer)
     this.controls.enableDamping = true
     this.controls.dampingFactor = 0.2
     this.controls.target.set(0, 0, 0)
@@ -105,7 +103,7 @@ export default class ModelViewer extends Vue {
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.outputEncoding = sRGBEncoding
     this.renderer.physicallyCorrectLights = true
-    this.container.appendChild(this.renderer.domElement)
+    this.sceneContainer.appendChild(this.renderer.domElement)
     // set aspect ratio to match the new browser window aspect ratio
     this.camera.aspect = this.width / this.height
     this.camera.updateProjectionMatrix()

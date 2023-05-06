@@ -4,7 +4,7 @@ import { authStore } from '~/store'
 const authCheck: Middleware = ({ route, error }) => {
   const refreshToken = localStorage.getItem('refresh_token')
   if (!refreshToken || !authStore.getAccessToken) {
-    return error({ statusCode: 401, message: 'Unauthorized' })
+    error({ statusCode: 401, message: 'Unauthorized' })
   }
 }
 

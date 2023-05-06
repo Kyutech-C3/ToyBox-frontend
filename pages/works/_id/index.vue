@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[98vw] max-w-[800px] relative text-gray-400"
+    class="w-[98vw] !max-w-[800px] relative text-gray-400"
     :class="{ 'overflow-y-hidden h-0': isFullscreen }"
   >
     <div
