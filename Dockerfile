@@ -1,6 +1,4 @@
-# M1 Macの場合
 # FROM arm64v8/node:16-alpine
-# Intel CPUの場合
 FROM node:16-alpine
 
 ARG WORKDIR
@@ -14,7 +12,5 @@ WORKDIR /front
 RUN apk update && \
     apk add --no-cache python3 make g++ && \
     apk add git
-
-COPY package*.json ./
 
 COPY . ./
