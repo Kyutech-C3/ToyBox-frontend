@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts">
-import { Component, VModel, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, VModel, Vue } from 'nuxt-property-decorator'
 
 import { AxiosClient } from '@/utils/axios'
-import { workPostStore } from '@/store'
+import { workPostStore, blogPostStore } from '@/store'
 
 interface Event<T = EventTarget> {
   target: T
@@ -58,11 +58,16 @@ const baseAssetExtension: baseAssetExtensionType = {
 
 @Component
 export default class FormInputThumbnail extends Vue {
+  @Prop({ type: Boolean, required: false })
+  isBlog!: boolean
+
   @VModel({ type: String })
   thumbnail!: string
 
   get getThumbnailViewInfo() {
-    return workPostStore.getThumbnailViewInfo
+    return this.isBlog
+      ? blogPostStore.getThumbnailViewInfo
+      : workPostStore.getThumbnailViewInfo
   }
 
   get getPostThumbnailStatus() {
@@ -81,16 +86,29 @@ export default class FormInputThumbnail extends Vue {
         if (['image'].includes(assetType)) {
           params.append('asset_type', assetType)
           try {
-            AxiosClient.client(
-              'POST',
-              '/assets',
-              true,
-              params,
-              'multipart/form-data'
-            ).then((result) => {
-              this.thumbnail = result.data.id
-              workPostStore.setThumbnailViewInfo(result.data)
-            })
+            if (this.isBlog) {
+              AxiosClient.client(
+                'POST',
+                '/blogs/assets',
+                true,
+                params,
+                'multipart/form-data'
+              ).then((result) => {
+                this.thumbnail = result.data.id
+                blogPostStore.setThumbnailViewInfo(result.data)
+              })
+            } else {
+              AxiosClient.client(
+                'POST',
+                '/assets',
+                true,
+                params,
+                'multipart/form-data'
+              ).then((result) => {
+                this.thumbnail = result.data.id
+                workPostStore.setThumbnailViewInfo(result.data)
+              })
+            }
           } catch (error) {
             // eslint-disable-next-line no-console
             console.error(error)

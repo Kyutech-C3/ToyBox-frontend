@@ -88,7 +88,7 @@
       </div>
       <loading v-if="getPostThumbnailStatus === 'posting'" />
     </div>
-    <form-input-thumbnail v-model="thumbnail" />
+    <form-input-thumbnail v-model="thumbnail" :is-blog="isBlog" />
   </div>
 </template>
 
@@ -98,7 +98,7 @@ import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormImagePreview from '@/components/works/form/assetPreviewItems/FormImagePreview.vue'
 import FormInputThumbnail from '@/components/works/form/FormInputThumbnail.vue'
 import Loading from '@/components/commons/Loading.vue'
-import { workPostStore, previewStore } from '@/store'
+import { workPostStore, previewStore, blogPostStore } from '@/store'
 
 @Component({
   components: {
@@ -114,7 +114,9 @@ export default class FormThumbnail extends Vue {
   画像 [ .png .jpg .jpeg .bmp .gif ]
 `
   get getThumbnailViewInfo() {
-    return workPostStore.getThumbnailViewInfo
+    return this.isBlog
+      ? blogPostStore.getThumbnailViewInfo
+      : workPostStore.getThumbnailViewInfo
   }
 
   get getPostThumbnailStatus() {
@@ -127,6 +129,9 @@ export default class FormThumbnail extends Vue {
   @Prop({ type: Boolean, required: true })
   showWarning!: boolean
 
+  @Prop({ type: Boolean, required: false })
+  isBlog!: boolean
+
   @Watch('getThumbnailViewInfo')
   onChangeThumbnailViewInfo() {
     if (this.getThumbnailViewInfo.id !== '') {
@@ -136,7 +141,11 @@ export default class FormThumbnail extends Vue {
 
   deleteAsset() {
     this.thumbnail = ''
-    workPostStore.initThumbnailViewInfo()
+    if (this.isBlog) {
+      blogPostStore.initThumbnailViewInfo()
+    } else {
+      workPostStore.initThumbnailViewInfo()
+    }
     workPostStore.setPostThumbnailStatus('')
     workPostStore.changeIsBlockUnload()
   }
