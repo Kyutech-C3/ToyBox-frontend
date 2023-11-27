@@ -45,8 +45,10 @@
       "
     >
       <form-markdown
-        v-model="blogData.body_text"
+        v-model:description="blogData.body_text"
+        v-model:assets="blogData.assets_id"
         :show-warning="showRequiredWarning.bodyTextEmpty"
+        :is-blog="true"
         class="mb-1"
       />
       <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
@@ -108,6 +110,7 @@ export default class BlogForm extends Vue {
   blogData!: PostBlog
 
   submitSuccessProcess() {
+    blogPostStore.initAssetsViewInfo()
     tagSelectorStore.initSelectedTags()
     blogPostStore.initThumbnailViewInfo()
     workPostStore.initIsBlockUnload()

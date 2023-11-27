@@ -30,6 +30,7 @@ export default class Create extends mixins(BlockUnloadMixin) {
   }
 
   destroyed() {
+    blogPostStore.initAssetsViewInfo()
     tagSelectorStore.initSelectedTags()
     blogPostStore.initThumbnailViewInfo()
   }

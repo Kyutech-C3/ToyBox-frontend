@@ -51,7 +51,7 @@
       "
     >
       <form-markdown
-        v-model="workData.description"
+        v-model:description="workData.description"
         :show-warning="showRequiredWarning.descriptionEmpty"
         class="mb-1"
       />

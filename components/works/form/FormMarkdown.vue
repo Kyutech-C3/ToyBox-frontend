@@ -6,11 +6,22 @@
       :show-warning="showWarning"
       class="mb-3"
     />
+    <form-asset
+      v-if="isBlog"
+      class="mb-3"
+      v-model:description="description"
+      v-model:assets="assets"
+    />
     <mavon-editor
       v-model="description"
       :toolbars="toolbarsOption"
       language="ja"
-      :xss-options="{}"
+      :xss-options="{
+        whiteList: {
+          video: ['width', 'height', 'controls'],
+          source: ['src', 'type']
+        }
+      }"
       default-open="edit"
       :autofocus="false"
       class="markdown-body min-h-300 w-full bg-white"
@@ -19,21 +30,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, VModel, Prop } from 'nuxt-property-decorator'
-import FormLabel from '@/components/works/form/FormLabel.vue'
+import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import { workPostStore } from '@/store'
+import FormLabel from '@/components/works/form/FormLabel.vue'
+import FormAsset from '@/components/blogs/form/FormAsset.vue'
 
 @Component({
   components: {
-    FormLabel
+    FormLabel,
+    FormAsset
   }
 })
 export default class FormMarkdown extends Vue {
-  @VModel({ type: String })
+  @VModel({
+    type: String,
+    required: true
+  })
   description!: string
+
+  @VModel({
+    type: Array,
+    required: false
+  })
+  assets!: string[]
 
   @Prop({ type: Boolean, required: true })
   showWarning!: boolean
+
+  @Prop({ type: Boolean, required: false })
+  isBlog!: boolean
 
   changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
