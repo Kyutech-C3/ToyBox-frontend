@@ -45,10 +45,9 @@
       "
     >
       <form-markdown
-        v-model:description="blogData.body_text"
-        v-model:assets="blogData.assets_id"
+        v-model="blogData.body_text"
         :show-warning="showRequiredWarning.bodyTextEmpty"
-        :is-blog="true"
+        :on-file-picked="onFilePicked"
         class="mb-1"
       />
       <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
@@ -64,22 +63,46 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
+import { AxiosResponse } from 'axios'
 
 import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
 import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
-import FormMarkdown from '@/components/works/form/FormMarkdown.vue'
+import FormMarkdown from '@/components/blogs/form/FormMarkdown.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
 
 import { AxiosClient } from '@/utils/axios'
 import { tagSelectorStore, blogPostStore, workPostStore } from '@/store'
-import { PostBlog } from '@/types'
+import { BlogAsset, PostBlog } from '@/types'
 
 type RequiredType = {
   tagEmpty: boolean
   titleEmpty: boolean
   thumbnailEmpty: boolean
   bodyTextEmpty: boolean
+}
+
+type baseAssetExtensionType = {
+  image: string[]
+  video: string[]
+}
+
+const baseAssetExtension: baseAssetExtensionType = {
+  image: ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp'],
+  video: ['mp4', 'mov', 'avi', 'flv']
+}
+
+const extensionMimeType = {
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  bmp: 'image/bmp',
+  gif: 'image/gif',
+  webp: 'image/webp',
+  mp4: 'video/mp4',
+  mov: 'video/quicktime',
+  avi: 'video/x-msvideo',
+  flv: 'video/x-flv'
 }
 
 @Component({
@@ -189,6 +212,75 @@ export default class BlogForm extends Vue {
         this.showRequiredWarning.bodyTextEmpty = false
       }, 5000)
     }
+  }
+
+  onFilePicked(event: Event) {
+    workPostStore.setPostAssetStatus('posting')
+    const file = (event.target as HTMLInputElement).files as FileList
+    if (file.length !== 0 || file !== null) {
+      for (let i = 0; i < file.length; i++) {
+        const params = new FormData()
+        params.append('file', file[i])
+        const assetType = this.getAssetType(file[i].name as string)
+        if (['image', 'video'].includes(assetType)) {
+          params.append('asset_type', assetType)
+          try {
+            AxiosClient.client(
+              'POST',
+              '/blogs/assets',
+              true,
+              params,
+              'multipart/form-data'
+            ).then((result: AxiosResponse<BlogAsset>) => {
+              if (result.data.url !== undefined) {
+                let assetText = ''
+                if (result.data.asset_type === 'image') {
+                  assetText = `![${result.data.id}](${result.data.url})\n`
+                } else if (result.data.asset_type === 'video') {
+                  assetText = `<video width=500 controls><source src="${
+                    result.data.url
+                  }" type="${
+                    extensionMimeType[
+                      result.data.extension as keyof typeof extensionMimeType
+                    ]
+                  }"></video>\n`
+                }
+                this.blogData.body_text =
+                  this.blogData.body_text.concat(assetText)
+              }
+              this.blogData.assets_id.push(result.data.id)
+              blogPostStore.addAssetsViewInfo(result.data)
+            })
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error)
+            workPostStore.setPostAssetStatus('error')
+          }
+        } else {
+          workPostStore.setPostAssetStatus('')
+        }
+      }
+    }
+    const refs = this.$refs.pickimg as any
+    refs.value = ''
+    workPostStore.changeIsBlockUnload()
+  }
+
+  getAssetType(assetName: string) {
+    let index: number = 0
+    let response: string = ''
+    const assetTypeList: string[][] = Object.values(baseAssetExtension)
+    assetTypeList.forEach((assetType) => {
+      for (let i = 0; i < assetType.length; i++) {
+        if (assetType[i] === assetName.split('.').pop()?.toLowerCase()) {
+          // eslint-disable-next-line no-console
+          // console.log(Object.keys(baseAssetExtension)[index])
+          response = Object.keys(baseAssetExtension)[index]
+        }
+      }
+      index++
+    })
+    return response
   }
 }
 </script>
