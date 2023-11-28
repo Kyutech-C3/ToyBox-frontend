@@ -13,12 +13,13 @@
       "
       type="submit"
       @click="$emit('submit', submitList[option].value)"
+      :disabled="disabled"
     >
       <font-awesome-icon :icon="submitList[option].icon" class="w-4 mr-3" />
       {{ submitList[option].name }}
     </button>
 
-    <div
+    <button
       class="
         rounded-tr-lg rounded-br-lg
         border-2 border-hover-base-button-color
@@ -29,10 +30,12 @@
         pt-3
         pb-2
       "
+      type="submit"
       @click="openList = !openList"
+      :disabled="disabled"
     >
       <font-awesome-icon :icon="['fas', 'caret-up']" class="w-3" />
-    </div>
+    </button>
 
     <transition name="fade">
       <div
@@ -103,6 +106,9 @@ export default class FormSubmitButton extends Vue {
 
   @Prop({ type: String, required: false, default: 'public' })
   workVisibility!: Visibility
+
+  @Prop({ type: Boolean, required: false, default: false })
+  disabled!: boolean
 
   created() {
     this.option = this.visibilityToOption[this.workVisibility]

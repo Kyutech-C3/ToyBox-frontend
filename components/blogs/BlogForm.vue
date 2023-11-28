@@ -55,6 +55,7 @@
           class=""
           :work-visibility="blogData.visibility"
           @submit="clickSubmit($event)"
+          :disabled="assetStatus === 'posting'"
         />
       </div>
     </div>
@@ -124,6 +125,10 @@ export default class BlogForm extends Vue {
 
   get getSelectedTags() {
     return tagSelectorStore.getSelectedTags
+  }
+
+  get assetStatus() {
+    return workPostStore.getPostAssetStatus
   }
 
   @Prop({ type: Boolean, required: false, default: true })
@@ -256,6 +261,7 @@ export default class BlogForm extends Vue {
         workPostStore.setPostAssetStatus('')
       }
     }
+    workPostStore.setPostAssetStatus('')
     workPostStore.changeIsBlockUnload()
   }
 
