@@ -25,9 +25,51 @@ export type BaseUrlInfo = {
   url_type: string
 }
 
+export type Blog = {
+  id: string
+  title: string
+  body_text: string
+  user: User
+  assets: BlogAsset[]
+  visibility: string
+  tags: GetTag[]
+  thumbnail: BlogAsset
+  favorite_count?: number | undefined
+  is_favorite?: boolean | undefined
+  created_at: string
+  updated_at: string
+}
+
+export type BlogAsset = {
+  asset_type: string
+  id: string
+  user: User
+  extension: string
+  url?: string | undefined
+  created_at: string
+  updated_at: string
+}
+
+/** An enumeration. */
+export type BlogAssetType = 'image' | 'video'
+
+export type BlogsResponse = {
+  blogs: Blog[]
+  blogs_total_count: number
+}
+
 export type Body_post_asset_api_v1_assets_post = {
   file: File | ReadStream
   asset_type: AssetType
+}
+
+export type Body_post_asset_api_v1_blogs_assets_post = {
+  file: File | ReadStream
+  asset_type: BlogAssetType
+}
+
+export type Body_update_user_avatar_api_v1_users__me_avatar_put = {
+  file: File | ReadStream
 }
 
 export type DeleteStatus = {
@@ -48,6 +90,15 @@ export type GetTag = {
 
 export type HTTPValidationError = {
   detail?: ValidationError[] | undefined
+}
+
+export type PostBlog = {
+  title: string
+  body_text: string
+  visibility: string
+  thumbnail_asset_id: string
+  assets_id: string[]
+  tags_id: string[]
 }
 
 export type PostComment = {
@@ -76,6 +127,11 @@ export type PutTag = {
 
 export type RefreshTokenExchangeRequest = {
   refresh_token: string
+}
+
+export type ResWorks = {
+  works: Work[]
+  works_total_count: number
 }
 
 export type ResponseComment = {
@@ -142,14 +198,13 @@ export type UserCreateRequest = {
 
 export type UserInfoChangeRequest = {
   display_name?: string | undefined
-  avatar_url?: string | undefined
   profile?: string | undefined
   twitter_id?: string | undefined
   github_id?: string | undefined
 }
 
 export type ValidationError = {
-  loc: Partial<string & number>[]
+  loc: (string | number)[]
   msg: string
   type: string
 }
@@ -172,9 +227,4 @@ export type Work = {
   is_favorite?: boolean | undefined
   created_at: string
   updated_at: string
-}
-
-export type ResWorks = {
-  works: Work[]
-  works_total_count: number
 }
