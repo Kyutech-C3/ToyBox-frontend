@@ -29,11 +29,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, VModel, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class FormAsset extends Vue {
   @Prop({ type: Function, required: true })
-  onFilePicked!: (e: Event) => void
+  fileUploadHandler!: (files: File[]) => Promise<void>
+
+  async onFilePicked(event: Event) {
+    const target = event.target as HTMLInputElement
+    const files = target.files
+    if (files !== null) {
+      const fileArray = Array.from(files)
+      await this.fileUploadHandler(fileArray)
+    }
+    target.value = ''
+  }
 }
 </script>

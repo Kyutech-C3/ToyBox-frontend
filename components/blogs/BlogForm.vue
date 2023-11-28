@@ -47,7 +47,7 @@
       <form-markdown
         v-model="blogData.body_text"
         :show-warning="showRequiredWarning.bodyTextEmpty"
-        :on-file-picked="onFilePicked"
+        :file-upload-handler="fileUploadHandler"
         class="mb-1"
       />
       <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
@@ -214,55 +214,48 @@ export default class BlogForm extends Vue {
     }
   }
 
-  onFilePicked(event: Event) {
+  async fileUploadHandler(files: File[]) {
     workPostStore.setPostAssetStatus('posting')
-    const file = (event.target as HTMLInputElement).files as FileList
-    if (file.length !== 0 || file !== null) {
-      for (let i = 0; i < file.length; i++) {
-        const params = new FormData()
-        params.append('file', file[i])
-        const assetType = this.getAssetType(file[i].name as string)
-        if (['image', 'video'].includes(assetType)) {
-          params.append('asset_type', assetType)
-          try {
-            AxiosClient.client(
-              'POST',
-              '/blogs/assets',
-              true,
-              params,
-              'multipart/form-data'
-            ).then((result: AxiosResponse<BlogAsset>) => {
-              if (result.data.url !== undefined) {
-                let assetText = ''
-                if (result.data.asset_type === 'image') {
-                  assetText = `![${result.data.id}](${result.data.url})\n`
-                } else if (result.data.asset_type === 'video') {
-                  assetText = `<video width=500 controls><source src="${
-                    result.data.url
-                  }" type="${
-                    extensionMimeType[
-                      result.data.extension as keyof typeof extensionMimeType
-                    ]
-                  }"></video>\n`
-                }
-                this.blogData.body_text =
-                  this.blogData.body_text.concat(assetText)
-              }
-              this.blogData.assets_id.push(result.data.id)
-              blogPostStore.addAssetsViewInfo(result.data)
-            })
-          } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error)
-            workPostStore.setPostAssetStatus('error')
+    for (let i = 0; i < files.length; i++) {
+      const params = new FormData()
+      params.append('file', files[i])
+      const assetType = this.getAssetType(files[i].name)
+      if (['image', 'video'].includes(assetType)) {
+        params.append('asset_type', assetType)
+        try {
+          const result: AxiosResponse<BlogAsset> = await AxiosClient.client(
+            'POST',
+            '/blogs/assets',
+            true,
+            params,
+            'multipart/form-data'
+          )
+          if (result.data.url !== undefined) {
+            let assetText = ''
+            if (result.data.asset_type === 'image') {
+              assetText = `![${result.data.id}](${result.data.url})\n`
+            } else if (result.data.asset_type === 'video') {
+              assetText = `<video width=500 controls><source src="${
+                result.data.url
+              }" type="${
+                extensionMimeType[
+                  result.data.extension as keyof typeof extensionMimeType
+                ]
+              }"></video>\n`
+            }
+            this.blogData.body_text = this.blogData.body_text.concat(assetText)
           }
-        } else {
-          workPostStore.setPostAssetStatus('')
+          this.blogData.assets_id.push(result.data.id)
+          blogPostStore.addAssetsViewInfo(result.data)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+          workPostStore.setPostAssetStatus('error')
         }
+      } else {
+        workPostStore.setPostAssetStatus('')
       }
     }
-    const refs = this.$refs.pickimg as any
-    refs.value = ''
     workPostStore.changeIsBlockUnload()
   }
 

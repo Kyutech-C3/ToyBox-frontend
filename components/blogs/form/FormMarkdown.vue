@@ -6,8 +6,9 @@
       :show-warning="showWarning"
       class="mb-3"
     />
-    <form-asset class="mb-3" :on-file-picked="onFilePicked" />
+    <form-asset class="mb-3" :file-upload-handler="fileUploadHandler" />
     <mavon-editor
+      ref="md"
       v-model="description"
       :toolbars="toolbarsOption"
       language="ja"
@@ -19,6 +20,7 @@
       }"
       default-open="edit"
       :autofocus="false"
+      @imgAdd="dragAndDropAsset"
       class="markdown-body min-h-300 w-full bg-white"
     />
   </div>
@@ -47,10 +49,21 @@ export default class FormMarkdown extends Vue {
   showWarning!: boolean
 
   @Prop({ type: Function, required: true })
-  onFilePicked!: (e: Event) => void
+  fileUploadHandler!: (files: File[]) => Promise<void>
 
   changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()
+  }
+
+  async dragAndDropAsset(pos: Number, file: File) {
+    await this.fileUploadHandler([file])
+    const reg = RegExp(`\\!\\[.+\\]\\(${pos}\\)`, 'i')
+    console.log(reg)
+    console.log(this.description)
+    console.log('start reg')
+    this.description = this.description.replace(reg, '')
+    console.log('finish reg')
+    console.log(this.description)
   }
 
   toolbarsOption = {
