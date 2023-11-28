@@ -14,7 +14,7 @@
       language="ja"
       :xss-options="{
         whiteList: {
-          video: ['width', 'height', 'controls'],
+          video: ['controls'],
           source: ['src', 'type']
         }
       }"

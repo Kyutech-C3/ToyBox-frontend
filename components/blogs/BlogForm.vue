@@ -235,7 +235,7 @@ export default class BlogForm extends Vue {
             if (result.data.asset_type === 'image') {
               assetText = `![${result.data.id}](${result.data.url})\n`
             } else if (result.data.asset_type === 'video') {
-              assetText = `<video width=500 controls><source src="${
+              assetText = `<video controls><source src="${
                 result.data.url
               }" type="${
                 extensionMimeType[
