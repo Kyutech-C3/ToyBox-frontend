@@ -58,12 +58,7 @@ export default class FormMarkdown extends Vue {
   async dragAndDropAsset(pos: Number, file: File) {
     await this.fileUploadHandler([file])
     const reg = RegExp(`\\!\\[.+\\]\\(${pos}\\)`, 'i')
-    console.log(reg)
-    console.log(this.description)
-    console.log('start reg')
     this.description = this.description.replace(reg, '')
-    console.log('finish reg')
-    console.log(this.description)
   }
 
   toolbarsOption = {
