@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[98vw] max-w-[800px] relative text-gray-400"
+    class="w-[98vw] !max-w-[800px] relative text-gray-400"
     :class="{ 'overflow-y-hidden h-0': isFullscreen }"
   >
     <div
@@ -415,7 +415,6 @@ import {
   }
 })
 export default class Works extends Vue {
-  [x: string]: any
   work!: Work
 
   postCommentData: PostComment = { content: '' }
@@ -531,6 +530,10 @@ export default class Works extends Vue {
     this.isLiked = this.work.is_favorite ? this.work.is_favorite : false
   }
 
+  destroyed() {
+    modalStore.close()
+  }
+
   clickFavorite() {
     if (this.nowLogin) {
       if (!this.isLiked) {
@@ -605,6 +608,11 @@ export default class Works extends Vue {
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
+            this.$gtag('event', 'success_post_comment', {
+              user_name: this.getUser.name,
+              user_display_name: this.getUser.display_name,
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -619,6 +627,11 @@ export default class Works extends Vue {
           .then((result) => {
             commentStore.addComments(result.data)
             this.postCommentData.content = ''
+            this.$gtag('event', 'success_post_comment', {
+              user_name: 'ゲスト',
+              user_display_name: 'ゲスト',
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -648,6 +661,11 @@ export default class Works extends Vue {
               parentCommentId: replyCommentData.comment_id
             })
             replyCommentData.reply_comment_data.content = ''
+            this.$gtag('event', 'success_post_reply_comment', {
+              user_name: this.getUser.name,
+              user_display_name: this.getUser.display_name,
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)
@@ -665,6 +683,11 @@ export default class Works extends Vue {
               parentCommentId: replyCommentData.comment_id
             })
             replyCommentData.reply_comment_data.content = ''
+            this.$gtag('event', 'success_post_reply_comment', {
+              user_name: 'ゲスト',
+              user_display_name: 'ゲスト',
+              content: this.postCommentData.content
+            })
           })
           .catch((error) => {
             console.error(error)

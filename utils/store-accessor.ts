@@ -11,6 +11,7 @@ import DownloadAsset from '@/store/download_asset'
 import Preview from '~/store/preview'
 import WorkShare from '~/store/work_share'
 import TagSelector from '~/store/tag_selector'
+import BlogPost from '~/store/blog_post'
 
 let authStore: Auth
 let commentStore: Comment
@@ -24,6 +25,8 @@ let previewStore: Preview
 let workShareStore: WorkShare
 let tagSelectorStore: TagSelector
 
+let blogPostStore: BlogPost
+
 function initializeStores(store: Store<any>): void {
   authStore = getModule(Auth, store)
   commentStore = getModule(Comment, store)
@@ -36,6 +39,7 @@ function initializeStores(store: Store<any>): void {
   previewStore = getModule(Preview, store)
   workShareStore = getModule(WorkShare, store)
   tagSelectorStore = getModule(TagSelector, store)
+  blogPostStore = getModule(BlogPost, store)
 }
 
 export {
@@ -50,5 +54,6 @@ export {
   downloadAssetStore,
   previewStore,
   workShareStore,
-  tagSelectorStore
+  tagSelectorStore,
+  blogPostStore
 }

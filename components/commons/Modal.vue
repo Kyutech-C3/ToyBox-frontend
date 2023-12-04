@@ -28,14 +28,12 @@ import ConfirmModal from '@/components/commons/ConfirmModal.vue'
 })
 export default class Modal extends Vue {
   get modalInner() {
-    console.debug('modalInner')
     return modalStore.getComponent === null
       ? undefined
       : modalStore.getComponent
   }
 
   public close() {
-    console.debug('close')
     modalStore.close()
   }
 }

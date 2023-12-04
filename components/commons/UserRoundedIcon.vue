@@ -2,11 +2,13 @@
   <div
     class="rounded-full bg-white relative overflow-hidden shadow-md isolate"
     :class="[
-      { 'w-6 h-6': size === 'small' },
+      { 'w-6 h-6': size === 'sm' },
       { 'w-8 h-8': size === 'base' },
-      { 'w-11 h-11': size === 'large' },
-      { 'w-14 h-14': size === 'x-large' },
-      { 'w-16 h-16': size === 'xx-large' },
+      { 'w-11 h-11': size === 'lg' },
+      { 'w-14 h-14': size === 'xl' },
+      { 'w-16 h-16': size === '2xl' },
+      { 'w-20 h-20': size === '3xl' },
+      { 'w-36 h-36': size === 'full' },
       { ' bg-slate-500': !imageSrc }
     ]"
   >
@@ -47,6 +49,6 @@ export default class UserRoundedIcon extends Vue {
   imageSrc!: string
 
   @Prop({ type: String, required: false, default: 'base' })
-  size!: 'small' | 'base' | 'large' | 'x-large' | 'xx-large'
+  size!: 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
 }
 </script>

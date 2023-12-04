@@ -12,7 +12,7 @@
   >
     <user-rounded-icon
       :image-src="user.avatar_url ? user.avatar_url : ''"
-      :size="invisibleName || size === 'small' ? 'small' : 'base'"
+      :size="invisibleName || size === 'small' ? 'sm' : 'base'"
     />
     <div
       v-if="!invisibleName"

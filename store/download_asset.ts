@@ -23,7 +23,7 @@ export default class DownloadAsset extends VuexModule {
 
   @Mutation
   SET_ASSET(asset: Asset) {
-    this.asset = asset
+    this.asset ? Object.assign(this.asset, asset) : (this.asset = asset)
   }
 
   @Action

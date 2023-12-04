@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { User, Work } from './types'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -82,7 +83,8 @@ export default {
     { src: '~/plugins/three.ts', mode: 'client' },
     { src: '~/plugins/dayjs.ts', mode: 'client' },
     { src: '~/plugins/prism.ts', mode: 'client' },
-    { src: '~/plugins/markdownit.ts', mode: 'client' }
+    { src: '~/plugins/markdownit.ts', mode: 'client' },
+    { src: '~/plugins/error-handler', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -103,7 +105,7 @@ export default {
         config: {
           send_page_view: false
         },
-        debug: true
+        debug: false
       }
     ],
     '@nuxtjs/device'
@@ -158,7 +160,7 @@ export default {
   },
   ssr: false,
 
-  router: { base: '/', middleware: 'auth' },
+  router: { base: '/', middleware: 'fetch_user' },
 
   watchers: {
     webpack: {
@@ -173,9 +175,11 @@ export default {
         await axios.get(process.env.API_URL + '/users?limit=9999'),
         await axios.get(process.env.API_URL + '/works?limit=9999')
       ]).then(([users, works]) => {
-        const urls = []
-        users.data.map((user) => urls.push({ route: `/users/${user.id}` }))
-        works.data.works.map((work) =>
+        const urls: { route: string }[] = []
+        users.data.map((user: User) =>
+          urls.push({ route: `/users/${user.id}` })
+        )
+        works.data.works.map((work: Work) =>
           urls.push({ route: `/works/${work.id}` })
         )
         return urls

@@ -61,9 +61,11 @@ export default class Auth extends VuexModule {
   }
 
   @Action
-  public async authAgain() {
+  public async authAgain(fetchUser: Boolean = true) {
     await this.getAccessTokenByRefreshToken()
-    await this.fetchUser()
+    if (fetchUser) {
+      await this.fetchUser()
+    }
   }
 
   @Action

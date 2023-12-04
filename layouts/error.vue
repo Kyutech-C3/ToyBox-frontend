@@ -6,18 +6,19 @@
         justify-center
         items-center
         flex-col
-        w-1/2
+        w-[95%]
+        max-w-xl
         h-1/3
         rounded-3xl
-        border border-gray-400
-        py-10
-        px-20
+        border border-gray-100
+        py-20
+        px-3
         mb-10
         bg-white
       "
     >
       <div>{{ error.statusCode }}</div>
-      <div>{{ error.message }}</div>
+      <div class="max-w-md break-words">{{ error.message }}</div>
     </div>
     <base-text-button
       :title="'Homeに戻る'"

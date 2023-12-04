@@ -199,7 +199,6 @@ export default class AudioView extends Vue {
     this.analyzer
       .analyze(this.src, 200)
       .then((peaksArr) => {
-        console.log(peaksArr)
         this.peaksArr = peaksArr
         this.barLength = peaksArr[0].length
         this.analyzingStatus = 'processed'

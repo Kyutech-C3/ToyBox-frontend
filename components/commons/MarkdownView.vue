@@ -157,6 +157,12 @@ export default class MarkdownView extends Vue {
       @apply rounded-[5px];
       @apply text-[#905];
     }
+
+    a {
+      @apply text-orange-400;
+      @apply hover:underline;
+      @apply mx-1;
+    }
   }
 
   pre {
