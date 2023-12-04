@@ -1,41 +1,5 @@
 <template>
   <div class="!max-w-[1220px]">
-    <div class="bg-white h-14 mx-20 rounded-full flex overflow-hidden mb-12">
-      <button
-        :class="`w-1/2
-          h-full
-          text-lg
-          font-bold
-          flex
-          items-center
-          justify-center
-          hover:bg-[var(--hover-base-button-color)]
-          text-[var(--hover-base-text-color)] ${[
-            target === 'toy' &&
-              'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
-          ]}`"
-        @click="changeTag('toy')"
-      >
-        <span>Toy</span>
-      </button>
-      <button
-        :class="`w-1/2
-          h-full
-          text-lg
-          font-bold
-          flex
-          items-center
-          justify-center
-          hover:bg-[var(--hover-base-button-color)]
-          text-[var(--hover-base-text-color)] ${[
-            target === 'blog' &&
-              'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
-          ]}`"
-        @click="changeTag('blog')"
-      >
-        <span>Blog</span>
-      </button>
-    </div>
     <works-filter :include-draft="false" @search="searchWorks" @clear="clear" />
     <div class="px-10 text-end my-3 text-gray-600">
       {{ getWorksLength }} / {{ resWorks.works_total_count }}
@@ -114,7 +78,6 @@ export default class Index extends Vue {
   nextContentLoadProcessing: boolean = false
   bottom: number = 0
   limit: number = 30
-  target: 'toy' | 'blog' = 'toy'
 
   @Ref() workList!: HTMLDivElement
 
@@ -147,28 +110,6 @@ export default class Index extends Vue {
       if (!this.nextContentLoadProcessing && !this.isWorksEmpty) {
         this.nextContentLoadProcessing = true
         this.getNextContent()
-      }
-    }
-  }
-
-  @Watch('$route')
-  async onRouteChange() {
-    if (this.getNowLogin) {
-      if (this.$route.query.target) {
-        this.target = this.$route.query.target as 'blog' | 'toy'
-      } else {
-        this.target = 'toy'
-      }
-    }
-  }
-
-  @Watch('target')
-  async onChangeTag() {
-    if (this.getNowLogin) {
-      if (this.target === 'toy') {
-        await this.searchWorks()
-      } else if (this.target === 'blog') {
-        // await this.getBlog()
       }
     }
   }
@@ -266,13 +207,6 @@ export default class Index extends Vue {
     await this.searchWorks()
     workFilterStore.setSearched(true)
     this.isWorksEmpty = false
-  }
-
-  changeTag(target: 'blog' | 'toy') {
-    this.$router.push({
-      path: ``,
-      query: { target: target }
-    })
   }
 }
 </script>

@@ -1,7 +1,19 @@
 <template>
   <div class="!max-w-[1220px]">
     <users-profile :user="user" />
-    <div class="bg-white h-14 mx-20 rounded-full flex overflow-hidden mb-12">
+    <div
+      class="
+        bg-white
+        h-14
+        rounded-3xl
+        flex
+        overflow-hidden
+        mb-4
+        w-[95vw]
+        max-w-full
+      "
+      v-if="getIsMe"
+    >
       <button
         :class="`w-1/2
           h-full
@@ -88,6 +100,7 @@ import { Query } from '@/utils/query'
     }
     let User
     let resUser
+    let isMe
     let resWorks!: { data: ResWorks; [key: string]: any }
     let resBlogs!: { data: BlogsResponse; [key: string]: any }
     const query: Query = new Query()
@@ -98,10 +111,10 @@ import { Query } from '@/utils/query'
     if (authStore.getUser.id === '' && authStore.getAccessToken !== '') {
       User = await AxiosClient.client('GET', '/users/@me', true)
     }
-    if (
+    isMe =
       User?.data.id === route.params.id ||
       authStore.getUser.id === route.params.id
-    ) {
+    if (isMe) {
       resUser = await AxiosClient.client('GET', '/users/@me', true)
       if (route.query.target === 'blog') {
         resBlogs = await AxiosClient.client(
@@ -131,8 +144,18 @@ import { Query } from '@/utils/query'
     if (!resUser.data) {
       alert('ユーザー情報の取得に失敗しました')
     }
-    if (!resWorks || !resWorks.data) {
+    if (
+      (!route.query.target || route.query.target === 'toy') &&
+      (!resWorks || !resWorks.data)
+    ) {
       alert('ユーザーの作品情報の取得に失敗しました')
+    }
+    if (
+      route.query.target === 'blog' &&
+      isMe &&
+      (!resBlogs || !resBlogs.data)
+    ) {
+      alert('ユーザーのブログ情報の取得に失敗しました')
     }
 
     if (!route.query.target || route.query.target === 'toy') {
@@ -141,7 +164,7 @@ import { Query } from '@/utils/query'
         item_total_count: resWorks!.data.works_total_count as number,
         user: resUser.data
       }
-    } else if (route.query.target === 'blogs') {
+    } else if (route.query.target === 'blog') {
       return {
         blogs: resBlogs!.data.blogs as Blog[],
         item_total_count: resBlogs!.data.blogs_total_count as number,
@@ -151,7 +174,7 @@ import { Query } from '@/utils/query'
   }
 })
 export default class Users extends Vue {
-  works!: Work[]
+  works: Work[] = []
   item_total_count: number = 0
   user!: User
   userWorksCount: number = 6
