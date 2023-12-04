@@ -12,7 +12,7 @@
           justify-center
           hover:bg-[var(--hover-base-button-color)]
           text-[var(--hover-base-text-color)] ${[
-            tag === 'toy' &&
+            target === 'toy' &&
               'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
           ]}`"
         @click="changeTag('toy')"
@@ -29,7 +29,7 @@
           justify-center
           hover:bg-[var(--hover-base-button-color)]
           text-[var(--hover-base-text-color)] ${[
-            tag === 'blog' &&
+            target === 'blog' &&
               'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
           ]}`"
         @click="changeTag('blog')"
@@ -38,19 +38,19 @@
       </button>
     </div>
     <works-filter
-      v-if="tag === 'toy'"
+      v-if="target === 'toy'"
       :include-draft="getUser.id === $route.params.id"
       @search="searchWorks"
       @clear="clear"
       id="user_work"
     />
     <div v-if="getIsMe" class="px-10 text-end my-3 text-gray-600">
-      {{ tag === 'toy' ? getWorksLength : getBlogsLength }} /
+      {{ target === 'toy' ? getWorksLength : getBlogsLength }} /
       {{ item_total_count }}
     </div>
     <div class="relative w-full min-h-[50vh]">
-      <works-list v-if="!processing && tag === 'toy'" :works="works" />
-      <blog-list v-else-if="!processing && tag === 'blog'" :blogs="blogs" />
+      <works-list v-if="!processing && target === 'toy'" :works="works" />
+      <blog-list v-else-if="!processing && target === 'blog'" :blogs="blogs" />
       <loading v-else />
     </div>
   </div>
@@ -103,7 +103,7 @@ import { Query } from '@/utils/query'
       authStore.getUser.id === route.params.id
     ) {
       resUser = await AxiosClient.client('GET', '/users/@me', true)
-      if (route.query.tag === 'blog') {
+      if (route.query.target === 'blog') {
         resBlogs = await AxiosClient.client(
           'GET',
           `/users/@me/blogs${query.getQuery()}`,
@@ -135,13 +135,13 @@ import { Query } from '@/utils/query'
       alert('ユーザーの作品情報の取得に失敗しました')
     }
 
-    if (!route.query.tag || route.query.tag === 'toy') {
+    if (!route.query.target || route.query.target === 'toy') {
       return {
         works: resWorks!.data.works as Work[],
         item_total_count: resWorks!.data.works_total_count as number,
         user: resUser.data
       }
-    } else if (route.query.tag === 'blogs') {
+    } else if (route.query.target === 'blogs') {
       return {
         blogs: resBlogs!.data.blogs as Blog[],
         item_total_count: resBlogs!.data.blogs_total_count as number,
@@ -159,7 +159,7 @@ export default class Users extends Vue {
   processing: boolean = false
   query: Query = new Query()
   blogs: Blog[] = []
-  tag: 'blog' | 'toy' = 'blog'
+  target: 'blog' | 'toy' = 'blog'
 
   get getUser() {
     return authStore.getUser
@@ -241,28 +241,28 @@ export default class Users extends Vue {
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     workFilterStore.setSearched(true)
-    this.$route.query.tag
-      ? (this.tag = this.$route.query.tag as 'blog' | 'toy')
-      : (this.tag = 'toy')
+    this.$route.query.target
+      ? (this.target = this.$route.query.target as 'blog' | 'toy')
+      : (this.target = 'toy')
   }
 
   @Watch('$route')
   async onRouteChange() {
     if (this.getNowLogin) {
-      if (this.$route.query.tag) {
-        this.tag = this.$route.query.tag as 'blog' | 'toy'
+      if (this.$route.query.target) {
+        this.target = this.$route.query.target as 'blog' | 'toy'
       } else {
-        this.tag = 'toy'
+        this.target = 'toy'
       }
     }
   }
 
-  @Watch('tag')
+  @Watch('target')
   async onChangeTag() {
     if (this.getNowLogin) {
-      if (this.tag === 'toy') {
+      if (this.target === 'toy') {
         await this.searchWorks()
-      } else if (this.tag === 'blog') {
+      } else if (this.target === 'blog') {
         await this.getBlog()
       }
     }
@@ -321,10 +321,10 @@ export default class Users extends Vue {
     }
   }
 
-  changeTag(tag: 'blog' | 'toy') {
+  changeTag(target: 'blog' | 'toy') {
     this.$router.push({
       path: `/users/${this.$route.params.id}`,
-      query: { tag: tag }
+      query: { target: target }
     })
   }
 }

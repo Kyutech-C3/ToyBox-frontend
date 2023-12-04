@@ -11,7 +11,7 @@
           justify-center
           hover:bg-[var(--hover-base-button-color)]
           text-[var(--hover-base-text-color)] ${[
-            tag === 'toy' &&
+            target === 'toy' &&
               'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
           ]}`"
         @click="changeTag('toy')"
@@ -28,7 +28,7 @@
           justify-center
           hover:bg-[var(--hover-base-button-color)]
           text-[var(--hover-base-text-color)] ${[
-            tag === 'blog' &&
+            target === 'blog' &&
               'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
           ]}`"
         @click="changeTag('blog')"
@@ -114,7 +114,7 @@ export default class Index extends Vue {
   nextContentLoadProcessing: boolean = false
   bottom: number = 0
   limit: number = 30
-  tag: 'toy' | 'blog' = 'toy'
+  target: 'toy' | 'blog' = 'toy'
 
   @Ref() workList!: HTMLDivElement
 
@@ -154,20 +154,20 @@ export default class Index extends Vue {
   @Watch('$route')
   async onRouteChange() {
     if (this.getNowLogin) {
-      if (this.$route.query.tag) {
-        this.tag = this.$route.query.tag as 'blog' | 'toy'
+      if (this.$route.query.target) {
+        this.target = this.$route.query.target as 'blog' | 'toy'
       } else {
-        this.tag = 'toy'
+        this.target = 'toy'
       }
     }
   }
 
-  @Watch('tag')
+  @Watch('target')
   async onChangeTag() {
     if (this.getNowLogin) {
-      if (this.tag === 'toy') {
+      if (this.target === 'toy') {
         await this.searchWorks()
-      } else if (this.tag === 'blog') {
+      } else if (this.target === 'blog') {
         // await this.getBlog()
       }
     }
@@ -268,10 +268,10 @@ export default class Index extends Vue {
     this.isWorksEmpty = false
   }
 
-  changeTag(tag: 'blog' | 'toy') {
+  changeTag(target: 'blog' | 'toy') {
     this.$router.push({
       path: ``,
-      query: { tag: tag }
+      query: { target: target }
     })
   }
 }
