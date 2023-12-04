@@ -1,31 +1,71 @@
 <template>
   <div class="!max-w-[1220px]">
     <users-profile :user="user" />
+    <div class="bg-white h-14 mx-20 rounded-full flex overflow-hidden mb-12">
+      <button
+        :class="`w-1/2
+          h-full
+          text-lg
+          font-bold
+          flex
+          items-center
+          justify-center
+          hover:bg-[var(--hover-base-button-color)]
+          text-[var(--hover-base-text-color)] ${[
+            tag === 'toy' &&
+              'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
+          ]}`"
+        @click="changeTag('toy')"
+      >
+        <span>Toy</span>
+      </button>
+      <button
+        :class="`w-1/2
+          h-full
+          text-lg
+          font-bold
+          flex
+          items-center
+          justify-center
+          hover:bg-[var(--hover-base-button-color)]
+          text-[var(--hover-base-text-color)] ${[
+            tag === 'blog' &&
+              'bg-[var(--hover-base-button-color)] text-[var(--hover-base-text-color)] pointer-events-none'
+          ]}`"
+        @click="changeTag('blog')"
+      >
+        <span>Blog</span>
+      </button>
+    </div>
     <works-filter
+      v-if="tag === 'toy'"
       :include-draft="getUser.id === $route.params.id"
       @search="searchWorks"
       @clear="clear"
       id="user_work"
     />
-    <div class="px-10 text-end my-3 text-gray-600">
-      {{ getWorksLength }} / {{ works_total_count }}
+    <div v-if="getIsMe" class="px-10 text-end my-3 text-gray-600">
+      {{ tag === 'toy' ? getWorksLength : getBlogsLength }} /
+      {{ item_total_count }}
     </div>
     <div class="relative w-full min-h-[50vh]">
-      <works-list v-if="!processing" :works="works" />
+      <works-list v-if="!processing && tag === 'toy'" :works="works" />
+      <blog-list v-else-if="!processing && tag === 'blog'" :blogs="blogs" />
       <loading v-else />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 
 import UsersProfile from '@/components/users/UsersProfile.vue'
 import WorksFilter from '@/components/works/WorksFilter.vue'
 import WorksList from '@/components/works/WorksList.vue'
 import Loading from '@/components/commons/Loading.vue'
+import BlogList from '@/components/blogs/BlogList.vue'
 
-import { User, Work } from '@/types'
+import { User, Work, Blog, BlogsResponse, ResWorks } from '@/types'
 import { authStore, tagSelectorStore, workFilterStore } from '~/store'
 import { AxiosClient } from '@/utils/axios'
 import { Query } from '@/utils/query'
@@ -35,7 +75,8 @@ import { Query } from '@/utils/query'
     UsersProfile,
     WorksFilter,
     WorksList,
-    Loading
+    Loading,
+    BlogList
   },
   async asyncData({ route }) {
     if (workFilterStore.getOnPageName !== 'user') {
@@ -47,7 +88,8 @@ import { Query } from '@/utils/query'
     }
     let User
     let resUser
-    let resWorks
+    let resWorks!: { data: ResWorks; [key: string]: any }
+    let resBlogs!: { data: BlogsResponse; [key: string]: any }
     const query: Query = new Query()
     query.create(
       tagSelectorStore.getSelectedTags,
@@ -61,11 +103,19 @@ import { Query } from '@/utils/query'
       authStore.getUser.id === route.params.id
     ) {
       resUser = await AxiosClient.client('GET', '/users/@me', true)
-      resWorks = await AxiosClient.client(
-        'GET',
-        `/users/@me/works${query.getQuery()}`,
-        true
-      )
+      if (route.query.tag === 'blog') {
+        resBlogs = await AxiosClient.client(
+          'GET',
+          `/users/@me/blogs${query.getQuery()}`,
+          true
+        )
+      } else {
+        resWorks = await AxiosClient.client(
+          'GET',
+          `/users/@me/works${query.getQuery()}`,
+          true
+        )
+      }
     } else {
       resUser = await AxiosClient.client(
         'GET',
@@ -81,24 +131,35 @@ import { Query } from '@/utils/query'
     if (!resUser.data) {
       alert('ユーザー情報の取得に失敗しました')
     }
-    if (!resWorks.data) {
+    if (!resWorks || !resWorks.data) {
       alert('ユーザーの作品情報の取得に失敗しました')
     }
-    return {
-      works: resWorks.data.works,
-      works_total_count: resWorks.data.works_total_count,
-      user: resUser.data
+
+    if (!route.query.tag || route.query.tag === 'toy') {
+      return {
+        works: resWorks!.data.works as Work[],
+        item_total_count: resWorks!.data.works_total_count as number,
+        user: resUser.data
+      }
+    } else if (route.query.tag === 'blogs') {
+      return {
+        blogs: resBlogs!.data.blogs as Blog[],
+        item_total_count: resBlogs!.data.blogs_total_count as number,
+        user: resUser.data
+      }
     }
   }
 })
 export default class Users extends Vue {
   works!: Work[]
-  works_total_count: number = 0
+  item_total_count: number = 0
   user!: User
   userWorksCount: number = 6
   userWorks: string[] = Array(this.userWorksCount)
   processing: boolean = false
   query: Query = new Query()
+  blogs: Blog[] = []
+  tag: 'blog' | 'toy' = 'blog'
 
   get getUser() {
     return authStore.getUser
@@ -118,6 +179,14 @@ export default class Users extends Vue {
 
   get getWorksLength() {
     return this.works.length
+  }
+
+  get getBlogsLength() {
+    return this.blogs.length
+  }
+
+  get getIsMe() {
+    return this.getUser.id === this.$route.params.id
   }
 
   head() {
@@ -172,6 +241,31 @@ export default class Users extends Vue {
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     workFilterStore.setSearched(true)
+    this.$route.query.tag
+      ? (this.tag = this.$route.query.tag as 'blog' | 'toy')
+      : (this.tag = 'toy')
+  }
+
+  @Watch('$route')
+  async onRouteChange() {
+    if (this.getNowLogin) {
+      if (this.$route.query.tag) {
+        this.tag = this.$route.query.tag as 'blog' | 'toy'
+      } else {
+        this.tag = 'toy'
+      }
+    }
+  }
+
+  @Watch('tag')
+  async onChangeTag() {
+    if (this.getNowLogin) {
+      if (this.tag === 'toy') {
+        await this.searchWorks()
+      } else if (this.tag === 'blog') {
+        await this.getBlog()
+      }
+    }
   }
 
   async searchWorks() {
@@ -199,7 +293,21 @@ export default class Users extends Vue {
       }
       this.works.splice(0)
       this.works = resWorks.data.works
-      this.works_total_count = resWorks.data.works_total_count
+      this.item_total_count = resWorks.data.works_total_count
+      this.processing = false
+    }
+  }
+
+  async getBlog() {
+    if (this.getNowLogin) {
+      this.processing = true
+      const res = await AxiosClient.client('GET', `/users/@me/blogs`, true)
+      if (res.status !== 200) {
+        alert('ブログ一覧の取得に失敗しました')
+      }
+      this.blogs.splice(0)
+      this.blogs = res.data.blogs
+      this.item_total_count = res.data.blogs_total_count
       this.processing = false
     }
   }
@@ -211,6 +319,13 @@ export default class Users extends Vue {
       await this.searchWorks()
       workFilterStore.setSearched(true)
     }
+  }
+
+  changeTag(tag: 'blog' | 'toy') {
+    this.$router.push({
+      path: `/users/${this.$route.params.id}`,
+      query: { tag: tag }
+    })
   }
 }
 </script>
