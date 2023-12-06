@@ -28,8 +28,8 @@
         @click="$router.push(`/works/${blogData.id}/edit`)"
       />
     </div>
-    <nuxt-link
-      :to="'/works/' + blogData.id"
+    <a
+      :href="getBaseBlogLink + blogData.id"
       class="h-[12rem] border-b block relative overflow-hidden"
     >
       <img
@@ -48,8 +48,8 @@
         alt="work thumbnail"
         loading="lazy"
       />
-    </nuxt-link>
-    <nuxt-link :to="'/works/' + blogData.id" class="h-1/2 py-3 px-2.5 block">
+    </a>
+    <a :href="getBaseBlogLink + blogData.id" class="h-1/2 py-3 px-2.5 block">
       <div class="mx-auto w-min flex items-center flex-col mb-3">
         <div class="text-center text-xl w-max">
           {{ getTitle }}
@@ -104,7 +104,7 @@
             {{ user.name }}
           </div>
         </div> -->
-    </nuxt-link>
+    </a>
   </div>
 </template>
 
@@ -146,6 +146,10 @@ export default class BlogCard extends Vue {
         ? this.blogData.title.substr(0, limitTitle) + '...'
         : this.blogData.title
     return title
+  }
+
+  get getBaseBlogLink() {
+    return `${process.env.C3_OFFICIAL_URL}/blog`
   }
 
   dateFormatter(date: string): string {

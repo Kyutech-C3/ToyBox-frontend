@@ -156,7 +156,8 @@ export default {
   env: {
     AUTHENTICATION_URL: process.env.AUTHENTICATION_URL,
     API_URL: process.env.API_URL,
-    BASE_URL: process.env.BASE_URL
+    BASE_URL: process.env.BASE_URL,
+    C3_OFFICIAL_URL: process.env.C3_OFFICIAL_URL
   },
   ssr: false,
 
