@@ -48,9 +48,10 @@
         v-model="blogData.body_text"
         :show-warning="showRequiredWarning.bodyTextEmpty"
         :file-upload-handler="fileUploadHandler"
-        class="mb-1"
+        class="mb-3"
       />
-      <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
+      <form-scheduler v-model="publishDatetime" />
+      <div class="mr-3 z-10 cursor-pointer flex items-center justify-end">
         <form-submit-button
           class=""
           :work-visibility="blogData.visibility"
@@ -70,6 +71,7 @@ import FormTag from '@/components/works/form/FormTag.vue'
 import FormTitle from '@/components/works/form/FormTitle.vue'
 import FormThumbnail from '@/components/works/form/FormThumbnail.vue'
 import FormMarkdown from '@/components/blogs/form/FormMarkdown.vue'
+import FormScheduler from '@/components/blogs/form/FormScheduler.vue'
 import FormSubmitButton from '@/components/works/form/FormSubmitButton.vue'
 
 import { AxiosClient } from '@/utils/axios'
@@ -112,6 +114,7 @@ const extensionMimeType = {
     FormTitle,
     FormThumbnail,
     FormMarkdown,
+    FormScheduler,
     FormSubmitButton
   }
 })
@@ -136,6 +139,16 @@ export default class BlogForm extends Vue {
 
   @VModel({ type: Object, required: true })
   blogData!: PostBlog
+
+  publishDatetime?: string = undefined
+
+  created() {
+    if (this.blogData.published_at) {
+      const datetime = new Date(this.blogData.published_at)
+      datetime.setHours(datetime.getHours() + 9)
+      this.publishDatetime = datetime.toISOString().substring(0, 16)
+    }
+  }
 
   submitSuccessProcess() {
     blogPostStore.initAssetsViewInfo()
@@ -177,6 +190,12 @@ export default class BlogForm extends Vue {
     this.getSelectedTags.map((tag) => {
       this.blogData.tags_id.push(tag.id)
     })
+    if (this.publishDatetime) {
+      const datetime = new Date(this.publishDatetime)
+      datetime.setHours(datetime.getHours() + 9)
+      this.blogData.published_at = datetime.toISOString()
+    }
+    console.log(this.blogData.published_at)
     if (!this.checkEmpty()) {
       // バリデーションをクリアしたときのみ実行される
       // バックエンドにPOSTを記述
