@@ -20,12 +20,20 @@
       :visibility="blogData.visibility"
       class="absolute left-3 top-3 z-20"
     />
-    <div class="z-50 absolute right-3 top-3">
+    <div class="z-50 absolute right-10 top-3">
       <base-icon-button
         v-if="getUser.id === blogData.user.id"
         :size="'small'"
         :font-awesome="{ type: 'fas', name: 'pen' }"
-        @click="$router.push(`/works/${blogData.id}/edit`)"
+        @click="$router.push(`/blogs/${blogData.id}/edit`)"
+      />
+    </div>
+    <div class="z-50 absolute right-2 top-3">
+      <base-icon-button
+        v-if="getUser.id === blogData.user.id"
+        :size="'small'"
+        :font-awesome="{ type: 'fas', name: 'trash-can' }"
+        @click="deleteBlog"
       />
     </div>
     <a
@@ -150,6 +158,14 @@ export default class BlogCard extends Vue {
 
   get getBaseBlogLink() {
     return `${process.env.C3_OFFICIAL_URL}/blog`
+  }
+
+  deleteBlog() {
+    const msg = `${this.blogData.title}\nこの記事を削除してもよろしいですか？`
+    if (confirm(msg)) {
+      // TODO: ここでブログ削除APIを叩く
+      console.log(`delete ${this.blogData.id}`)
+    }
   }
 
   dateFormatter(date: string): string {
