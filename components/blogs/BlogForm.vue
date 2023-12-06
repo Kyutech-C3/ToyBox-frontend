@@ -48,6 +48,8 @@
         v-model="blogData.body_text"
         :show-warning="showRequiredWarning.bodyTextEmpty"
         :file-upload-handler="fileUploadHandler"
+        :assets="assets"
+        :insert-asset-url="insertAssetUrl"
         class="mb-1"
       />
       <div class="mt-5 mr-3 z-10 cursor-pointer flex items-center justify-end">
@@ -137,6 +139,8 @@ export default class BlogForm extends Vue {
   @VModel({ type: Object, required: true })
   blogData!: PostBlog
 
+  assets: BlogAsset[] = []
+
   submitSuccessProcess() {
     blogPostStore.initAssetsViewInfo()
     tagSelectorStore.initSelectedTags()
@@ -219,6 +223,22 @@ export default class BlogForm extends Vue {
     }
   }
 
+  insertAssetUrl(asset_id: string) {
+    let assetText = ''
+    for (let asset of this.assets) {
+      if (asset.id === asset_id) {
+        if (asset.asset_type === 'image') {
+          assetText = `![${asset.id}](${asset.url})\n`
+        } else if (asset.asset_type === 'video') {
+          assetText = `<video controls><source src="${asset.url}" type="${
+            extensionMimeType[asset.extension as keyof typeof extensionMimeType]
+          }"></video>\n`
+        }
+      }
+    }
+    this.blogData.body_text = this.blogData.body_text.concat(assetText)
+  }
+
   async fileUploadHandler(files: File[]) {
     workPostStore.setPostAssetStatus('posting')
     for (let i = 0; i < files.length; i++) {
@@ -251,6 +271,7 @@ export default class BlogForm extends Vue {
             this.blogData.body_text = this.blogData.body_text.concat(assetText)
           }
           this.blogData.assets_id.push(result.data.id)
+          this.assets.push(result.data)
           blogPostStore.addAssetsViewInfo(result.data)
         } catch (error) {
           // eslint-disable-next-line no-console
