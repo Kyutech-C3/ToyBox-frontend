@@ -75,12 +75,12 @@
           />
         </a>
         <!-- not logged in  -->
-        <div v-if="$route.path !== '/works/create'">
+        <div v-if="$route.path.split('/').pop() !== 'create'">
           <base-text-button
             v-if="nowLogin"
             class="mr-5"
             title="投稿"
-            @click="$router.push('/works/create')"
+            @click="postNav = true"
           />
         </div>
         <!-- logged in -->
@@ -241,11 +241,67 @@
           ログアウト
         </button>
       </div>
+      <!-- post-navigation -->
+      <div
+        v-if="postNav"
+        class="
+          shadow-2xl
+          rounded-xl
+          absolute
+          top-24
+          right-16
+          w-44
+          bg-gray-700
+          z-50
+          flex flex-col
+          py-3
+          gap-2
+          post-menu
+        "
+      >
+        <div @click="postNav = !postNav">
+          <!-- my profile link -->
+          <nuxt-link
+            class="
+              grid
+              py-1
+              px-2
+              mx-auto
+              hover:text-white
+              hover:underline
+              text-gray-200
+            "
+            :to="'/works/create'"
+          >
+            作品を投稿する
+          </nuxt-link>
+        </div>
+        <div @click="postNav = !postNav">
+          <!-- my profile link -->
+          <nuxt-link
+            class="
+              grid
+              py-1
+              px-2
+              mx-auto
+              hover:text-white
+              hover:underline
+              text-gray-200
+            "
+            :to="'/blogs/create'"
+          >
+            ブログを投稿する
+          </nuxt-link>
+        </div>
+      </div>
     </header>
     <div
-      v-if="activeNav"
+      v-if="activeNav || postNav"
       class="fixed top-0 left-0 w-full h-full z-40"
-      @click="activeNav = !activeNav"
+      @click="
+        activeNav = false
+        postNav = false
+      "
     />
   </div>
 </template>
@@ -265,6 +321,7 @@ import { authStore, workFilterStore } from '@/store'
 })
 export default class Header extends Vue {
   activeNav: Boolean = false
+  postNav: Boolean = false
   windowWidth: number = window.innerWidth
 
   get nowLogin() {
@@ -340,6 +397,15 @@ export default class Header extends Vue {
   top: -30px;
   right: 25px;
   left: auto;
+}
+.post-menu::after {
+  position: absolute;
+  display: inline-block;
+  content: '';
+  border: 15px solid transparent;
+  border-bottom-color: rgba(55, 65, 81, 1);
+  top: -30px;
+  left: 50%;
 }
 .triangle {
   width: 0;
