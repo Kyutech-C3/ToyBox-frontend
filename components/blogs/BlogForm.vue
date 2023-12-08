@@ -50,8 +50,9 @@
         :file-upload-handler="fileUploadHandler"
         class="mb-3"
       />
-      <form-scheduler v-model="publishDatetime" />
-      <div class="mr-3 z-10 cursor-pointer flex items-center justify-end">
+
+      <div class="mr-3 z-10 cursor-pointer flex items-center justify-between">
+        <form-scheduler v-model="publishDatetime" />
         <form-submit-button
           class=""
           :work-visibility="blogData.visibility"
