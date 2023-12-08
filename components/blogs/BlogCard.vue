@@ -161,7 +161,7 @@ export default class BlogCard extends Vue {
   }
 
   deleteBlog() {
-    const msg = `${this.blogData.title}\nこの記事を削除してもよろしいですか？`
+    const msg = `「${this.blogData.title}」\nこの記事を削除してもよろしいですか？`
     if (confirm(msg)) {
       // TODO: ここでブログ削除APIを叩く
       console.log(`delete ${this.blogData.id}`)

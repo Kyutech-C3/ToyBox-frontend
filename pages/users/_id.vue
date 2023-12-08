@@ -5,12 +5,14 @@
       class="
         bg-white
         h-14
-        rounded-3xl
+        rounded-full
         flex
         overflow-hidden
-        mb-4
+        mb-10
+        mt-28
         w-[95vw]
-        max-w-full
+        max-w-[70%]
+        mx-auto
       "
       v-if="getIsMe"
     >

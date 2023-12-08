@@ -248,8 +248,8 @@
           shadow-2xl
           rounded-xl
           absolute
-          top-24
-          right-16
+          top-20
+          right-24
           w-44
           bg-gray-700
           z-50
@@ -259,35 +259,19 @@
           post-menu
         "
       >
-        <div @click="postNav = !postNav">
+        <div @click="postNav = !postNav" class="hover:bg-gray-600">
           <!-- my profile link -->
           <nuxt-link
-            class="
-              grid
-              py-1
-              px-2
-              mx-auto
-              hover:text-white
-              hover:underline
-              text-gray-200
-            "
+            class="grid py-2 px-2 mx-auto text-gray-200"
             :to="'/works/create'"
           >
             作品を投稿する
           </nuxt-link>
         </div>
-        <div @click="postNav = !postNav">
+        <div @click="postNav = !postNav" class="hover:bg-gray-600">
           <!-- my profile link -->
           <nuxt-link
-            class="
-              grid
-              py-1
-              px-2
-              mx-auto
-              hover:text-white
-              hover:underline
-              text-gray-200
-            "
+            class="grid py-2 px-2 mx-auto text-gray-200"
             :to="'/blogs/create'"
           >
             ブログを投稿する
@@ -402,10 +386,10 @@ export default class Header extends Vue {
   position: absolute;
   display: inline-block;
   content: '';
-  border: 15px solid transparent;
+  border: 13px solid transparent;
   border-bottom-color: rgba(55, 65, 81, 1);
-  top: -30px;
-  left: 50%;
+  top: -22px;
+  right: 30px;
 }
 .triangle {
   width: 0;
