@@ -160,16 +160,16 @@ import { Query } from '@/utils/query'
       alert('ユーザーのブログ情報の取得に失敗しました')
     }
 
-    if (!route.query.target || route.query.target === 'toy') {
-      return {
-        works: resWorks!.data.works as Work[],
-        item_total_count: resWorks!.data.works_total_count as number,
-        user: resUser.data
-      }
-    } else if (route.query.target === 'blog') {
+    if (isMe && route.query.target === 'blog') {
       return {
         blogs: resBlogs!.data.blogs as Blog[],
         item_total_count: resBlogs!.data.blogs_total_count as number,
+        user: resUser.data
+      }
+    } else {
+      return {
+        works: resWorks!.data.works as Work[],
+        item_total_count: resWorks!.data.works_total_count as number,
         user: resUser.data
       }
     }
@@ -266,7 +266,7 @@ export default class Users extends Vue {
   created() {
     workFilterStore.setUseConditionsWhenAsyncData(true)
     workFilterStore.setSearched(true)
-    this.$route.query.target
+    this.$route.query.target && this.getNowLogin
       ? (this.target = this.$route.query.target as 'blog' | 'toy')
       : (this.target = 'toy')
   }
