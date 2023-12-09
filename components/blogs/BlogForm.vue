@@ -141,7 +141,7 @@ export default class BlogForm extends Vue {
   @VModel({ type: Object, required: true })
   blogData!: PostBlog
 
-  publishDatetime?: string = undefined
+  publishDatetime: string | null = null
 
   created() {
     if (this.blogData.published_at) {
@@ -191,7 +191,7 @@ export default class BlogForm extends Vue {
     this.getSelectedTags.map((tag) => {
       this.blogData.tags_id.push(tag.id)
     })
-    if (this.publishDatetime) {
+    if (this.publishDatetime !== null) {
       const datetime = new Date(this.publishDatetime)
       datetime.setHours(datetime.getHours() + 9)
       this.blogData.published_at = datetime.toISOString()

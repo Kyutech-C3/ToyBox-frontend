@@ -21,10 +21,9 @@ import { Component, Vue, VModel } from 'nuxt-property-decorator'
 })
 export default class FormMarkdown extends Vue {
   @VModel({
-    type: String || undefined,
-    required: true
+    type: String || null
   })
-  scheduleTime?: string = undefined
+  scheduleTime!: string | null
 
   useSchedulePost: boolean = false
 
@@ -38,7 +37,7 @@ export default class FormMarkdown extends Vue {
           this.scheduleTime = timer.value
         }
       } else {
-        this.scheduleTime = undefined
+        this.scheduleTime = null
       }
     }
   }
