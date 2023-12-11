@@ -7,6 +7,11 @@
       class="mb-3"
     />
     <form-asset class="mb-3" :file-upload-handler="fileUploadHandler" />
+    <form-asset-list
+      :assets="assets"
+      :insert-asset-url="insertAssetUrl"
+      v-if="assets.length"
+    />
     <mavon-editor
       ref="md"
       v-model="description"
@@ -31,11 +36,14 @@ import { Component, Vue, Prop, VModel } from 'nuxt-property-decorator'
 import { workPostStore } from '@/store'
 import FormLabel from '@/components/works/form/FormLabel.vue'
 import FormAsset from '@/components/blogs/form/FormAsset.vue'
+import FormAssetList from '@/components/blogs/form/FormAssetList.vue'
+import { BlogAsset } from '~/types'
 
 @Component({
   components: {
     FormLabel,
-    FormAsset
+    FormAsset,
+    FormAssetList
   }
 })
 export default class FormMarkdown extends Vue {
@@ -50,6 +58,12 @@ export default class FormMarkdown extends Vue {
 
   @Prop({ type: Function, required: true })
   fileUploadHandler!: (files: File[]) => Promise<void>
+
+  @Prop({ type: Array, required: true })
+  assets!: BlogAsset[]
+
+  @Prop({ type: Function, required: true })
+  insertAssetUrl!: (asset_id: string) => void
 
   changeBlockUnloadState() {
     workPostStore.changeIsBlockUnload()

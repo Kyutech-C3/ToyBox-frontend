@@ -29,7 +29,7 @@
       <font-awesome-icon
         class="m-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         :class="[
-          { 'w-4': size === 'small' },
+          { 'w-3': size === 'small' },
           { 'w-7': size === 'base' },
           { 'w-10': size === 'large' }
         ]"
