@@ -38,6 +38,7 @@ export type Blog = {
   is_favorite?: boolean | undefined
   created_at: string
   updated_at: string
+  published_at?: string | undefined
 }
 
 export type BlogAsset = {
@@ -99,6 +100,7 @@ export type PostBlog = {
   thumbnail_asset_id: string
   assets_id: string[]
   tags_id: string[]
+  published_at?: string | undefined
 }
 
 export type PostComment = {
