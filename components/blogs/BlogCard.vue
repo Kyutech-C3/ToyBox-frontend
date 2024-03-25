@@ -37,7 +37,7 @@
       />
     </div>
     <a
-      :href="getBaseBlogLink + blogData.id"
+      :href="getBaseBlogLink + '/' + blogData.id"
       class="h-[12rem] border-b block relative overflow-hidden"
     >
       <img
@@ -57,7 +57,7 @@
         loading="lazy"
       />
     </a>
-    <a :href="getBaseBlogLink + blogData.id" class="h-1/2 py-3 px-2.5 block">
+    <a :href="getBaseBlogLink + '/' + blogData.id" class="h-1/2 py-3 px-2.5 block">
       <div class="mx-auto w-min flex items-center flex-col mb-3">
         <div class="text-center text-xl w-max">
           {{ getTitle }}
