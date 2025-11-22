@@ -197,7 +197,6 @@ export default class BlogForm extends Vue {
     })
     if (this.publishDatetime !== null) {
       const datetime = new Date(this.publishDatetime)
-      datetime.setHours(datetime.getHours() + 9)
       this.blogData.published_at = datetime.toISOString()
     } else {
       this.blogData.published_at = undefined
