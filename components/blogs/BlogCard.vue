@@ -124,6 +124,7 @@ import UserTag from '@/components/commons/UserTag.vue'
 import BaseIconButton from '@/components/commons/BaseIconButton.vue'
 import VisibilityStateTag from '@/components/commons/VisibilityStateTag.vue'
 
+import { AxiosClient } from '@/utils/axios'
 import { Blog } from '@/types'
 import { authStore } from '~/store'
 
@@ -163,8 +164,25 @@ export default class BlogCard extends Vue {
   deleteBlog() {
     const msg = `「${this.blogData.title}」\nこの記事を削除してもよろしいですか？`
     if (confirm(msg)) {
-      // TODO: ここでブログ削除APIを叩く
-      console.log(`delete ${this.blogData.id}`)
+      try {
+        if (this.getNowLogin) {
+          AxiosClient.client(
+            'DELETE',
+            `${process.env.API_URL}/blogs/${this.blogData.id}`,
+            true
+          )
+            .then(() => {
+              this.$router.go(0)
+            })
+            .catch((error) => {
+              console.error(error)
+              alert('削除できませんでした>_<管理者に報告してください！')
+            })
+        }
+      } catch (error) {
+        console.error(error)
+        alert('削除できませんでした>_<管理者に報告してください！')
+      }
     }
   }
 
