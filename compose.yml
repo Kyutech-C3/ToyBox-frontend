@@ -6,7 +6,7 @@ services:
       args:
         WORKDIR: front
     ports:
-      - 3030:3000
+      - "127.0.0.1:3030:3000"
     volumes:
       - .:/front
     working_dir: /front
