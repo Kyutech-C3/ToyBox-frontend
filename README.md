@@ -4,8 +4,11 @@
 `Nuxt.js` + `TypeScript` + `nuxt-property-decorator` + `storybook`
 
 ## Build Setup
+ツール管理にはmiseを使います
 
 ```bash
+# install tools
+$ mise install
 # install dependencies
 $ yarn install
 

@@ -19,8 +19,7 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-      "@types/markdown-it",
-      "tsparticles"
+      "@types/markdown-it"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist", "api"]
